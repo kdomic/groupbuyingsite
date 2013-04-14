@@ -476,7 +476,11 @@ nav a.current {
     line-height: 175%;
 }
 
-.maps {}
+#map {
+    width: 100%;
+    height: 300px;
+    margin: 0;
+}
 
 .company {
     width: 50%;
