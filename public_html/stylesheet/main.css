@@ -1,0 +1,361 @@
+/* 
+    Document   : main.css
+    Created on : 26/03/2013
+    Author     : Krunoslav Domic
+    Description: Group buying site
+*/
+
+/* === Global styles === */
+
+body {
+    background: #fff url(../images/background.gif); /*http://subtlepatterns.com*/
+    font-family: helvetica, arial, sans-serif;
+    margin: 0;
+}
+
+/* === Header === */
+
+header {
+    width: 100%;
+    height: 85px;
+    background-color: #000;
+    color: #fff;
+}
+
+header#headerDown {
+    height: 45px;
+    background-color: #699737;
+}
+
+#logoDiv {
+    width: 1048px;
+    margin: 0 auto;    
+}
+
+#logoImg { /*http://www.psdgraphics.com*/
+    background: url(../images/logo.png) no-repeat;
+    width: 200px;
+    height: 140px;
+}
+
+/* === Main menu === */
+
+nav {
+    width: 945px;
+    height: 45px; /* visina doljnjeg izbornika */
+    margin: 0 auto;
+    color: #fff;
+}
+
+nav#navUp {
+    color: #fff;
+    margin-top: -85px;
+}
+
+nav#navUp div {
+    margin-left: 150px;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;    
+}
+
+nav li {
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+
+nav a {
+    color: inherit;
+    display: block;
+    text-decoration: none;
+    padding: 10px 15px 15px 15px;
+    margin-left: 10px;
+}
+
+nav a:hover {
+    color: #FFFF66;
+}
+
+nav#navUp a:hover {
+    background-color: #699737;
+    border-radius: 10px 10px 0 0;
+    
+}
+
+nav a.current {
+    background-color: #699737;
+    border-radius: 10px 10px 0 0;
+}
+
+/* === Content === */
+
+#outerDiv {
+    width: 945px;
+    margin: 0 auto;
+}
+
+.wrapper {
+    padding: 10px;
+    background-color: #fff;
+    border: 2px solid #eee;
+    border-radius: 5px;
+}
+
+/* === Slidebar === */
+
+#slider {
+    height: 400px;
+    margin-top: 15px;
+}
+
+.sliderCaption {
+    width: 100%;
+    height: 60px;
+    padding: 2px;
+}
+
+.sliderCaption h1 {
+    font-size: 140%;
+    font-weight: bold;
+    margin: 0 0 8px 0;
+    color: #333;
+}
+
+.sliderCaption h2 {
+    font-size: 100%;
+    font-weight: normal;
+    margin: 0;
+    color: #949494;
+}
+
+.sliderOffer{
+    float: left;
+    width: 340px;
+    padding: 0 5px;    
+}
+
+.sliderOfferBuy {
+    height: 80px;
+    margin-top: 20px;
+    background-color: #4bc1de;
+    color: #fff;
+    border-radius: 10px;
+}
+
+.sliderOfferTag {
+    height: 80px;
+    margin: 0;
+    padding: 0;    
+    margin-left: -105px;
+    margin-top: -2.1ex;
+    background: url(../images/tag.png) no-repeat;
+}
+
+.sliderOfferBuy h1 {
+    float: left;
+    margin-top: -65px;
+    margin-left: 25px;
+    font-size: 100%;
+    text-transform: uppercase;
+}
+
+.sliderOfferBuy a {
+    float: right;
+    margin-top: -72px;
+    margin-right: 25px;
+    padding: 20px 35px;
+    text-decoration: none;
+    text-align: center;
+    background-color: #fa9f2a;
+    color: #fff;
+    border: 3px solid #fff;
+    border-radius: 10px;
+}
+
+.sliderOfferBuy a:hover {
+    background-color: #fccf94;
+    color: #699737;
+}
+
+.sliderOfferBuy h2 {
+    float: left;
+    margin-top: -46px;
+    margin-left: 50px;
+    font-size: 140%;
+}
+
+.sliderOfferDiscount {
+    height: 60px;
+    border-bottom: 1px solid #ccc;
+}
+
+.sliderOfferFriend {
+    height: 47px;
+    border-bottom: 1px solid #ccc;
+}
+
+.sliderOfferBought {
+    height: 80px;
+    border-bottom: 1px solid #ccc;
+}
+
+.sliderOfferTime {
+    height: 50px;
+}
+
+.sliderImg {
+    float: left;
+    width: 570px;
+    padding: 10px 0;
+}
+
+/* === Content === */
+
+#content {
+    float: left;
+    width: 660px;
+    margin-top: 15px;
+}
+
+#caption {
+    font-family: Impact, sans-serif;
+    font-size: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* === Offers === */
+
+.offer {
+    position: relative;
+    height: 165px;
+    padding: 8px;
+    border: 1px solid #d0d0d0;
+    margin: 8px;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+}
+
+#loadMoreOffer {
+    height: 1em;
+    font-size: 0.8em;
+    font-weight: bold;
+    font-style: initial;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+#loadMoreOffer:hover {
+    cursor: pointer;
+}
+
+.offer img {
+    width: 250px;
+    float: left;
+    padding: 5px;
+}
+
+.offer div {
+    width: 350px;
+    float: right; 
+}
+
+.offer div h1 {
+    font-size: 125%;
+    font-weight: bold;
+    margin: 0 0 8px 0;
+    color: #333;
+}
+
+.offer div h2 {
+    font-size: 100%;
+    font-weight: normal;
+    margin: 0;
+    color: #949494;
+}
+
+.offer div h3 {
+    font-size: 75%;
+    font-weight: normal;
+    font-style: italic;
+    text-transform: uppercase;
+    margin: 0;
+    color: #333;
+}
+
+.offer div h4 {
+    font-size: 100%;
+    font-weight: bold;
+    margin: 0;
+    color: #333;
+}
+
+.offer div.down {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    text-align: center;    
+}
+
+.offer div.price {
+    float: left;
+    width: 20%;
+    border-right: 1px dotted #ccc;
+}
+
+.offer div.discount {    
+    float: left;
+    width: 15%;
+    border-right: 1px dotted #ccc;border-right: 1px dotted #ccc;
+}
+
+.offer div.time {    
+    float: left;
+    width: 40%;
+}
+
+.offer div.more {    
+    float: left;
+    width: 20%;    
+    padding: 5px;
+    border: 1px solid #fa9f2a;
+    border-radius: 25px;
+    background-color: #fa9f2a;
+    color: #fff;
+    font-weight: bold;
+}
+
+.offer div.more:hover {
+    background-color: #fccf94;
+}
+/* === Sidebar === */
+
+#sidebar {
+    float: right;
+    width: 225px;
+    margin-top: 15px;
+}
+
+/* === Footer  === */
+
+footer {
+    width: 100%;
+    height: 500px;
+    color: #fff;
+    background-color: #1a1a1a;
+    border-top: 1px solid #05c4e7;
+    margin-top: 100px;
+}
+
+/* === Other === */
+
+.clear {
+    clear: both;
+    height: 0;
+    padding: 0;    
+    margin: 0;
+}
