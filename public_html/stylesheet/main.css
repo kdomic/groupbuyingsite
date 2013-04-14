@@ -118,7 +118,6 @@ nav a.current {
 /* === Slidebar === */
 
 #slider {
-    height: 400px;
     margin-top: 15px;
 }
 
@@ -326,9 +325,11 @@ nav a.current {
     padding: 10px 0;
 }
 
+/*Galerija slika, opis... -> nalaze se dolje pod Content Details*/
+
 /* === Content === */
 
-#content {
+.content {
     float: left;
     width: 660px;
     margin-top: 15px;
@@ -450,6 +451,38 @@ nav a.current {
     color: #699737;
 }
 
+/* === Content Details === */
+
+.shortDesc {
+    float: left;
+    width: 48%;
+    margin-top: 15px;
+}
+
+.imgGallery {
+    float: right;
+    width: 48%;
+}
+
+.imgGallery img {
+    width: 80px;
+}
+
+.desc {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    color: #4B4B4B;
+    padding: 10px 20px;
+    line-height: 175%;
+}
+
+.maps {}
+
+.company {
+    width: 50%;
+    float: right;
+}
+
 /* === Sidebar === */
 
 #sidebar {
@@ -458,12 +491,18 @@ nav a.current {
     margin-right: 5px;
 }
 
+#sidebar ul, li {
+    margin: 0;
+    padding: 0 0 0 10px;
+}
+
 .sidebarWrapper {
     margin-top: 15px;
     background-color: #fff;
     border: 1px solid #d0d0d0;
     border-radius: 10px 10px 0 0;
     margin-bottom: 0;
+    font-size: 80%;
 }
 
 .sidebarWrapper#basketIcon {
@@ -482,7 +521,6 @@ nav a.current {
     display: block;
     margin: 0 0 5px 0;
     padding: 0;
-    border: 1px solid #ccc;
     border-radius: 5px;
 }
 
@@ -491,7 +529,7 @@ nav a.current {
 }
 
 .sidebarWrapper #pay a {
-    margin-left: 20px;
+    margin-left: 28px;
     padding: 5px 35px;
     text-decoration: none;
     background: #6cbb6b;
