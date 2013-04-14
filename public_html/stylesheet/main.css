@@ -28,14 +28,14 @@ header#headerDown {
 }
 
 #logoDiv {
-    width: 1048px;
+    width: 1150px;
     margin: 0 auto;    
 }
 
-#logoImg { /*http://www.psdgraphics.com*/
+#logoImg { /*http://www.markevanstech.com/wp-content/uploads/2011/06/groupon-logo.jpeg*/
     background: url(../images/logo.png) no-repeat;
-    width: 200px;
-    height: 140px;
+    width: 240px;
+    height: 105px;
 }
 
 /* === Main menu === */
@@ -53,7 +53,7 @@ nav#navUp {
 }
 
 nav#navUp div {
-    margin-left: 150px;
+    margin-left: 220px;
 }
 
 nav ul {
@@ -193,9 +193,48 @@ nav a.current {
     border-bottom: 1px solid #ccc;
 }
 
+.sliderOfferDiscount div {
+    width: 33%;
+    float: left;
+}
+
+.sliderOfferDiscount div h1 {
+    font-size: 75%;
+    font-weight: normal;
+    font-style: italic;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 12px 0 0 0;
+    color: #333;
+}
+
+.sliderOfferDiscount div h2 {
+    font-size: 100%;
+    font-weight: bold;
+    text-align: center;
+    margin: 5px 0 0 0;
+    color: #333;
+}
+
 .sliderOfferFriend {
     height: 47px;
     border-bottom: 1px solid #ccc;
+}
+
+.sliderOfferFriend img {
+    margin-top: 5px;
+    height: 40px;
+    float: left;
+    margin: 3px 0 0 2em;
+}
+
+.sliderOfferFriend h1 {
+    float: left;
+    font-size: 100%;
+    font-weight: bold;
+    text-align: left;
+    margin: 1em 0 0 1em;
+    color: #333;
 }
 
 .sliderOfferBought {
@@ -203,8 +242,49 @@ nav a.current {
     border-bottom: 1px solid #ccc;
 }
 
+.sliderOfferBought h1 {
+    font-size: 120%;
+    font-weight: normal;
+    font-style: italic;
+    text-align: center;
+    margin: 8px 0 0 0;
+    color: #333;
+}
+
+.sliderOfferBought meter {
+    width: 80%;
+    margin: 5px 0 5px 10%;
+}
+
+.sliderOfferBought h2 {
+    font-size: 85%;
+    font-weight: normal;
+    font-style: italic;
+    text-align: center;
+    margin: 0;
+    color: #333;    
+}
+
 .sliderOfferTime {
     height: 50px;
+}
+
+.sliderOfferTime h1 {
+    font-size: 75%;
+    font-weight: normal;
+    font-style: italic;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 10px 0 0 0;
+    color: #333;
+}
+
+.sliderOfferTime h2 {
+    font-size: 110%;
+    font-weight: bold;
+    text-align: center;
+    margin: 5px 0 0 0;
+    color: #333;
 }
 
 .sliderImg {
