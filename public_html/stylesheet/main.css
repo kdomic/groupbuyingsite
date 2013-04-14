@@ -198,7 +198,7 @@ nav a.current {
     font-size: 140%;
 }
 
-.sliderOfferDiscount {      
+.sliderOfferDiscount {
     height: 60px;
     border-radius: 10px 10px 0 0;
     border-bottom: 1px solid #ccc;
@@ -209,9 +209,9 @@ nav a.current {
 
 .sliderOfferDiscount div {
     width: 33%;
-    float: left;
-    margin-top: 5px;
-    border-left: 1px dotted #ccc;
+    float: right;
+    margin-top: 3px;
+    border-right: 1px dotted #ccc;
 }
 
 .sliderOfferDiscount div:first-child {
