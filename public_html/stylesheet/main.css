@@ -24,11 +24,21 @@ header {
 
 header#headerDown {
     height: 45px;
-    background-color: #699737;
+    /*background-color: #699737;*/
+    /*Generator: http://www.colorzilla.com/gradient-editor/*/
+    background: #cdeb8e; /* Old browsers */
+    background: -moz-linear-gradient(top,  #cdeb8e 0%, #a5c956 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cdeb8e), color-stop(100%,#a5c956)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #cdeb8e 0%,#a5c956 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #cdeb8e 0%,#a5c956 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #cdeb8e 0%,#a5c956 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #cdeb8e 0%,#a5c956 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cdeb8e', endColorstr='#a5c956',GradientType=0 ); /* IE6-9 */
+
 }
 
 #logoDiv {
-    width: 1150px;
+    width: 900px;
     margin: 0 auto;    
 }
 
@@ -44,16 +54,16 @@ nav {
     width: 945px;
     height: 45px; /* visina doljnjeg izbornika */
     margin: 0 auto;
-    color: #fff;
+    color: #555;
 }
 
 nav#navUp {
-    color: #fff;
+    color: #555;
     margin-top: -85px;
 }
 
 nav#navUp div {
-    margin-left: 220px;
+    margin-left: 180px;
 }
 
 nav ul {
@@ -81,13 +91,13 @@ nav a:hover {
 }
 
 nav#navUp a:hover {
-    background-color: #699737;
+    background-color: #cdeb8e;
     border-radius: 10px 10px 0 0;
     
 }
 
 nav a.current {
-    background-color: #699737;
+    background-color: #cdeb8e;
     border-radius: 10px 10px 0 0;
 }
 
@@ -98,7 +108,7 @@ nav a.current {
     margin: 0 auto;
 }
 
-.wrapper {
+.outerWrapper {
     padding: 10px;
     background-color: #fff;
     border: 2px solid #eee;
@@ -135,7 +145,7 @@ nav a.current {
 .sliderOffer{
     float: left;
     width: 340px;
-    padding: 0 5px;    
+    padding: 0 5px;
 }
 
 .sliderOfferBuy {
@@ -188,14 +198,24 @@ nav a.current {
     font-size: 140%;
 }
 
-.sliderOfferDiscount {
+.sliderOfferDiscount {      
     height: 60px;
+    border-radius: 10px 10px 0 0;
     border-bottom: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    background: #eee;
 }
 
 .sliderOfferDiscount div {
     width: 33%;
     float: left;
+    margin-top: 5px;
+    border-left: 1px dotted #ccc;
+}
+
+.sliderOfferDiscount div:first-child {
+    border: none;
 }
 
 .sliderOfferDiscount div h1 {
@@ -204,7 +224,6 @@ nav a.current {
     font-style: italic;
     text-transform: uppercase;
     text-align: center;
-    margin: 12px 0 0 0;
     color: #333;
 }
 
@@ -219,13 +238,16 @@ nav a.current {
 .sliderOfferFriend {
     height: 47px;
     border-bottom: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    background: #eee;
 }
 
 .sliderOfferFriend img {
     margin-top: 5px;
     height: 40px;
     float: left;
-    margin: 3px 0 0 2em;
+    margin: 3px 0 0 60px;
 }
 
 .sliderOfferFriend h1 {
@@ -240,6 +262,9 @@ nav a.current {
 .sliderOfferBought {
     height: 80px;
     border-bottom: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    background: #eee;
 }
 
 .sliderOfferBought h1 {
@@ -247,8 +272,9 @@ nav a.current {
     font-weight: normal;
     font-style: italic;
     text-align: center;
-    margin: 8px 0 0 0;
+    margin: 0;
     color: #333;
+    padding: 8px 0 0 0;
 }
 
 .sliderOfferBought meter {
@@ -262,11 +288,17 @@ nav a.current {
     font-style: italic;
     text-align: center;
     margin: 0;
+    padding: 0 0 2px 0;
     color: #333;    
 }
 
 .sliderOfferTime {
-    height: 50px;
+    height: 60px;
+    border-radius: 0 0 10px 10px;
+    border-bottom: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    background: #eee;
 }
 
 .sliderOfferTime h1 {
@@ -275,7 +307,8 @@ nav a.current {
     font-style: italic;
     text-transform: uppercase;
     text-align: center;
-    margin: 10px 0 0 0;
+    margin: 0;
+    padding: 12px 0 0 0;
     color: #333;
 }
 
@@ -283,7 +316,7 @@ nav a.current {
     font-size: 110%;
     font-weight: bold;
     text-align: center;
-    margin: 5px 0 0 0;
+    margin: 0;
     color: #333;
 }
 
@@ -412,12 +445,135 @@ nav a.current {
 .offer div.more:hover {
     background-color: #fccf94;
 }
+
 /* === Sidebar === */
 
 #sidebar {
     float: right;
-    width: 225px;
+    width: 235px;    
+    margin-right: 5px;
+}
+
+.sidebarWrapper {
     margin-top: 15px;
+    background-color: #fff;
+    border: 1px solid #d0d0d0;
+    border-radius: 10px 10px 0 0;
+    margin-bottom: 0;
+}
+
+.sidebarWrapper#basketIcon {
+    height: 25px;
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+
+.sidebarWrapper #kosarica {
+    text-align: center;
+}
+
+.sidebarWrapper #kosarica img {
+    width: 100%;
+    display: block;
+    margin: 0 0 5px 0;
+    padding: 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.sidebarWrapper #pay {
+    margin-top: -20px;
+}
+
+.sidebarWrapper #pay a {
+    margin-left: 20px;
+    padding: 5px 35px;
+    text-decoration: none;
+    background: #6cbb6b;
+    background-image: -moz-linear-gradient(#95d788, #6cbb6b);
+    background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #6cbb6b),color-stop(1, #95d788));
+    border: 1px solid #447d43;
+    border-radius: 10px;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;   		
+    font-weight: bold;   
+    cursor: pointer;
+    color: #23441e;
+}
+
+.sidebarWrapper #pay a:hover {
+    background: #95d788;
+    background-image: -moz-linear-gradient(#6cbb6b, #95d788);
+    background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #95d788),color-stop(1, #6cbb6b));
+}
+
+.sidebarWrapper h1 {
+    text-align: left;
+    font-size: 120%;
+    margin: 0;
+    padding: 8px;
+    background-color: #f2f2f2;
+    color: #333;
+    border-radius: inherit;
+}
+
+.sidebarWrapper div {
+    padding: 12px;
+}
+
+#search, #submit {
+    float: left;
+    margin: 20px 0 0 5px;
+}
+
+#search {    
+    padding: 5px 9px;
+    height: 23px;
+    width: 120px;
+    border: 1px solid #a4c3ca;
+    background: #f1f1f1;
+    border-radius: 50px 3px 3px 50px;
+    outline: none;    
+}
+
+#submit {
+    height: 35px;
+    width: 60px;
+    padding: 0;
+    background: #6cbb6b;
+    background-image: -moz-linear-gradient(#95d788, #6cbb6b);
+    background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #6cbb6b),color-stop(1, #95d788));
+    border: 1px solid #447d43;
+    border-radius: 3px 50px 50px 3px;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;   		
+    font-weight: bold;   
+    cursor: pointer;
+    color: #23441e;
+}
+
+#submit:hover {		
+    background: #95d788;
+    background-image: -moz-linear-gradient(#6cbb6b, #95d788);
+    background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #95d788),color-stop(1, #6cbb6b));
+}
+
+.newsletterEmail {
+    width: 180px;
+    height: 30px;    
+    float: left;
+    margin: 0;
+    padding: 0;
+    outline: none;
+    border: 1px solid #ccc;
+}
+
+.newsletterSubmit {
+    width: 20px;
+    height: 32px;    
+    float: left;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #ccc;
 }
 
 /* === Footer  === */

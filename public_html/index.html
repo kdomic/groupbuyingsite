@@ -32,7 +32,7 @@
             </ul>
         </nav>
         <div id="outerDiv">
-            <div id="slider" class="wrapper">
+            <div id="slider" class="outerWrapper">
                 
                 <div class="sliderCaption">
                     <h1>Rafting avantura na donjem toku Mrežnice!</h1>
@@ -62,7 +62,7 @@
                     </div>
                     <div class="sliderOfferFriend">
                         <img src="images/gift.png" alt="Gift" />
-                        <h1>Kupi za prijatelja</h1>
+                        <h1>Pokloni prijatelju</h1>
                     </div>
                     <div class="sliderOfferBought">
                         <h1>Za sada kupljeno 35 proizvoda</h1>
@@ -78,7 +78,7 @@
                 
             </div>
             
-            <div id="content" class="wrapper">
+            <div id="content" class="outerWrapper">
                 <div id="caption">Za Vas smo odabrali</div>
                 <div class="offer">
                     <img src="http://hr-static.kolektiva.net/media/catalog/product/cache/3/thumbnail/285x180/c1099b9e5b06a1bef8898baab2a6c918/1/2/12_17_4.jpg" alt="slika" />
@@ -128,7 +128,41 @@
                 <div class="offer">Offer 10</div>
                 <div class="offer" id="loadMoreOffer" onclick="alert(1);">Učitaj više</div>
             </div>            
-            <div id="sidebar" class="wrapper" >Sidebar</div>
+            <div id="sidebar">                
+                <div>
+                    <form id="searchbox" action="">
+                        <input id="search" type="text" placeholder="Pretraga">
+                        <input id="submit" type="submit" value="Traži">
+                    </form>
+                </div>
+                <div class="clear"></div>
+                <div class="sidebarWrapper" >
+                    <h1>
+                        <img id="basketIcon" src="images/basket.png" alt="KOšarica" />
+                        Košarica
+                    </h1>
+                    <div id="kosarica">
+                        1 stvar u košarici
+                        <a href="#"><img src="http://www.kupime.hr/upload/oglas/kuoime_rafting_mreznica_home_144213.jpg.axd?width=594" alt="slika" /></a>
+                        <img src="http://hr-static.kolektiva.net/media/catalog/product/cache/3/thumbnail/285x180/c1099b9e5b06a1bef8898baab2a6c918/0/5/05_102_26.jpg" alt="slika" />
+                    </div>
+                    <div id="pay">
+                        <a href="">Završi kupnju</a>
+                    </div>
+                </div>
+                
+                <div class="sidebarWrapper" >
+                    <h1>Newsletter</h1>
+                    <div>
+                        <form action="">
+                            <input class="newsletterEmail" type="email" placeholder="E-mail" required>
+                            <input class="newsletterSubmit" type="submit" value="&gt;">
+                        </form> 
+                        <br><br>
+                    </div>                    
+                </div>
+                
+            </div>            
         </div>
         <div class="clear"></div>
         <footer>
