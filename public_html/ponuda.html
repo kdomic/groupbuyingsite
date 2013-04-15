@@ -4,6 +4,7 @@
         <title></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="stylesheet/main.css" />
+        <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>        
     </head>
     <body>
@@ -50,19 +51,19 @@
                     <div class="sliderOfferDiscount">
                         <div>
                             <h1>Vrijedi</h1>
-                            <h2>99999 kn</h2>
+                            <h2 class="v">99999 kn</h2>
                         </div>
                         <div>
                             <h1>Popust</h1>
-                            <h2>99%</h2>
+                            <h2 class="p">99%</h2>
                         </div>
                         <div>
                             <h1>Ušteda</h1>
-                            <h2>99999 kn</h2>
+                            <h2 class="u">99999 kn</h2>
                         </div>
                     </div>
                     <div class="sliderOfferFriend">
-                        <a href="">
+                        <a href="#">
                             <img src="images/gift.png" alt="Gift" />
                             <h1>Pokloni prijatelju</h1>
                         </a>
@@ -89,28 +90,16 @@
                     </ul>
                 </div>
                 <div class="imgGallery">
-                    <img src="offers/ponuda_00043/02.jpg" alt="slika" />
-                    <img src="offers/ponuda_00043/03.jpg" alt="slika" />
-                    <img src="offers/ponuda_00043/04.jpg" alt="slika" />
-                    <img src="offers/ponuda_00043/05.jpg" alt="slika" />
-                    <img src="offers/ponuda_00043/06.jpg" alt="slika" />
-                    <img src="offers/ponuda_00043/07.jpg" alt="slika" />
-                    <img src="offers/ponuda_00043/02.jpg" alt="slika" />
-                    <img src="offers/ponuda_00043/03.jpg" alt="slika" />
-                    <img src="offers/ponuda_00043/04.jpg" alt="slika" />
-                    <img src="offers/ponuda_00043/05.jpg" alt="slika" />
-                    <img src="offers/ponuda_00043/06.jpg" alt="slika" />
-                    <img src="offers/ponuda_00043/07.jpg" alt="slika" />
-                    <img src="offers/ponuda_00043/02.jpg" alt="slika" />
-                    <img src="offers/ponuda_00043/03.jpg" alt="slika" />
-                    <img src="offers/ponuda_00043/04.jpg" alt="slika" />
-                    <img src="offers/ponuda_00043/05.jpg" alt="slika" />
-                    <img src="offers/ponuda_00043/06.jpg" alt="slika" />
-                    <img src="offers/ponuda_00043/07.jpg" alt="slika" />
+                    <img src="offers/ponuda_00043/01.jpg" alt="slika" onclick="sliderImgChange(this);"/>
+                    <img src="offers/ponuda_00043/02.jpg" alt="slika" onclick="sliderImgChange(this);"/>
+                    <img src="offers/ponuda_00043/03.jpg" alt="slika" onclick="sliderImgChange(this);"/>
+                    <img src="offers/ponuda_00043/04.jpg" alt="slika" onclick="sliderImgChange(this);"/>
+                    <img src="offers/ponuda_00043/05.jpg" alt="slika" onclick="sliderImgChange(this);"/>
+                    <img src="offers/ponuda_00043/06.jpg" alt="slika" onclick="sliderImgChange(this);"/>
+                    <img src="offers/ponuda_00043/07.jpg" alt="slika" onclick="sliderImgChange(this);"/>
                 </div>
                 <div class="clear"></div>
             </div>
-            
             <div class="content outerWrapper">
                 <div class="desc">
                     <p>Za ljubitelje prirode i avanture, ne postoji bolji provod od raftinga. Nekoć je to bio jedan od najvažnijih načina prijevoza, a danas je izvor neopisive zabave. I &scaron;to je najbolje, do vrhunske rafting avanture ne trebate putovati daleko, nego samo do obližnje <a href="https://www.google.hr/search?q=Mre%C5%BEnica&amp;aq=f&amp;um=1&amp;ie=UTF-8&amp;hl=en&amp;tbm=isch&amp;source=og&amp;sa=N&amp;tab=wi&amp;authuser=0&amp;ei=BKNRUajQOonRhAfH6IDAAQ&amp;biw=1600&amp;bih=738&amp;sei=BqNRUZb_Oc2Thge1voHICA" target="_blank">Mrežnice</a>.</p>
@@ -154,7 +143,7 @@
                     <h1>
                         Dodaj u košaricu
                     </h1>
-                    <div id="kosarica">
+                    <div>
                         Rafting avantura na donjem toku Mrežnice!
                         <a href="#"><img src="images/basketAdd.png" alt="slika" /></a>
                     </div>
