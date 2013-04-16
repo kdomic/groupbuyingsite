@@ -687,3 +687,8 @@ footer {
     padding: 0;    
     margin: 0;
 }
+
+.hide {
+    visibility: hidden;
+    display: none;
+}
