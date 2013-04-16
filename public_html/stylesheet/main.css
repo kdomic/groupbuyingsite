@@ -330,6 +330,34 @@ nav a.current {
     height: 316px;
 }
 
+.sliderImgNum {
+    width: 20px;
+    height: 20px;
+    float: right;
+    margin: -3px 1px 0 1px;
+}
+
+.sliderImgNum a {
+    padding: 1px 5px;
+    text-align: center;
+    vertical-align: central;
+    border-radius: 100px;
+    background-color: #f2f2f2;
+    color: #333;
+    text-decoration: none;
+}
+
+.sliderImgNum a:hover {
+    background-color: #333;
+    color: #f2f2f2;
+}
+
+.sliderImgNum a.current {
+    background-color: #333;
+    color: #f2f2f2;
+    cursor: default;
+}
+
 /*Galerija slika, opis... -> nalaze se dolje pod Content Details*/
 
 /* === Content === */
