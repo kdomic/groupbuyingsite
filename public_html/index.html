@@ -4,7 +4,8 @@
         <title></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="stylesheet/main.css" />
-        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>        
+        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="js/jquery.timer.js"></script>
         <script type="text/javascript" src="js/main.js"></script> 
     </head>
     <body>
@@ -47,14 +48,15 @@
                     <div class="sliderOfferBought"><h1></h1><meter value="0" min="0" max="0">0</meter><h2></h2></div>
                     <div class="sliderOfferTime"><h1>Preostalo vremena: </h1><h2></h2></div>
                 </div>
-                <div class="sliderImg"><img src="http://www.kupime.hr/upload/oglas/kuoime_rafting_mreznica_home_144213.jpg.axd?width=594" alt="slika" /></div>
+                <div class="sliderImg"><img src="" alt="Slika ponude" /></div>
+                <div class="sliderImgNum"><a onclick="sliderPlay()" id="sliderPlay">&#9734;</a></div>
                 <div class="sliderImgNum"><a onclick="sliderChange(4)" >4</a></div>
                 <div class="sliderImgNum"><a onclick="sliderChange(3)" >3</a></div>
                 <div class="sliderImgNum"><a onclick="sliderChange(2)" >2</a></div>
-                <div class="sliderImgNum"><a onclick="sliderChange(1)" class="current">1</a></div>
+                <div class="sliderImgNum"><a onclick="sliderChange(1)" class="current">1</a></div>                
                 <div class="clear"></div>
             </div>
-            <script type="text/javascript">sliderChange(1);</script>
+            <script type="text/javascript">initSlider();</script>
             
             <div class="content outerWrapper">
                 <div id="caption">Za Vas smo odabrali</div>

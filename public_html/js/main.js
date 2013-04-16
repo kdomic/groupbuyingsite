@@ -1,26 +1,36 @@
 /* === Slider === */
 
-function dajPodatke()
-{
-    $.ajax({
-        url: 'data.php',
-        type: 'GET',
-        dataType: 'xml',
-        success: function(xml) {
-            var inHTML = '<select id="kolegij" name="kolegij" size="20">';
-            $(xml).find('name').each(function() {
-                inHTML += '<option value="' 
-                        + $(this).attr('studij') 
-                        + "#" + $(this).attr('sifra') + '">' +
-                        $(this).attr('studij') + " / " + $(this).text() + '</option>';
-            });
-            inHTML += '</select>';
-            $('#cilj')[0].innerHTML = inHTML;
-        }
-    });
+var timer = $.timer(function() {sliderChange(null);}); /*https://code.google.com/p/jquery-timer/*/
+var speed = 6000;
+var sliderNum = 0;
+var sliderMaxNum = 4;
+
+function initSlider() {
+    sliderChange(null);
+    timer.set({ time : speed, autostart : true });
+    console.log();
+}
+
+function sliderPlayIcon(){
+    if(timer.isActive) $('#sliderPlay').html("&#9734;");
+    else $('#sliderPlay').html("&#9733;");
+}
+
+function sliderPlay(){
+    timer.toggle(true);
+    sliderPlayIcon()
 }
 
 function sliderChange(selectedOffer){
+    if(selectedOffer===null){
+        sliderNum = sliderNum+1;
+        selectedOffer = sliderNum;        
+        sliderNum = sliderNum%sliderMaxNum;        
+    }else{
+        sliderNum = selectedOffer;
+        timer.pause();
+        sliderPlayIcon()
+    }
     var index = $('.sliderImgNum a').length-selectedOffer;
     $('.sliderImgNum a').removeClass('current');
     $($('.sliderImgNum a')[index]).addClass('current');
