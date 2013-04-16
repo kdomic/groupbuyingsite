@@ -4,7 +4,7 @@
         <title></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="stylesheet/main.css" />
-        <script type="text/javascript" src="js/jquery.js"></script>        
+        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>        
         <script type="text/javascript" src="js/main.js"></script> 
     </head>
     <body>
@@ -34,57 +34,27 @@
             </ul>
         </nav>
         <div id="outerDiv">
-            <div id="slider" class="outerWrapper">
-                
-                <div class="sliderCaption">
-                    <h1>Rafting avantura na donjem toku Mrežnice!</h1>
-                    <h2>Uživajte u trosatnoj pustolovini kroz brzace i slapove Mrežnice uz Terra Croatica za samo 129 kn</h2>
-                </div>
-                <div class="sliderOffer">
-                    
-                    <div class="sliderOfferBuy">                                                
-                        <div class="sliderOfferTag"></div>
-                        <h1>plaćaš samo</h1>
-                        <h2>500 kn</h2>
-                        <a href="ponuda.html">KUPI</a>
-                    </div>
+            <div id="slider" class="outerWrapper">                
+                <div class="sliderCaption"><h1></h1><h2></h2></div>
+                <div class="sliderOffer">                    
+                    <div class="sliderOfferBuy"><div class="sliderOfferTag"></div><h1>Plaćaš samo!</h1><h2></h2><a href="">KUPI</a></div>
                     <div class="sliderOfferDiscount">
-                        <div>
-                            <h1>Vrijedi</h1>
-                            <h2>99999 kn</h2>
-                        </div>
-                        <div>
-                            <h1>Popust</h1>
-                            <h2>99%</h2>
-                        </div>
-                        <div>
-                            <h1>Ušteda</h1>
-                            <h2>99999 kn</h2>
-                        </div>
+                        <div><h1>Vrijedi</h1><h2 class="v"></h2></div>
+                        <div><h1>Popust</h1><h2 class="p"></h2></div>
+                        <div><h1>Ušteda</h1><h2 class="u"></h2></div>
                     </div>
-                    <div class="sliderOfferFriend">
-                        <a href="">
-                            <img src="images/gift.png" alt="Gift" />
-                            <h1>Pokloni prijatelju</h1>
-                        </a>
-                    </div>
-                    <div class="sliderOfferBought">
-                        <h1>Za sada kupljeno 35 proizvoda</h1>
-                        <meter value="7" min="0" max="10">2 out of 10</meter>
-                        <h2>Još potrebno kupiti 10 kako bi vrjedilo</h2>
-                    </div>
-                    <div class="sliderOfferTime">
-                        <h1>Preostalo vremena: </h1>
-                        <h2>100 dan 24:59:59</h2>
-                    </div>
+                    <div class="sliderOfferFriend"><a href=""><img src="images/gift.png" alt="Gift" /><h1>Pokloni prijatelju</h1></a></div>
+                    <div class="sliderOfferBought"><h1></h1><meter value="0" min="0" max="0">0</meter><h2></h2></div>
+                    <div class="sliderOfferTime"><h1>Preostalo vremena: </h1><h2></h2></div>
                 </div>
                 <div class="sliderImg"><img src="http://www.kupime.hr/upload/oglas/kuoime_rafting_mreznica_home_144213.jpg.axd?width=594" alt="slika" /></div>
-                <div class="sliderImgNum"><a href="javascript:sliderChange(4)" >4</a></div>
-                <div class="sliderImgNum"><a href="javascript:sliderChange(3)" >3</a></div>
-                <div class="sliderImgNum"><a href="javascript:sliderChange(2)" >2</a></div>
-                <div class="sliderImgNum"><a href="javascript:sliderChange(1)" class="current">1</a></div>
+                <div class="sliderImgNum"><a onclick="sliderChange(4)" >4</a></div>
+                <div class="sliderImgNum"><a onclick="sliderChange(3)" >3</a></div>
+                <div class="sliderImgNum"><a onclick="sliderChange(2)" >2</a></div>
+                <div class="sliderImgNum"><a onclick="sliderChange(1)" class="current">1</a></div>
                 <div class="clear"></div>
             </div>
+            <script type="text/javascript">sliderChange(1);</script>
             
             <div class="content outerWrapper">
                 <div id="caption">Za Vas smo odabrali</div>

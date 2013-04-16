@@ -19,36 +19,38 @@ function dajPodatke()
         }
     });
 }
-/*
-console.log($(j).attr("id"));
-console.log($(j).find("name").attr("lang"));
-*/
-function sliderChange(img){
-    var data = new Array();
+
+function sliderChange(selectedOffer){
+    var index = $('.sliderImgNum a').length-selectedOffer;
+    $('.sliderImgNum a').removeClass('current');
+    $($('.sliderImgNum a')[index]).addClass('current');
     $.ajax({
         url:'sliderOffers.xml',
         type: 'GET',
         dataType: 'xml',
         success: function(xml) {
-            var offer = $(xml).find('offer[id=1]');
+            var data = new Array();
+            var offer = $(xml).find('offer[id='+selectedOffer+']');
             $(offer).each(function(){
                 $(this).children().each(function(){
-                    console.log(this);
+                    var _data = $(this).text();
+                    _data = _data.replace(/"/g, '');
+                    data.push(_data);
                 });
             });
+            slideOfferChange(data);
+            sliderImgChange(data[11]);
         }
-    });
-
-    sliderImgChange("http://localhost:8383/groupbuyingsite/offers/ponuda_00042/01.jpg");
-    //slideOfferChange(data);
+    });        
 }
 
 function sliderImgChange(img){
     var time = 400;
-    $('.sliderImg img').css({opacity: 1.0, visibility: "visible"}).animate({opacity: 0}, time);
+    if(jQuery.type(img) !== "string") img = img.src;
+    $('.sliderImg img').css({opacity: 1.0}).animate({opacity: 0}, time);
     $('.sliderImg img').delay(time+10)
-                       .queue(function(next){ 
-                            $(this).attr("src", img.src);
+                       .queue(function(next){
+                            $(this).attr("src", img);
                             $(this).css({opacity: 0, visibility: "visible"}).animate({opacity: 1.0}, time);
                             next(); 
                         });                    
@@ -75,5 +77,8 @@ function slideOfferChange(data) {
     $('.sliderOfferTime h2').fadeOut(time, function() { $(this).text(data[10]).fadeIn(time); });
     $('.sliderOfferBuy a').attr("href", "javascript:aletr(1)");
     $('.sliderOfferFriend a').attr("href", "javascript:aletr(2)");    
+    $('.sliderOfferBuy h1').fadeOut(time).fadeIn(time);
+    $('.sliderOfferBuy a').fadeOut(time).fadeIn(time);    
+    $('.sliderOfferTime h1').fadeOut(time).fadeIn(time);
 }
 
