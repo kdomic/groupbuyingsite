@@ -8,7 +8,6 @@ var sliderMaxNum = 4;
 function initSlider() {
     sliderChange(null);
     timer.set({ time : speed, autostart : true });
-    console.log();
 }
 
 function sliderPlayIcon(){
@@ -18,7 +17,7 @@ function sliderPlayIcon(){
 
 function sliderPlay(){
     timer.toggle(true);
-    sliderPlayIcon()
+    sliderPlayIcon();
 }
 
 function sliderChange(selectedOffer){
