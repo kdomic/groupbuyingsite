@@ -5,35 +5,37 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="stylesheet/main.css" />
         <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>        
+        <script type="text/javascript" src="js/jquery.timer.js"></script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>  
         <script type="text/javascript" src="js/main.js"></script> 
     </head>
     <body>
-        <header>
-            <div id="logoDiv"><br/><div id="logoImg"></div></div>
-        </header>
-        <header id="headerDown"></header>        
-        
-        <nav id="navUp">
-            <div>
-                <ul>
-                    <li><a href="" class="current">Gore 1</a></li>
-                    <li><a href="">Gore 2</a></li>
-                    <li><a href="">Gore 3</a></li>
-                    <li><a href="">Gore 4</a></li>
-                    <li><a href="">Gore 5</a></li>
-                </ul>
+        <div class="logIn">
+            <div class="headerContent">
+                Lalalal
             </div>
-        </nav>
-        <nav id="navDown">
-            <ul>
-                <li><a href="">Dolje 1</a></li>
-                <li><a href="">Dolje 2</a></li>
-                <li><a href="">Dolje 3</a></li>
-                <li><a href="">Dolje 4</a></li>
-                <li><a href="">Dolje 5</a></li>
-            </ul>
-        </nav>
+        </div>
+        <header>
+            <div class="headerContent">                
+                <div class="divHeaderLeft">
+                    <img src="images/logo.png" alt="Logo" />
+                    <nav>
+                        <select>
+                            <option class="dropDown">Svi gradovi</option>
+                            <option class="dropDown">Zagreb</option>
+                            <option class="dropDown">Osijek</option>
+                            <option class="dropDown">Varaždin</option>                        
+                        </select>
+                        <select>
+                            <option class="dropDown">Sve kategorije</option>
+                            <option class="dropDown">Putovanja</option>
+                            <option class="dropDown">Zabava</option>                        
+                        </select>
+                    </nav>      
+                </div>
+                <div class="divHeaderRight"> <a href="#" onclick="showLogin();">Prijava</a> </div>
+            </div>
+        </header> 
         <div id="outerDiv">
             <div id="slider" class="outerWrapper">
                 
@@ -165,7 +167,22 @@
                 </div>                              
             </div>
             
-                        <div class="content outerWrapper">
+           <div class="content outerWrapper">
+                <div id="caption">Komentari korisnika</div>
+                <div class="comment">
+                    <div class="commentText">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam consectetur egestas nisi, at rutrum metus euismod sit amet. Proin sagittis tellus nec mauris molestie non aliquam tortor pretium. Proin eget magna erat. Integer porta faucibus tellus.
+                    </div>
+                    <div class="commentAuthor">
+                        <img src="https://www.phpbb.com/community/download/file.php?avatar=192443_1357502265.gif" alt="Slika korisnika" />
+                        <h1>Pero Perić</h1>
+                        <h2>Broj kupovina: 15</h2>
+                    </div>
+                    <div class="clear"></div>
+                </div>                            
+            </div>
+
+            <div class="content outerWrapper">
                 <div id="caption">Uz ovaj proizvod možda će vas još zanimati</div>
                 <div class="offer">
                     <img src="http://hr-static.kolektiva.net/media/catalog/product/cache/3/thumbnail/285x180/c1099b9e5b06a1bef8898baab2a6c918/1/2/12_17_4.jpg" alt="slika" />
