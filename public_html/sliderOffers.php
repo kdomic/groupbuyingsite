@@ -37,22 +37,17 @@ mysql_set_charset("utf-8", $dbc);
             $this->sliderOfferBuy = $this->sliderOfferDiscountV*(100-$sliderOfferDiscountP)/100;
             $this->sliderOfferDiscountU = $this->sliderOfferDiscountV-$this->sliderOfferBuy;            
             $this->sliderOfferDiscountP = ($sliderOfferDiscountP.'%');
-            $this->sliderOfferBuy = $this->sliderOfferBuy.' kn';
-            $this->sliderOfferDiscountV = $this->sliderOfferDiscountV.' kn';
-            $this->sliderOfferDiscountU = $this->sliderOfferDiscountU.' kn';
+            $this->sliderOfferBuy = str_replace('.', ',', sprintf("%01.2f", $this->sliderOfferBuy)).' kn';
+            $this->sliderOfferDiscountV = str_replace('.', ',', sprintf("%01.2f", $this->sliderOfferDiscountV)).' kn';
+            $this->sliderOfferDiscountU = str_replace('.', ',', sprintf("%01.2f", $this->sliderOfferDiscountU)).' kn';
             $this->sliderOfferBoughtT1 = ($sliderOfferBoughtT1);
             $this->sliderOfferBoughtT2 = ($sliderOfferBoughtT2);
             $this->sliderOfferBoughtVal = ($sliderOfferBoughtVal);
             $this->sliderOfferBoughtMax = ($sliderOfferBoughtMax);
             $this->sliderOfferTime = ($sliderOfferTime);
             $this->sliderOfferBoughtImg = ('offers/ponuda_'.sprintf("%05d", $this->id).'/01.jpg');
-            $this->convertToUtf8();
         }
-        
-        function convertToUtf8(){
-            foreach ($this as $el)
-                $el = 1;
-        }
+
     }
     
     $offers = array();
@@ -75,10 +70,7 @@ mysql_set_charset("utf-8", $dbc);
                                         '10',
                                         '100',
                                         '1 dan 15:45:30');
-    print '<pre>';
-    print_r($offers);
-    print '</pre>';
-    /*
+
     $xmlDoc = new DOMDocument();
     $root = $xmlDoc->appendChild($xmlDoc->createElement("RecentTutorials"));
     foreach ($offers as $offer){
@@ -100,5 +92,5 @@ mysql_set_charset("utf-8", $dbc);
     header("Content-Type: text/plain");
     $xmlDoc->formatOutput = true;
     echo $xmlDoc->saveXML();
-     */
+
 ?>

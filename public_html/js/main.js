@@ -1,3 +1,17 @@
+/* === LogIn === */
+var showLoginOn = 0;
+
+function showLogin(){
+    if(showLoginOn){
+        $(".logIn").slideUp("slow");
+        showLoginOn = 0;
+    } else {
+        $(".logIn").slideDown("slow");
+        showLoginOn = 1;
+    }
+}
+
+
 /* === Slider === */
 
 var timer = $.timer(function() {sliderChange(null);}); /*https://code.google.com/p/jquery-timer/*/
@@ -34,7 +48,7 @@ function sliderChange(selectedOffer){
     $('.sliderImgNum a').removeClass('current');
     $($('.sliderImgNum a')[index]).addClass('current');
     $.ajax({
-        url:'sliderOffers.xml',
+        url:'sliderOffers.php',
         type: 'GET',
         dataType: 'xml',
         success: function(xml) {

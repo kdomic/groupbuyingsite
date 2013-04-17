@@ -15,69 +15,90 @@ body {
 
 /* === Header === */
 
-.logIn {
-    background-color: #000;
-    color: #fff;
-    display: none;
-}
-
-.headerContent {
-    width: 945px;    
-    margin: 0 auto;
-    color: #fff;
-    padding-top: 3px;
-}
-
 header {
     width: 100%;
-    height: 50px;
-    background-color: black;
-    margin-bottom: 50px;
+    height: 85px;
+    background-color: #000;
+    color: #fff;
 }
 
-header .divHeaderLeft {
-    width: auto;
-    height: 75px;
+header#headerDown {
+    height: 45px;
+    /*background-color: #699737;*/
+    /*Generator: http://www.colorzilla.com/gradient-editor/*/
+    background: #cdeb8e; /* Old browsers */
+    background: -moz-linear-gradient(top,  #cdeb8e 0%, #a5c956 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cdeb8e), color-stop(100%,#a5c956)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #cdeb8e 0%,#a5c956 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #cdeb8e 0%,#a5c956 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #cdeb8e 0%,#a5c956 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #cdeb8e 0%,#a5c956 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cdeb8e', endColorstr='#a5c956',GradientType=0 ); /* IE6-9 */
+
+}
+
+#logoDiv {
+    width: 900px;
+    margin: 0 auto;    
+}
+
+#logoImg { /*http://www.markevanstech.com/wp-content/uploads/2011/06/groupon-logo.jpeg*/
+    background: url(../images/logo.png) no-repeat;
+    width: 240px;
+    height: 105px;
+}
+
+/* === Main menu === */
+
+nav {
+    width: 945px;
+    height: 45px; /* visina doljnjeg izbornika */
+    margin: 0 auto;
+    color: #555;
+}
+
+nav#navUp {
+    color: #555;
+    margin-top: -85px;
+}
+
+nav#navUp div {
+    margin-left: 180px;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;    
+}
+
+nav li {
     float: left;
+    margin: 0;
+    padding: 0;
 }
 
-header .divHeaderRight {
-    width: auto;
-    height: 75px;
-    float: right;
-}
-
-header nav {
-    display: initial;
-}
-
-header nav select {
-    height: 40px;
-    width: max-content;
-    padding: 5px;    
-    background-color: #000;
-    color: #fff;
-    font-size: 100%;
-    text-align: center;
-    border-radius: 10px;
-    -webkit-appearance: none;
-    outline: none;    
-}
-
-.dropDown {
-    width: max-content;
-    background-color: #000;
-    color: #fff;
-}
-
-.divHeaderRight a {
+nav a {
+    color: inherit;
+    display: block;
     text-decoration: none;
-    padding: 5px 15px;
-    border: 1px solid #fff;
-    border-radius: 0 0 15px 15px;
-    color: #000;
-    background-color: #fff;
-    margin-top: 10px;
+    padding: 10px 15px 15px 15px;
+    margin-left: 10px;
+}
+
+nav a:hover {
+    color: #FFFF66;
+}
+
+nav#navUp a:hover {
+    background-color: #cdeb8e;
+    border-radius: 10px 10px 0 0;
+    
+}
+
+nav a.current {
+    background-color: #cdeb8e;
+    border-radius: 10px 10px 0 0;
 }
 
 /* === Content === */
@@ -641,10 +662,6 @@ header nav select {
     margin: 0;
     padding: 0;
     border: 1px solid #ccc;
-}
-
-.newsletterSelect{
-    width: 200px;
 }
 
 .newsletterSubmit:hover {

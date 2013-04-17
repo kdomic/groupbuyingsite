@@ -9,31 +9,33 @@
         <script type="text/javascript" src="js/main.js"></script> 
     </head>
     <body>
-        <header>
-            <div id="logoDiv"><br/><div id="logoImg"></div></div>
-        </header>
-        <header id="headerDown"></header>        
-        
-        <nav id="navUp">
-            <div>
-                <ul>
-                    <li><a href="" class="current">Gore 1</a></li>
-                    <li><a href="">Gore 2</a></li>
-                    <li><a href="">Gore 3</a></li>
-                    <li><a href="">Gore 4</a></li>
-                    <li><a href="">Gore 5</a></li>
-                </ul>
+        <div class="logIn">
+            <div class="headerContent">
+                Lalalal
             </div>
-        </nav>
-        <nav id="navDown">
-            <ul>
-                <li><a href="">Dolje 1</a></li>
-                <li><a href="">Dolje 2</a></li>
-                <li><a href="">Dolje 3</a></li>
-                <li><a href="">Dolje 4</a></li>
-                <li><a href="">Dolje 5</a></li>
-            </ul>
-        </nav>
+        </div>
+        <header>
+            <div class="headerContent">                
+                <div class="divHeaderLeft">
+                    <img src="images/logo.png" alt="Logo" />
+                    <nav>
+                        <select>
+                            <option class="dropDown">Svi gradovi</option>
+                            <option class="dropDown">Zagreb</option>
+                            <option class="dropDown">Osijek</option>
+                            <option class="dropDown">Varaždin</option>                        
+                        </select>
+                        <select>
+                            <option class="dropDown">Sve kategorije</option>
+                            <option class="dropDown">Putovanja</option>
+                            <option class="dropDown">Zabava</option>                        
+                        </select>
+                    </nav>      
+                </div>
+                <div class="divHeaderRight"> <a href="#" onclick="showLogin();">Prijava</a> </div>
+            </div>
+        </header>   
+        
         <div id="outerDiv">
             <div id="slider" class="outerWrapper">                
                 <div class="sliderCaption"><h1></h1><h2></h2></div>
@@ -137,8 +139,13 @@
                         <form action="#">
                             <input class="newsletterEmail" type="email" placeholder="E-mail" required>
                             <input class="newsletterSubmit" type="submit" value="&gt;">
+                            <select class="newsletterSelect">
+                                <option>Svi gradovi</option>
+                                <option>Zagreb</option>
+                                <option>Osijek</option>
+                                <option>Varaždin</option>    
+                            </select>
                         </form> 
-                        <br><br>
                     </div>                    
                 </div>
                 
