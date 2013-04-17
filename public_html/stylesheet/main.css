@@ -668,6 +668,12 @@ header nav select {
     border-radius: inherit;
 }
 
+.sidebarWrapper h1 a {
+    text-decoration: none;
+    cursor: pointer;
+    color: inherit;
+}
+
 .sidebarWrapper div {
     padding: 12px;
 }

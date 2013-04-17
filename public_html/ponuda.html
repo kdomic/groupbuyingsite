@@ -10,9 +10,64 @@
         <script type="text/javascript" src="js/main.js"></script> 
     </head>
     <body>
-        <div class="logIn">
+        <div class="dropbox">
             <div class="headerContent">
-                Lalalal
+                <div class="dropboxLeft">
+                    Registracija
+                    <form>
+                        <table>
+                            <tr>
+                                <td><label for="inputIme">Ime</label></td>
+                                <td><input type="text"      name="ime"      id="inputIme"       placeholder="Ime"/><br/></td>
+                            </tr>
+                            <tr>
+                                <td><label for="inputPrezime">Prezime</label></td>
+                                <td><input type="text"      name="prezime"  id="inputPrezime"   placeholder="Prezime"/><br/></td>
+                            </tr>
+                            <tr>
+                                <td><label for="inputEmail">Email</label></td>
+                                <td><input type="email"     name="email"    id="inputEmail"     placeholder="Email"/><br/></td>
+                            </tr>
+                            <tr>
+                                <td><label for="inputLozinka">Lozinka</label></td>
+                                <td><input type="password"  name="lozinka"  id="inputLozinka"   placeholder="Lozinka"/><br/></td>
+                            </tr>
+                            <tr>
+                                <td><label for="inputLozinka2">Potvrdi lozinku</label></td>
+                                <td><input type="password"  name="lozinka2" id="inputLozinka2"  placeholder="Lozinka 2"/><br/></td>
+                            </tr>
+                            <tr>
+                                <td><label for="uvjeti">Prihvati uvijete</label></td>
+                                <td><input type="checkbox"  name="uvijeti"  id="uvjeti"/></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><input type="submit" name="submit" value="Registriraj me" /></td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+                <div class="dropboxLeft">
+                    Prijava
+                    <form>
+                        <table>
+                            <tr>
+                                <td><label for="inputEmailP">Email</label></td>
+                                <td><input type="email"     name="email"    id="inputEmailP"     placeholder="Email"/><br/></td>
+                            </tr>
+                            <tr>
+                                <td><label for="inputLozinkaP">Lozinka</label></td>
+                                <td> <input type="password"  name="lozinka"  id="inputLozinkaP"   placeholder="Lozinka"/><br/></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><input type="submit" name="submit" value="Prijava" /></td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+                <div class="dropboxLeft">
+                    Facebook & Google
+                </div>
+                <div class="clear"></div>
             </div>
         </div>
         <header>
@@ -21,21 +76,22 @@
                     <img src="images/logo.png" alt="Logo" />
                     <nav>
                         <select>
-                            <option class="dropDown">Svi gradovi</option>
-                            <option class="dropDown">Zagreb</option>
-                            <option class="dropDown">Osijek</option>
-                            <option class="dropDown">Varaždin</option>                        
+                            <option class="selectDrop">Svi gradovi</option>
+                            <option class="selectDrop">Zagreb</option>
+                            <option class="selectDrop">Osijek</option>
+                            <option class="selectDrop">Varaždin</option>                        
                         </select>
                         <select>
-                            <option class="dropDown">Sve kategorije</option>
-                            <option class="dropDown">Putovanja</option>
-                            <option class="dropDown">Zabava</option>                        
+                            <option class="selectDrop">Sve kategorije</option>
+                            <option class="selectDrop">Putovanja</option>
+                            <option class="selectDrop">Zabava</option>                        
                         </select>
                     </nav>      
                 </div>
-                <div class="divHeaderRight"> <a href="#" onclick="showLogin();">Prijava</a> </div>
+                <div class="divHeaderRight"> <a onclick="showDropbox();">Prijava</a> </div>
             </div>
-        </header> 
+        </header>
+        
         <div id="outerDiv">
             <div id="slider" class="outerWrapper">
                 
