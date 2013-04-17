@@ -15,12 +15,6 @@ body {
 
 /* === Header === */
 
-.logIn {
-    background-color: #000;
-    color: #fff;
-    display: none;
-}
-
 .headerContent {
     width: 945px;    
     margin: 0 auto;
@@ -45,6 +39,7 @@ header .divHeaderRight {
     width: auto;
     height: 75px;
     float: right;
+    margin-top: 2px;
 }
 
 header nav {
@@ -64,7 +59,7 @@ header nav select {
     outline: none;    
 }
 
-.dropDown {
+.selectDrop {
     width: max-content;
     background-color: #000;
     color: #fff;
@@ -73,12 +68,34 @@ header nav select {
 .divHeaderRight a {
     text-decoration: none;
     padding: 5px 15px;
-    border: 1px solid #fff;
+    border: 2px solid #fff;
+    border-top: none;
     border-radius: 0 0 15px 15px;
     color: #000;
     background-color: #fff;
     margin-top: 10px;
+    cursor: pointer;
 }
+
+
+.divHeaderRight a:hover {    
+    border-color: #05c4e7;    
+}
+
+.dropbox {
+    display: none;
+    background-color: #000;
+    color: #fff;    
+    padding-bottom: 10px;
+    border-bottom: 1px solid #05c4e7;
+}
+
+.dropboxLeft {
+    float: left;
+    width: 33%;
+    margin-top: 15px;
+}
+
 
 /* === Content === */
 

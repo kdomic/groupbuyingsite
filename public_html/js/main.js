@@ -1,16 +1,15 @@
 /* === LogIn === */
-var showLoginOn = 0;
+var dropboxOn = 0;
 
-function showLogin(){
-    if(showLoginOn){
-        $(".logIn").slideUp("slow");
-        showLoginOn = 0;
+function showDropbox(){
+    if(dropboxOn){
+        $(".dropbox").slideUp("slow");
+        dropboxOn = 0;
     } else {
-        $(".logIn").slideDown("slow");
-        showLoginOn = 1;
+        $(".dropbox").slideDown("slow");
+        dropboxOn = 1;
     }
 }
-
 
 /* === Slider === */
 
