@@ -104,3 +104,36 @@ function slideOfferChange(data) {
     $('.sliderOfferTime h1').fadeOut(time).fadeIn(time);
 }
 
+/* === OFFERS ==== */
+var initOfferNum = 10;
+
+function initOffers(){
+    addNewOffer();
+}
+
+function addNewOffer(){
+    var imgPath = 'offers/ponuda_00002/01.jpg';
+    var h1 = 'Mala škola jahanja u Alminoj potkovici';
+    var h2 = 'Za 159 kn čekaju vas 3 školska sata druženja s konjima i naravno, jahanje';
+    var p = '292,50 kn';
+    var d = '65%';
+    var t = '1 dan 15:45:30';
+    var link = '#';
+    
+    var $div = $('\
+<div class="offer">\
+<img src="'+imgPath+'" alt="slika" />\
+<div>\
+<h1>'+h1+'</h1>\
+<h2>'+h2+'</h2>\
+<div class="down">\
+<div class="price"> <h3>Plaćaš</h3> <h4>'+p+'</h4>  </div>\
+<div class="discount"> <h3>Štediš</h3> <h4>'+d+'</h4> </div>\
+<div class="time"> <h3>Vrijedi još</h3> <h4>'+t+'</h4> </div>\
+<div class="more"> <a href="'+link+'">Više</a> </div>\
+</div>\
+</div>\
+</div>\
+');
+    $('#layout_offers').append($div);
+}

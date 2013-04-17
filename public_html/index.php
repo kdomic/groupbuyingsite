@@ -1,8 +1,33 @@
-<?php require_once ('includes/initialize.php'); ?>
-
-<?php
-    $korisnici = Korisnici::find_all();
-    echo '<pre>';
-    print_r($korisnici);
-    echo '</pre>';   
-?>
+<?php require_once('includes/initialize.php'); ?>
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Dobrodošli na portal za Grupnu kupovinu</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="stylesheet/main.css" />
+        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="js/jquery.timer.js"></script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>  
+        <script type="text/javascript" src="js/main.js"></script> 
+    </head>
+    
+    <?php include('layout_dropbox.php'); ?>
+    <?php include('layout_header.php'); ?>
+    <body>
+        <div id="outerDiv">
+            <?php include('layout_slider.php'); ?>
+            
+            <?php include('layout_offers.php'); ?>
+                        
+            <div class="sidebar"> 
+                <?php include('layout_sidebar_search.php'); ?>
+                <?php include('layout_sidebar_basket.php'); ?>
+                <?php include('layout_sidebar_newsletter.php'); ?>
+            </div>
+        </div>
+    </body>
+    
+    <?php include('layout_footer.php'); ?>
+    
+</html>
