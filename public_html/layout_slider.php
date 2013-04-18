@@ -19,4 +19,3 @@
     <div class="sliderImgNum"><a onclick="sliderChange(1)" class="current">1</a></div>                
     <div class="clear"></div>
 </div>
-<script type="text/javascript">initSlider();</script>

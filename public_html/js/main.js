@@ -17,6 +17,7 @@ var timer = $.timer(function() {sliderChange(null);}); /*https://code.google.com
 var speed = 6000;
 var sliderNum = 0;
 var sliderMaxNum = 4;
+var sliderData = new Array();
 
 function initSlider() {
     sliderChange(null);
@@ -41,29 +42,15 @@ function sliderChange(selectedOffer){
     }else{
         sliderNum = selectedOffer;
         timer.pause();
-        sliderPlayIcon()
+        sliderPlayIcon();
     }
     var index = $('.sliderImgNum a').length-selectedOffer;
     $('.sliderImgNum a').removeClass('current');
     $($('.sliderImgNum a')[index]).addClass('current');
-    $.ajax({
-        url:'sliderOffers.php',
-        type: 'GET',
-        dataType: 'xml',
-        success: function(xml) {
-            var data = new Array();
-            var offer = $(xml).find('offer[id='+selectedOffer+']');
-            $(offer).each(function(){
-                $(this).children().each(function(){
-                    var _data = $(this).text();
-                    _data = _data.replace(/"/g, '');
-                    data.push(_data);
-                });
-            });
-            slideOfferChange(data);
-            sliderImgChange(data[11]);
-        }
-    });        
+    console.log(index);
+    var data = getOffer(sliderMaxNum-index+1);
+    slideOfferChange(data);
+    sliderImgChange(data[12]);
 }
 
 function sliderImgChange(img){
@@ -80,60 +67,82 @@ function sliderImgChange(img){
 
 function slideOfferChange(data) {
     var time = 400;
-    $('.sliderCaption h1').fadeOut(time, function() { $(this).text(data[0]).fadeIn(time); });
-    $('.sliderCaption h2').fadeOut(time, function() { $(this).text(data[1]).fadeIn(time); });    
-    $('.sliderOfferBuy h2').fadeOut(time, function() { $(this).text(data[2]).fadeIn(time); });
-    $('.sliderOfferDiscount h2.u').fadeOut(time, function() { $(this).text(data[3]).fadeIn(time); });
-    $('.sliderOfferDiscount h2.p').fadeOut(time, function() { $(this).text(data[4]).fadeIn(time); });
-    $('.sliderOfferDiscount h2.v').fadeOut(time, function() { $(this).text(data[5]).fadeIn(time); });
-    $('.sliderOfferBought h1').fadeOut(time, function() { $(this).text(data[6]).fadeIn(time); });
-    $('.sliderOfferBought h2').fadeOut(time, function() { $(this).text(data[7]).fadeIn(time); });
+    $('.sliderCaption h1').fadeOut(time, function() { $(this).text(data[1]).fadeIn(time); });
+    $('.sliderCaption h2').fadeOut(time, function() { $(this).text(data[2]).fadeIn(time); });    
+    $('.sliderOfferBuy h2').fadeOut(time, function() { $(this).text(data[3]).fadeIn(time); });
+    $('.sliderOfferDiscount h2.u').fadeOut(time, function() { $(this).text(data[4]).fadeIn(time); });
+    $('.sliderOfferDiscount h2.p').fadeOut(time, function() { $(this).text(data[5]).fadeIn(time); });
+    $('.sliderOfferDiscount h2.v').fadeOut(time, function() { $(this).text(data[6]).fadeIn(time); });
+    $('.sliderOfferBought h1').fadeOut(time, function() { $(this).text(data[7]).fadeIn(time); });
+    $('.sliderOfferBought h2').fadeOut(time, function() { $(this).text(data[8]).fadeIn(time); });
     $('.sliderOfferBought meter').css({opacity: 1.0, visibility: "visible"}).animate({opacity: 0}, time);
     $('.sliderOfferBought meter').delay(time+10)
                                  .queue(function(next){ 
-                                     $('.sliderOfferBought meter').attr("value", data[8]);
-                                     $('.sliderOfferBought meter').attr("max", data[9]);
+                                     $('.sliderOfferBought meter').attr("value", data[9]);
+                                     $('.sliderOfferBought meter').attr("max", data[10]);
                                      $(this).css({opacity: 0, visibility: "visible"}).animate({opacity: 1.0}, time);
                                      next(); 
                                  });    
-    $('.sliderOfferTime h2').fadeOut(time, function() { $(this).text(data[10]).fadeIn(time); });
-    $('.sliderOfferBuy a').attr("href", "javascript:aletr(1)");
-    $('.sliderOfferFriend a').attr("href", "javascript:aletr(2)");    
+    $('.sliderOfferTime h2').fadeOut(time, function() { $(this).text(data[11]).fadeIn(time); });
+    $('.sliderOfferBuy a').attr("href", ""+data[0]);
+    $('.sliderOfferFriend a').attr("href", ""+data[0]);    
     $('.sliderOfferBuy h1').fadeOut(time).fadeIn(time);
     $('.sliderOfferBuy a').fadeOut(time).fadeIn(time);    
     $('.sliderOfferTime h1').fadeOut(time).fadeIn(time);
 }
 
 /* === OFFERS ==== */
-var initOfferNum = 10;
+var initOfferNum = 3;
+var currentOfferNum = 5; //prve 4 su za gore!
 
 function initOffers(){
-    addNewOffer();
+    initSlider();
+    for(var i = 0; i<initOfferNum; i++)
+        addOneOffer();
 }
 
-function addNewOffer(){
-    var imgPath = 'offers/ponuda_00002/01.jpg';
-    var h1 = 'Mala škola jahanja u Alminoj potkovici';
-    var h2 = 'Za 159 kn čekaju vas 3 školska sata druženja s konjima i naravno, jahanje';
-    var p = '292,50 kn';
-    var d = '65%';
-    var t = '1 dan 15:45:30';
-    var link = '#';
-    
+function addOneOffer(){
+    addNewOffer(currentOfferNum);
+    currentOfferNum++;
+}
+
+function addNewOffer(load){
+    var data = getOffer(load);
     var $div = $('\
 <div class="offer">\
-<img src="'+imgPath+'" alt="slika" />\
+<img src="'+data[12]+'" alt="slika" />\
 <div>\
-<h1>'+h1+'</h1>\
-<h2>'+h2+'</h2>\
+<h1>'+data[1]+'</h1>\
+<h2>'+data[2]+'</h2>\
 <div class="down">\
-<div class="price"> <h3>Plaćaš</h3> <h4>'+p+'</h4>  </div>\
-<div class="discount"> <h3>Štediš</h3> <h4>'+d+'</h4> </div>\
-<div class="time"> <h3>Vrijedi još</h3> <h4>'+t+'</h4> </div>\
-<div class="more"> <a href="'+link+'"><img src="images/info.png" alt="Info" /></a> </div>\
+<div class="price"> <h3>Plaćaš</h3> <h4>'+data[3]+'</h4>  </div>\
+<div class="discount"> <h3>Štediš</h3> <h4>'+data[5]+'</h4> </div>\
+<div class="time"> <h3>Vrijedi još</h3> <h4>'+data[11]+'</h4> </div>\
+<div class="more"> <a href="'+data[0]+'"><img src="images/info.png" alt="Info" /></a> </div>\
 </div>\
 </div>\
 </div>\
 ');
     $('#layout_offers').append($div);
+}
+
+function getOffer(load){
+    var data = new Array();
+    $.ajax({
+        url:'get_offer.php?num='+load,
+        async:false,
+        type: 'GET',
+        dataType: 'xml',
+        success: function(xml) {
+            var offer = $(xml).find('offer'); //var offer = $(xml).find('offer[id='+selectedOffer+']');
+            $(offer).each(function(){
+                $(this).children().each(function(){
+                    var _data = $(this).text();
+                    _data = _data.replace(/"/g, '');
+                    data.push(_data);
+                });
+            });
+        }
+    });
+    return data;
 }

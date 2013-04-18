@@ -18,13 +18,16 @@
         <div id="outerDiv">
             <?php include('layout_slider.php'); ?>
             
-            <?php include('layout_offers.php'); ?>
-                        
+            <?php include('layout_offers.php'); ?>            
+            
             <div class="sidebar"> 
                 <?php include('layout_sidebar_search.php'); ?>
                 <?php include('layout_sidebar_basket.php'); ?>
                 <?php include('layout_sidebar_newsletter.php'); ?>
             </div>
+            
+            <?php include('layout_loadmore.php'); ?>   
+            
         </div>
     </body>
     

@@ -13,6 +13,7 @@
     
     //load database-related class
     require_once ('korisnici.php');
+    require_once ('ponude.php');
 
     
 ?>
