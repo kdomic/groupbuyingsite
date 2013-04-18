@@ -4,6 +4,7 @@
     
     //load extra function
     //require_once ('functions.php');
+    require_once ('xml_ponuda.php');
     
     //load core object
     //require_once ('session.php');

@@ -16,4 +16,3 @@
     
 </div>
 <script type="text/javascript">initOffers();</script>
-<script type="text/javascript">initOffers();</script>
