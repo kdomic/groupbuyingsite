@@ -1,4 +1,4 @@
-<?php require_once('includes/initialize.php'); ?>
+<?php require_once('initialize.php'); ?>
 <?php
     class XmlPonuda {
         public $id;

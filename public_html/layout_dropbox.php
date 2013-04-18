@@ -2,7 +2,6 @@
 <div class="headerContent">
     <div class="dropboxLeft">
         Registracija
-        <form>
             <table>
                 <tr>
                     <td><label for="inputIme">Ime</label></td>
@@ -29,7 +28,10 @@
                     <td><input type="checkbox"  name="uvijeti"  id="uvjeti"/></td>
                 </tr>
                 <tr>
-                    <td colspan="2"><input type="submit" name="submit" value="Registriraj me" /></td>
+                    <td colspan="2"><button id="btnRegister" onclick="registerUser();" >Registriraj me</button></td>
+                </tr>
+                <tr>
+                    <td colspan="2"> Greska </td>
                 </tr>
             </table>
         </form>

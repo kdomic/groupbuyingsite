@@ -1,4 +1,4 @@
-/* === LogIn === */
+/* === LOGIN === */
 var dropboxOn = 0;
 
 function showDropbox(){
@@ -11,7 +11,33 @@ function showDropbox(){
     }
 }
 
-/* === Slider === */
+/* === REGISTER === */
+
+function registerUser(){
+    var dataString = checkRegForm();
+    var jsonString = JSON.stringify(dataString);
+    $.ajax({
+         type: "POST",
+         url: "includes/register.php",
+         data: {data : jsonString}, 
+         cache: false,
+         success: function(){}
+     });
+}
+
+function checkRegForm(){
+    var data = new Array();
+    data.push($('#inputIme').val());
+    data.push($('#inputPrezime').val());
+    data.push($('#inputEmail').val());
+    data.push($('#inputLozinka').val());
+    data.push($('#inputLozinka2').val());
+    data.push($('#uvjeti').is(':checked'));
+    console.log(data);
+    return data;
+}
+
+/* === SLIDER === */
 
 var timer = $.timer(function() {sliderChange(null);}); /*https://code.google.com/p/jquery-timer/*/
 var speed = 6000;
@@ -47,7 +73,6 @@ function sliderChange(selectedOffer){
     var index = $('.sliderImgNum a').length-selectedOffer;
     $('.sliderImgNum a').removeClass('current');
     $($('.sliderImgNum a')[index]).addClass('current');
-    console.log(index);
     var data = getOffer(sliderMaxNum-index+1);
     slideOfferChange(data);
     sliderImgChange(data[12]);
@@ -92,6 +117,7 @@ function slideOfferChange(data) {
 }
 
 /* === OFFERS ==== */
+
 var initOfferNum = 3;
 var currentOfferNum = 5; //prve 4 su za gore!
 
