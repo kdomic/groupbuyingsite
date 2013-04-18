@@ -130,7 +130,7 @@ function addNewOffer(){
 <div class="price"> <h3>Plaćaš</h3> <h4>'+p+'</h4>  </div>\
 <div class="discount"> <h3>Štediš</h3> <h4>'+d+'</h4> </div>\
 <div class="time"> <h3>Vrijedi još</h3> <h4>'+t+'</h4> </div>\
-<div class="more"> <a href="'+link+'">Više</a> </div>\
+<div class="more"> <a href="'+link+'"><img src="images/info.png" alt="Info" /></a> </div>\
 </div>\
 </div>\
 </div>\
