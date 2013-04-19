@@ -23,7 +23,7 @@
         
         function save(){
             $xmlDoc = new DOMDocument();
-            $root = $xmlDoc->appendChild($xmlDoc->createElement("RecentTutorials"));
+            $root = $xmlDoc->appendChild($xmlDoc->createElement("offers"));
             $offerTag = $root->appendChild($xmlDoc->createElement("offer"));
             $offerTag->appendChild($xmlDoc->createAttribute("id"))->appendChild($xmlDoc->createTextNode($this->id));
             $offerTag->appendChild($xmlDoc->createElement("id", $this->id));
@@ -39,7 +39,7 @@
             $offerTag->appendChild($xmlDoc->createElement("sliderOfferBoughtMax", $this->sliderOfferBoughtMax));
             $offerTag->appendChild($xmlDoc->createElement("sliderOfferTime", $this->sliderOfferTime));        
             $offerTag->appendChild($xmlDoc->createElement("sliderOfferBoughtImg", $this->sliderOfferBoughtImg));
-            header("Content-Type: text/plain");
+            header("Content-Type: text/xml");
             $xmlDoc->formatOutput = true;
             echo $xmlDoc->saveXML();
         }

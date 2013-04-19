@@ -1,26 +1,9 @@
-<?php require_once('includes/initialize.php'); ?>
-<pre>
 <?php
-    if($_POST) {
-            echo "Primljeni podaci: <hr/>";
-            foreach($_POST as $k=>$v) {
-                    echo $k . "=". $v . "<br/>";
-            }
-    } else {
-            echo "Podaci moraju biti poslani HTTP POST metodom";
-    }
-
-    echo '<hr/>';
-    $data = json_decode(stripslashes($_POST['data']));
-    print_r($data);
-    
-/*JSON
-  $data = json_decode(stripslashes($_POST['data']));
-  foreach($data as $d){
-     echo $d;
-  }
-*/  
-  
-  
+	$sh1 = sha1('kruno');
+	$sh2 = sha1('kruno1');
+	if($sh1===$sh2) echo "ok";
+	else echo "error";
+	print_r($sh1);
+	echo "<br>";
+	print_r($sh2);
 ?>
-</pre>

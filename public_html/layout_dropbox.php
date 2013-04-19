@@ -13,7 +13,7 @@
                 </tr>
                 <tr>
                     <td><label for="inputEmail">Email</label></td>
-                    <td><input type="email"     name="email"    id="inputEmail"     placeholder="Email"/><br/></td>
+                    <td><input type="email"     name="email"    id="inputEmail"     placeholder="Email" onblur="checkEmailAvailability()"/><br/></td>
                 </tr>
                 <tr>
                     <td><label for="inputLozinka">Lozinka</label></td>
@@ -30,11 +30,11 @@
                 <tr>
                     <td colspan="2"><button id="btnRegister" onclick="registerUser();" >Registriraj me</button></td>
                 </tr>
-                <tr>
-                    <td colspan="2"> Greska </td>
-                </tr>
-            </table>
+            </table>        
         </form>
+        <div id="regStatus" class="warning hide">
+            <span></span>
+        </div>
     </div>
     <div class="dropboxLeft">
         Prijava

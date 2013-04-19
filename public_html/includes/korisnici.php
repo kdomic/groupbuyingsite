@@ -19,7 +19,6 @@
                                             'blokiran',
                                             'datum_registracije',
                                             'email_potvrda',
-                                            'username',
                                             'password',
                                             'ovlasti');
             public $id;
@@ -38,8 +37,12 @@
             public $blokiran;
             public $datum_registracije;
             public $email_potvrda;
-            public $username;
             public $password;
             public $ovlasti;
+            
+            public static function find_by_email($id=0) {
+                $result_array = self::find_by_sql("SELECT * FROM ".static::$table_name." WHERE email='{$id}' LIMIT 1");
+                return !empty($result_array) ? array_shift($result_array) : false;
+            }
     }
 ?>

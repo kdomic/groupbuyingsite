@@ -14,27 +14,126 @@ function showDropbox(){
 /* === REGISTER === */
 
 function registerUser(){
-    var dataString = checkRegForm();
+    if(!checkIsEmpty()) return;
+    if(!checkEmailAvailability()) return;
+    if(!checkPassMatching()) return;
+    var dataString = parseRegForm();
+    dataString.push("regData");
+    $('#btnRegister').attr("disabled", "disabled");
+    var xml = sendUserData(dataString);
+    var status = $(xml).find('status').text();
+    if(status==='1'){
+        $('#regStatus').removeClass("warning").addClass("info");
+        $('#regStatus span').html("Registracija izvršena!<br/>Možete se prijaviti");      
+        $('#regStatus').slideDown("slow");
+    } else {
+        $('#regStatus').removeClass("warning").addClass("error");
+        $('#regStatus span').html("Registracija neuspjela!<br/>Pokušajte ponovno");
+        $('#btnRegister').removeAttr("disabled");        
+        $('#regStatus').slideDown("slow");
+    }
+}
+
+function checkIsEmpty(){
+    var i;
+    var data = parseRegForm();
+    for(i=0; i<data.length; i++)
+        if(data[i].length===0)
+            break;
+    var pattern = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
+    if(!pattern.test(data[2])) i=2;
+    if(!data[5]) i=5;
+    switch(i){
+        case 0: 
+            $('#regStatus span').html("Ime je obavezno polje!");
+            $('#regStatus').slideDown("slow");
+            $('#inputIme').focus();
+              return false;
+        case 1: 
+            $('#regStatus span').html("Prezime je obavezno polje!");
+            $('#regStatus').slideDown("slow");
+            $('#inputPrezime').focus();
+            return false;
+        case 2: 
+            $('#regStatus span').html("Email nije unešen ili je neispravan!");
+            $('#regStatus').slideDown("slow");
+            $('#inputEmail').focus();
+            return false;
+        case 3: 
+            $('#regStatus span').html("Lozinka je obavezno polje!");
+            $('#regStatus').slideDown("slow");
+            $('#inputLozinka').focus();
+            return false;
+        case 4: 
+            $('#regStatus span').html("Potvrda lozinke je obavezna");
+            $('#regStatus').slideDown("slow");
+            $('#inputLozinka2').focus();
+            return false;
+        case 5: 
+            $('#regStatus span').html("Morate prihvatiti uvijete");
+            $('#regStatus').slideDown("slow");
+            $('#uvjeti').focus();
+            return false;
+        default:
+            $('#regStatus').slideUp("slow");
+            $('#regStatus span').html("");
+            return true;
+    }
+}
+
+function checkEmailAvailability(){
+    var dataString = parseRegForm();
+    var xml = sendUserData(dataString);
+    var status = $(xml).find('status').text();
+    if(status==='1'){
+        $('#regStatus span').html("E-mail zauzet!");
+        $('#regStatus').slideDown("slow");
+        return false;
+    } else {
+        $('#regStatus').slideUp("slow");
+        $('#regStatus span').html("");
+        return true;
+    }
+}
+
+function checkPassMatching() {
+    var data = parseRegForm();
+    if(data[3]!==data[4]) {
+        $('#regStatus span').html("Lozinke se ne podudaraju");
+        $('#regStatus').slideDown("slow");
+        return false;
+    } else {
+        $('#regStatus').slideUp("slow");
+        $('#regStatus span').html("");
+        return true;
+    }
+}
+
+function parseRegForm(){
+    var data = new Array();
+    data.push($('#inputIme').val());        //0
+    data.push($('#inputPrezime').val());    //1
+    data.push($('#inputEmail').val());      //2
+    data.push($('#inputLozinka').val());    //3
+    data.push($('#inputLozinka2').val());   //4
+    data.push($('#uvjeti').is(':checked')); //5
+    return data;
+}
+
+function sendUserData(dataString){
     var jsonString = JSON.stringify(dataString);
+    var data;
     $.ajax({
          type: "POST",
          url: "includes/register.php",
          data: {data : jsonString}, 
          cache: false,
-         success: function(){}
+         async:false,
+         success: function(xml){
+             data = xml;
+         }
      });
-}
-
-function checkRegForm(){
-    var data = new Array();
-    data.push($('#inputIme').val());
-    data.push($('#inputPrezime').val());
-    data.push($('#inputEmail').val());
-    data.push($('#inputLozinka').val());
-    data.push($('#inputLozinka2').val());
-    data.push($('#uvjeti').is(':checked'));
-    console.log(data);
-    return data;
+     return data;
 }
 
 /* === SLIDER === */
