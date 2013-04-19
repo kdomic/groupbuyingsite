@@ -31,14 +31,10 @@
                     <td colspan="2"><button id="btnRegister" onclick="registerUser();" >Registriraj me</button></td>
                 </tr>
             </table>        
-        </form>
-        <div id="regStatus" class="warning hide">
-            <span></span>
-        </div>
+        <div id="regStatus" class="warning hide"><span></span></div>
     </div>
     <div class="dropboxLeft">
         Prijava
-        <form>
             <table>
                 <tr>
                     <td><label for="inputEmailP">Email</label></td>
@@ -49,10 +45,10 @@
                     <td> <input type="password"  name="lozinka"  id="inputLozinkaP"   placeholder="Lozinka"/><br/></td>
                 </tr>
                 <tr>
-                    <td colspan="2"><input type="submit" name="submit" value="Prijava" /></td>
+                    <td colspan="2"><button id="btnLogin" onclick="loginUser();" >Prijava</button></td>
                 </tr>
             </table>
-        </form>
+            <div id="loginStatus" class="warning hide"><span></span></div>
     </div>
     <div class="dropboxLeft">
         Facebook & Google

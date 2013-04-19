@@ -3,7 +3,7 @@
     require_once ('config.php');
     
     //load extra function
-    //require_once ('functions.php');
+    require_once ('functions.php');
     require_once ('xml_ponuda.php');
     
     //load core object

@@ -19,7 +19,7 @@
             $this->uvjeti = $data[5];
             if(isset($data[6])){
                 if(!strlen($this->ime) || !strlen($this->prezime) || !strlen($this->email) || !strlen($this->lozinka) || !$this->uvjeti || $this->lozinka!=$this->lozinka)
-                    $this->xml(0);
+                    xmlStatusSend(0);
                 else
                     $this->register();
             } 
@@ -37,21 +37,12 @@
             $korisnik->email_potvrda = $this->emailConfirm();
             $korisnik->ovlasti = 1;
             $status = $korisnik->save();
-            $this->xml($status);
+            xmlStatusSend($status);
         }
         
         function emailCheck(){
             $check = Korisnici::find_by_email($this->email);
-            $this->xml($check ? "1":"0");
-        }
-
-        function xml($status){
-            $xmlDoc = new DOMDocument();
-            $root = $xmlDoc->appendChild($xmlDoc->createElement("email"));
-            $root->appendChild($xmlDoc->createElement("status", $status));
-            header("Content-Type: text/xml");
-            $xmlDoc->formatOutput = true;
-            echo $xmlDoc->saveXML();
+            xmlStatusSend($check ? "1":"0");
         }
         
         function emailConfirm(){

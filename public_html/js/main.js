@@ -1,4 +1,6 @@
-/* === LOGIN === */
+var emailPattern = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
+
+/* === DROPBOX === */
 var dropboxOn = 0;
 
 function showDropbox(){
@@ -20,10 +22,10 @@ function registerUser(){
     var dataString = parseRegForm();
     dataString.push("regData");
     $('#btnRegister').attr("disabled", "disabled");
-    var xml = sendUserData(dataString);
+    var xml = sendToPhp(dataString,"includes/register.php");
     var status = $(xml).find('status').text();
     if(status==='1'){
-        $('#regStatus').removeClass("warning").addClass("info");
+        $('#regStatus').removeClass("error").removeClass("warning").addClass("info");
         $('#regStatus span').html("Registracija izvršena!<br/>Možete se prijaviti");      
         $('#regStatus').slideDown("slow");
     } else {
@@ -40,8 +42,7 @@ function checkIsEmpty(){
     for(i=0; i<data.length; i++)
         if(data[i].length===0)
             break;
-    var pattern = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
-    if(!pattern.test(data[2])) i=2;
+    if(!emailPattern.test(data[2])) i=2;
     if(!data[5]) i=5;
     switch(i){
         case 0: 
@@ -83,7 +84,7 @@ function checkIsEmpty(){
 
 function checkEmailAvailability(){
     var dataString = parseRegForm();
-    var xml = sendUserData(dataString);
+    var xml = sendToPhp(dataString,"includes/register.php");
     var status = $(xml).find('status').text();
     if(status==='1'){
         $('#regStatus span').html("E-mail zauzet!");
@@ -120,20 +121,32 @@ function parseRegForm(){
     return data;
 }
 
-function sendUserData(dataString){
-    var jsonString = JSON.stringify(dataString);
-    var data;
-    $.ajax({
-         type: "POST",
-         url: "includes/register.php",
-         data: {data : jsonString}, 
-         cache: false,
-         async:false,
-         success: function(xml){
-             data = xml;
-         }
-     });
-     return data;
+/* === LOGIN === */
+
+function loginUser(){
+    var data = new Array();
+    data.push($('#inputEmailP').val());
+    data.push($('#inputLozinkaP').val());
+    if(data[0].length===0 || data[1].length===0 || !emailPattern.test(data[0])){        
+        $('#loginStatus span').html("Uneseni podatci nisu ispravni");
+        $('#loginStatus').slideDown("slow");
+        return false;
+    }
+    $('#loginStatus').slideUp("slow");
+    $('#loginStatus span').html("");
+    $('#btnLogin').attr("disabled", "disabled");
+    var xml = sendToPhp(data,"includes/login.php");
+    var status = $(xml).find('status').text();
+    if(status==='1'){
+        $('#loginStatus').removeClass("error").removeClass("warning").addClass("info");
+        $('#loginStatus span').html("Prijava uspješna!");      
+        $('#loginStatus').slideDown("slow");
+    } else {
+        $('#loginStatus').removeClass("warning").addClass("error");
+        $('#loginStatus span').html("Uneseni podatci nisu ispravni");
+        $('#btnLogin').removeAttr("disabled");        
+        $('#loginStatus').slideDown("slow");
+    }
 }
 
 /* === SLIDER === */
@@ -270,4 +283,21 @@ function getOffer(load){
         }
     });
     return data;
+}
+
+/* === AJAX status SEND/R === */
+function sendToPhp(dataString,url){
+    var jsonString = JSON.stringify(dataString);
+    var data;
+    $.ajax({
+         type: "POST",
+         url: url,
+         data: {data : jsonString}, 
+         cache: false,
+         async:false,
+         success: function(xml){
+             data = xml;
+         }
+     });
+     return data;
 }

@@ -44,5 +44,12 @@
                 $result_array = self::find_by_sql("SELECT * FROM ".static::$table_name." WHERE email='{$id}' LIMIT 1");
                 return !empty($result_array) ? array_shift($result_array) : false;
             }
+
+            public static function authenticate($email=0,$pass=0) {
+                $pass = sha1($pass);
+                $result_array = self::find_by_sql("SELECT * FROM ".static::$table_name." WHERE email='{$email}' LIMIT 1");
+                $user = array_shift($result_array);
+                return $pass===$user->password ? $user : false;
+            }
     }
 ?>
