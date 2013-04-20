@@ -1,4 +1,4 @@
-<div class="sidebarWrapper" >
+<div class="sidebarWrapper" id="layout_sidebar_basket">
     <h1>
         <a href="kosarica.html" >
             <img id="basketIcon" src="images/basket.png" alt="Košarica" />

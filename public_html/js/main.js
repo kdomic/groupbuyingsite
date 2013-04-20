@@ -1,4 +1,6 @@
 var emailPattern = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
+var map_x = 0;
+var map_y = 0;
 
 /* === DROPBOX === */
 
@@ -238,6 +240,7 @@ var sliderMaxNum = 4;
 var sliderData = new Array();
 
 function initSlider() {
+    sliderNum = 0;
     sliderChange(null);
     timer.set({ time : speed, autostart : true });
 }
@@ -266,7 +269,7 @@ function sliderChange(selectedOffer){
     $('.sliderImgNum a').removeClass('current');
     $($('.sliderImgNum a')[index]).addClass('current');
     var data = getOffer(sliderMaxNum-index+1);
-    slideOfferChange(data);
+    slideOfferChange(data,0);
     sliderImgChange(data[12]);
 }
 
@@ -282,10 +285,10 @@ function sliderImgChange(img){
                         });                    
 }
 
-function slideOfferChange(data) {
+function slideOfferChange(data,kupi) { 
     var time = 400;
     $('.sliderCaption h1').fadeOut(time, function() { $(this).text(data[1]).fadeIn(time); });
-    $('.sliderCaption h2').fadeOut(time, function() { $(this).text(data[2]).fadeIn(time); });    
+    $('.sliderCaption h2').fadeOut(time, function() { $(this).text(data[2]).fadeIn(time); });
     $('.sliderOfferBuy h2').fadeOut(time, function() { $(this).text(data[3]).fadeIn(time); });
     $('.sliderOfferDiscount h2.u').fadeOut(time, function() { $(this).text(data[4]).fadeIn(time); });
     $('.sliderOfferDiscount h2.p').fadeOut(time, function() { $(this).text(data[5]).fadeIn(time); });
@@ -301,8 +304,10 @@ function slideOfferChange(data) {
                                      next(); 
                                  });    
     $('.sliderOfferTime h2').fadeOut(time, function() { $(this).text(data[11]).fadeIn(time); });
-    $('.sliderOfferBuy a').attr("href", ""+data[0]);
-    $('.sliderOfferFriend a').attr("href", ""+data[0]);    
+    $($('.sliderOfferFriend a')[0]).click(function(){alert("Ovo treba napraviti");});
+    $($('.sliderOfferFriend a')[1]).click(function(){loadOfferDetails(data[0]);})
+    $('.sliderOfferFriend h1').fadeOut(time).fadeIn(time);    
+    $('.sliderOfferFriend img').fadeOut(time).fadeIn(time);
     $('.sliderOfferBuy h1').fadeOut(time).fadeIn(time);
     $('.sliderOfferBuy a').fadeOut(time).fadeIn(time);    
     $('.sliderOfferTime h1').fadeOut(time).fadeIn(time);
@@ -314,7 +319,6 @@ var initOfferNum = 3;
 var currentOfferNum = 5; //prve 4 su za gore!
 
 function initOffers(){
-    initSlider();
     for(var i = 0; i<initOfferNum; i++)
         addOneOffer();
 }
@@ -336,7 +340,7 @@ function addNewOffer(load){
 <div class="price"> <h3>Plaćaš</h3> <h4>'+data[3]+'</h4>  </div>\
 <div class="discount"> <h3>Štediš</h3> <h4>'+data[5]+'</h4> </div>\
 <div class="time"> <h3>Vrijedi još</h3> <h4>'+data[11]+'</h4> </div>\
-<div class="more"> <a href="'+data[0]+'"><img src="images/info.png" alt="Info" /></a> </div>\
+<div class="more"> <a onclick="loadOfferDetails('+data[0]+');"><img src="images/info.png" alt="Info" /></a> </div>\
 </div>\
 </div>\
 </div>\
@@ -363,6 +367,31 @@ function getOffer(load){
         }
     });
     return data;
+}
+
+/* === OFFER DETAILS === */
+
+function loadOfferDetails(num){    
+    var data = getOffer(num);
+    sliderChange(num,1);
+    var img = data[14].split(';');
+    img.pop();
+    $('.imgGallery').html('');
+    while(img.length>0){
+        var path = data[13]+'/'+img.pop();
+        var $div = $('<img src="'+path+'" alt="slika" onclick="sliderImgChange(this);"/>');
+        $('.imgGallery').append($div);
+    }
+    $('.shortDesc').text(htmlDencodeEntities(data[15]));
+    $('.desc').text(htmlDencodeEntities(data[16]));
+    $($('#layout_sidebar_offer_details div')[0]).html(htmlDencodeEntities(data[17])); 
+    map_x = parseFloat(data[18]);
+    map_y = parseFloat(data[19]);
+    console.log(parseFloat(data[18]));
+    console.log(parseFloat(data[19]));    
+    $($('#layout_sidebar_offer_details div')[1]).html(data[1]+'<br/><a href=""><img src="images/basketAdd.png" alt="slika" /></a>');
+    hideIndexLayou();    
+    showOfferLayou();    
 }
 
 /* === AJAX status SEND/R === */
@@ -415,9 +444,63 @@ $(document).ready(function() {
         $('#btnShowDropboxPurchases').removeClass("hide");
         $('#btnShowDropboxAccount').removeClass("hide");
     }
-    $('#inputLozinkaP').keypress(function(e) {if(e.which == 13){loginUser();}
+    $('#inputLozinkaP').keypress(function(e) {if(e.which == 13)loginUser();});
+    initOffers();    
+    hideOfferLayou();
+    showIndexLayout();
 });
-});
+
+/* === LAYOUTS === */
+
+function showIndexLayout() {
+    initSlider();
+    $('slider').show();
+    $('.sliderImgNum').show();
+    $('#layout_offers').show();
+    $('#layout_loadmore').show();
+    $('#layout_sidebar_search').show();
+    $('#layout_sidebar_basket').show(); 
+    $('#layout_sidebar_newsletter').show();
+}
+
+function hideIndexLayou() {
+    timer.stop();
+    $('slider').hide();
+    $('.sliderImgNum').hide();
+    $('#layout_offers').hide();
+    $('#layout_loadmore').hide();
+    $('#layout_sidebar_search').hide();
+    $('#layout_sidebar_basket').hide();    
+    $('#layout_sidebar_newsletter').hide();
+}
+
+function showOfferLayou(){
+    $('#goBack').show();
+    $('slider').show();
+    $('#imageGallery').show();
+    $('#layout_offer_details').show();
+    $('#layout_sidebar_offer_details').show();
+    $('#layout_sidebar_basket').show();
+    $('#layout_comments').show();
+    $('#layout_recomended_offers').show();
+    googleMaps();    
+}
+
+function hideOfferLayou(){
+    $('#goBack').hide();
+    $('slider').hide();
+    $('#imageGallery').hide();    
+    $('#layout_offer_details').hide();
+    $('#layout_sidebar_offer_details').hide();
+    $('#layout_sidebar_basket').hide();
+    $('#layout_comments').hide();  
+    $('#layout_recomended_offers').hide();    
+}
+
+function goBack() {
+    hideOfferLayou();
+    showIndexLayout();
+}
 
 /* === OTHER ===*/
 
@@ -425,7 +508,15 @@ function error() {
     document.location.reload(true);
 }
 
-function CheckOIB(oib) { //Preuzeto sa: http://v2009.dizzy.hr/oib/
+function htmlEncodeEntities(s){
+        return $("<div/>").text(s).html();
+}
+
+function htmlDencodeEntities(s){
+    return $("<div/>").html(s).text();
+}
+
+function CheckOIB(oib) { //http://v2009.dizzy.hr/oib/
     oib = oib.toString();
     if (oib.length != 11) return false;
     var b = parseInt(oib, 10);
@@ -442,3 +533,18 @@ function CheckOIB(oib) { //Preuzeto sa: http://v2009.dizzy.hr/oib/
     if (kontrolni == 10) kontrolni = 0;
     return kontrolni == parseInt(oib.substr(10, 1));
 }
+
+function googleMaps() { //https://developers.google.com/maps/
+    var mapOptions = {
+        center: new google.maps.LatLng(map_x,map_y),
+        zoom: 12,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    var markerOptions = {
+        position: new google.maps.LatLng(map_x,map_y)
+    };
+    var marker = new google.maps.Marker(markerOptions);
+    marker.setMap(map);
+}
+

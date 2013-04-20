@@ -15,14 +15,19 @@
         <?php include('layout_dropbox.php'); ?>
         <?php include('layout_header.php'); ?>
         <div id="outerDiv">
-            <?php include('layout_slider.php'); ?>            
-            <?php include('layout_offers.php'); ?>                        
+            <div id="goBack" onclick="goBack();"><img src="images/back.png" alt="Natrag" /></div>
+            <?php include('layout_slider.php'); ?>
+            <?php include('layout_offers.php'); ?>
+            <?php include('layout_offer_details.php'); ?>                       
             <div class="sidebar"> 
                 <?php include('layout_sidebar_search.php'); ?>
+                <?php include('layout_sidebar_offer_details.php'); ?>                
                 <?php include('layout_sidebar_basket.php'); ?>
                 <?php include('layout_sidebar_newsletter.php'); ?>
             </div>            
             <?php include('layout_loadmore.php'); ?>               
+            <?php include('layout_comments.php'); ?>
+            <?php include('layout_recomended_offers.php'); ?> 
         </div>
         <div class="clear"></div>
         <?php include('layout_footer.php'); ?>

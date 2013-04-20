@@ -203,6 +203,7 @@ header nav select {
     color: #fff;
     border: 3px solid #fff;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .sliderOfferBuy a:hover {
@@ -265,19 +266,22 @@ header nav select {
 }
 
 .sliderOfferFriend img {
-    margin-top: 5px;
     height: 40px;
     float: left;
-    margin: 3px 0 0 60px;
+    margin: 3px 0 0 30px;
 }
 
 .sliderOfferFriend h1 {
     float: left;
-    font-size: 100%;
+    font-size: 80%;
     font-weight: bold;
-    text-align: left;
-    margin: 1em 0 0 1em;
+    text-align: center;
+    vertical-align: center;
     color: #333;
+}
+
+.sliderOfferFriend a {
+    cursor: pointer;
 }
 
 .sliderOfferBought {
@@ -491,13 +495,14 @@ header nav select {
 
 .offer div.more {
     float: right;
-    width: 25px;    
+    width: 25px;   
 }
 
 .offer div.more img {
    float: right;
    width: 20px;
    height: 20px;
+   cursor: pointer;
 }
 
 
@@ -516,6 +521,8 @@ header nav select {
 
 .imgGallery img {
     width: 80px;
+    height: 60px;
+    margin-left: 5px;
 }
 
 .imgGallery img:hover {
@@ -813,3 +820,8 @@ footer {
     display: none;
 }
 
+#goBack {
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+}

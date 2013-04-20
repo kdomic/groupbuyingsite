@@ -13,7 +13,7 @@
                 </tr>
                 <tr>
                     <td><label for="inputEmail">Email</label></td>
-                    <td><input type="email"     name="email"    id="inputEmail"     placeholder="Email" onblur="checkEmailAvailability()"/></td>
+                    <td><input type="email"     name="email"    id="inputEmail"     placeholder="Email" onblur="checkEmailAvailability()" /></td>
                 </tr>
                 <tr>
                     <td><label for="inputLozinka">Lozinka</label></td>

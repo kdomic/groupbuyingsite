@@ -1,4 +1,4 @@
-<div class="sidebarWrapper" >
+<div class="sidebarWrapper" id="layout_sidebar_newsletter">
     <h1>Newsletter</h1>
     <div>
         <form action="#">

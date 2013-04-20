@@ -14,10 +14,18 @@
         public $sliderOfferBoughtMax;
         public $sliderOfferTime;
         public $sliderOfferBoughtImg;
+        public $imagesPath;
+        public $imagesList;
+        public $shortDesc;
+        public $desc;
+        public $remark;
+        public $x;
+        public $y;
         
         function __construct($num) {
             $ponuda = Ponude::find_by_id($num);            
-            $this->testdata($ponuda);            
+            $this->testdata($ponuda);
+            $this->imgList();           
             $this->save();
         }
         
@@ -39,6 +47,14 @@
             $offerTag->appendChild($xmlDoc->createElement("sliderOfferBoughtMax", $this->sliderOfferBoughtMax));
             $offerTag->appendChild($xmlDoc->createElement("sliderOfferTime", $this->sliderOfferTime));        
             $offerTag->appendChild($xmlDoc->createElement("sliderOfferBoughtImg", $this->sliderOfferBoughtImg));
+            $offerTag->appendChild($xmlDoc->createElement("imagesPath", $this->imagesPath));
+            $offerTag->appendChild($xmlDoc->createElement("imagesList", $this->imagesList));
+            $offerTag->appendChild($xmlDoc->createElement("shortDesc", $this->shortDesc));
+            $offerTag->appendChild($xmlDoc->createElement("desc", $this->desc));
+            $offerTag->appendChild($xmlDoc->createElement("remark", $this->remark));
+            $offerTag->appendChild($xmlDoc->createElement("x", $this->x));
+            $offerTag->appendChild($xmlDoc->createElement("y", $this->y));
+
             header("Content-Type: text/xml");
             $xmlDoc->formatOutput = true;
             echo $xmlDoc->saveXML();
@@ -61,7 +77,21 @@
             $this->sliderOfferBoughtVal = rand()%101;
             $this->sliderOfferBoughtMax = '100';
             $this->sliderOfferTime = '125 dana 12:18:49';
-            $this->sliderOfferBoughtImg = ('offers/ponuda_'.sprintf("%05d", $this->id).'/01.jpg');  
-        }                
+            $this->sliderOfferBoughtImg = ('offers/ponuda_'.sprintf("%05d", $this->id).'/01.jpg');
+            $this->shortDesc = htmlspecialchars($ponuda->opis_naslov.'<br/>'.$ponuda->opis_kratki);
+            $this->desc = htmlspecialchars($ponuda->opis);
+            $this->remark = htmlspecialchars($ponuda->napomena);
+            $this->x = $ponuda->karta_x;
+            $this->y = $ponuda->karta_y;
+        }
+
+        function imgList(){
+            $this->imagesPath = 'offers/ponuda_'.sprintf("%05d", $this->id);
+            $handle = opendir($this->imagesPath);
+            while (false !== ($entry = readdir($handle)))
+                if(strpos($entry,'.jpg'))
+                    $this->imagesList .= $entry.";";
+            closedir($handle);
+        }              
     }    
 ?>
