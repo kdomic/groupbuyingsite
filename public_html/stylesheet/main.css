@@ -97,6 +97,30 @@ header nav select {
     margin-top: 15px;
 }
 
+.dropboxTiles {
+    width: 220px;
+    height: 180px;
+    float: left;
+    margin: 2px 2px 0 0;
+    border: 1px solid #fff;
+    border-radius: 5px;
+}
+
+.dropboxTiles:hover {
+    border: 1px solid#05c4e7;
+}
+
+.dropboxTiles img {
+    width: 210px;
+    padding: 5px;
+}
+
+.dropboxTiles h1 {
+    font-size: 100%;
+    color: #fff;
+    text-align: center;;
+}
+
 /* === Content === */
 
 #outerDiv {
