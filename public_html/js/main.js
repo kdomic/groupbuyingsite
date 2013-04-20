@@ -267,10 +267,10 @@ function sliderChange(selectedOffer){
         data = getOffer(sliderMaxNum-index+1);      
     }else{
         sliderNum = selectedOffer;
-        timer.pause();
-        sliderPlayIcon();
+        timer.pause();        
         data = getOffer(selectedOffer);
     }    
+    sliderPlayIcon();
     slideOfferChange(data);
     sliderImgChange(data[12]);
 }
@@ -308,12 +308,18 @@ function slideOfferChange(data) {
     $('.sliderOfferTime h2').fadeOut(time, function() { $(this).text(data[11]).fadeIn(time); });
     $('.sliderOfferFriend a').unbind('click');
     $($('.sliderOfferFriend a')[0]).click(function(){alter("napraviti")});
-    $($('.sliderOfferFriend a')[1]).click(function(){loadOfferDetails(data[0]);});
-    $('.sliderOfferBuy a').unbind('click').click(function(){addOfferToBasket(data[0]);});
+    $($('.sliderOfferFriend a')[1]).click(function(){loadOfferDetails(data[0]);});    
+    $('.sliderOfferBuy a').remove('a');
+    $('.sliderOfferBuy img').remove('img');
+    if(isInBasket(data[0]))    
+        $('.sliderOfferBuy').append('<img src="images/basketRemove.png" alt="U košaric" onclick="removeOfferFromBasket('+data[0]+');"/>');
+    else
+        $('.sliderOfferBuy').append('<a onclick="addOfferToBasket('+data[0]+');">KUPI</a>');
+    $('.sliderOfferBuy a').fadeOut(time).fadeIn(time);
+    $('.sliderOfferBuy img').fadeOut(time).fadeIn(time);
     $('.sliderOfferFriend h1').fadeOut(time).fadeIn(time);
     $('.sliderOfferFriend img').fadeOut(time).fadeIn(time);
-    $('.sliderOfferBuy h1').fadeOut(time).fadeIn(time);
-    $('.sliderOfferBuy a').fadeOut(time).fadeIn(time);    
+    $('.sliderOfferBuy h1').fadeOut(time).fadeIn(time);        
     $('.sliderOfferTime h1').fadeOut(time).fadeIn(time);
 }
 
@@ -393,7 +399,6 @@ function loadOfferDetails(num){
     map_y = parseFloat(data[19]);
     //console.log(parseFloat(data[18]));
     //console.log(parseFloat(data[19]));    
-    console.log(1);
     $($('#layout_sidebar_offer_details div')[1]).html(data[1]+'<br/><a href=""><img src="images/basketAdd.png" alt="slika" /></a>');
     hideIndexLayou();    
     showOfferLayou();    
@@ -402,12 +407,40 @@ function loadOfferDetails(num){
 /* === BASKET ==== */
 
 function addOfferToBasket(num){
+    console.log("Add: "+num);
     var dataString = new Array();
     dataString.push('1');
     dataString.push(num);
     var xml = sendToPhp(dataString,"includes/basket.php");
     var status = $(xml).find('status').text();
     reloadBasket();
+    console.log(status);
+    sliderChange(num);
+}
+
+function removeOfferFromBasket(num){
+    console.log("Remove: "+num);    
+    var dataString = new Array();
+    dataString.push('2');
+    dataString.push(num);
+    var xml = sendToPhp(dataString,"includes/basket.php");
+    var status = $(xml).find('status').text();
+    reloadBasket();
+    console.log(status);
+    sliderChange(num);
+}
+
+function isInBasket(num){
+    var dataString = new Array();
+    dataString.push('0');
+    var xml = sendToPhp(dataString,"includes/basket.php");
+    var data = $(xml).find('status').text();
+    data = data.split(';');
+    data.pop();
+    while(data.length>0)
+        if(parseInt(data.pop())===parseInt(num))
+            return true;
+    return false;
 }
 
 function reloadBasket() {
@@ -486,6 +519,7 @@ $(document).ready(function() {
 
 function showIndexLayout() {
     initSlider();
+    sliderPlayIcon();
     $('slider').show();
     $($('.sliderOfferFriend a')[1]).show();
     $('.sliderImgNum').show();

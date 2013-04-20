@@ -1,7 +1,12 @@
 <div id="slider" class="outerWrapper">                
     <div class="sliderCaption"><h1></h1><h2></h2></div>
     <div class="sliderOffer">                    
-        <div class="sliderOfferBuy"><div class="sliderOfferTag"></div><h1>Plaćaš samo!</h1><h2></h2><a>KUPI</a></div>
+        <div class="sliderOfferBuy">
+            <div class="sliderOfferTag"></div>
+            <h1>Plaćaš samo!</h1>
+            <h2></h2>
+            <img src="images/basketRemove.png" alt="U košaric" onclick="removeOfferToBasket(data[0]);"/>
+        </div>
         <div class="sliderOfferDiscount">
             <div><h1>Vrijedi</h1><h2 class="v"></h2></div>
             <div><h1>Popust</h1><h2 class="p"></h2></div>

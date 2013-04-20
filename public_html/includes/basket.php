@@ -26,7 +26,7 @@
 
 		public function add($value='')
 		{
-			if ($_SESSION['basket'])
+			if (isset($_SESSION['basket']))
 				$_SESSION['basket'] .= $value.';';
 			else
 				$_SESSION['basket'] = $value.';';
@@ -34,12 +34,22 @@
 
 		public function remove($value='')
 		{
-			# code...
+			if (isset($_SESSION['basket'])){
+				$data = explode(';', $_SESSION['basket']);
+				$new_data = '';
+				foreach ($data as $d) {
+					if((int)$d===(int)$value || $d==='') continue;
+					else $new_data .= $d.';';
+				}
+    			$_SESSION['basket'] = $new_data;
+			}				
+			else
+				xmlStatusSend(0);
 		}
 
 		public function show()
 		{
-			if ($_SESSION['basket'])
+			if (isset($_SESSION['basket']))
 				xmlStatusSend($_SESSION['basket']);
 			else
 				xmlStatusSend(0);
