@@ -59,7 +59,27 @@
 
 <div class="dropboxPurchases">
 <div class="headerContent">
-    dropboxPurchases
+    <div class="dropboxTiles">
+        <a href=""><img src="offers/ponuda_00002/01.jpg" alt="Ponuda"></a>
+        <h1>14.08.2013. <i>za</i> 250,00 kn</h1>
+    </div>
+    <div class="dropboxTiles">
+        <a href=""><img src="offers/ponuda_00002/01.jpg" alt="Ponuda"></a>
+        <h1>14.08.2013. <i>za</i> 250,00 kn</h1>
+    </div>
+    <div class="dropboxTiles">
+        <a href=""><img src="offers/ponuda_00002/01.jpg" alt="Ponuda"></a>
+        <h1>14.08.2013. <i>za</i> 250,00 kn</h1>
+    </div>
+    <div class="dropboxTiles">
+        <a href=""><img src="offers/ponuda_00002/01.jpg" alt="Ponuda"></a>
+        <h1>14.08.2013. <i>za</i> 250,00 kn</h1>
+    </div>
+    <div class="dropboxTiles">
+        <a href=""><img src="offers/ponuda_00002/01.jpg" alt="Ponuda"></a>
+        <h1>14.08.2013. <i>za</i> 250,00 kn</h1>
+    </div>
+    <div class="clear"></div>
 </div>
 </div>
 
