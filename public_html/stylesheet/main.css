@@ -439,6 +439,7 @@ header nav select {
     width: 260px;
     float: left;
     padding: 5px;
+    cursor: pointer;
 }
 
 .offer div {

@@ -260,17 +260,17 @@ function sliderChange(selectedOffer){
     if(selectedOffer===null){
         sliderNum = sliderNum+1;
         selectedOffer = sliderNum;        
-        sliderNum = sliderNum%sliderMaxNum;  
-        var index = $('.sliderImgNum a').length-selectedOffer;
-        $('.sliderImgNum a').removeClass('current');
-        $($('.sliderImgNum a')[index]).addClass('current');
-        data = getOffer(sliderMaxNum-index+1);      
+        sliderNum = sliderNum%sliderMaxNum;        
     }else{
         sliderNum = selectedOffer;
         timer.pause();        
         data = getOffer(selectedOffer);
     }    
     sliderPlayIcon();
+    var index = $('.sliderImgNum a').length-selectedOffer;
+    $('.sliderImgNum a').removeClass('current');
+    $($('.sliderImgNum a')[index]).addClass('current');
+    data = getOffer(sliderMaxNum-index+1);
     slideOfferChange(data);
     sliderImgChange(data[12]);
 }
@@ -342,7 +342,7 @@ function addNewOffer(load){
     var data = getOffer(load);
     var $div = $('\
 <div class="offer">\
-<img src="'+data[12]+'" alt="slika" />\
+<img src="'+data[12]+'" alt="slika" onclick="loadOfferDetails('+data[0]+');"/>\
 <div>\
 <h1>'+data[1]+'</h1>\
 <h2>'+data[2]+'</h2>\
@@ -381,7 +381,8 @@ function getOffer(load){
 
 /* === OFFER DETAILS === */
 
-function loadOfferDetails(num){    
+function loadOfferDetails(num){
+    goTop();   
     var data = getOffer(num);
     sliderChange(num);
     var img = data[14].split(';');
@@ -571,6 +572,10 @@ function goBack() {
 }
 
 /* === OTHER ===*/
+
+function goTop(){
+    window.scrollTo(0,0);
+}
 
 function leadZero(str) {
     return str.length < 5 ? leadZero("0" + str) : str;
