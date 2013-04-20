@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <?php
     //load config file
     require_once ('config.php');
@@ -7,7 +8,6 @@
     require_once ('xml_ponuda.php');
     
     //load core object
-    //require_once ('session.php');
     require_once('database.php');
     require_once('database_object.php');
     

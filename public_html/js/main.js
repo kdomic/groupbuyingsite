@@ -3,7 +3,32 @@ var emailPattern = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-
 /* === DROPBOX === */
 
 function showDropbox(index){
-    $(".dropbox"+index).slideToggle("slow");
+    if(index==='Account') userAccount();
+    if(index==='Purchases') userPurchases();
+    $(".dropbox"+index).slideToggle("slow");    
+}
+
+function userAccount() {
+    var userId = sessionCheck ();
+    if(!sessionCheck()) error();
+    var userData = getUserData(userId);
+    $('#inputUserIdA').val(userData[0]);
+    $('#inputImeA').val(userData[1]);
+    $('#inputPrezimeA').val(userData[2]);
+    $('#inputAdresaA').val(userData[3]);
+    $('#inputPbrA').val(userData[4]);
+    $('#inputMjestoA').val(userData[5]);
+    $('#inputTelefonA').val(userData[6]);
+    $('#inputOibA').val(userData[8]);
+    $('#inputEmailA').val(userData[7]);
+
+    $('#infoCol').html('ok');
+    $('#dropboxCol1Status').hide();
+    $('#dropboxCol2Status').hide();
+}
+
+function userPurchases() {
+    if(!sessionCheck()) error();
 }
 
 /* === REGISTER === */
@@ -118,9 +143,10 @@ function parseRegForm(){
 
 function loginUser(){
     var data = new Array();
+    data.push('1');
     data.push($('#inputEmailP').val());
     data.push($('#inputLozinkaP').val());
-    if(data[0].length===0 || data[1].length===0 || !emailPattern.test(data[0])){        
+    if(data[1].length===0 || data[2].length===0 || !emailPattern.test(data[1])){        
         $('#loginStatus span').html("Uneseni podatci nisu ispravni");
         $('#loginStatus').slideDown("slow");
         return false;
@@ -128,7 +154,7 @@ function loginUser(){
     $('#loginStatus').slideUp("slow");
     $('#loginStatus span').html("");
     $('#btnLogin').attr("disabled", "disabled");
-    var xml = sendToPhp(data,"includes/login.php");
+    var xml = sendToPhp(data,"includes/session.php");
     var status = $(xml).find('status').text();
     if(status==='1'){
         $('#loginStatus').removeClass("error").removeClass("warning").addClass("info");
@@ -146,6 +172,61 @@ function loginUser(){
         $('#btnLogin').removeAttr("disabled");        
         $('#loginStatus').slideDown("slow");
     }
+}
+
+/*=== USER SETTINGS ===*/
+
+function userInformationChange(){
+    var userData = getUserData($('#inputUserIdA').val());
+    userData[1] = $('#inputImeA').val();
+    userData[2] = $('#inputPrezimeA').val();
+    userData[3] = $('#inputAdresaA').val();
+    userData[4] = $('#inputPbrA').val();
+    userData[5] = $('#inputMjestoA').val();
+    userData[6] = $('#inputTelefonA').val();
+    userData[8] = $('#inputOibA').val();
+    if(!CheckOIB(userData[8])){
+        $('#dropboxCol1Status').slideUp("slow");
+        $('#dropboxCol1Status').removeClass("info").removeClass("error").addClass("warning");
+        $('#dropboxCol1Status span').html("OIB je neispravan");
+        $('#dropboxCol1Status').slideDown("slow");
+        return;
+    }
+    var xml = setUserData(userData);
+    var status = $(xml).find('status').text();
+    accountMess('dropboxCol1Status',status);
+}
+
+function userCredentialChange(){
+    var userData = getUserData($('#inputUserIdA').val());
+    var pass = $('#inputLozinkaA').val();
+    var pass2 = $('#inputLozinka2A').val();
+    if(pass!==pass2){
+        $('#dropboxCol2Status').slideUp("slow");
+        $('#dropboxCol2Status').removeClass("info").removeClass("error").addClass("warning");
+        $('#dropboxCol2Status span').html("Lozinke se ne podudaraju");
+        $('#dropboxCol2Status').slideDown("slow");
+        return;
+    }
+    userData[16] = pass;
+    var xml = setUserData(userData);
+    var status = $(xml).find('status').text();
+    accountMess('dropboxCol2Status',status);
+}
+
+function accountMess(id,status){
+    $('#'+id).slideUp("slow");
+    if(status==='1'){
+        $('#'+id).removeClass("error").removeClass("warning").addClass("info");
+        $('#'+id+' span').html("Izmjene pohranjene");      
+    } else if(status==='') {
+        $('#'+id).removeClass("info").removeClass("error").addClass("warning");
+        $('#'+id).html("Podatci nisu izmjenjeni");
+    } else {
+        $('#'+id).removeClass("info").removeClass("warning").addClass("error");
+        $('#'+id+' span').html("Pohrana nije uspjela");
+    }
+    $('#'+id).slideDown("slow");
 }
 
 /* === SLIDER === */
@@ -299,4 +380,65 @@ function sendToPhp(dataString,url){
          }
      });
      return data;
+}
+
+/* === SESSION and USER DATA === */
+function sessionCheck () {
+    var data = new Array();
+    data.push('2');
+    var xml = sendToPhp(data,"includes/session.php");
+    var status = $(xml).find('status').text();
+    return parseInt(status);
+}
+
+function getUserData(id){
+    var data = new Array();
+    data.push(id);
+    var xml = sendToPhp(data,"get_userdata.php");
+    var status = $(xml).find('status').text();
+    if(status==='0') error();
+    var userData = new Array();
+    var user = $(xml).find('korisnik');
+    $(user).children().each(function(){userData.push($(this).text())});
+    return userData;
+}
+
+function setUserData(data){
+    var xml = sendToPhp(data,"set_userdata.php");
+    return xml;
+}
+
+/* === ONLOAD === */
+$(document).ready(function() {
+    if(sessionCheck()){
+        $('#btnShowDropboxLogin').addClass("hide");        
+        $('#btnShowDropboxPurchases').removeClass("hide");
+        $('#btnShowDropboxAccount').removeClass("hide");
+    }
+    $('#inputLozinkaP').keypress(function(e) {if(e.which == 13){loginUser();}
+});
+});
+
+/* === OTHER ===*/
+
+function error() {
+    document.location.reload(true);
+}
+
+function CheckOIB(oib) { //Preuzeto sa: http://v2009.dizzy.hr/oib/
+    oib = oib.toString();
+    if (oib.length != 11) return false;
+    var b = parseInt(oib, 10);
+    if (isNaN(b)) return false;
+    var a = 10;
+    for (var i = 0; i < 10; i++) {
+    a = a + parseInt(oib.substr(i, 1), 10);
+    a = a % 10;
+    if (a == 0) a = 10;
+    a *= 2;
+    a = a % 11;
+    }
+    var kontrolni = 11 - a;
+    if (kontrolni == 10) kontrolni = 0;
+    return kontrolni == parseInt(oib.substr(10, 1));
 }

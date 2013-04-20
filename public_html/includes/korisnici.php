@@ -21,24 +21,24 @@
                                             'email_potvrda',
                                             'password',
                                             'ovlasti');
-            public $id;
-            public $ime;
-            public $prezime;
-            public $adresa;
-            public $pbr;
-            public $mjesto;
-            public $telefon;
-            public $email;
-            public $oib;
-            public $open_id;
-            public $opomena;
-            public $deaktiviran;
-            public $zamrznut;
-            public $blokiran;
-            public $datum_registracije;
-            public $email_potvrda;
-            public $password;
-            public $ovlasti;
+            public $id;                 //[0]
+            public $ime;                //[1]
+            public $prezime;            //[2]
+            public $adresa;             //[3]
+            public $pbr;                //[4]
+            public $mjesto;             //[5]
+            public $telefon;            //[6]
+            public $email;              //[7]
+            public $oib;                //[8]
+            public $open_id;            //[9]
+            public $opomena;            //[10]
+            public $deaktiviran;        //[11]
+            public $zamrznut;           //[12]
+            public $blokiran;           //[13]
+            public $datum_registracije; //[14]
+            public $email_potvrda;      //[15]
+            public $password;           //[16]
+            public $ovlasti;            //[17]
             
             public static function find_by_email($id=0) {
                 $result_array = self::find_by_sql("SELECT * FROM ".static::$table_name." WHERE email='{$id}' LIMIT 1");
