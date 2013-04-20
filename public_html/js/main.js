@@ -417,6 +417,14 @@ function addOfferToBasket(num){
     reloadBasket();
     console.log(status);
     sliderChange(num);
+    $.msgBox({
+        title: "Dodavanje",
+        content: "Proizvod je dodan u košaricu",
+        type: "info",
+        showButtons: false,
+        opacity: 0.9,
+        autoClose:true
+    });
 }
 
 function removeOfferFromBasket(num){
@@ -429,6 +437,14 @@ function removeOfferFromBasket(num){
     reloadBasket();
     console.log(status);
     sliderChange(num);
+    $.msgBox({
+        title: "Uklanjanje",
+        content: "Proizvod je uklonjen iz košarice",
+        type: "info",
+        showButtons: false,
+        opacity: 0.9,
+        autoClose:true
+    });
 }
 
 function isInBasket(num){
