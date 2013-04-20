@@ -1,4 +1,3 @@
-<div class="clear"></div>
-<footer>
+<footer>	
     Footer
 </footer>

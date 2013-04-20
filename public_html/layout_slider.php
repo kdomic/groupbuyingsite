@@ -11,7 +11,7 @@
         <div class="sliderOfferBought"><h1></h1><meter value="0" min="0" max="0">0</meter><h2></h2></div>
         <div class="sliderOfferTime"><h1>Preostalo vremena: </h1><h2></h2></div>
     </div>
-    <div class="sliderImg"><img src="" alt="Slika ponude" /></div>
+    <div class="sliderImg"><img src="images/empty.png" alt="Slika ponude" /></div>
     <div class="sliderImgNum"><a onclick="sliderPlay()" id="sliderPlay">&#9734;</a></div>
     <div class="sliderImgNum"><a onclick="sliderChange(4)" >4</a></div>
     <div class="sliderImgNum"><a onclick="sliderChange(3)" >3</a></div>
