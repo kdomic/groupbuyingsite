@@ -256,20 +256,22 @@ function sliderPlay(){
 }
 
 function sliderChange(selectedOffer){
+    var data = new Array();
     if(selectedOffer===null){
         sliderNum = sliderNum+1;
         selectedOffer = sliderNum;        
-        sliderNum = sliderNum%sliderMaxNum;        
+        sliderNum = sliderNum%sliderMaxNum;  
+        var index = $('.sliderImgNum a').length-selectedOffer;
+        $('.sliderImgNum a').removeClass('current');
+        $($('.sliderImgNum a')[index]).addClass('current');
+        data = getOffer(sliderMaxNum-index+1);      
     }else{
         sliderNum = selectedOffer;
         timer.pause();
         sliderPlayIcon();
-    }
-    var index = $('.sliderImgNum a').length-selectedOffer;
-    $('.sliderImgNum a').removeClass('current');
-    $($('.sliderImgNum a')[index]).addClass('current');
-    var data = getOffer(sliderMaxNum-index+1);
-    slideOfferChange(data,0);
+        data = getOffer(selectedOffer);
+    }    
+    slideOfferChange(data);
     sliderImgChange(data[12]);
 }
 
@@ -285,7 +287,7 @@ function sliderImgChange(img){
                         });                    
 }
 
-function slideOfferChange(data,kupi) { 
+function slideOfferChange(data) { 
     var time = 400;
     $('.sliderCaption h1').fadeOut(time, function() { $(this).text(data[1]).fadeIn(time); });
     $('.sliderCaption h2').fadeOut(time, function() { $(this).text(data[2]).fadeIn(time); });
@@ -304,8 +306,9 @@ function slideOfferChange(data,kupi) {
                                      next(); 
                                  });    
     $('.sliderOfferTime h2').fadeOut(time, function() { $(this).text(data[11]).fadeIn(time); });
+    $('.sliderOfferFriend a').unbind('click');
     $($('.sliderOfferFriend a')[0]).click(function(){alert("Ovo treba napraviti");});
-    $($('.sliderOfferFriend a')[1]).click(function(){loadOfferDetails(data[0]);})
+    $($('.sliderOfferFriend a')[1]).click(function(){loadOfferDetails(data[0]);});
     $('.sliderOfferFriend h1').fadeOut(time).fadeIn(time);    
     $('.sliderOfferFriend img').fadeOut(time).fadeIn(time);
     $('.sliderOfferBuy h1').fadeOut(time).fadeIn(time);
@@ -373,7 +376,7 @@ function getOffer(load){
 
 function loadOfferDetails(num){    
     var data = getOffer(num);
-    sliderChange(num,1);
+    sliderChange(num);
     var img = data[14].split(';');
     img.pop();
     $('.imgGallery').html('');
@@ -387,8 +390,9 @@ function loadOfferDetails(num){
     $($('#layout_sidebar_offer_details div')[0]).html(htmlDencodeEntities(data[17])); 
     map_x = parseFloat(data[18]);
     map_y = parseFloat(data[19]);
-    console.log(parseFloat(data[18]));
-    console.log(parseFloat(data[19]));    
+    //console.log(parseFloat(data[18]));
+    //console.log(parseFloat(data[19]));    
+    console.log(1);
     $($('#layout_sidebar_offer_details div')[1]).html(data[1]+'<br/><a href=""><img src="images/basketAdd.png" alt="slika" /></a>');
     hideIndexLayou();    
     showOfferLayou();    
@@ -455,6 +459,7 @@ $(document).ready(function() {
 function showIndexLayout() {
     initSlider();
     $('slider').show();
+    $($('.sliderOfferFriend a')[1]).show();
     $('.sliderImgNum').show();
     $('#layout_offers').show();
     $('#layout_loadmore').show();
@@ -466,6 +471,7 @@ function showIndexLayout() {
 function hideIndexLayou() {
     timer.stop();
     $('slider').hide();
+    $($('.sliderOfferFriend a')[1]).hide();
     $('.sliderImgNum').hide();
     $('#layout_offers').hide();
     $('#layout_loadmore').hide();
