@@ -307,9 +307,10 @@ function slideOfferChange(data) {
                                  });    
     $('.sliderOfferTime h2').fadeOut(time, function() { $(this).text(data[11]).fadeIn(time); });
     $('.sliderOfferFriend a').unbind('click');
-    $($('.sliderOfferFriend a')[0]).click(function(){alert("Ovo treba napraviti");});
+    $($('.sliderOfferFriend a')[0]).click(function(){alter("napraviti")});
     $($('.sliderOfferFriend a')[1]).click(function(){loadOfferDetails(data[0]);});
-    $('.sliderOfferFriend h1').fadeOut(time).fadeIn(time);    
+    $('.sliderOfferBuy a').unbind('click').click(function(){addOfferToBasket(data[0]);});
+    $('.sliderOfferFriend h1').fadeOut(time).fadeIn(time);
     $('.sliderOfferFriend img').fadeOut(time).fadeIn(time);
     $('.sliderOfferBuy h1').fadeOut(time).fadeIn(time);
     $('.sliderOfferBuy a').fadeOut(time).fadeIn(time);    
@@ -398,6 +399,32 @@ function loadOfferDetails(num){
     showOfferLayou();    
 }
 
+/* === BASKET ==== */
+
+function addOfferToBasket(num){
+    var dataString = new Array();
+    dataString.push('1');
+    dataString.push(num);
+    var xml = sendToPhp(dataString,"includes/basket.php");
+    var status = $(xml).find('status').text();
+    reloadBasket();
+}
+
+function reloadBasket() {
+    var dataString = new Array();
+    dataString.push('0');
+    var xml = sendToPhp(dataString,"includes/basket.php");
+    var data = $(xml).find('status').text();
+    $('#basket').html('');
+    data = data.split(';');
+    data.pop();
+    while(data.length>0){
+        var num = data.pop();
+        var $div = $('<img src="offers/ponuda_'+leadZero(num)+'/01.jpg" alt="slika" onclick="loadOfferDetails('+num+')"/>');
+        $('#basket').append($div);
+    }
+}
+
 /* === AJAX status SEND/R === */
 function sendToPhp(dataString,url){
     var jsonString = JSON.stringify(dataString);
@@ -449,7 +476,8 @@ $(document).ready(function() {
         $('#btnShowDropboxAccount').removeClass("hide");
     }
     $('#inputLozinkaP').keypress(function(e) {if(e.which == 13)loginUser();});
-    initOffers();    
+    initOffers(); 
+    reloadBasket();   
     hideOfferLayou();
     showIndexLayout();
 });
@@ -509,6 +537,10 @@ function goBack() {
 }
 
 /* === OTHER ===*/
+
+function leadZero(str) {
+    return str.length < 5 ? leadZero("0" + str) : str;
+}
 
 function error() {
     document.location.reload(true);

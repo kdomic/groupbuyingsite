@@ -1,8 +1,6 @@
-<?php
-
-$handle = opendir('images');
-while (false !== ($entry = readdir($handle)))
-	print_r($entry);
-closedir($handle);
-
-?>
+<?php require_once('includes/initialize.php'); ?>
+<pre>
+	<?php
+	print_r($_SESSION['basket']);
+	?>
+</pre>

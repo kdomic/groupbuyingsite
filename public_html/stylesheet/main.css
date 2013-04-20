@@ -655,6 +655,15 @@ header nav select {
 
 .sidebarWrapper #basket {
     text-align: center;
+    cursor: pointer;    
+}
+
+.sidebarWrapper #basket img {
+    border: 1px solid #fff;
+}
+
+.sidebarWrapper #basket img:hover {
+    border: 1px solid #05c4e7;
 }
 
 .sidebarWrapper #pay {
