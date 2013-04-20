@@ -83,7 +83,7 @@ header nav select {
 
 /* === DROPBOX === */
 
-.dropbox {
+.dropbox, .dropboxLogin, .dropboxPurchases, .dropboxAccount{
     display: none;
     background-color: #000;
     color: #fff;    

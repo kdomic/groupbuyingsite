@@ -1,4 +1,4 @@
-<div class="dropbox">
+<div class="dropboxLogin">
 <div class="headerContent">
     <div class="dropboxLeft">
         Registracija
@@ -54,5 +54,17 @@
         Facebook & Google
     </div>
     <div class="clear"></div>
+</div>
+</div>
+
+<div class="dropboxPurchases">
+<div class="headerContent">
+    dropboxPurchases
+</div>
+</div>
+
+<div class="dropboxAccount">
+<div class="headerContent">
+    dropboxAccount
 </div>
 </div>

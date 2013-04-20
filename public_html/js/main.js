@@ -1,16 +1,9 @@
 var emailPattern = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
 
 /* === DROPBOX === */
-var dropboxOn = 0;
 
-function showDropbox(){
-    if(dropboxOn){
-        $(".dropbox").slideUp("slow");
-        dropboxOn = 0;
-    } else {
-        $(".dropbox").slideDown("slow");
-        dropboxOn = 1;
-    }
+function showDropbox(index){
+    $(".dropbox"+index).slideToggle("slow");
 }
 
 /* === REGISTER === */
@@ -141,6 +134,12 @@ function loginUser(){
         $('#loginStatus').removeClass("error").removeClass("warning").addClass("info");
         $('#loginStatus span').html("Prijava uspješna!");      
         $('#loginStatus').slideDown("slow");
+        $('#btnShowDropboxLogin').addClass("hide");        
+        setTimeout(function(){
+            $('.dropboxLogin').slideUp("slow");
+            $('#btnShowDropboxPurchases').removeClass("hide");
+            $('#btnShowDropboxAccount').removeClass("hide");
+        }, 1000);
     } else {
         $('#loginStatus').removeClass("warning").addClass("error");
         $('#loginStatus span').html("Uneseni podatci nisu ispravni");

@@ -16,6 +16,10 @@
                 </select>
             </nav>      
         </div>
-        <div class="divHeaderRight"> <a onclick="showDropbox();">Prijava</a> </div>
+        <div class="divHeaderRight"> 
+            <a onclick="showDropbox('Login');" id="btnShowDropboxLogin" class="">Prijava</a>
+            <a onclick="showDropbox('Purchases');" id="btnShowDropboxPurchases" class="hide">Moje kupovine</a>
+            <a onclick="showDropbox('Account');" id="btnShowDropboxAccount" class="hide">Moj račun</a>            
+        </div>
     </div>
 </header> 

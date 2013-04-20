@@ -12,7 +12,7 @@
     </head>    
     
     <body>
-        <?php include('layout_register_login.php'); ?>
+        <?php include('layout_dropbox.php'); ?>
         <?php include('layout_header.php'); ?>
         <div id="outerDiv">
             <?php include('layout_slider.php'); ?>            
