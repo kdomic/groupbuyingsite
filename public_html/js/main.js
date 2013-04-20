@@ -401,7 +401,6 @@ function loadOfferDetails(num){
     //console.log(parseFloat(data[18]));
     //console.log(parseFloat(data[19]));    
     $($('#layout_sidebar_offer_details div')[1]).html(data[1]+'<br/><a href=""><img src="images/basketAdd.png" alt="slika" /></a>');
-    hideIndexLayou();    
     showOfferLayou();    
 }
 
@@ -468,11 +467,20 @@ function reloadBasket() {
     $('#basket').html('');
     data = data.split(';');
     data.pop();
+    $('#pay').hide();
+    if(data.length===0)$('#basket').html('Košarica je prazna');
     while(data.length>0){
         var num = data.pop();
         var $div = $('<img src="offers/ponuda_'+leadZero(num)+'/01.jpg" alt="slika" onclick="loadOfferDetails('+num+')"/>');
         $('#basket').append($div);
+        $('#pay').show();
     }
+}
+
+/* === CHECKOUT ===*/
+
+function checkout(){
+    // body...
 }
 
 /* === AJAX status SEND/R === */
@@ -528,16 +536,23 @@ $(document).ready(function() {
     $('#inputLozinkaP').keypress(function(e) {if(e.which == 13)loginUser();});
     initOffers(); 
     reloadBasket();   
-    hideOfferLayou();
     showIndexLayout();
 });
 
 /* === LAYOUTS === */
 
+function hideAll() {
+    $('#slider').hide();
+    hideIndexLayou();
+    hideOfferLayou();
+    hideCheckoutLayout();
+}
+
 function showIndexLayout() {
+    hideAll();
     initSlider();
     sliderPlayIcon();
-    $('slider').show();
+    $('#slider').show();
     $($('.sliderOfferFriend a')[1]).show();
     $('.sliderImgNum').show();
     $('#layout_offers').show();
@@ -549,7 +564,7 @@ function showIndexLayout() {
 
 function hideIndexLayou() {
     timer.stop();
-    $('slider').hide();
+    $('#slider').hide();
     $($('.sliderOfferFriend a')[1]).hide();
     $('.sliderImgNum').hide();
     $('#layout_offers').hide();
@@ -560,6 +575,7 @@ function hideIndexLayou() {
 }
 
 function showOfferLayou(){
+    hideAll();
     $('#goBack').show();
     $('slider').show();
     $('#imageGallery').show();
@@ -573,13 +589,21 @@ function showOfferLayou(){
 
 function hideOfferLayou(){
     $('#goBack').hide();
-    $('slider').hide();
+    $('#slider').hide();
     $('#imageGallery').hide();    
     $('#layout_offer_details').hide();
     $('#layout_sidebar_offer_details').hide();
     $('#layout_sidebar_basket').hide();
     $('#layout_comments').hide();  
     $('#layout_recomended_offers').hide();    
+}
+
+function showCheckoutLayout() {
+    hideAll();
+}
+
+function hideCheckoutLayout() {
+    // body...
 }
 
 function goBack() {
