@@ -48,7 +48,6 @@ header nav {
 
 header nav select {
     height: 40px;
-    width: max-content;
     padding: 5px;    
     background-color: #000;
     color: #fff;
@@ -61,7 +60,6 @@ header nav select {
 }
 
 .selectDrop {
-    width: max-content;
     background-color: #000;
     color: #fff;
 }
