@@ -402,7 +402,7 @@ function loadOfferDetails(num){
     //console.log(parseFloat(data[19]));    
     $($('#layout_sidebar_offer_details div')[1]).html(data[1]+'<br/><a href=""><img src="images/basketAdd.png" alt="slika" /></a>');
     showOfferLayou();
-    backQueneOffer.push(num);
+    backQuene.push(parseInt(num)*(-1));
 }
 
 /* === BASKET ==== */
@@ -589,7 +589,6 @@ function hideIndexLayou() {
 
 function showOfferLayou(){
     hideAll();    
-    backQuene.push(2);  
     console.log(backQuene);  
     $('#goBack').show();
     $('#slider').show();
@@ -628,22 +627,23 @@ function hideCheckoutLayout() {
 }
 
 var backQuene = new Array();
-var backQueneOffer = new Array();
 
 function goBack() {
     hideAll();
     backQuene.pop();
-    console.log(backQuene);    
-    switch(backQuene.pop()){
+    console.log(backQuene);
+    var num = backQuene.pop();
+    switch(num){
         case 1: 
             showIndexLayout(); 
             $('#goBack').hide();
             break;
-        case 2:
-            //loadOfferDetails(lastQueneOffer);
-            showOfferLayou(); 
-            break;
+        case 2: break;
         case 3: showCheckoutLayout(); break;
+        default:
+            num = num*(-1);
+            showOfferLayou();
+            loadOfferDetails(num);
     }
 }
 
