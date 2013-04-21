@@ -26,6 +26,7 @@
                 <?php include('layout_sidebar_offer_details.php'); ?>                
                 <?php include('layout_sidebar_basket.php'); ?>
                 <?php include('layout_sidebar_newsletter.php'); ?>
+                <?php include('layout_sidebar_universal.php'); ?>                
             </div>            
             <?php include('layout_loadmore.php'); ?>               
             <?php include('layout_comments.php'); ?>

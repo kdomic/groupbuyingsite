@@ -401,7 +401,8 @@ function loadOfferDetails(num){
     //console.log(parseFloat(data[18]));
     //console.log(parseFloat(data[19]));    
     $($('#layout_sidebar_offer_details div')[1]).html(data[1]+'<br/><a href=""><img src="images/basketAdd.png" alt="slika" /></a>');
-    showOfferLayou();    
+    showOfferLayou();
+    backQueneOffer.push(num);
 }
 
 /* === BASKET ==== */
@@ -480,7 +481,16 @@ function reloadBasket() {
 /* === CHECKOUT ===*/
 
 function checkout(){
-    // body...
+    var dataString = new Array();
+    dataString.push('0');
+    var xml = sendToPhp(dataString,"includes/basket.php");
+    var data = $(xml).find('status').text();
+    data = data.split(';');
+    data.pop();
+    while(data.length>0){
+        var num = data.pop();
+        addNewOffer(num);
+    }
 }
 
 /* === AJAX status SEND/R === */
@@ -542,13 +552,16 @@ $(document).ready(function() {
 /* === LAYOUTS === */
 
 function hideAll() {
-    $('#slider').hide();
+    goTop();
     hideIndexLayou();
     hideOfferLayou();
     hideCheckoutLayout();
 }
 
 function showIndexLayout() {
+    backQuene.push(1);
+    console.log(backQuene);
+    $('#goBack').hide();
     hideAll();
     initSlider();
     sliderPlayIcon();
@@ -575,9 +588,11 @@ function hideIndexLayou() {
 }
 
 function showOfferLayou(){
-    hideAll();
+    hideAll();    
+    backQuene.push(2);  
+    console.log(backQuene);  
     $('#goBack').show();
-    $('slider').show();
+    $('#slider').show();
     $('#imageGallery').show();
     $('#layout_offer_details').show();
     $('#layout_sidebar_offer_details').show();
@@ -588,7 +603,6 @@ function showOfferLayou(){
 }
 
 function hideOfferLayou(){
-    $('#goBack').hide();
     $('#slider').hide();
     $('#imageGallery').hide();    
     $('#layout_offer_details').hide();
@@ -599,16 +613,38 @@ function hideOfferLayou(){
 }
 
 function showCheckoutLayout() {
+    backQuene.push(3);
+    console.log(backQuene);    
+    $('#goBack').show();
     hideAll();
+    $('#layout_offers').html('').show();
+    $('#layout_sidebar_universal').show();
+    checkout();
 }
 
 function hideCheckoutLayout() {
-    // body...
+    $('#layout_offers').hide();
+    $('#layout_sidebar_universal').hide();
 }
 
+var backQuene = new Array();
+var backQueneOffer = new Array();
+
 function goBack() {
-    hideOfferLayou();
-    showIndexLayout();
+    hideAll();
+    backQuene.pop();
+    console.log(backQuene);    
+    switch(backQuene.pop()){
+        case 1: 
+            showIndexLayout(); 
+            $('#goBack').hide();
+            break;
+        case 2:
+            //loadOfferDetails(lastQueneOffer);
+            showOfferLayou(); 
+            break;
+        case 3: showCheckoutLayout(); break;
+    }
 }
 
 /* === OTHER ===*/
