@@ -17,7 +17,10 @@
         <?php include('layout_dropbox.php'); ?>
         <?php include('layout_header.php'); ?>
         <div id="outerDiv">
-            <div id="goBack" onclick="goBack();"><img src="images/back.png" alt="Natrag" /></div>
+            <div id="goBack" >
+                <img src="images/home.png" alt="Natrag" onclick="goHome();" />
+                <img src="images/back.png" alt="Natrag" onclick="goBack();" />
+            </div>
             <?php include('layout_slider.php'); ?>
             <?php include('layout_offers.php'); ?>
             <?php include('layout_offer_details.php'); ?>                       

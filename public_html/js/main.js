@@ -628,6 +628,13 @@ function hideCheckoutLayout() {
 
 var backQuene = new Array();
 
+function goHome(){
+    backQuene = new Array();
+    backQuene.push(1);
+    backQuene.push(1);
+    goBack();   
+}
+
 function goBack() {
     hideAll();
     backQuene.pop();
