@@ -168,6 +168,7 @@ function loginUser(){
             $('#btnShowDropboxPurchases').removeClass("hide");
             $('#btnShowDropboxAccount').removeClass("hide");
         }, 1000);
+        reloadBasket();
     } else {
         $('#loginStatus').removeClass("warning").addClass("error");
         $('#loginStatus span').html("Uneseni podatci nisu ispravni");
@@ -408,6 +409,11 @@ function loadOfferDetails(num){
 /* === BASKET ==== */
 
 function addOfferToBasket(num){
+    if(!sessionCheck()){
+        msgBoxShow("Niste prijavljeni", "Molimo Vas prijavite se kako biste mogli kupovati", "info");       
+        showDropbox('Login');
+        return;
+    }
     console.log("Add: "+num);
     var dataString = new Array();
     dataString.push('1');
@@ -417,14 +423,7 @@ function addOfferToBasket(num){
     reloadBasket();
     console.log(status);
     sliderChange(num);
-    $.msgBox({
-        title: "Dodavanje",
-        content: "Proizvod je dodan u košaricu",
-        type: "info",
-        showButtons: false,
-        opacity: 0.9,
-        autoClose:true
-    });
+    msgBoxShow("Dodavanje", "Proizvod je dodan u košaricu", "info");
 }
 
 function removeOfferFromBasket(num){
@@ -437,14 +436,7 @@ function removeOfferFromBasket(num){
     reloadBasket();
     console.log(status);
     sliderChange(num);
-    $.msgBox({
-        title: "Uklanjanje",
-        content: "Proizvod je uklonjen iz košarice",
-        type: "info",
-        showButtons: false,
-        opacity: 0.9,
-        autoClose:true
-    });
+    msgBoxShow("Uklanjanje", "Proizvod je uklonjen iz košarice", "info");
 }
 
 function isInBasket(num){
@@ -461,6 +453,11 @@ function isInBasket(num){
 }
 
 function reloadBasket() {
+    if(!sessionCheck()){
+        $('#basket').html('Niste prijavljani');
+        $('#pay').hide();
+        return;
+    }
     var dataString = new Array();
     dataString.push('0');
     var xml = sendToPhp(dataString,"includes/basket.php");
@@ -481,6 +478,7 @@ function reloadBasket() {
 /* === CHECKOUT ===*/
 
 function checkout(){
+    showCheckoutLayout();    
     var dataString = new Array();
     dataString.push('0');
     var xml = sendToPhp(dataString,"includes/basket.php");
@@ -511,7 +509,7 @@ function sendToPhp(dataString,url){
 }
 
 /* === SESSION and USER DATA === */
-function sessionCheck () {
+function sessionCheck() {
     var data = new Array();
     data.push('2');
     var xml = sendToPhp(data,"includes/session.php");
@@ -543,8 +541,7 @@ $(document).ready(function() {
         $('#btnShowDropboxPurchases').removeClass("hide");
         $('#btnShowDropboxAccount').removeClass("hide");
     }
-    $('#inputLozinkaP').keypress(function(e) {if(e.which == 13)loginUser();});
-    initOffers(); 
+    $('#inputLozinkaP').keypress(function(e) {if(e.which == 13)loginUser();});    
     reloadBasket();   
     showIndexLayout();
 });
@@ -563,6 +560,7 @@ function showIndexLayout() {
     console.log(backQuene);
     $('#goBack').hide();
     hideAll();
+    initOffers();
     initSlider();
     sliderPlayIcon();
     $('#slider').show();
@@ -613,12 +611,10 @@ function hideOfferLayou(){
 
 function showCheckoutLayout() {
     backQuene.push(3);
-    console.log(backQuene);    
     $('#goBack').show();
     hideAll();
     $('#layout_offers').html('').show();
-    $('#layout_sidebar_universal').show();
-    checkout();
+    $('#layout_sidebar_universal').show();    
 }
 
 function hideCheckoutLayout() {
@@ -635,7 +631,7 @@ function goHome(){
     goBack();   
 }
 
-function goBack() {
+function goBack() {    
     hideAll();
     backQuene.pop();
     console.log(backQuene);
@@ -652,6 +648,19 @@ function goBack() {
             showOfferLayou();
             loadOfferDetails(num);
     }
+}
+
+/* === === */
+
+function msgBoxShow(title, content, type) {
+    $.msgBox({
+        title: title,
+        content: content,
+        type: type,
+        showButtons: false,
+        opacity: 0.9,
+        autoClose:true
+    });
 }
 
 /* === OTHER ===*/

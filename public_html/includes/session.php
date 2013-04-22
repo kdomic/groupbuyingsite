@@ -30,14 +30,17 @@
 
 		public function login($user)
 		{
-			if($user)
+			if($user){
 				$this->user_id = $_SESSION['user_id'] = $user->id;
+				$this->clearBasket();
+			}
 		}
 
 		public function logout()
 		{
 			unset($_SESSION['user_id']);
 			$this->user_id = 0;
+			$this->clearBasket();
 		}
 
 		public function check_login()
@@ -46,6 +49,12 @@
 				$this->user_id = $_SESSION['user_id'];
 			else
 				$this->user_id = 0;
+		}
+
+		public function clearBasket()
+		{
+			if(isset($_SESSION['basket']))
+				unset($_SESSION['basket']);
 		}
 
 	}

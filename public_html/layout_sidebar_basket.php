@@ -6,5 +6,5 @@
         </a>
     </h1>
     <div id="basket"></div>
-    <div id="pay"><a onclick="showCheckoutLayout();">Završi kupnju</a></div>
+    <div id="pay"><a onclick="checkout();">Završi kupnju</a></div>
 </div>
