@@ -501,13 +501,21 @@ function checkoutPay() {
         type: "confirm",
         buttons: [{ value: "Prihvati" }, { value: "Povratak" }],
         success: function (result) {
-            if (result == "Prihvati") {
-                $('#layout_offers').html('<div class="success">Kupnja gotova!</div>');
-                $('#layout_content_universal').hide();
-                
+            if (result == "Prihvati") {                
+                var dataString = new Array();
+                dataString.push('3');
+                var xml = sendToPhp(dataString,"includes/basket.php");
+                var data = parseInt($(xml).find('status').text());
+                if(data===1){
+                    $('#layout_offers').html('<div class="success">Kupnja gotova!</div>');
+                    $('#layout_content_universal').hide();
+                } else {
+                    //alert("ne");
+                }
             }
         }
-    });    
+    });
+    reloadBasket();    
 }
 
 /* === AJAX status SEND/R === */
