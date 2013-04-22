@@ -417,6 +417,7 @@ function addOfferToBasket(num){
     dataString.push(num);
     var xml = sendToPhp(dataString,"includes/basket.php");
     var status = $(xml).find('status').text();
+    console.log(status);
     reloadBasket();
     sliderChange(num);
     msgBoxShow("Dodavanje", "Proizvod je dodan u košaricu", "info");
@@ -456,6 +457,7 @@ function reloadBasket() {
     dataString.push('0');
     var xml = sendToPhp(dataString,"includes/basket.php");
     var data = $(xml).find('status').text();
+    console.log(data);
     $('#basket').html('');
     data = data.split(';');
     data.pop();
