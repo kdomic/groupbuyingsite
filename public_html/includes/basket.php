@@ -1,22 +1,23 @@
 <?php require_once('initialize.php'); ?>
 <?php
 	/*	Procedure
-			['0']				data[0]==0 - return items
+			['0']				data[0]==1 - return items
 			['1','offerNum']	data[0]==1 - add item 
 			['2','offerNum']	data[0]==2 - remove
-			['3']				data[0]==3 - save basket as purchased
+			['3']				data[0]==3 - save basket as purchased			
 	*/
 	class Basket
 	{
 		
 		public $items;
-		public $status;
 
 		function __construct()
 		{
-			$this->status = 0;
 			$data = json_decode(stripslashes($_POST['data']));
 			switch ((int)$data[0]) {
+				case 0:
+					$this->show();
+					break;
 				case 1:
 					$this->add($data[1]);
 					break;
@@ -25,9 +26,8 @@
 					break;
 				case 3:
 					$this->save();
-					break;
-			}
-			$this->show();
+					break;					
+			}			
 		}
 
 		public function add($value='')
@@ -50,29 +50,38 @@
     			$_SESSION['basket'] = $new_data;
 			}				
 			else
-				xmlStatusSend(0);
-		}
-
-		public function save()
-		{
-			$this->status = 0;
-			if(!isset($_SESSION['basket'])) return;
-			$racun = new Racuni();
-			$racun->id_korisnika = Session::getCurrentUser();
-			$racun->datum = date("Y-m-d H:i:s");
-			$racun->placeno = 1;
-			$racun->save();			
-			$this->status = 1;
-			unset($_SESSION['basket']);			
+				xmlStatusSend(0);			
 		}
 
 		public function show()
 		{
 			if (isset($_SESSION['basket']))
 				xmlStatusSend($_SESSION['basket']);
-			else				
-				xmlStatusSend($this->status);
+			else
+				xmlStatusSend(0);
 		}
+
+		public function save()
+		{
+			$this->status = 0;
+			if(!isset($_SESSION['basket']) || !$_SESSION['user_id']) return;
+			$racun = new Racuni();
+			$racun->id_korisnika = $_SESSION['user_id'];
+			$racun->datum = date("Y-m-d H:i:s");
+			$racun->placeno = 1;
+			$racun->save();
+			$data = explode(';', $_SESSION['basket']);
+			array_pop($data);
+			foreach ($data as $d) {
+				$racun_akcije = new Racuni_akcije();
+				$racun_akcije->id_racuna = $racun->id;
+				$racun_akcije->id_akcije = (int)$d;
+				$racun_akcije->kolicina = 1;
+				$racun_akcije->save();
+			}
+			unset($_SESSION['basket']);
+			xmlStatusSend(1);
+		}	
 
 	}
 

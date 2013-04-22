@@ -10,7 +10,6 @@
 
 		function __construct()
 		{
-			if(!isset($_POST['data'])) return;
 			$this->check_login();
 			$data = json_decode(stripslashes($_POST['data']));			
 			switch ((int)$data[0]) {
@@ -27,13 +26,6 @@
 					xmlStatusSend($this->user_id);
 					break;
 			}
-		}
-
-		public static function getCurrentUser(){
-			if(isset($_SESSION['user_id']))
-				return $_SESSION['user_id'];
-			else
-				return 0;
 		}
 
 		public function login($user)
@@ -67,4 +59,5 @@
 
 	}
 	$sessione = new Session();
+
 ?>

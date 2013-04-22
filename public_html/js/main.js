@@ -417,7 +417,6 @@ function addOfferToBasket(num){
     dataString.push(num);
     var xml = sendToPhp(dataString,"includes/basket.php");
     var status = $(xml).find('status').text();
-    console.log(status);
     reloadBasket();
     sliderChange(num);
     msgBoxShow("Dodavanje", "Proizvod je dodan u košaricu", "info");
@@ -450,24 +449,23 @@ function isInBasket(num){
 function reloadBasket() {
     if(!sessionCheck()){
         $('#basket').html('Niste prijavljani');
-        $('#pay').hide();
+        $('.buttonGreen').hide();
         return;
     }
     var dataString = new Array();
     dataString.push('0');
     var xml = sendToPhp(dataString,"includes/basket.php");
     var data = $(xml).find('status').text();
-    console.log(data);
     $('#basket').html('');
     data = data.split(';');
     data.pop();
-    $('#pay').hide();
+    $('.buttonGreen').hide();
     if(data.length===0)$('#basket').html('Košarica je prazna');
     while(data.length>0){
         var num = data.pop();
         var $div = $('<img src="offers/ponuda_'+leadZero(num)+'/01.jpg" alt="slika" onclick="loadOfferDetails('+num+')"/>');
         $('#basket').append($div);
-        $('#pay').show();
+        $('.buttonGreen').show();
     }
 }
 
@@ -496,7 +494,7 @@ function checkout(){
 }
 
 function checkoutPay() {
-    var sum = 199.99;
+    var sum = 0;
     $.msgBox({
         title: "Proces naplate",
         content: "Ukupan iznos za naplatu: "+sum+"kn",
@@ -511,13 +509,14 @@ function checkoutPay() {
                 if(data===1){
                     $('#layout_offers').html('<div class="success">Kupnja gotova!</div>');
                     $('#layout_content_universal').hide();
+                    reloadBasket();
                 } else {
-                    //alert("ne");
+                    $('#layout_offers').html('<div class="error">Greška</div>');
+                    $('#layout_content_universal').hide();
                 }
             }
         }
-    });
-    reloadBasket();    
+    });    
 }
 
 /* === AJAX status SEND/R === */
