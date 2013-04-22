@@ -1,11 +1,11 @@
 <?php require_once('includes/initialize.php'); ?>
 <?php
 	$data = json_decode(stripslashes($_POST['data']));
-	$currentUser = $_SESSION['user_id'];
-	if((int)$data[0]!=(int)$currentUser){
+	//$currentUser = $_SESSION['user_id'];
+	/*if((int)$data[0]!=(int)$currentUser){
 		xmlStatusSend(0);
 		return;
-	}
+	}*/
 	$k = Korisnici::find_by_id($data[0]);	
 	$xmlDoc = new DOMDocument();
 	$root = $xmlDoc->appendChild($xmlDoc->createElement("korisnik"));
@@ -27,6 +27,7 @@
 	$root->appendChild($xmlDoc->createElement("email_potvrda", $k->email_potvrda));
 	$root->appendChild($xmlDoc->createElement("password", $k->password));
 	$root->appendChild($xmlDoc->createElement("ovlasti", $k->ovlasti));	
+	$root->appendChild($xmlDoc->createElement("aktivan", $k->aktivan));	
 	header("Content-Type: text/xml");
     $xmlDoc->formatOutput = true;
     echo $xmlDoc->saveXML();

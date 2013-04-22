@@ -1,11 +1,11 @@
 <?php require_once('includes/initialize.php'); ?>
 <?php
 	$data = json_decode(stripslashes($_POST['data']));
-	$currentUser = $_SESSION['user_id'];
-	if((int)$data[0]!=(int)$currentUser){
+	//$currentUser = $_SESSION['user_id'];
+	/*if((int)$data[0]!=(int)$currentUser){
 		xmlStatusSend(0);
 		return;
-	}
+	}*/
 	$k = Korisnici::find_by_id($data[0]);
 	$k->ime = $data[1];
 	$k->prezime = $data[2];
@@ -24,6 +24,7 @@
 	$k->email_potvrda = $data[15];
 	$k->password = is_sha1($data[16]) ? $data[16] : sha1($data[16]);
 	$k->ovlasti = $data[17];
+	$k->aktivan = $data[18];
 	xmlStatusSend($k->save());
 ?>
 

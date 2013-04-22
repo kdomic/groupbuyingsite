@@ -20,7 +20,8 @@
                                             'datum_registracije',
                                             'email_potvrda',
                                             'password',
-                                            'ovlasti');
+                                            'ovlasti',
+                                            'aktivan');
             public $id;                 //[0]
             public $ime;                //[1]
             public $prezime;            //[2]
@@ -39,6 +40,7 @@
             public $email_potvrda;      //[15]
             public $password;           //[16]
             public $ovlasti;            //[17]
+            public $aktivan;            //[18]
             
             public static function find_by_email($id=0) {
                 $result_array = self::find_by_sql("SELECT * FROM ".static::$table_name." WHERE email='{$id}' LIMIT 1");

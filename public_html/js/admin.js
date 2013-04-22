@@ -1,13 +1,104 @@
+var emailPattern = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
+var originalEmail;
+
 /* === LAYOUTS === */
 
 function hideAll(){
+    $('#pocetna').hide();
+    $('#korisnici').hide();
+    $('#moderatori').hide();
+    $('#kategorije').hide();
+    $('#proizvodi').hide();
+    $('#akcije').hide();
+    $('#vrijeme').hide();
+}
 
+function layout_showKorisnici(){
+    $('#singleUser').hide();
+    $('#allUsers').show();
+    $('#korisnici').show();
+    $('.menuCurrent').removeClass('menuCurrent');
+    $($('#sidebar li')[1]).addClass('menuCurrent');
 }
 
 /* === ONLOAD === */
 $(document).ready(function(){
+    //!!!! PROVJERA OVLASTI - get_allusers.php
 	hideAll();
+    initUserTable();
+
+    //EVENTS
+    $($('#sidebar li')[0]).click(function(){});
+    $($('#sidebar li')[1]).click(function(){layout_showKorisnici();});
+    $($('#sidebar li')[2]).click(function(){});
+    $($('#sidebar li')[3]).click(function(){});
+    $($('#sidebar li')[4]).click(function(){});
+    $($('#sidebar li')[5]).click(function(){});
+    $($('#sidebar li')[6]).click(function(){});
 });
+
+/* === USER EDIT === */
+
+function initUserTable() { 
+    var dataTable = $('#userTable').dataTable();
+    dataTable.fnClearTable();
+    var xml = sendToPhp(new Array,'../get_allusers.php');
+    var users = $(xml).find('korisnici');
+    var user = new Array();
+    $(users).each(function(){    
+        $(this).children().each(function(){
+            user = []; 
+            $(this).children().each(function(){
+                user.push($(this).text());
+            });
+            dataTable.fnAddData([user[0],user[1],user[2],user[3],user[4],user[5],user[6]]);
+        });
+    });    
+    dataTable.$('tr').addClass("row").click(function(){editUser(dataTable.fnGetData(this)[0])});
+}
+
+function editUser(num){    
+    $('#userUpdateStatus').slideUp("fast");    
+    $('#allUsers').hide();
+    $('#singleUser').show();
+    var userData = getUserData(num);
+    var userInput = $('#singleUser td input');
+    for(var i=0; i<userData.length; i++)
+        $($(userInput)[i]).val(userData[i]);
+    originalEmail = $('#userEMAIL').val();
+}
+
+function saveUser(){
+    var userInput = $('#singleUser td input');
+    var userData = getUserData($($(userInput)[0]).val());
+    for(var i=1; i<userData.length; i++)
+        userData[i] = $($(userInput)[i]).val();
+    var xml = setUserData(userData);
+    var status = $(xml).find('status').text();
+    if(status==='1'){
+        $('#userUpdateStatus').html("Zapis pohranjen").addClass("success").removeClass("error").slideDown("slow");
+        setTimeout(function(){
+            $('#singleUser').hide();
+            $('#allUsers').show();
+            initUserTable();
+        }, 1000);
+    } else {
+        $('#userUpdateStatus').html("Greška prilikom pohrane").addClass("error").removeClass("success").slideDown("slow");
+    }
+}
+
+function checkEmailAvailability() {
+    if(originalEmail == $('#userEMAIL').val())return;
+    var dataString = new Array('','',$('#userEMAIL').val(),'','','');
+    var xml = sendToPhp(dataString,"../includes/register.php");
+    var status = $(xml).find('status').text();
+    if(status==='1')
+        $('#userUpdateStatus').html("Email zauzet!").addClass("error").removeClass("success").slideDown("slow");
+    else
+        $('#userUpdateStatus').html("").removeClass("error").slideUp("slow");
+    console.log(status);
+}
+
 
 
 /* === AJAX status SEND/R === */
@@ -31,7 +122,7 @@ function sendToPhp(dataString,url){
 function sessionCheck() {
     var data = new Array();
     data.push('2');
-    var xml = sendToPhp(data,"includes/session.php");
+    var xml = sendToPhp(data,"../includes/session.php");
     var status = $(xml).find('status').text();
     return parseInt(status);
 }
@@ -39,9 +130,9 @@ function sessionCheck() {
 function getUserData(id){
     var data = new Array();
     data.push(id);
-    var xml = sendToPhp(data,"get_userdata.php");
+    var xml = sendToPhp(data,"../get_userdata.php");
     var status = $(xml).find('status').text();
-    if(status==='0') error();
+    //if(status==='0') error(); !!!!!!!!!!!!!!!!!!!!!! - i u PHP (get set)
     var userData = new Array();
     var user = $(xml).find('korisnik');
     $(user).children().each(function(){userData.push($(this).text())});
@@ -49,8 +140,21 @@ function getUserData(id){
 }
 
 function setUserData(data){
-    var xml = sendToPhp(data,"set_userdata.php");
+    var xml = sendToPhp(data,"../set_userdata.php");
     return xml;
+}
+
+/* === Message Box=== */
+
+function msgBoxShow(title, content, type) {
+    $.msgBox({
+        title: title,
+        content: content,
+        type: type,
+        showButtons: false,
+        opacity: 0.9,
+        autoClose:true
+    });
 }
 
 /* === OTHER ===*/
