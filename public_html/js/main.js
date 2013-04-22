@@ -398,9 +398,7 @@ function loadOfferDetails(num){
     $('.desc').text(htmlDencodeEntities(data[16]));
     $($('#layout_sidebar_offer_details div')[0]).html(htmlDencodeEntities(data[17])); 
     map_x = parseFloat(data[18]);
-    map_y = parseFloat(data[19]);
-    //console.log(parseFloat(data[18]));
-    //console.log(parseFloat(data[19]));    
+    map_y = parseFloat(data[19]);  
     $($('#layout_sidebar_offer_details div')[1]).html(data[1]+'<br/><a href=""><img src="images/basketAdd.png" alt="slika" /></a>');
     showOfferLayou();
     backQuene.push(parseInt(num)*(-1));
@@ -414,27 +412,23 @@ function addOfferToBasket(num){
         showDropbox('Login');
         return;
     }
-    console.log("Add: "+num);
     var dataString = new Array();
     dataString.push('1');
     dataString.push(num);
     var xml = sendToPhp(dataString,"includes/basket.php");
     var status = $(xml).find('status').text();
     reloadBasket();
-    console.log(status);
     sliderChange(num);
     msgBoxShow("Dodavanje", "Proizvod je dodan u košaricu", "info");
 }
 
 function removeOfferFromBasket(num){
-    console.log("Remove: "+num);    
     var dataString = new Array();
     dataString.push('2');
     dataString.push(num);
     var xml = sendToPhp(dataString,"includes/basket.php");
     var status = $(xml).find('status').text();
     reloadBasket();
-    console.log(status);
     sliderChange(num);
     msgBoxShow("Uklanjanje", "Proizvod je uklonjen iz košarice", "info");
 }
@@ -489,6 +483,31 @@ function checkout(){
         var num = data.pop();
         addNewOffer(num);
     }
+    $('#layout_content_universal').html('<div class="buttonLongGreen" onclick="checkoutPay();">Plati</div>');
+    $('#layout_sidebar_universal h1').html('Opis pllaćanja');
+    $('#layout_sidebar_universal div').html('\
+        Plaćanje na portalu grupne kupovine je vrlo jednostavno!<br><br>\
+        Nakon što pritisnete gumb plati transakciju možete izvršiti sljedećim sredstvima:<br>\
+        <div class="cards"><img src="images/card_paypal.png" alt="Kartica" /></div>\
+        <div class="cards"><img src="images/card_visa.png" alt="Kartica" /></div>\
+        <div class="cards"><img src="images/card_mastercard.png" alt="Kartica" /></div>');
+}
+
+function checkoutPay() {
+    var sum = 199.99;
+    $.msgBox({
+        title: "Proces naplate",
+        content: "Ukupan iznos za naplatu: "+sum+"kn",
+        type: "confirm",
+        buttons: [{ value: "Prihvati" }, { value: "Povratak" }],
+        success: function (result) {
+            if (result == "Prihvati") {
+                $('#layout_offers').html('<div class="success">Kupnja gotova!</div>');
+                $('#layout_content_universal').hide();
+                
+            }
+        }
+    });    
 }
 
 /* === AJAX status SEND/R === */
@@ -557,9 +576,9 @@ function hideAll() {
 
 function showIndexLayout() {
     backQuene.push(1);
-    console.log(backQuene);
     $('#goBack').hide();
     hideAll();
+    $('#layout_offers').html('');
     initOffers();
     initSlider();
     sliderPlayIcon();
@@ -567,7 +586,8 @@ function showIndexLayout() {
     $($('.sliderOfferFriend a')[1]).show();
     $('.sliderImgNum').show();
     $('#layout_offers').show();
-    $('#layout_loadmore').show();
+    $('#layout_content_universal').html('<div class="offer" id="loadMoreOffer" onclick="addOneOffer();">Učitaj više</div>')
+                                  .show();
     $('#layout_sidebar_search').show();
     $('#layout_sidebar_basket').show(); 
     $('#layout_sidebar_newsletter').show();
@@ -579,7 +599,7 @@ function hideIndexLayou() {
     $($('.sliderOfferFriend a')[1]).hide();
     $('.sliderImgNum').hide();
     $('#layout_offers').hide();
-    $('#layout_loadmore').hide();
+    $('#layout_content_universal').hide();
     $('#layout_sidebar_search').hide();
     $('#layout_sidebar_basket').hide();    
     $('#layout_sidebar_newsletter').hide();
@@ -587,7 +607,6 @@ function hideIndexLayou() {
 
 function showOfferLayou(){
     hideAll();    
-    console.log(backQuene);  
     $('#goBack').show();
     $('#slider').show();
     $('#imageGallery').show();
@@ -614,12 +633,14 @@ function showCheckoutLayout() {
     $('#goBack').show();
     hideAll();
     $('#layout_offers').html('').show();
-    $('#layout_sidebar_universal').show();    
+    $('#layout_sidebar_universal').show();
+    $('#layout_content_universal').html('').show();  
 }
 
 function hideCheckoutLayout() {
     $('#layout_offers').hide();
     $('#layout_sidebar_universal').hide();
+    $('#layout_content_universal').hide();
 }
 
 var backQuene = new Array();
@@ -634,7 +655,6 @@ function goHome(){
 function goBack() {    
     hideAll();
     backQuene.pop();
-    console.log(backQuene);
     var num = backQuene.pop();
     switch(num){
         case 1: 

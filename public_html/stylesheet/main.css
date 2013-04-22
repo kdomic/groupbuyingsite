@@ -632,8 +632,8 @@ header nav select {
 }
 
 .sidebar ul, li {
-    margin: 0;
-    padding: 0 0 0 10px;
+    margin: 0 0 0 15px;
+    padding: 0 0 0 0;
 }
 
 .sidebarWrapper {
@@ -652,6 +652,35 @@ header nav select {
     padding: 0;
     border-radius: 5px;
 }
+
+.cards img {
+    width: 48px;
+    height: 30px;
+    display: block;
+    margin: 0 auto;
+}
+
+.sidebarWrapper h1 {
+    text-align: left;
+    font-size: 120%;
+    margin: 0;
+    padding: 8px;
+    background-color: #f2f2f2;
+    color: #333;
+    border-radius: inherit;
+}
+
+.sidebarWrapper h1 a {
+    text-decoration: none;
+    cursor: pointer;
+    color: inherit;
+}
+
+.sidebarWrapper div {
+    padding: 12px;
+}
+
+/* === Sidebar Basket === */
 
 #basketIcon{
     height: 25px;
@@ -674,50 +703,7 @@ header nav select {
     border: 1px solid #05c4e7;
 }
 
-.sidebarWrapper #pay {
-    cursor: pointer;
-}
-
-.sidebarWrapper #pay a {
-    margin-left: 28px;
-    padding: 5px 35px;
-    text-decoration: none;
-    background: #6cbb6b;
-    background-image: -moz-linear-gradient(#95d788, #6cbb6b);
-    background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #6cbb6b),color-stop(1, #95d788));
-    border: 1px solid #447d43;
-    border-radius: 10px;
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;   		
-    font-weight: bold;   
-    cursor: pointer;
-    color: #23441e;
-}
-
-.sidebarWrapper #pay a:hover {
-    background: #95d788;
-    background-image: -moz-linear-gradient(#6cbb6b, #95d788);
-    background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #95d788),color-stop(1, #6cbb6b));
-}
-
-.sidebarWrapper h1 {
-    text-align: left;
-    font-size: 120%;
-    margin: 0;
-    padding: 8px;
-    background-color: #f2f2f2;
-    color: #333;
-    border-radius: inherit;
-}
-
-.sidebarWrapper h1 a {
-    text-decoration: none;
-    cursor: pointer;
-    color: inherit;
-}
-
-.sidebarWrapper div {
-    padding: 12px;
-}
+/* === Sidebar Search === */
 
 #search, #submit {
     float: left;
@@ -755,6 +741,8 @@ header nav select {
     background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #95d788),color-stop(1, #6cbb6b));
 }
 
+/* === Sidebar Newsletter === */
+
 .newsletterEmail {
     width: 180px;
     height: 30px;    
@@ -779,6 +767,56 @@ header nav select {
 }
 
 .newsletterSubmit:hover {
+    cursor: pointer;
+}
+
+/* === Button Green (Završi kupnju) ===*/
+
+.buttonGreen {
+    cursor: pointer;
+}
+
+.buttonGreen a {
+    margin-left: 28px;
+    padding: 5px 35px;
+    text-decoration: none;
+    background: #6cbb6b;
+    background-image: -moz-linear-gradient(#95d788, #6cbb6b);
+    background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #6cbb6b),color-stop(1, #95d788));
+    border: 1px solid #447d43;
+    border-radius: 10px;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;         
+    font-weight: bold;   
+    cursor: pointer;
+    color: #23441e;
+}
+
+.buttonGreen a:hover {
+    background: #95d788;
+    background-image: -moz-linear-gradient(#6cbb6b, #95d788);
+    background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #95d788),color-stop(1, #6cbb6b));
+}
+
+/* === Button Long Green (plati)*/
+
+.buttonLongGreen {
+    text-align: center;    
+    padding: 8px;
+    background: #6cbb6b;
+    background-image: -moz-linear-gradient(#95d788, #6cbb6b);
+    background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #6cbb6b),color-stop(1, #95d788));
+    border: 1px solid #447d43;
+    border-radius: 10px;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;         
+    font-weight: bold;   
+    cursor: pointer;
+    color: #23441e;
+}
+
+.buttonLongGreen:hover {
+    background: #95d788;
+    background-image: -moz-linear-gradient(#6cbb6b, #95d788);
+    background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #95d788),color-stop(1, #6cbb6b));
     cursor: pointer;
 }
 

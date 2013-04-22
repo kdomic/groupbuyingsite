@@ -31,7 +31,7 @@
                 <?php include('layout_sidebar_newsletter.php'); ?>
                 <?php include('layout_sidebar_universal.php'); ?>                
             </div>            
-            <?php include('layout_loadmore.php'); ?>               
+            <?php include('layout_content_universal.php'); ?>               
             <?php include('layout_comments.php'); ?>
             <?php include('layout_recomended_offers.php'); ?> 
         </div>
