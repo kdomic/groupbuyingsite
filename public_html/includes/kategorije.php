@@ -8,7 +8,7 @@
 		public $naziv;
 		public $aktivna;
 
-		public static function getAllCategories(){
+		public static function getAll(){
 			$_k = self::find_all();		
 			$xmlDoc = new DOMDocument();
 			$root = $xmlDoc->appendChild($xmlDoc->createElement("kategorije"));
@@ -23,7 +23,7 @@
 			echo $xmlDoc->saveXML();
 		}
 
-		public static function getCategory($id){
+		public static function get($id){
 			$k = self::find_by_id($id);
 			$xmlDoc = new DOMDocument();
 			$root = $xmlDoc->appendChild($xmlDoc->createElement("kategorije"));
@@ -35,7 +35,7 @@
 			$xmlDoc->formatOutput = true;
 			echo $xmlDoc->saveXML();
 		}
-		public static function setCategory($data)
+		public static function set($data)
 		{
 			$k = new Kategorije();
 			if((int)$data[0]===4) $k = self::find_by_id($data[1]);
