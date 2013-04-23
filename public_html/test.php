@@ -1,8 +1,8 @@
 <?php require_once('includes/initialize.php'); ?>
 <pre>
 	<?php
-		$p = Prodavatelji::find_by_id(1);
-		print_r($p);
-		array_reverse($p);
+		$stack = array("orange", "banana", "apple", "raspberry");
+		$fruit = array_shift($stack);
+		print_r($stack); 
 	?>
 </pre>

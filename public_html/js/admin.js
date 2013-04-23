@@ -9,7 +9,7 @@ function hideAll(){
     $('#korisnici').hide();
     $('#prodavatelji').hide();    
     $('#kategorije').hide();
-    $('#proizvodi').hide();
+    $('#ponude').hide();
     $('#akcije').hide();
     $('#vrijeme').hide();
 }
@@ -56,6 +56,16 @@ function layout_showKategorije(){
     $($('#sidebar li')[4]).addClass('menuCurrent');
 }
 
+function layout_showPonude(){
+    hideAll();
+    $('#ponude').show();
+    $('#allOffers').show();
+    $('#singleOffer').hide();    
+    initOffersTable();
+    $('.menuCurrent').removeClass('menuCurrent');
+    $($('#sidebar li')[5]).addClass('menuCurrent');    
+}
+
 /* === ONLOAD === */
 $(document).ready(function(){
     //!!!! PROVJERA OVLASTI - get_allusers.php
@@ -67,11 +77,13 @@ $(document).ready(function(){
     $($('#sidebar li')[2]).click(function(){layout_showModeratori();});
     $($('#sidebar li')[3]).click(function(){layout_showProdavatelji();});
     $($('#sidebar li')[4]).click(function(){layout_showKategorije();});    
-    $($('#sidebar li')[5]).click(function(){});
+    $($('#sidebar li')[5]).click(function(){layout_showPonude();});
     $($('#sidebar li')[6]).click(function(){});
 
     $('#btnNewCategory').click(function(){newCategory();});
     $('#btnNewSeller').click(function(){newSeller();});
+
+    //ONCLICK na gumbovima za snimanje fome treba prebaciti ovdje!
 
 });
 
@@ -235,7 +247,7 @@ function newSeller(){
 }
 
 function editSeller(num){
-    userDropSelectForSeller();
+    userDropSelect("sellerKORISNIK");
     var protocolData = new Array('2',num);
     var xml = sendToPhp(protocolData,'../getSet_prodavatelji.php');
     var data = new Array();
@@ -275,7 +287,110 @@ function saveSeller(){
     layout_showProdavatelji();
 }
 
-function userDropSelectForSeller(){
+/* === OFFERS === */
+
+function initOffersTable(){
+    var dataTable = $('#offersTable').dataTable();
+    dataTable.fnClearTable();
+    var protocolData = new Array();
+    protocolData.push(1);
+    var xml = sendToPhp(protocolData,'../getSet_ponude.php');
+    var dataSet = $(xml).find('ponude');
+    var data = new Array();
+    $(dataSet).each(function(){    
+        $(this).children().each(function(){
+            data = []; 
+            $(this).children().each(function(){
+                data.push($(this).text());
+            });
+            dataTable.fnAddData([data[0],data[2],data[3],data[1]]);
+        });
+    });    
+    dataTable.$('tr').addClass("row").click(function(){editOffer(dataTable.fnGetData(this)[0])}); 
+}
+
+function newOffer(){ }
+
+function editOffer(num){
+    userDropSelect('offerPRODAVATELJ');
+    categoryDropSelect('offerKATEGORIJA');
+    var protocolData = new Array('2',num);
+    var xml = sendToPhp(protocolData,'../getSet_ponude.php');
+    var data = new Array();
+    var parsedXML = $(xml).find('ponuda');
+    $(parsedXML).children().each(function(){
+        data.push($(this).text());
+    });
+
+    $('#offerID').val(data[0]);
+    $('#offerPRODAVATELJ').val(data[1]);
+    $('#offerKATEGORIJA').val(data[2]);
+    $('#offerNASLOV').val(data[3]);
+    $('#offerPODNASLOV').val(data[4]);
+    $('#offerCIJENA').val(data[5]);
+    $('#offerOPISNASLOV').val(data[6]);
+    $('#offerOPISKRATKI').val(data[7]);
+    $('#offerOPIS').val(data[8]);
+    $('#offerNAPOMENA').val(data[9]);
+    $('#offerKARTAX').val(data[10]);
+    $('#offerKARTAY').val(data[11]);
+
+    if(data[data.length-1]=="Da")
+        $('#singleOffer input:radio[name=vidljivost][value="1"]').prop('checked', true);
+    else
+        $('#singleOffer input:radio[name=vidljivost][value="0"]').prop('checked', true);
+
+    $('#singleOffer').show();
+    $('#allOffers').hide();
+}
+
+function saveOffer(){
+    var data = new Array();
+    if($($('#singleOffer input')[0]).val()=="Novi unos"){
+        data.push(3);
+        data.push(-1);
+    } else {
+        data.push(4);        
+        data.push($($('#singleOffer input')[0]).val());
+    }
+
+    //data.push($('#offerPRODAVATELJ').val());
+    //data.push($('#offerKATEGORIJA').val());
+    data.push(1);
+    data.push(1);    
+    data.push($('#offerNASLOV').val());
+    data.push($('#offerPODNASLOV').val());
+    data.push($('#offerCIJENA').val());
+    data.push($('#offerOPISNASLOV').val());
+    data.push($('#offerOPISKRATKI').val());
+    data.push($('#offerOPIS').val());
+    data.push($('#offerNAPOMENA').val());
+    data.push($('#offerKARTAX').val());
+    data.push($('#offerKARTAY').val());
+    data.push($('#singleOffer input:radio[name=vidljivost]:checked').val());
+    var xml = sendToPhp(data,'../getSet_ponude.php');
+    //layout_showPonude();
+}
+
+
+
+
+
+
+/*
+function initCategoriesTable(){ }
+
+function newCategory(){ }
+
+function editCategory(num){ }
+
+function saveCategory(){ }
+
+*/
+
+/* === USER DROP SELECT */
+
+function userDropSelect(field){
     var availableTags = new Array();
     var protocolData = new Array();
     protocolData.push(1);
@@ -291,21 +406,27 @@ function userDropSelectForSeller(){
             availableTags.push(user[1]);
         });
     });
-    $(function(){$("#sellerKORISNIK").autocomplete({source: availableTags});});
+    $(function(){$("#"+field).autocomplete({source: availableTags});});
 }
 
-/*
-function initCategoriesTable(){ }
-
-function newCategory(){ }
-
-function editCategory(num){ }
-
-function saveCategory(){ }
-
-*/
-
-
+function categoryDropSelect(field){
+    var availableTags = new Array();
+    var protocolData = new Array();
+    protocolData.push(1);
+    var xml = sendToPhp(protocolData,'../getSet_kategorije.php');
+    var cats = $(xml).find('kategorije');
+    var data = new Array();
+    $(cats).each(function(){    
+        $(this).children().each(function(){
+            data = []; 
+            $(this).children().each(function(){
+                data.push($(this).text());
+            });
+            availableTags.push(data[1]);
+        });
+    });
+    $(function(){$("#"+field).autocomplete({source: availableTags});});
+}
 
 /* === AJAX status SEND/R === */
 function sendToPhp(dataString,url){

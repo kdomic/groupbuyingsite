@@ -28,7 +28,7 @@
                     <li>Moderatori</li>
                     <li>Prodavatelji</li>
                     <li>Kategorije</li>
-                    <li>Proizvodi</li>
+                    <li>Ponude</li>
                     <li>Akcije</li>
                     <li>Sistemsko vrijeme</li>
                 </ul>                                                                           
@@ -39,6 +39,8 @@
                 <?php include('layout_korisnici.php'); ?>
                 <?php include('layout_prodavatelji.php'); ?> 
                 <?php include('layout_kategorije.php'); ?>           
+                <?php include('layout_ponude.php'); ?> 
+
             </div> 
             <div class="clear"></div>        
         </div>
