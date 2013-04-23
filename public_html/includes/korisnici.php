@@ -53,5 +53,9 @@
                 $user = array_shift($result_array);
                 return $pass===$user->password ? $user : false;
             }
+
+            public static function find_by_credential() {
+                return self::find_by_sql("SELECT * FROM ".static::$table_name." WHERE ovlasti>1");
+            }
     }
 ?>

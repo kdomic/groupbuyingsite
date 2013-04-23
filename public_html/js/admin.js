@@ -1,12 +1,12 @@
 var emailPattern = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
 var originalEmail;
+var userSelectType;
 
 /* === LAYOUTS === */
 
 function hideAll(){
     $('#pocetna').hide();
     $('#korisnici').hide();
-    $('#moderatori').hide();
     $('#kategorije').hide();
     $('#proizvodi').hide();
     $('#akcije').hide();
@@ -14,6 +14,9 @@ function hideAll(){
 }
 
 function layout_showKorisnici(){
+    hideAll();    
+    userSelectType = 1;
+    initUserTable(1);    
     $('#singleUser').hide();
     $('#allUsers').show();
     $('#korisnici').show();
@@ -21,28 +24,52 @@ function layout_showKorisnici(){
     $($('#sidebar li')[1]).addClass('menuCurrent');
 }
 
+function layout_showModeratori(){
+    hideAll();    
+    userSelectType = 2;    
+    initUserTable(2);
+    $('#singleUser').hide();
+    $('#allUsers').show();
+    $('#korisnici').show();
+    $('.menuCurrent').removeClass('menuCurrent');
+    $($('#sidebar li')[2]).addClass('menuCurrent');    
+}
+
+function layout_showKategorije(){
+    hideAll();
+    $('#kategorije').show();
+    $('#allCategories').show();
+    $('#singleCategory').hide();    
+    initCategoriesTable();
+    $('.menuCurrent').removeClass('menuCurrent');
+    $($('#sidebar li')[3]).addClass('menuCurrent');
+}
+
 /* === ONLOAD === */
 $(document).ready(function(){
     //!!!! PROVJERA OVLASTI - get_allusers.php
 	hideAll();
-    initUserTable();
 
     //EVENTS
     $($('#sidebar li')[0]).click(function(){});
     $($('#sidebar li')[1]).click(function(){layout_showKorisnici();});
-    $($('#sidebar li')[2]).click(function(){});
-    $($('#sidebar li')[3]).click(function(){});
+    $($('#sidebar li')[2]).click(function(){layout_showModeratori();});
+    $($('#sidebar li')[3]).click(function(){layout_showKategorije();});
     $($('#sidebar li')[4]).click(function(){});
     $($('#sidebar li')[5]).click(function(){});
     $($('#sidebar li')[6]).click(function(){});
+
+    $('#btnNewCategory').click(function(){newCategory();});
 });
 
 /* === USER EDIT === */
 
-function initUserTable() { 
+function initUserTable(protocol) { 
     var dataTable = $('#userTable').dataTable();
     dataTable.fnClearTable();
-    var xml = sendToPhp(new Array,'../get_allusers.php');
+    var protocolData = new Array();
+    protocolData.push(protocol);
+    var xml = sendToPhp(protocolData,'../get_allusers.php');
     var users = $(xml).find('korisnici');
     var user = new Array();
     $(users).each(function(){    
@@ -80,7 +107,7 @@ function saveUser(){
         setTimeout(function(){
             $('#singleUser').hide();
             $('#allUsers').show();
-            initUserTable();
+            initUserTable(userSelectType);
         }, 1000);
     } else {
         $('#userUpdateStatus').html("Greška prilikom pohrane").addClass("error").removeClass("success").slideDown("slow");
@@ -99,7 +126,32 @@ function checkEmailAvailability() {
     console.log(status);
 }
 
+/* === CATEGORIES === */
 
+function initCategoriesTable() { 
+    var dataTable = $('#categoriesTable').dataTable();
+    dataTable.fnClearTable();
+    var protocolData = new Array();
+    protocolData.push(1);
+    var xml = sendToPhp(protocolData,'../get_categories.php');
+    var cats = $(xml).find('kategorije');
+    var cat = new Array();
+    $(cats).each(function(){    
+        $(this).children().each(function(){
+            cat = []; 
+            $(this).children().each(function(){
+                cat.push($(this).text());
+            });
+            dataTable.fnAddData([cat[0],cat[1],cat[2]]);
+        });
+    });    
+    dataTable.$('tr').addClass("row").click(function(){editUser(dataTable.fnGetData(this)[0])});
+}
+
+function newCategory(){
+    $('#allCategories').hide();
+    $('#singleCategory').show();
+}
 
 /* === AJAX status SEND/R === */
 function sendToPhp(dataString,url){

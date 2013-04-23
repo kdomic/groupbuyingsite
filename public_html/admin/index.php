@@ -39,7 +39,7 @@
                                 <th>ID</th><th>Ime i prezime</th><th>Email</th>
                                 <th>Zamrznut do</th><th>B</th><th>D</th><th>O</th>
                              </tr></thead>
-                            <tbody id="userTableContent"></tbody>
+                            <tbody></tbody>
                         </table>
                     </div>
                     <div id="singleUser">
@@ -127,8 +127,17 @@
                         <div id="userUpdateStatus" class=""><span></span></div>                       
                     </div>
                 </div>
-                <div id="moderatori"></div>
-                <div id="kategorije"></div>
+                <div id="kategorije">
+                    <div id="allCategories">
+                        <button id="btnNewCategory">Dodaj novu kategoriju</button>
+                        <div class="clear"></div> 
+                        <table id="categoriesTable">
+                            <thead><tr><th>ID</th><th>Naziv</th><th>Aktivna</th></tr></thead>
+                            <tbody id="categoriesTableContent"></tbody>
+                        </table>
+                    </div>
+                    <div id="singleCategory">Cat</div>
+                </div>
                 <div id="proizvodi"></div>
                 <div id="akcije"></div>
                 <div id="vrijeme"></div>                                        

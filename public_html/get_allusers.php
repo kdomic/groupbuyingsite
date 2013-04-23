@@ -1,6 +1,12 @@
 <?php require_once('includes/initialize.php'); ?>
 <?php
-	$_k = Korisnici::find_all();	
+	$data = json_decode(stripslashes($_POST['data']));
+	$_k = null;
+	switch ((int)$data[0]){
+		case 1: $_k = Korisnici::find_all(); break;
+		case 2: $_k = Korisnici::find_by_credential(); break;
+	}
+		
 	$xmlDoc = new DOMDocument();
 	$root = $xmlDoc->appendChild($xmlDoc->createElement("korisnici"));
 	foreach($_k as $k){
