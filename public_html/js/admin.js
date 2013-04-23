@@ -133,7 +133,7 @@ function initCategoriesTable() {
     dataTable.fnClearTable();
     var protocolData = new Array();
     protocolData.push(1);
-    var xml = sendToPhp(protocolData,'../get_categories.php');
+    var xml = sendToPhp(protocolData,'../getSet_categories.php');
     var cats = $(xml).find('kategorije');
     var cat = new Array();
     $(cats).each(function(){    
@@ -145,12 +145,50 @@ function initCategoriesTable() {
             dataTable.fnAddData([cat[0],cat[1],cat[2]]);
         });
     });    
-    dataTable.$('tr').addClass("row").click(function(){editUser(dataTable.fnGetData(this)[0])});
+    dataTable.$('tr').addClass("row").click(function(){editCategory(dataTable.fnGetData(this)[0])});
 }
 
 function newCategory(){
     $('#allCategories').hide();
     $('#singleCategory').show();
+    $('#singleCategory input:text').val('');
+    $($('#singleCategory input')[0]).val('Nova kategorija');
+    $('input:radio[name=vidljivost]').prop('checked', false);
+    $('input:radio[name=vidljivost][value="1"]').prop('checked', true);
+}
+
+function editCategory(num){
+    var data = new Array('2',num);
+    var xml = sendToPhp(data,'../getSet_categories.php');
+    var catData = new Array();
+    var user = $(xml).find('kategorija');
+    $(user).children().each(function(){catData.push($(this).text())});
+    console.log(catData);
+    $('#categoryID').val(catData[0]);
+    $('#categoryNAZIV').val(catData[1]);
+    if(catData[2]=="Da")
+        $('input:radio[name=vidljivost][value="1"]').prop('checked', true);
+    else
+        $('input:radio[name=vidljivost][value="0"]').prop('checked', true);
+
+    $('#allCategories').hide();
+    $('#singleCategory').show();
+}
+
+function saveCategory(){
+    var data = new Array();
+    if($($('#singleCategory input')[0]).val()=="Nova kategorija"){
+        data.push(3);        
+        data.push(-1);
+    } else {
+        data.push(4);        
+        data.push($($('#singleCategory input')[0]).val());
+    }
+    data.push($($('#singleCategory input')[1]).val());
+    data.push($('input:radio[name=vidljivost]:checked').val());
+    console.log(data);
+    var xml = sendToPhp(data,'../getSet_categories.php');
+    layout_showKategorije();
 }
 
 /* === AJAX status SEND/R === */

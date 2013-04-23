@@ -35,12 +35,13 @@
 			$xmlDoc->formatOutput = true;
 			echo $xmlDoc->saveXML();
 		}
-		public static function setCategory($kategorija)
+		public static function setCategory($data)
 		{
-			$k = self::find_by_id($data[0]);
-			if(!isset($k)) $k = new this();
-			$k->ime = $data[1];
-			$k->aktivna = $data[2];
+			$k = new Kategorije();
+			if((int)$data[0]===4) $k = self::find_by_id($data[1]);
+			$k->naziv = $data[2];
+			$k->aktivna = $data[3];
+			print_r($k);			
 			xmlStatusSend($k->save());
 		}
     } 

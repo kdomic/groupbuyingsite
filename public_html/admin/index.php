@@ -85,27 +85,27 @@
                                 <td><input type="text"      name="openId"   id="userOPENID"    readonly /></td>
                             </tr>
                             <tr>
-                                <td><label for="">Opomena</label></td>
+                                <td><label for="userOPOMENA">Opomena</label></td>
                                 <td><input type="text"      name="opomena"  id="userOPOMENA"    placeholder="" /></td>
                             </tr>
                             <tr>
-                                <td><label for="">Deaktiviran</label></td>
+                                <td><label for="userDEAKTIVIRAN">Deaktiviran</label></td>
                                 <td><input type="text"      name="deaktiviran" id="userDEAKTIVIRAN"    placeholder="" /></td>
                             </tr>
                             <tr>
-                                <td><label for="">Zamrznut</label></td>
+                                <td><label for="userZAMRZNUT">Zamrznut</label></td>
                                 <td><input type="text"      name="zamrznut" id="userZAMRZNUT"    placeholder="" /></td>
                             </tr>
                             <tr>
-                                <td><label for="">Blokiran</label></td>
+                                <td><label for="userBLOKIRAN">Blokiran</label></td>
                                 <td><input type="text"      name="blokiran" id="userBLOKIRAN"    placeholder="" /></td>
                             </tr>
                             <tr>
-                                <td><label for="">Datum registracije</label></td>
+                                <td><label for="userDATUM">Datum registracije</label></td>
                                 <td><input type="text"      name="datum"    id="userDATUM"    placeholder="" /></td>
                             </tr>
                             <tr>
-                                <td><label for="">Email potvrda</label></td>
+                                <td><label for="userPOTVRDA">Email potvrda</label></td>
                                 <td><input type="text"      name="potvrda"  id="userPOTVRDA"    placeholder="" /></td>
                             </tr>
                             <tr>
@@ -113,11 +113,11 @@
                                 <td> <input type="password"  name="lozinka" id="userLOZINKA"     placeholder="Lozinka"/><br/></td>
                             </tr>                          
                             <tr>
-                                <td><label for="">Ovlasti</label></td>
+                                <td><label for="userOvlasti">Ovlasti</label></td>
                                 <td><input type="text"      name="ovlasti"  id="userOvlasti"    placeholder="" /></td>
                             </tr>
                             <tr>
-                                <td><label for="">Obrisati</label></td>
+                                <td><label for="userOBRISATI">Obrisati</label></td>
                                 <td><input type="text"      name="obrisati" id="userOBRISATI"    placeholder="" /></td>
                             </tr>
                             <tr>
@@ -136,7 +136,28 @@
                             <tbody id="categoriesTableContent"></tbody>
                         </table>
                     </div>
-                    <div id="singleCategory">Cat</div>
+                    <div id="singleCategory">
+                        <table>
+                            <tr>
+                                <td><label for="categoryID">ID</label></td>
+                                <td><input type="text"      name="id"      id="categoryID"    readonly /></td>
+                            </tr>                            
+                            <tr>
+                                <td><label for="categoryNAZIV">Naziv</label></td>
+                                <td><input type="text"      name="naziv"      id="categoryNAZIV"      placeholder="Naziv kategortije"/></td>
+                            </tr>
+                            <tr>
+                                <td><label for="categoryAKTIVNA">Vidljivost</label></td>
+                                <td>
+                                    <input type="radio" name="vidljivost" value="1" >Da
+                                    <input type="radio" name="vidljivost" value="0" >Ne
+                                </td>
+                            </tr>                                                        
+                            <tr>
+                            <td colspan="2"><button id="btnSaveUser" onclick="saveCategory();" >Pospremi</button></td>
+                            </tr>                            
+                        </table>
+                    </div>
                 </div>
                 <div id="proizvodi"></div>
                 <div id="akcije"></div>
