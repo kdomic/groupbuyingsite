@@ -1,4 +1,14 @@
 <?php
+
+	/*
+	Protocol legend
+		[1]				- Dohvati sve kategorije
+		[2,'ID']		- Dohvati kategoriju sa ID
+		[3, '-1', ...]	- Dodaj novu kategoriju
+		[4, 'ID', ...]	- Ažuriraj kategorju
+
+	*/
+
     class Kategorije extends DatabaseObject { 
 
 		protected static $table_name = "kategorije";
@@ -41,7 +51,6 @@
 			if((int)$data[0]===4) $k = self::find_by_id($data[1]);
 			$k->naziv = $data[2];
 			$k->aktivna = $data[3];
-			print_r($k);			
 			xmlStatusSend($k->save());
 		}
     } 

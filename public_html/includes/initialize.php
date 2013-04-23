@@ -16,5 +16,7 @@
     require_once ('ponude.php');
     require_once ('racuni.php');
     require_once ('racuni_akcije.php');
-    require_once ('kategorije.php');    
+    require_once ('kategorije.php');
+    require_once ('prodavatelji.php');    
+
 ?>

@@ -7,6 +7,7 @@ var userSelectType;
 function hideAll(){
     $('#pocetna').hide();
     $('#korisnici').hide();
+    $('#prodavatelji').hide();    
     $('#kategorije').hide();
     $('#proizvodi').hide();
     $('#akcije').hide();
@@ -35,6 +36,16 @@ function layout_showModeratori(){
     $($('#sidebar li')[2]).addClass('menuCurrent');    
 }
 
+function layout_showProdavatelji(){
+    hideAll();
+    $('#prodavatelji').show();
+    $('#singleSeller').hide();
+    $('#allSellers').show();
+    initSellersTable();
+    $('.menuCurrent').removeClass('menuCurrent');
+    $($('#sidebar li')[3]).addClass('menuCurrent');
+}
+
 function layout_showKategorije(){
     hideAll();
     $('#kategorije').show();
@@ -42,7 +53,7 @@ function layout_showKategorije(){
     $('#singleCategory').hide();    
     initCategoriesTable();
     $('.menuCurrent').removeClass('menuCurrent');
-    $($('#sidebar li')[3]).addClass('menuCurrent');
+    $($('#sidebar li')[4]).addClass('menuCurrent');
 }
 
 /* === ONLOAD === */
@@ -54,12 +65,14 @@ $(document).ready(function(){
     $($('#sidebar li')[0]).click(function(){});
     $($('#sidebar li')[1]).click(function(){layout_showKorisnici();});
     $($('#sidebar li')[2]).click(function(){layout_showModeratori();});
-    $($('#sidebar li')[3]).click(function(){layout_showKategorije();});
-    $($('#sidebar li')[4]).click(function(){});
+    $($('#sidebar li')[3]).click(function(){layout_showProdavatelji();});
+    $($('#sidebar li')[4]).click(function(){layout_showKategorije();});    
     $($('#sidebar li')[5]).click(function(){});
     $($('#sidebar li')[6]).click(function(){});
 
     $('#btnNewCategory').click(function(){newCategory();});
+    $('#btnNewSeller').click(function(){newSeller();});
+
 });
 
 /* === USER EDIT === */
@@ -133,7 +146,7 @@ function initCategoriesTable() {
     dataTable.fnClearTable();
     var protocolData = new Array();
     protocolData.push(1);
-    var xml = sendToPhp(protocolData,'../getSet_categories.php');
+    var xml = sendToPhp(protocolData,'../getSet_kategorije.php');
     var cats = $(xml).find('kategorije');
     var cat = new Array();
     $(cats).each(function(){    
@@ -153,23 +166,22 @@ function newCategory(){
     $('#singleCategory').show();
     $('#singleCategory input:text').val('');
     $($('#singleCategory input')[0]).val('Nova kategorija');
-    $('input:radio[name=vidljivost]').prop('checked', false);
-    $('input:radio[name=vidljivost][value="1"]').prop('checked', true);
+    $('#singleCategory input:radio[name=vidljivost]').prop('checked', false);
+    $('#singleCategory input:radio[name=vidljivost][value="1"]').prop('checked', true);
 }
 
 function editCategory(num){
     var data = new Array('2',num);
-    var xml = sendToPhp(data,'../getSet_categories.php');
+    var xml = sendToPhp(data,'../getSet_kategorije.php');
     var catData = new Array();
     var user = $(xml).find('kategorija');
     $(user).children().each(function(){catData.push($(this).text())});
-    console.log(catData);
     $('#categoryID').val(catData[0]);
     $('#categoryNAZIV').val(catData[1]);
     if(catData[2]=="Da")
-        $('input:radio[name=vidljivost][value="1"]').prop('checked', true);
+        $('#singleCategory input:radio[name=vidljivost][value="1"]').prop('checked', true);
     else
-        $('input:radio[name=vidljivost][value="0"]').prop('checked', true);
+        $('#singleCategory input:radio[name=vidljivost][value="0"]').prop('checked', true);
 
     $('#allCategories').hide();
     $('#singleCategory').show();
@@ -186,10 +198,114 @@ function saveCategory(){
     }
     data.push($($('#singleCategory input')[1]).val());
     data.push($('input:radio[name=vidljivost]:checked').val());
-    console.log(data);
-    var xml = sendToPhp(data,'../getSet_categories.php');
+    var xml = sendToPhp(data,'../getSet_kategorije.php');
     layout_showKategorije();
 }
+
+/* === SELLERS === */
+
+function initSellersTable(){
+    var dataTable = $('#sellersTable').dataTable();
+    dataTable.fnClearTable();
+    var protocolData = new Array();
+    protocolData.push(1);
+    var xml = sendToPhp(protocolData,'../getSet_prodavatelji.php');
+    var dataSet = $(xml).find('prodavatelji');
+    var data = new Array();
+    $(dataSet).each(function(){    
+        $(this).children().each(function(){
+            data = []; 
+            $(this).children().each(function(){
+                data.push($(this).text());
+            });
+            dataTable.fnAddData([data[0],data[2],data[1],data[6],data[7]]);
+        });
+    });    
+    dataTable.$('tr').addClass("row").click(function(){editSeller(dataTable.fnGetData(this)[0])}); 
+}
+
+function newSeller(){
+    userDropSelectForSeller();
+    $('#allSellers').hide();
+    $('#singleSeller').show();
+    $('#singleSeller input:text').val('');
+    $($('#singleSeller input')[0]).val('Novi unos');
+    $('#singleSeller input:radio[name=vidljivost]').prop('checked', false);
+    $('#singleSeller input:radio[name=vidljivost][value="1"]').prop('checked', true);
+}
+
+function editSeller(num){
+    userDropSelectForSeller();
+    var protocolData = new Array('2',num);
+    var xml = sendToPhp(protocolData,'../getSet_prodavatelji.php');
+    var data = new Array();
+    var parsedXML = $(xml).find('prodavatelj');
+    $(parsedXML).children().each(function(){
+        data.push($(this).text());
+    });
+    for(var i =0; i<data.length; i++){
+        $($('#singleSeller input:text')[i]).val(data[i]);
+    }
+    if(data[data.length-1]=="Da")
+        $('#singleSeller input:radio[name=vidljivost][value="1"]').prop('checked', true);
+    else
+        $('#singleSeller input:radio[name=vidljivost][value="0"]').prop('checked', true);
+
+    var user = getUserData($("#sellerKORISNIK").val());
+    $("#sellerKORISNIK").val(user[1]+' '+user[2]);
+
+    $('#singleSeller').show();
+    $('#allSellers').hide();
+}
+
+function saveSeller(){
+    var data = new Array();
+    if($($('#singleSeller input')[0]).val()=="Novi unos"){
+        data.push(3);
+        data.push(-1);
+    } else {
+        data.push(4);        
+        data.push($($('#singleSeller input')[0]).val());
+    }
+    $('#singleSeller input:text').each(function(){
+        data.push($(this).val())
+    });
+    data.push($('#singleSeller input:radio[name=vidljivost]:checked').val());
+    var xml = sendToPhp(data,'../getSet_prodavatelji.php');
+    layout_showProdavatelji();
+}
+
+function userDropSelectForSeller(){
+    var availableTags = new Array();
+    var protocolData = new Array();
+    protocolData.push(1);
+    var xml = sendToPhp(protocolData,'../get_allusers.php');
+    var users = $(xml).find('korisnici');
+    var user = new Array();
+    $(users).each(function(){    
+        $(this).children().each(function(){
+            user = []; 
+            $(this).children().each(function(){
+                user.push($(this).text());
+            });
+            availableTags.push(user[1]);
+        });
+    });
+    $(function(){$("#sellerKORISNIK").autocomplete({source: availableTags});});
+}
+
+/*
+function initCategoriesTable(){ }
+
+function newCategory(){ }
+
+function editCategory(num){ }
+
+function saveCategory(){ }
+
+*/
+
+
 
 /* === AJAX status SEND/R === */
 function sendToPhp(dataString,url){
