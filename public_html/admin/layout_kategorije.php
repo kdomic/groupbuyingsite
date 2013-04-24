@@ -4,7 +4,7 @@
         <div class="clear"></div> 
         <table id="categoriesTable">
             <thead><tr><th>ID</th><th>Naziv</th><th>Aktivna</th></tr></thead>
-            <tbody id="categoriesTableContent"></tbody>
+            <tbody></tbody>
         </table>
     </div>
     <div id="singleCategory">

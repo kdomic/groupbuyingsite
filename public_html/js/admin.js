@@ -63,7 +63,7 @@ function layout_showPonude(){
     $('#singleOffer').hide();    
     initOffersTable();
     $('.menuCurrent').removeClass('menuCurrent');
-    $($('#sidebar li')[5]).addClass('menuCurrent');    
+    $($('#sidebar li')[6]).addClass('menuCurrent');    
 }
 
 /* === ONLOAD === */
@@ -76,9 +76,9 @@ $(document).ready(function(){
     $($('#sidebar li')[1]).click(function(){layout_showKorisnici();});
     $($('#sidebar li')[2]).click(function(){layout_showModeratori();});
     $($('#sidebar li')[3]).click(function(){layout_showProdavatelji();});
-    $($('#sidebar li')[4]).click(function(){layout_showKategorije();});    
-    $($('#sidebar li')[5]).click(function(){layout_showPonude();});
-    $($('#sidebar li')[6]).click(function(){});
+    $($('#sidebar li')[4]).click(function(){layout_showKategorije();}); 
+    $($('#sidebar li')[5]).click(function(){});       
+    $($('#sidebar li')[6]).click(function(){layout_showPonude();});
 
     $('#btnNewCategory').click(function(){newCategory();});
     $('#btnNewSeller').click(function(){newSeller();});

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Dobrodošli na portal za Grupnu kupovinu</title>
+        <title>Administracija portala</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="../stylesheet/admin.css" />
         <link rel="stylesheet" type="text/css" href="../stylesheet/msgBoxLight.css" />        
@@ -28,6 +28,7 @@
                     <li>Moderatori</li>
                     <li>Prodavatelji</li>
                     <li>Kategorije</li>
+                    <li>Gradovi</li>                    
                     <li>Ponude</li>
                     <li>Akcije</li>
                     <li>Sistemsko vrijeme</li>
@@ -38,7 +39,8 @@
                 <?php include('layout_pocetna.php'); ?>           
                 <?php include('layout_korisnici.php'); ?>
                 <?php include('layout_prodavatelji.php'); ?> 
-                <?php include('layout_kategorije.php'); ?>           
+                <?php include('layout_kategorije.php'); ?> 
+                <?php include('layout_gradovi.php'); ?>                                     
                 <?php include('layout_ponude.php'); ?> 
 
             </div> 
