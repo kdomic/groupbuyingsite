@@ -1,12 +1,5 @@
 <?php require_once('initialize.php'); ?>
 <?php
-    /*
-        Protocol legend
-        [1]             - getAll()
-        [2,'ID']        - get()
-        [3, '-1', ...]  - set() new
-        [4, 'ID', ...]  - set() update
-    */
 
     class Ponude extends DatabaseObject {
         protected static $table_name = "ponude";
