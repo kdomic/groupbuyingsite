@@ -1,8 +1,17 @@
 <?php require_once('includes/initialize.php'); ?>
 <pre>
 	<?php
-		$stack = array("orange", "banana", "apple", "raspberry");
-		$fruit = array_shift($stack);
-		print_r($stack); 
+		$ponude = Ponude::find_all();
+		foreach ($ponude as $p) {
+			$nova = Ponude::find_by_id($p->id);
+			foreach ($p as $key => $value) {
+				$nova->$key = strip_tags($value);
+				//$value = strip_tags($value);
+				//print_r($key);
+			}
+			$nova->save();
+			//print_r($p);
+		}
+		echo "kraj";;
 	?>
 </pre>

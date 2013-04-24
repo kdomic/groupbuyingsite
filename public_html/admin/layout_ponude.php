@@ -4,7 +4,7 @@
         <div class="clear"></div> 
     	<table id="offersTable">
             <thead><tr>
-                <th>ID</th><th>Kategorija</th><th>Naslov</th><th>Prodavatelj</th></thead>
+                <th>ID</th><th>Kategorija</th><th>Naslov</th><th>Prodavatelj</th><th>Vidljivo</th></thead>
             <tbody></tbody>
         </table>
     </div>
@@ -16,11 +16,11 @@
             </tr>                            
             <tr>
                 <td><label for="offerPRODAVATELJ">Odgovorna osoba</label></td>
-                <td><input type="text"      name="offerPRODAVATELJ"      id="offerPRODAVATELJ"      placeholder=""/></td>
+                <td><select name="offerPRODAVATELJ"      id="offerPRODAVATELJ" ></select></td>
             </tr>
             <tr>
                 <td><label for="offerKATEGORIJA">Kategorija</label></td>
-                <td><input type="text"      name="offerKATEGORIJA"      id="offerKATEGORIJA"      placeholder=""/></td>
+                <td><select name="offerKATEGORIJA"      id="offerKATEGORIJA"></select></td>
             </tr>
             <tr>
                 <td><label for="offerNASLOV">Naslov</label></td>                

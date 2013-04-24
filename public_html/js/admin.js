@@ -82,6 +82,7 @@ $(document).ready(function(){
 
     $('#btnNewCategory').click(function(){newCategory();});
     $('#btnNewSeller').click(function(){newSeller();});
+    $('#btnNewOffer').click(function(){newOffer();});
 
     //ONCLICK na gumbovima za snimanje fome treba prebaciti ovdje!
 
@@ -148,7 +149,6 @@ function checkEmailAvailability() {
         $('#userUpdateStatus').html("Email zauzet!").addClass("error").removeClass("success").slideDown("slow");
     else
         $('#userUpdateStatus').html("").removeClass("error").slideUp("slow");
-    console.log(status);
 }
 
 /* === CATEGORIES === */
@@ -265,7 +265,6 @@ function editSeller(num){
 
     var user = getUserData($("#sellerKORISNIK").val());
     $("#sellerKORISNIK").val(user[1]+' '+user[2]);
-
     $('#singleSeller').show();
     $('#allSellers').hide();
 }
@@ -303,17 +302,27 @@ function initOffersTable(){
             $(this).children().each(function(){
                 data.push($(this).text());
             });
-            dataTable.fnAddData([data[0],data[2],data[3],data[1]]);
+            dataTable.fnAddData([data[0],data[2],data[3],data[1],data[data.length-1]]);
         });
     });    
     dataTable.$('tr').addClass("row").click(function(){editOffer(dataTable.fnGetData(this)[0])}); 
 }
 
-function newOffer(){ }
+function newOffer(){
+    prodavateljiDropSelectOptions('offerPRODAVATELJ');
+    categoryDropSelectOptions('offerKATEGORIJA');
+    $('#allOffers').hide();
+    $('#singleOffer').show();
+    $('#singleOffer input:text').val('');
+    $('#singleOffer textarea').val('');
+    $($('#singleOffer input')[0]).val('Novi unos');
+    $('#singleOffer input:radio[name=vidljivost]').prop('checked', false);
+    $('#singleOffer input:radio[name=vidljivost][value="1"]').prop('checked', true);
+}
 
 function editOffer(num){
-    userDropSelect('offerPRODAVATELJ');
-    categoryDropSelect('offerKATEGORIJA');
+    prodavateljiDropSelectOptions('offerPRODAVATELJ');
+    categoryDropSelectOptions('offerKATEGORIJA');
     var protocolData = new Array('2',num);
     var xml = sendToPhp(protocolData,'../getSet_ponude.php');
     var data = new Array();
@@ -321,7 +330,6 @@ function editOffer(num){
     $(parsedXML).children().each(function(){
         data.push($(this).text());
     });
-
     $('#offerID').val(data[0]);
     $('#offerPRODAVATELJ').val(data[1]);
     $('#offerKATEGORIJA').val(data[2]);
@@ -334,8 +342,9 @@ function editOffer(num){
     $('#offerNAPOMENA').val(data[9]);
     $('#offerKARTAX').val(data[10]);
     $('#offerKARTAY').val(data[11]);
-
-    if(data[data.length-1]=="Da")
+    $('#offerPRODAVATELJ option').eq(2).attr('selected', 'selected');    
+    $('#offerKATEGORIJA option').eq(3).attr('selected', 'selected');
+    if(data[data.length-1]=="1")
         $('#singleOffer input:radio[name=vidljivost][value="1"]').prop('checked', true);
     else
         $('#singleOffer input:radio[name=vidljivost][value="0"]').prop('checked', true);
@@ -354,10 +363,8 @@ function saveOffer(){
         data.push($($('#singleOffer input')[0]).val());
     }
 
-    //data.push($('#offerPRODAVATELJ').val());
-    //data.push($('#offerKATEGORIJA').val());
-    data.push(1);
-    data.push(1);    
+    data.push($('#offerPRODAVATELJ').val());  
+    data.push($('#offerKATEGORIJA').val());
     data.push($('#offerNASLOV').val());
     data.push($('#offerPODNASLOV').val());
     data.push($('#offerCIJENA').val());
@@ -369,12 +376,8 @@ function saveOffer(){
     data.push($('#offerKARTAY').val());
     data.push($('#singleOffer input:radio[name=vidljivost]:checked').val());
     var xml = sendToPhp(data,'../getSet_ponude.php');
-    //layout_showPonude();
+    layout_showPonude();
 }
-
-
-
-
 
 
 /*
@@ -409,8 +412,26 @@ function userDropSelect(field){
     $(function(){$("#"+field).autocomplete({source: availableTags});});
 }
 
-function categoryDropSelect(field){
-    var availableTags = new Array();
+function prodavateljiDropSelectOptions(field){
+    $('#'+field+" option").remove();    
+    var protocolData = new Array();
+    protocolData.push(1);
+    var xml = sendToPhp(protocolData,'../getSet_prodavatelji.php');
+    var dataSet = $(xml).find('prodavatelji');
+    var data = new Array();
+    $(dataSet).each(function(){    
+        $(this).children().each(function(){
+            data = []; 
+            $(this).children().each(function(){
+                data.push($(this).text());
+            });
+            $('#'+field).append("<option value="+data[0]+">"+data[2]+"</option>");
+        });
+    });
+}
+
+function categoryDropSelectOptions(field){
+    $('#'+field+" option").remove();
     var protocolData = new Array();
     protocolData.push(1);
     var xml = sendToPhp(protocolData,'../getSet_kategorije.php');
@@ -422,10 +443,9 @@ function categoryDropSelect(field){
             $(this).children().each(function(){
                 data.push($(this).text());
             });
-            availableTags.push(data[1]);
+            $('#'+field).append("<option value="+data[0]+">"+data[1]+"</option>");
         });
     });
-    $(function(){$("#"+field).autocomplete({source: availableTags});});
 }
 
 /* === AJAX status SEND/R === */

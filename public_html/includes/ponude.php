@@ -43,13 +43,14 @@
             $root = $xmlDoc->appendChild($xmlDoc->createElement("ponude"));
             foreach ($_p as $p){
                 $ponuda = $root->appendChild($xmlDoc->createElement("ponuda"));
-                $prodavatelj = Korisnici::find_by_id($p->id_prodavatelja);
+                $prodavatelj = Prodavatelji::find_by_id($p->id_prodavatelja);
                 $kategorija = Kategorije::find_by_id($p->id_kategorije);
-                $p->id_prodavatelja = $prodavatelj->ime.' '.$prodavatelj->prezime ;                
+                $p->id_prodavatelja = $prodavatelj->naziv ;                                        
                 $p->id_kategorije = $kategorija->naziv;
+                $p->aktivan = $p->aktivan==1 ? "Da" : "Ne";                
                 foreach ($p as $key => $value) {
                     $ponuda->appendChild($xmlDoc->createElement($key, htmlentities($value)));
-                }                        
+                }
             }
             header("Content-Type: text/xml");
             $xmlDoc->formatOutput = true;
@@ -61,13 +62,9 @@
             $xmlDoc = new DOMDocument();
             $root = $xmlDoc->appendChild($xmlDoc->createElement("ponude"));
             $ponuda = $root->appendChild($xmlDoc->createElement("ponuda"));
-            $prodavatelj = Korisnici::find_by_id($p->id_prodavatelja);
-            $kategorija = Kategorije::find_by_id($p->id_kategorije);
-            $p->id_prodavatelja = $prodavatelj->ime.' '.$prodavatelj->prezime ;                                        
-            $p->id_kategorije = $kategorija->naziv;
             foreach ($p as $key => $value) {
                 $ponuda->appendChild($xmlDoc->createElement($key, htmlentities($value)));
-            }                        
+            }
             header("Content-Type: text/xml");
             $xmlDoc->formatOutput = true;
             echo $xmlDoc->saveXML();
@@ -75,13 +72,21 @@
 
         public static function set($data)
         {         
-            print_r($data);
-            //$p = new Prodavatelji();
-            //if((int)$data[0]===4) $p = self::find_by_id($data[1]);            
-            //array_shift($data);
-            //foreach ($p as $key => $value)
-            //    $value = array_shift($data);
-            //xmlStatusSend($p->save());
+            $p = new Ponude();
+            if((int)$data[0]===4) $p = self::find_by_id($data[1]);            
+            $p->aktivan = array_pop($data);
+            $p->karta_y = array_pop($data);
+            $p->karta_x = array_pop($data);
+            $p->napomena = array_pop($data);
+            $p->opis = array_pop($data);
+            $p->opis_kratki = array_pop($data);
+            $p->opis_naslov = array_pop($data);
+            $p->cijena = array_pop($data);
+            $p->podnaslov = array_pop($data);
+            $p->naslov = array_pop($data);
+            $p->id_kategorije = array_pop($data);
+            $p->id_prodavatelja = array_pop($data);
+            xmlStatusSend($p->save());            
         }
     } 
 ?>
