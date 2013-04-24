@@ -57,5 +57,40 @@
             public static function find_by_credential() {
                 return self::find_by_sql("SELECT * FROM ".static::$table_name." WHERE ovlasti>1");
             }
+
+            public static function getAll() //1
+            {
+                # code...
+            }
+
+            public static function get($id) //2
+            {
+                # code...
+            }
+
+            public static function set($data) //3,4
+            {
+                # code...
+            }
+
+            public static function getByEmail($email) //5
+            {
+                # code...
+            }
+
+            public static function getByName($name) //6 //ime+" "+prezime
+            {
+                # code...
+            }
+
+            public static function getAllModerators()
+            {
+                # code...
+            }
+
+            public static function getAllAdmins()
+            {
+                # code...
+            }
     }
 ?>
