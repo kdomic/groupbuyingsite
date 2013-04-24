@@ -83,7 +83,6 @@
                 $xmlDoc = new DOMDocument();
                 $root = $xmlDoc->appendChild($xmlDoc->createElement("korisnici"));
                 $data = $root->appendChild($xmlDoc->createElement("korisnik"));
-                $d->aktivan = $d->aktivan==1 ? "Da" : "Ne";
                 foreach ($d as $key => $value) {
                     $data->appendChild($xmlDoc->createElement($key, htmlentities($value)));
                 }
@@ -93,29 +92,29 @@
             }
 
             public static function set($data) //3,4
-            {
-                $p = new Korisnici();
-                if((int)$data[0]===4) $p = self::find_by_id($data[1]);            
-                $p->aktivan = array_pop($data);
-                $k->ovlasti = array_pop($data);
+            {                
+                $d = new Korisnici();
+                if((int)$data[0]===4) $d = self::find_by_id($data[1]);            
+                $d->aktivan = array_pop($data);
+                $d->ovlasti = array_pop($data);
                 $newPass= array_pop($data);
-                $k->password = is_sha1($newPass) ? $newPass : sha1($newPass);
-                $k->email_potvrda = array_pop($data);
-                $k->datum_registracije = array_pop($data);
-                $k->blokiran = array_pop($data);
-                $k->zamrznut = array_pop($data);
-                $k->deaktiviran = array_pop($data);
-                $k->opomena = array_pop($data);
-                $k->open_id = array_pop($data);
-                $k->oib = array_pop($data);
-                $k->email = array_pop($data);
-                $k->telefon = array_pop($data);
-                $k->mjesto = array_pop($data);
-                $k->pbr = array_pop($data);
-                $k->adresa = array_pop($data);
-                $k->prezime = array_pop($data);
-                $k->ime = array_pop($data);
-                xmlStatusSend($p->save());
+                $d->password = is_sha1($newPass) ? $newPass : sha1($newPass);
+                $d->email_potvrda = array_pop($data);
+                $d->datum_registracije = array_pop($data);
+                $d->blokiran = array_pop($data);
+                $d->zamrznut = array_pop($data);
+                $d->deaktiviran = array_pop($data);
+                $d->opomena = array_pop($data);
+                $d->open_id = array_pop($data);
+                $d->oib = array_pop($data);
+                $d->email = array_pop($data);
+                $d->telefon = array_pop($data);
+                $d->mjesto = array_pop($data);
+                $d->pbr = array_pop($data);
+                $d->adresa = array_pop($data);
+                $d->prezime = array_pop($data);
+                $d->ime = array_pop($data);
+                xmlStatusSend($d->save());
             }
 
             public static function getByEmail($email) //5
