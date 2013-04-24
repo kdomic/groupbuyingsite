@@ -38,11 +38,11 @@
             <table>
                 <tr>
                     <td><label for="inputEmailP">Email</label></td>
-                    <td><input type="email"     name="email"    id="inputEmailP"     placeholder="Email" value="kdomic@foi.hr"/></td>
+                    <td><input type="email"     name="email"    id="inputEmailP"     placeholder="Email" value="pero@pero.com"/></td>
                 </tr>
                 <tr>
                     <td><label for="inputLozinkaP">Lozinka</label></td>
-                    <td> <input type="password"  name="lozinka"  id="inputLozinkaP"   placeholder="Lozinka" value="admin"/></td>
+                    <td> <input type="password"  name="lozinka"  id="inputLozinkaP"   placeholder="Lozinka" value="pero"/></td>
                 </tr>
                 <tr>
                     <td colspan="2"><button id="btnLogin" onclick="loginUser();" >Prijava</button></td>
