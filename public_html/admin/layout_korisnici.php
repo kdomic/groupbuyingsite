@@ -1,9 +1,10 @@
 <div id="korisnici">
+    <button id="btnNewUser">Dodaj novog korisnika</button>
     <div id="allUsers">
         <table id="userTable">
             <thead><tr>
                 <th>ID</th><th>Ime i prezime</th><th>Email</th>
-                <th>Zamrznut do</th><th>B</th><th>D</th><th>O</th>
+                <th>Zamrznut do</th><th>B</th><th>D</th><th>O</th><th>Ovlasti</th><th>A</th>
              </tr></thead>
             <tbody></tbody>
         </table>
@@ -83,8 +84,11 @@
                 <td><input type="text"      name="ovlasti"  id="userOvlasti"    placeholder="" /></td>
             </tr>
             <tr>
-                <td><label for="userOBRISATI">Obrisati</label></td>
-                <td><input type="text"      name="obrisati" id="userOBRISATI"    placeholder="" /></td>
+                <td><label for="userAKTIVNA">Vidljivost</label></td>
+                <td>
+                    <input type="radio" name="vidljivost" value="1" id="userAKTIVNA">Da
+                    <input type="radio" name="vidljivost" value="0" >Ne
+                </td>
             </tr>
             <tr>
             <td colspan="2"><button id="btnSaveUser" onclick="saveUser();" >Pospremi</button></td>

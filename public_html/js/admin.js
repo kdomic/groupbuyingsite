@@ -1,6 +1,6 @@
 var emailPattern = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
 var originalEmail;
-var userSelectType;
+var userSelectType; //ova nam je da se znamo vratiti poslje pohrane korisnika ili moderatora
 
 /* === LAYOUTS === */
 
@@ -68,7 +68,7 @@ function layout_showPonude(){
 
 /* === ONLOAD === */
 $(document).ready(function(){
-    //!!!! PROVJERA OVLASTI - get_allusers.php
+    //!!!! PROVJERA OVLASTI - getSet_korisnici.php
 	hideAll();
 
     //EVENTS
@@ -83,6 +83,9 @@ $(document).ready(function(){
     $('#btnNewCategory').click(function(){newCategory();});
     $('#btnNewSeller').click(function(){newSeller();});
     $('#btnNewOffer').click(function(){newOffer();});
+    $('#btnNewUser').click(function(){newUser();});
+
+    
 
     //ONCLICK na gumbovima za snimanje fome treba prebaciti ovdje!
 
@@ -90,12 +93,14 @@ $(document).ready(function(){
 
 /* === USER EDIT === */
 
-function initUserTable(protocol) { 
+function initUserTable(protocol) {     
     var dataTable = $('#userTable').dataTable();
-    dataTable.fnClearTable();
-    var protocolData = new Array();
-    protocolData.push(protocol);
-    var xml = sendToPhp(protocolData,'../get_allusers.php');
+    if(protocol!=3)dataTable.fnClearTable();
+    var protocolData = new Array(); //1-all, 6-mods, 7-admins
+    if(protocol==1) protocolData.push(1);
+    else if (protocol==2) protocolData.push(6);
+    else if (protocol==3) protocolData.push(7);
+    var xml = sendToPhp(protocolData,'../getSet_korisnici.php');
     var users = $(xml).find('korisnici');
     var user = new Array();
     $(users).each(function(){    
@@ -104,10 +109,11 @@ function initUserTable(protocol) {
             $(this).children().each(function(){
                 user.push($(this).text());
             });
-            dataTable.fnAddData([user[0],user[1],user[2],user[3],user[4],user[5],user[6]]);
+            dataTable.fnAddData([user[0],user[1]+' '+user[2],user[7],user[12],user[13],user[11],user[10],user[17],user[18]]);
         });
     });    
     dataTable.$('tr').addClass("row").click(function(){editUser(dataTable.fnGetData(this)[0])});
+    if(protocol==2) initUserTable(3);
 }
 
 function editUser(num){    
@@ -116,17 +122,39 @@ function editUser(num){
     $('#singleUser').show();
     var userData = getUserData(num);
     var userInput = $('#singleUser td input');
-    for(var i=0; i<userData.length; i++)
+    for(var i=0; i<(userData.length-1); i++)
         $($(userInput)[i]).val(userData[i]);
+    if(userData[userData.length-1]==1)
+        $('#singleUser input:radio[name=vidljivost][value="1"]').prop('checked', true);
+    else
+        $('#singleUser input:radio[name=vidljivost][value="0"]').prop('checked', true);
     originalEmail = $('#userEMAIL').val();
 }
 
+function newUser(){
+    $('#allUsers').hide();
+    $('#singleUser').show();
+    $('#singleUser input:text').val('');
+    $($('#singleUser input')[0]).val('Novi korisnik');
+    $('#singleUser input:radio[name=vidljivost]').prop('checked', false);
+    $('#singleUser input:radio[name=vidljivost][value="1"]').prop('checked', true);
+}
+
 function saveUser(){
-    var userInput = $('#singleUser td input');
-    var userData = getUserData($($(userInput)[0]).val());
-    for(var i=1; i<userData.length; i++)
-        userData[i] = $($(userInput)[i]).val();
-    var xml = setUserData(userData);
+    var protocolData = new Array();
+    if($($('#singleUser input')[0]).val()=="Novi korisnik"){
+        protocolData.push(3);        
+        protocolData.push(-1);
+    } else {
+        protocolData.push(4);
+        protocolData.push($($('#singleUser input')[0]).val());
+    }
+    for(var i=1; i<(19-1); i++)
+        protocolData.push($($('#singleUser input')[i]).val());
+    protocolData.push($('#singleUser input:radio[name=vidljivost]:checked').val());
+
+    console.log(protocolData);
+    var xml = sendToPhp(protocolData,'../getSet_korisnici.php');
     var status = $(xml).find('status').text();
     if(status==='1'){
         $('#userUpdateStatus').html("Zapis pohranjen").addClass("success").removeClass("error").slideDown("slow");
@@ -209,7 +237,7 @@ function saveCategory(){
         data.push($($('#singleCategory input')[0]).val());
     }
     data.push($($('#singleCategory input')[1]).val());
-    data.push($('input:radio[name=vidljivost]:checked').val());
+    data.push($('#singleCategory input:radio[name=vidljivost]:checked').val());
     var xml = sendToPhp(data,'../getSet_kategorije.php');
     layout_showKategorije();
 }
@@ -395,9 +423,8 @@ function saveCategory(){ }
 
 function userDropSelect(field){
     var availableTags = new Array();
-    var protocolData = new Array();
-    protocolData.push(1);
-    var xml = sendToPhp(protocolData,'../get_allusers.php');
+    var protocolData = new Array('1');
+    var xml = sendToPhp(protocolData,'../getSet_korisnici.php');    
     var users = $(xml).find('korisnici');
     var user = new Array();
     $(users).each(function(){    
@@ -406,7 +433,7 @@ function userDropSelect(field){
             $(this).children().each(function(){
                 user.push($(this).text());
             });
-            availableTags.push(user[1]);
+            availableTags.push(user[1]+' '+user[2]);
         });
     });
     $(function(){$("#"+field).autocomplete({source: availableTags});});
@@ -476,19 +503,15 @@ function sessionCheck() {
 
 function getUserData(id){
     var data = new Array();
-    data.push(id);
-    var xml = sendToPhp(data,"../get_userdata.php");
-    var status = $(xml).find('status').text();
-    //if(status==='0') error(); !!!!!!!!!!!!!!!!!!!!!! - i u PHP (get set)
-    var userData = new Array();
-    var user = $(xml).find('korisnik');
-    $(user).children().each(function(){userData.push($(this).text())});
-    return userData;
-}
-
-function setUserData(data){
-    var xml = sendToPhp(data,"../set_userdata.php");
-    return xml;
+    var protocolData = new Array('2',id);
+    var xml = sendToPhp(protocolData,'../getSet_korisnici.php');
+    //var status = $(xml).find('status').text();
+    //if(status==='0') error();
+    var parsedXML = $(xml).find('korisnik');
+    $(parsedXML).children().each(function(){
+        data.push($(this).text());
+    });
+    return data;
 }
 
 /* === Message Box=== */
