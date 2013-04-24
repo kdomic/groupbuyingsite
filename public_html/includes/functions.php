@@ -9,4 +9,9 @@
         echo $xmlDoc->saveXML();
     }
 
+    //Preuzeto sa: http://stackoverflow.com/questions/2982059/testing-if-string-is-sha1-in-php
+	function is_sha1($str) {
+	    return (bool) preg_match('/^[0-9a-f]{40}$/i', $str);
+	}
+
 ?>
