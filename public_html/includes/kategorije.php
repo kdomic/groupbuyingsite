@@ -1,14 +1,5 @@
 <?php
 
-	/*
-	Protocol legend
-		[1]				- Dohvati sve kategorije
-		[2,'ID']		- Dohvati kategoriju sa ID
-		[3, '-1', ...]	- Dodaj novu kategoriju
-		[4, 'ID', ...]	- Ažuriraj kategorju
-
-	*/
-
     class Kategorije extends DatabaseObject { 
 
 		protected static $table_name = "kategorije";
