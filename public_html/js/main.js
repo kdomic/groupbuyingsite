@@ -180,6 +180,8 @@ function loginUser(){
 /*=== USER SETTINGS ===*/
 
 function userInformationChange(){
+    var protocolData = new Array();
+    protocolData.push(4);
     var userData = getUserData($('#inputUserIdA').val());
     userData[1] = $('#inputImeA').val();
     userData[2] = $('#inputPrezimeA').val();
@@ -195,12 +197,16 @@ function userInformationChange(){
         $('#dropboxCol1Status').slideDown("slow");
         return;
     }
-    var xml = setUserData(userData);
+    protocolData = protocolData.concat(userData);
+    var xml = sendToPhp(protocolData,'getSet_korisnici.php');
     var status = $(xml).find('status').text();
+    console.log(status);
     accountMess('dropboxCol1Status',status);
 }
 
 function userCredentialChange(){
+    var protocolData = new Array();
+    protocolData.push(4);
     var userData = getUserData($('#inputUserIdA').val());
     var pass = $('#inputLozinkaA').val();
     var pass2 = $('#inputLozinka2A').val();
@@ -212,7 +218,8 @@ function userCredentialChange(){
         return;
     }
     userData[16] = pass;
-    var xml = setUserData(userData);
+    protocolData = protocolData.concat(userData);
+    var xml = sendToPhp(protocolData,'getSet_korisnici.php');
     var status = $(xml).find('status').text();
     accountMess('dropboxCol2Status',status);
 }
@@ -547,19 +554,15 @@ function sessionCheck() {
 
 function getUserData(id){
     var data = new Array();
-    data.push(id);
-    var xml = sendToPhp(data,"get_userdata.php");
-    var status = $(xml).find('status').text();
-    if(status==='0') error();
-    var userData = new Array();
-    var user = $(xml).find('korisnik');
-    $(user).children().each(function(){userData.push($(this).text())});
-    return userData;
-}
-
-function setUserData(data){
-    var xml = sendToPhp(data,"set_userdata.php");
-    return xml;
+    var protocolData = new Array('2',id);
+    var xml = sendToPhp(protocolData,'getSet_korisnici.php');
+    //var status = $(xml).find('status').text();
+    //if(status==='0') error();
+    var parsedXML = $(xml).find('korisnik');
+    $(parsedXML).children().each(function(){
+        data.push($(this).text());
+    });
+    return data;    
 }
 
 /* === ONLOAD === */
