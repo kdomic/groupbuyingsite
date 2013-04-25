@@ -25,7 +25,7 @@
                 </td>
             </tr>                                                        
             <tr>
-            <td colspan="2"><button id="btnSaveCategory" onclick="saveCategory();" >Pospremi</button></td>
+            <td colspan="2"><button id="btnSaveCategory" >Pospremi</button></td>
             </tr>                            
         </table>
     </div>

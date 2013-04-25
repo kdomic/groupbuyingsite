@@ -66,7 +66,7 @@
                 </td>
             </tr> 
             <tr>
-            <td colspan="2"><button id="btnSaveOffer" onclick="saveOffer();" >Pospremi</button></td>
+            <td colspan="2"><button id="btnSaveOffer" >Pospremi</button></td>
             </tr>
         </table>
     </div>

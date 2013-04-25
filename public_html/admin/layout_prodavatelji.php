@@ -16,7 +16,7 @@
             </tr>                            
             <tr>
                 <td><label for="sellerKORISNIK">Odgovorna osoba</label></td>
-                <td><input type="text"      name="ime"      id="sellerKORISNIK"      placeholder="Odgovorna osoba"/></td>
+                <td><select name="ime"      id="sellerKORISNIK"></select></td>
             </tr>
             <tr>
                 <td><label for="sellerNAZIV">Naziv</label></td>
@@ -46,7 +46,7 @@
                 </td>
             </tr> 
             <tr>
-            <td colspan="2"><button id="btnSaveSeller" onclick="saveSeller();" >Pospremi</button></td>
+            <td colspan="2"><button id="btnSaveSeller">Pospremi</button></td>
             </tr>
         </table>
     </div>                    

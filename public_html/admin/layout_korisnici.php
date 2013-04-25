@@ -1,6 +1,6 @@
 <div id="korisnici">
-    <button id="btnNewUser">Dodaj novog korisnika</button>
     <div id="allUsers">
+        <button id="btnNewUser">Dodaj novog korisnika</button>        
         <table id="userTable">
             <thead><tr>
                 <th>ID</th><th>Ime i prezime</th><th>Email</th>
@@ -91,7 +91,7 @@
                 </td>
             </tr>
             <tr>
-            <td colspan="2"><button id="btnSaveUser" onclick="saveUser();" >Pospremi</button></td>
+            <td colspan="2"><button id="btnSaveUser" >Pospremi</button></td>
             </tr>
         </table>
         <div id="userUpdateStatus" class=""><span></span></div>                       
