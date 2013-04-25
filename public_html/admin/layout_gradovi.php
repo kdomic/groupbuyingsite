@@ -1,9 +1,9 @@
 <div id="gradovi">
     <div id="allCitys">
-        <button id="btnNewCategory">Dodaj novu kategoriju</button>
+        <button id="btnNewCity">Dodaj novi grad</button>
         <div class="clear"></div> 
-        <table id="categoriesTable">
-            <thead><tr><th>ID</th><th>Naziv</th></tr></thead>
+        <table id="citysTable">
+            <thead><tr><th>ID</th><th>Naziv</th><th>Aktivan</th></tr></thead>
             <tbody></tbody>
         </table>
     </div>
@@ -25,7 +25,7 @@
                 </td>
             </tr>                                                        
             <tr>
-            <td colspan="2"><button id="btnSaveCity" onclick="saveCity();" >Pospremi</button></td>
+            <td colspan="2"><button id="btnSaveCity">Pospremi</button></td>
             </tr>                            
         </table>
     </div>
