@@ -42,6 +42,7 @@
                 <?php include('layout_kategorije.php'); ?> 
                 <?php include('layout_gradovi.php'); ?>                                     
                 <?php include('layout_ponude.php'); ?> 
+                <?php include('layout_akcije.php'); ?> 
 
             </div> 
             <div class="clear"></div>        

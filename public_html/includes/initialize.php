@@ -18,5 +18,10 @@
     require_once ('racuni_akcije.php');
     require_once ('kategorije.php');
     require_once ('prodavatelji.php');    
+    require_once ('gradovi.php');
+    require_once ('gradovi_akcije.php');
+    require_once ('akcije.php');    
+
+
 
 ?>
