@@ -39,6 +39,7 @@
                 $id *= (-1);
                 $query .= 'AND a.id='.$id;
             } else {
+                $query .= 'AND a.datum_zavrsetka >= now() ';
                 $query .= 'ORDER BY a.istaknuto DESC, a.datum_zavrsetka ASC ';
                 $query .= 'LIMIT 1 OFFSET '.($id-1);
             }
@@ -71,6 +72,8 @@
                 $xml->sliderOfferBoughtT2 = 'Do sada kupljeno '.$xml->sliderOfferBoughtVal;
             }
             $xml->sliderOfferTime = array_shift($data[0]);
+            //$xml->sliderOfferTime = Vrijeme::timeWithOffset($xml->sliderOfferTime);
+            $xml->sliderOfferTime = Vrijeme::remainingTime($xml->sliderOfferTime);
             $xml->shortDesc = htmlentities(array_shift($data[0]));
             $xml->shortDesc .= htmlentities(array_shift($data[0]));
             $xml->desc = htmlentities(array_shift($data[0]));

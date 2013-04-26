@@ -336,7 +336,7 @@ var initOfferNum;
 var currentOfferNum;
 
 function initOffers(){
-    initOfferNum = 3;
+    initOfferNum = 1;
     currentOfferNum = 5; //prve 4 su za gore!
     for(var i = 0; i<initOfferNum; i++)
         addOneOffer();
@@ -569,6 +569,33 @@ function getUserData(id){
     return data;    
 }
 
+/* COUNTDOWN  */
+
+var countdown = $.timer(function() {startCountdown();}); /*https://code.google.com/p/jquery-timer/*/
+
+function startCountdown(){
+    if($('.sliderOfferTime h2').text()!='')
+        decreaseTime('.sliderOfferTime h2');
+    $('.time h4').each(function(){
+        decreaseTime(this);
+    });
+}
+
+function decreaseTime(element){
+    var full = $(element).text();
+    full = full.split(' ');
+    var d = full[0];
+    full = full[2].split(':');
+    var sum = parseInt(d)*(24*60*60)+parseInt(full[0])*(60*60)+parseInt(full[1])*(60)+parseInt(full[2])-1;
+    var _d = parseInt(sum/(24*60*60));
+    sum = sum - (24*60*60)*_d;
+    var _h = parseInt(sum/(60*60));
+    sum = sum - (60*60)*_h;
+    var _m = parseInt(sum/60);
+    var _s = sum - 60*_m;
+    $(element).text(_d+' dana '+_h+':'+_m+':'+_s);
+}
+
 /* === ONLOAD === */
 $(document).ready(function() {
     if(sessionCheck()){
@@ -579,6 +606,8 @@ $(document).ready(function() {
     $('#inputLozinkaP').keypress(function(e) {if(e.which == 13)loginUser();});    
     reloadBasket();   
     showIndexLayout();
+    startCountdown();
+    countdown.set({ time : 1000, autostart : true });    
 });
 
 /* === LAYOUTS === */

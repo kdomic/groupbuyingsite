@@ -24,6 +24,27 @@
             $vrijeme = self::find_by_id(1);
             return $vrijeme->pomak;
         }
+
+        public static function timeWithOffset($datetime){
+            $vrijeme = self::find_by_id(1);
+            $date = date('Y-m-d H:i:s', strtotime($datetime)+(1*60*60*(int)$vrijeme->pomak));
+            return $date;
+        }
+
+        public static function remainingTime($datetime){
+            $future = strtotime($datetime);
+            $now = strtotime(date("Y-m-d H:i:s"));
+            $diff = $future - $now;
+            if($diff>0) {
+                $s = $diff%60;
+                $m = floor(($diff%3600)/60);
+                $h = floor(($diff%86400)/3600);
+                $d = floor($diff/86400);
+                return "$d dana $h:$m:$s";
+            }
+            else
+                return "0000-00-00 00:00:00";
+        }
     }    
 
 ?>
