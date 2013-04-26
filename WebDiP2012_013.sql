@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 26, 2013 at 12:15 AM
+-- Generation Time: Apr 26, 2013 at 04:31 PM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -637,7 +637,7 @@ CREATE TABLE IF NOT EXISTS `prodavatelji` (
   `aktivan` tinyint(4) NOT NULL COMMENT '0 neaktivan\n1 aktivan',
   PRIMARY KEY (`id`),
   KEY `fk_prodavatelji_1` (`id_korisnika`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=47 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=46 ;
 
 --
 -- Dumping data for table `prodavatelji`
@@ -760,6 +760,18 @@ CREATE TABLE IF NOT EXISTS `vaucheri` (
   PRIMARY KEY (`id`),
   KEY `fk_vaucheri_1` (`id_korisnika`),
   KEY `fk_vaucheri_2` (`id_racuna`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vrijeme`
+--
+
+CREATE TABLE IF NOT EXISTS `vrijeme` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pomak` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
