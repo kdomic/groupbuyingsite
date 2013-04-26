@@ -43,7 +43,7 @@
                 return "$d dana $h:$m:$s";
             }
             else
-                return "0000-00-00 00:00:00";
+                return "Kupnja je zatvorena";
         }
     }    
 

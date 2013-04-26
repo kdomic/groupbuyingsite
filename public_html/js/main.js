@@ -294,7 +294,7 @@ function sliderImgChange(img){
                         });          
 }
 
-function slideOfferChange(data) {     
+function slideOfferChange(data) {         
     var time = 400;
     $('.sliderCaption h1').fadeOut(time, function() { $(this).text(data[1]).fadeIn(time); });
     $('.sliderCaption h2').fadeOut(time, function() { $(this).text(data[2]).fadeIn(time); });
@@ -311,23 +311,33 @@ function slideOfferChange(data) {
                                      $('.sliderOfferBought meter').attr("max", data[10]);
                                      $(this).css({opacity: 0, visibility: "visible"}).animate({opacity: 1.0}, time);
                                      next(); 
-                                 });    
+                                 });
     $('.sliderOfferTime h2').fadeOut(time, function() { $(this).text(data[11]).fadeIn(time); });
     $('.sliderOfferFriend a').unbind('click');
     $($('.sliderOfferFriend a')[0]).click(function(){alert("napraviti")});
     $($('.sliderOfferFriend a')[1]).click(function(){loadOfferDetails(data[0]);});    
     $('.sliderOfferBuy a').remove('a');
     $('.sliderOfferBuy img').remove('img');
-    if(isInBasket(data[0]))    
-        $('.sliderOfferBuy').append('<img src="images/basketRemove.png" alt="U košaric" onclick="removeOfferFromBasket('+data[0]+');"/>');
+    if(data[11]!='Kupnja je zatvorena')
+        if(isInBasket(data[0]))    
+            $('.sliderOfferBuy').append('<img src="images/basketRemove.png" alt="U košaric" onclick="removeOfferFromBasket('+data[0]+');"/>');
+        else
+            $('.sliderOfferBuy').append('<a onclick="addOfferToBasket('+data[0]+');">KUPI</a>');
     else
-        $('.sliderOfferBuy').append('<a onclick="addOfferToBasket('+data[0]+');">KUPI</a>');
+        hideIfTimeIsUp();
     $('.sliderOfferBuy a').fadeOut(time).fadeIn(time);
     $('.sliderOfferBuy img').fadeOut(time).fadeIn(time);
     $('.sliderOfferFriend h1').fadeOut(time).fadeIn(time);
     $('.sliderOfferFriend img').fadeOut(time).fadeIn(time);
     $('.sliderOfferBuy h1').fadeOut(time).fadeIn(time);        
     $('.sliderOfferTime h1').fadeOut(time).fadeIn(time);
+
+}
+
+function hideIfTimeIsUp(){
+    $('.sliderOfferTime h2').text("Kupnja je zatvorena");
+    $('.sliderOfferBuy img').hide();
+    $($('.sliderOfferFriend a')[0]).hide();
 }
 
 /* === OFFERS ==== */
@@ -343,7 +353,14 @@ function initOffers(){
 }
 
 function addOneOffer(){
-    addNewOffer(currentOfferNum);
+    var xml = sendToPhp(new Array(),"get_offer.php?count=1");
+    var status = $(xml).find('status').text();
+    console.log(status+">="+currentOfferNum);
+    if(status>=currentOfferNum)        
+        addNewOffer(currentOfferNum);
+    else
+        $('#layout_content_universal').hide();
+
     currentOfferNum++;
 }
 
@@ -587,6 +604,10 @@ function decreaseTime(element){
     var d = full[0];
     full = full[2].split(':');
     var sum = parseInt(d)*(24*60*60)+parseInt(full[0])*(60*60)+parseInt(full[1])*(60)+parseInt(full[2])-1;
+    if(sum<=0 || $(element).text()=="Kupnja je zatvorena"){
+        hideIfTimeIsUp();
+        return;
+    }
     var _d = parseInt(sum/(24*60*60));
     sum = sum - (24*60*60)*_d;
     var _h = parseInt(sum/(60*60));

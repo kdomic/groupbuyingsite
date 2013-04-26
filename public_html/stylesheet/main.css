@@ -291,6 +291,12 @@ header nav select {
     cursor: pointer;
 }
 
+.sliderOfferFriend span {
+    text-align: center;
+    margin: 0 0 0 40px;
+    font-style: italic;
+}
+
 .sliderOfferBought {
     height: 80px;
     border-bottom: 1px solid #ccc;
@@ -873,6 +879,11 @@ footer {
 
 .hide {
     display: none;
+}
+
+.center {
+    text-align: center;
+    vertical-align: center;
 }
 
 #goBack {
