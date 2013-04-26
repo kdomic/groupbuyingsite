@@ -1,8 +1,7 @@
 <?php require_once('includes/initialize.php'); ?>
 <pre>
 	<?php
-		$ponude = Gradovi_akcije::find_all();
-		print_r($ponude);		
+		pomakniVrijemeNa(15);
 	?>
 </pre>
 

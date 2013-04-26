@@ -9,8 +9,7 @@
         echo $xmlDoc->saveXML();
     }
 
-    function timeForMysql($value='')
-    {
+    function timeForMysql($value=''){
         return date("Y-m-d H:i:s",strtotime($value));
     }
 
