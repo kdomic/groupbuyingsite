@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 26, 2013 at 04:31 PM
+-- Generation Time: Apr 27, 2013 at 01:36 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -44,14 +44,14 @@ CREATE TABLE IF NOT EXISTS `akcije` (
 --
 
 INSERT INTO `akcije` (`id`, `id_ponude`, `popust`, `datum_pocetka`, `datum_zavrsetka`, `granica`, `istaknuto`, `aktivan`) VALUES
-(1, 1, 44, '2013-04-03 00:00:01', '2013-04-07 00:00:02', 9, 0, 1),
-(2, 2, 65, '2013-04-03 00:00:00', '2013-04-07 00:00:00', 9, 0, 1),
-(3, 3, 70, '2013-04-03 00:00:00', '2013-04-06 00:00:00', 3, 0, 1),
-(4, 4, 0, '2013-04-04 00:00:00', '2013-04-05 00:00:00', 3, 0, 1),
-(5, 5, 50, '2013-04-02 00:00:00', '2013-04-08 00:00:00', 6, 0, 1),
-(6, 6, 70, '2013-04-04 00:00:00', '2013-04-08 00:00:00', 9, 0, 1),
-(7, 7, 55, '2013-04-04 00:00:00', '2013-04-05 00:00:00', 8, 0, 1),
-(8, 8, 50, '2013-04-04 00:00:00', '2013-04-08 00:00:00', 10, 0, 1),
+(1, 1, 44, '2013-04-03 00:00:01', '2013-04-30 00:00:02', 9, 0, 1),
+(2, 2, 65, '2013-04-27 01:35:30', '2013-04-30 15:00:00', 9, 1, 1),
+(3, 3, 70, '2013-04-03 00:00:00', '2013-05-01 00:00:00', 3, 0, 1),
+(4, 4, 0, '2013-04-04 00:00:00', '2013-09-15 00:00:00', 3, 0, 1),
+(5, 5, 50, '2013-04-02 00:00:00', '2013-05-25 00:00:00', 6, 0, 0),
+(6, 6, 70, '2013-04-04 00:00:00', '2013-04-29 00:00:00', 9, 0, 1),
+(7, 7, 55, '2013-04-04 00:00:00', '2013-04-30 00:00:00', 8, 0, 1),
+(8, 8, 50, '2013-04-04 00:00:00', '2013-05-08 00:00:00', 10, 0, 1),
 (9, 9, 50, '2013-04-03 00:00:00', '2013-04-05 00:00:00', 7, 0, 1),
 (10, 10, 73, '2013-04-03 00:00:00', '2013-04-06 00:00:00', 6, 0, 1),
 (11, 11, 67, '2013-04-03 00:00:00', '2013-04-06 00:00:00', 9, 0, 1),
@@ -59,7 +59,7 @@ INSERT INTO `akcije` (`id`, `id_ponude`, `popust`, `datum_pocetka`, `datum_zavrs
 (13, 13, 0, '2013-04-04 00:00:00', '2013-04-08 00:00:00', 9, 0, 1),
 (14, 14, 40, '2013-04-04 00:00:00', '2013-04-07 00:00:00', 9, 0, 1),
 (15, 15, 50, '2013-04-04 00:00:00', '2013-04-08 00:00:00', 4, 0, 1),
-(16, 16, 64, '2013-04-02 00:00:00', '2013-04-07 00:00:00', 9, 0, 1),
+(16, 16, 64, '2013-04-02 00:00:00', '2013-04-27 01:20:45', 1, 1, 1),
 (17, 17, 59, '2013-04-04 00:00:00', '2013-04-06 00:00:00', 7, 0, 1),
 (18, 18, 51, '2013-04-03 00:00:00', '2013-04-06 00:00:00', 6, 0, 1),
 (19, 19, 51, '2013-04-02 00:00:00', '2013-04-08 00:00:00', 4, 0, 1),
@@ -93,7 +93,7 @@ INSERT INTO `akcije` (`id`, `id_ponude`, `popust`, `datum_pocetka`, `datum_zavrs
 (47, 2, 10, '1970-01-01 01:00:00', '1970-01-01 01:00:00', 0, 0, 0),
 (48, 2, 10, '1970-01-01 01:00:00', '1970-01-01 01:00:00', 0, 0, 0),
 (49, 6, 50, '2013-04-01 14:00:00', '2013-04-08 14:00:00', 50, 0, 0),
-(50, 47, 99, '2013-04-20 00:00:00', '2013-05-20 00:00:00', 199, 1, 1);
+(50, 47, 99, '2013-04-20 00:00:00', '2013-05-20 00:00:00', 199, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -644,7 +644,7 @@ CREATE TABLE IF NOT EXISTS `prodavatelji` (
 --
 
 INSERT INTO `prodavatelji` (`id`, `id_korisnika`, `naziv`, `adresa`, `kontakt`, `info`, `oib`, `aktivan`) VALUES
-(1, 11, 'Dragicina firma', 'Banovci 3 c, 9241 VerÅ¾ej, Slovenija', '+386025888238', 'http://www.soncna-hisa.si ', '82275477684', 0),
+(1, 11, 'Dragicina firma', 'Banovci 3 c, 9241 VerÅ¾ej, Slovenija', '+386025888238', 'http://www.soncna-hisa.si ', '82275477684', 1),
 (2, 1, 'Firma 2', '?ret b.b., Zagreb, Hrvatska', '0915205187', 'http://www.facebook.com/almina.potkovica', '20371366570', 1),
 (3, 3, 'Firma 3', 'Iblerov trg  4, Zagreb, Hrvatska', '0923048252', 'http://www.corpusvalens.com', '30160999168', 1),
 (4, 5, 'Firma 4', 'Pavla Hatza 7, Petrinjska 42a, Zagreb, Hrvats', '014572877,09145', 'http://www.latina.hr', '52123914876', 1),
@@ -703,7 +703,7 @@ CREATE TABLE IF NOT EXISTS `racuni` (
   `placeno` tinyint(4) NOT NULL COMMENT '0 ne\n1 da',
   PRIMARY KEY (`id`),
   KEY `fk_racuni_1` (`id_korisnika`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
 
 --
 -- Dumping data for table `racuni`
@@ -713,7 +713,10 @@ INSERT INTO `racuni` (`id`, `id_korisnika`, `datum`, `placeno`) VALUES
 (17, 2, '2013-04-22 20:07:08', 1),
 (18, 2, '2013-04-22 20:10:34', 1),
 (19, 2, '2013-04-22 21:37:20', 1),
-(20, 2, '2013-04-22 21:46:28', 1);
+(20, 2, '2013-04-22 21:46:28', 1),
+(21, 33, '2013-04-26 21:54:05', 1),
+(22, 33, '2013-04-26 22:07:04', 1),
+(23, 33, '2013-04-27 01:30:31', 1);
 
 -- --------------------------------------------------------
 
@@ -729,7 +732,7 @@ CREATE TABLE IF NOT EXISTS `racuni_akcije` (
   PRIMARY KEY (`id`),
   KEY `fk_racuni_akcije_1` (`id_racuna`),
   KEY `fk_racuni_akcije_2` (`id_akcije`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
 
 --
 -- Dumping data for table `racuni_akcije`
@@ -741,7 +744,11 @@ INSERT INTO `racuni_akcije` (`id`, `id_racuna`, `id_akcije`, `kolicina`) VALUES
 (10, 18, 4, 1),
 (11, 19, 2, 1),
 (12, 20, 1, 1),
-(13, 20, 6, 1);
+(13, 20, 6, 1),
+(14, 21, 16, 1),
+(15, 21, 25, 1),
+(16, 22, 39, 1),
+(17, 23, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -772,7 +779,14 @@ CREATE TABLE IF NOT EXISTS `vrijeme` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pomak` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `vrijeme`
+--
+
+INSERT INTO `vrijeme` (`id`, `pomak`) VALUES
+(1, 0);
 
 --
 -- Constraints for dumped tables
