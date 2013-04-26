@@ -245,7 +245,6 @@ var timer = $.timer(function() {sliderChange(null);}); /*https://code.google.com
 var speed = 6000;
 var sliderNum = 0;
 var sliderMaxNum = 4;
-var sliderData = new Array();
 
 function initSlider() {
     sliderNum = 0;

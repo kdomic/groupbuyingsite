@@ -12,6 +12,15 @@
             return $object_array;
         }
 
+        public static function find_by_raw_sql($sql="") {
+            global $database;
+            $result_set = $database->db_query($sql);
+            $object_array = array();
+            while ($row = $database->db_fetch_array($result_set))
+                $object_array[] = $row;
+            return $object_array;
+        }
+
         public static function find_all() {
             return self::find_by_sql("SELECT * FROM ".static::$table_name);
         }

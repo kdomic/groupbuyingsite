@@ -22,11 +22,59 @@
         public $x;
         public $y;
         
-        function __construct($num) {
-            $ponuda = Ponude::find_by_id($num);            
-            $this->testdata($ponuda);
-            $this->imgList();           
-            $this->save();
+        public static function get($id)
+        {
+            $query  = 'SELECT a.id AS akcija, p.id AS ponuda, p.naslov, p.podnaslov, p.cijena, a.popust, ';
+            $query .= '(SELECT sum(ra.kolicina) FROM racuni_akcije as ra WHERE ra.id_akcije=a.id GROUP BY ra.id_akcije ) as kupljeno, ';
+            $query .= 'a.granica, a.datum_zavrsetka, p.opis_naslov, p.opis_kratki, p.opis, p.napomena, p.karta_x, p.karta_y ';
+            $query .= 'FROM  akcije AS a ';
+            $query .= 'JOIN ponude AS p ON a.id_ponude=p.id ';
+            $query .= 'JOIN prodavatelji AS prod ON p.id_prodavatelja=prod.id ';
+            $query .= 'WHERE ';
+            $query .= 'a.aktivan=1 ';
+            $query .= 'AND p.aktivan=1 ';
+            $query .= 'AND prod.aktivan=1 ';
+            $query .= 'ORDER BY a.istaknuto DESC, a.datum_zavrsetka ASC ';
+            $query .= 'LIMIT 1 OFFSET '.$id;
+            $data = DatabaseObject::find_by_raw_sql($query);
+            if(empty($result_array)){
+                //VRATI STATUS 0
+            } else {
+                $data = array_shift($data);
+            }
+            $xml = new XmlPonuda();
+            $xml->id = array_shift($data[0]);
+            $za_sluku = array_shift($data[0]);
+            $xml->title = array_shift($data[0]);
+            $xml->subtitle = array_shift($data[0]);
+                $vrijednost = array_shift($data[0]);
+                $popust = array_shift($data[0]);
+                $cijena = $vrijednost*(100-$popust)/100;
+                $usteda = $vrijednost - $cijena;
+            $xml->sliderOfferBuy = str_replace('.', ',', sprintf("%01.2f", $cijena)).' kn';
+            $xml->sliderOfferDiscountU = str_replace('.', ',', sprintf("%01.2f", $usteda)).' kn';
+            $xml->sliderOfferDiscountP = $popust.'%';
+            $xml->sliderOfferDiscountV = str_replace('.', ',', sprintf("%01.2f", $vrijednost)).' kn';
+            $xml->sliderOfferBoughtVal = array_shift($data[0]);
+            $xml->sliderOfferBoughtMax = array_shift($data[0]);
+
+            if($xml->sliderOfferBoughtVal >= $xml->sliderOfferBoughtMax) {
+                $this->sliderOfferBoughtT1 = 'Ponuda je postignuta!';
+                $this->sliderOfferBoughtT2 = 'Do sada kupljeno '.$xml->sliderOfferBoughtVal;
+            } else {
+                $xml->sliderOfferBoughtT1 = 'Potrebno još {'.$xml->sliderOfferBoughtMax-$xml->sliderOfferBoughtVal.'} kupiti da bi vrijedilo';
+                $xml->sliderOfferBoughtT2 = 'Do sada kupljeno '.$xml->sliderOfferBoughtVal;
+            }
+            $xml->sliderOfferTime = array_shift($data[0]);
+            $xml->shortDesc = array_shift($data[0]);
+            $xml->shortDesc .= array_shift($data[0]);
+            $xml->desc = array_shift($data[0]);
+            $xml->remark = array_shift($data[0]);
+            $xml->x = array_shift($data[0]);
+            $xml->y = array_shift($data[0]);                        
+            $xml->sliderOfferBoughtImg = ('offers/ponuda_'.sprintf("%05d", $za_sluku).'/01.jpg');
+            $xml->imgList($za_sluku);
+            $xml->save();
         }
         
         function save(){
@@ -59,34 +107,9 @@
             $xmlDoc->formatOutput = true;
             echo $xmlDoc->saveXML();
         }
-        
-        function testdata($ponuda){
-            $vrijednost = rand()%1000+200;
-            $popust = rand()%80+1;
-            $cijena = $vrijednost*(100-$popust)/100;
-            $usteda = $vrijednost - $cijena;
-            $this->id = $ponuda->id;
-            $this->title = $ponuda->naslov;
-            $this->subtitle = $ponuda->podnaslov;
-            $this->sliderOfferBuy = str_replace('.', ',', sprintf("%01.2f", $cijena)).'';
-            $this->sliderOfferDiscountU = str_replace('.', ',', sprintf("%01.2f", $usteda)).'';
-            $this->sliderOfferDiscountP = $popust.'%';
-            $this->sliderOfferDiscountV = str_replace('.', ',', sprintf("%01.2f", $vrijednost)).' kn';
-            $this->sliderOfferBoughtT1 = 'Potrebno još 5 kupiti';
-            $this->sliderOfferBoughtT2 = 'Do sada kupljeno 95';
-            $this->sliderOfferBoughtVal = rand()%101;
-            $this->sliderOfferBoughtMax = '100';
-            $this->sliderOfferTime = '125 dana 12:18:49';
-            $this->sliderOfferBoughtImg = ('offers/ponuda_'.sprintf("%05d", $this->id).'/01.jpg');
-            $this->shortDesc = htmlspecialchars($ponuda->opis_naslov.'<br/>'.$ponuda->opis_kratki);
-            $this->desc = htmlspecialchars($ponuda->opis);
-            $this->remark = htmlspecialchars($ponuda->napomena);
-            $this->x = $ponuda->karta_x;
-            $this->y = $ponuda->karta_y;
-        }
 
-        function imgList(){
-            $this->imagesPath = 'offers/ponuda_'.sprintf("%05d", $this->id);
+        function imgList($path){
+            $this->imagesPath = 'offers/ponuda_'.sprintf("%05d", $path);
             $handle = opendir($this->imagesPath);
             while (false !== ($entry = readdir($handle)))
                 if(strpos($entry,'.jpg'))
