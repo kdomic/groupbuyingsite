@@ -291,10 +291,10 @@ function sliderImgChange(img){
                             $(this).attr("src", img);
                             $(this).css({opacity: 0, visibility: "visible"}).animate({opacity: 1.0}, time);
                             next(); 
-                        });                    
+                        });          
 }
 
-function slideOfferChange(data) { 
+function slideOfferChange(data) {     
     var time = 400;
     $('.sliderCaption h1').fadeOut(time, function() { $(this).text(data[1]).fadeIn(time); });
     $('.sliderCaption h2').fadeOut(time, function() { $(this).text(data[2]).fadeIn(time); });
@@ -314,7 +314,7 @@ function slideOfferChange(data) {
                                  });    
     $('.sliderOfferTime h2').fadeOut(time, function() { $(this).text(data[11]).fadeIn(time); });
     $('.sliderOfferFriend a').unbind('click');
-    $($('.sliderOfferFriend a')[0]).click(function(){alter("napraviti")});
+    $($('.sliderOfferFriend a')[0]).click(function(){alert("napraviti")});
     $($('.sliderOfferFriend a')[1]).click(function(){loadOfferDetails(data[0]);});    
     $('.sliderOfferBuy a').remove('a');
     $('.sliderOfferBuy img').remove('img');
@@ -332,10 +332,12 @@ function slideOfferChange(data) {
 
 /* === OFFERS ==== */
 
-var initOfferNum = 3;
-var currentOfferNum = 5; //prve 4 su za gore!
+var initOfferNum;
+var currentOfferNum;
 
 function initOffers(){
+    initOfferNum = 3;
+    currentOfferNum = 5; //prve 4 su za gore!
     for(var i = 0; i<initOfferNum; i++)
         addOneOffer();
 }
@@ -389,7 +391,9 @@ function getOffer(load){
 /* === OFFER DETAILS === */
 
 function loadOfferDetails(num){
-    goTop();   
+    goTop();
+    num = num *(-1);
+    console.log(num);
     var data = getOffer(num);
     sliderChange(num);
     var img = data[14].split(';');
@@ -424,7 +428,7 @@ function addOfferToBasket(num){
     var xml = sendToPhp(dataString,"includes/basket.php");
     var status = $(xml).find('status').text();
     reloadBasket();
-    sliderChange(num);
+    sliderChange(sliderNum);
     msgBoxShow("Dodavanje", "Proizvod je dodan u košaricu", "info");
 }
 
@@ -435,7 +439,7 @@ function removeOfferFromBasket(num){
     var xml = sendToPhp(dataString,"includes/basket.php");
     var status = $(xml).find('status').text();
     reloadBasket();
-    sliderChange(num);
+    sliderChange(sliderNum);
     msgBoxShow("Uklanjanje", "Proizvod je uklonjen iz košarice", "info");
 }
 
@@ -487,6 +491,7 @@ function checkout(){
     data.pop();
     while(data.length>0){
         var num = data.pop();
+        num = num*(-1);
         addNewOffer(num);
     }
     $('#layout_content_universal').html('<div class="buttonLongGreen" onclick="checkoutPay();">Plati</div>');

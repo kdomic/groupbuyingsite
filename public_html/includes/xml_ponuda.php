@@ -24,6 +24,7 @@
         
         public static function get($id)
         {
+            $id = (int)$id;
             $query  = 'SELECT a.id AS akcija, p.id AS ponuda, p.naslov, p.podnaslov, p.cijena, a.popust, ';
             $query .= '(SELECT sum(ra.kolicina) FROM racuni_akcije as ra WHERE ra.id_akcije=a.id GROUP BY ra.id_akcije ) as kupljeno, ';
             $query .= 'a.granica, a.datum_zavrsetka, p.opis_naslov, p.opis_kratki, p.opis, p.napomena, p.karta_x, p.karta_y ';
@@ -34,14 +35,18 @@
             $query .= 'a.aktivan=1 ';
             $query .= 'AND p.aktivan=1 ';
             $query .= 'AND prod.aktivan=1 ';
-            $query .= 'ORDER BY a.istaknuto DESC, a.datum_zavrsetka ASC ';
-            $query .= 'LIMIT 1 OFFSET '.$id;
-            $data = DatabaseObject::find_by_raw_sql($query);
-            if(empty($result_array)){
-                //VRATI STATUS 0
+            if($id<0){
+                $id *= (-1);
+                $query .= 'AND a.id='.$id;
             } else {
-                $data = array_shift($data);
+                $query .= 'ORDER BY a.istaknuto DESC, a.datum_zavrsetka ASC ';
+                $query .= 'LIMIT 1 OFFSET '.($id-1);
             }
+            $data = DatabaseObject::find_by_raw_sql($query);
+            if(empty($data)){
+                xmlStatusSend(0);
+                return;
+            }           
             $xml = new XmlPonuda();
             $xml->id = array_shift($data[0]);
             $za_sluku = array_shift($data[0]);
@@ -57,24 +62,24 @@
             $xml->sliderOfferDiscountV = str_replace('.', ',', sprintf("%01.2f", $vrijednost)).' kn';
             $xml->sliderOfferBoughtVal = array_shift($data[0]);
             $xml->sliderOfferBoughtMax = array_shift($data[0]);
-
+            $xml->sliderOfferBoughtVal = isset($xml->sliderOfferBoughtVal) ? $xml->sliderOfferBoughtVal : 0;        
             if($xml->sliderOfferBoughtVal >= $xml->sliderOfferBoughtMax) {
-                $this->sliderOfferBoughtT1 = 'Ponuda je postignuta!';
-                $this->sliderOfferBoughtT2 = 'Do sada kupljeno '.$xml->sliderOfferBoughtVal;
+                $xml->sliderOfferBoughtT1 = 'Ponuda je postignuta!';
+                $xml->sliderOfferBoughtT2 = 'Do sada kupljeno '.$xml->sliderOfferBoughtVal;
             } else {
-                $xml->sliderOfferBoughtT1 = 'Potrebno još {'.$xml->sliderOfferBoughtMax-$xml->sliderOfferBoughtVal.'} kupiti da bi vrijedilo';
+                $xml->sliderOfferBoughtT1 = 'Potrebno još '.($xml->sliderOfferBoughtMax-$xml->sliderOfferBoughtVal);
                 $xml->sliderOfferBoughtT2 = 'Do sada kupljeno '.$xml->sliderOfferBoughtVal;
             }
             $xml->sliderOfferTime = array_shift($data[0]);
-            $xml->shortDesc = array_shift($data[0]);
-            $xml->shortDesc .= array_shift($data[0]);
-            $xml->desc = array_shift($data[0]);
-            $xml->remark = array_shift($data[0]);
+            $xml->shortDesc = htmlentities(array_shift($data[0]));
+            $xml->shortDesc .= htmlentities(array_shift($data[0]));
+            $xml->desc = htmlentities(array_shift($data[0]));
+            $xml->remark = htmlentities(array_shift($data[0]));
             $xml->x = array_shift($data[0]);
             $xml->y = array_shift($data[0]);                        
             $xml->sliderOfferBoughtImg = ('offers/ponuda_'.sprintf("%05d", $za_sluku).'/01.jpg');
             $xml->imgList($za_sluku);
-            $xml->save();
+            $xml->save();            
         }
         
         function save(){
