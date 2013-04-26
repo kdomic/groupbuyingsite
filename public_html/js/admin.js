@@ -82,9 +82,17 @@ function layout_showAkcije(){
     $('#akcije').show();
     $('#allActions').show();
     $('#singleAction').hide();    
-    initActionsTable()
+    initActionsTable();
     $('.menuCurrent').removeClass('menuCurrent');
     $($('#sidebar li')[7]).addClass('menuCurrent');    
+}
+
+function layout_showVrijeme(){
+    hideAll();
+    initTimeTable();
+    $('#vrijeme').show();
+    $('.menuCurrent').removeClass('menuCurrent');
+    $($('#sidebar li')[8]).addClass('menuCurrent');    
 }
 
 /* === ONLOAD === */
@@ -101,6 +109,8 @@ $(document).ready(function(){
     $($('#sidebar li')[5]).click(function(){layout_showGradovi();});       
     $($('#sidebar li')[6]).click(function(){layout_showPonude();});
     $($('#sidebar li')[7]).click(function(){layout_showAkcije();});
+    $($('#sidebar li')[8]).click(function(){layout_showVrijeme();});
+
 
     $('#btnNewUser').click(function(){newUser();});
     $('#btnNewSeller').click(function(){newSeller();});
@@ -115,6 +125,8 @@ $(document).ready(function(){
     $('#btnSaveCity').click(function(){saveCity();});
     $('#btnSaveOffer').click(function(){saveOffer();});
     $('#btnSaveAction').click(function(){saveAction();});
+    $('#btnSaveTime').click(function(){saveTime();});
+
 
 });
 
@@ -690,6 +702,19 @@ function offersDropSelectOptions(field){
             $('#'+field).append("<option value="+data[0]+">"+data[3]+"</option>");
         });
     });
+}
+
+/* === TIME OFFSET === */
+
+function initTimeTable(){
+    var xml = sendToPhp(new Array('1'),'../getSet_vrijeme.php');
+    var status = $(xml).find('status').text();
+    $('#currentTimeOffset').html(status);
+}
+
+function saveTime() {
+    sendToPhp(new Array('2'),'../getSet_vrijeme.php');
+    initTimeTable();
 }
 
 /* === AJAX status SEND/R === */

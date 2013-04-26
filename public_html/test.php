@@ -1,7 +1,7 @@
 <?php require_once('includes/initialize.php'); ?>
 <pre>
 	<?php
-		pomakniVrijemeNa(15);
+		Vrijeme::getOffsetXML();
 	?>
 </pre>
 

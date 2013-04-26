@@ -43,6 +43,8 @@
                 <?php include('layout_gradovi.php'); ?>                                     
                 <?php include('layout_ponude.php'); ?> 
                 <?php include('layout_akcije.php'); ?> 
+                <?php include('layout_vrijeme.php'); ?> 
+
 
             </div> 
             <div class="clear"></div>        
