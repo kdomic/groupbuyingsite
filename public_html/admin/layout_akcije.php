@@ -23,11 +23,11 @@
             </tr>
             <tr>
                 <td><label for="actionPOCETAK">Početak</label></td>
-                <td><input type="datetime"      name="pocetak"      id="actionPOCETAK"      placeholder=""/></td>
+                <td><input type="datetime"      name="pocetak"      id="actionPOCETAK" /></td>
             </tr>
             <tr>
                 <td><label for="actionZAVRSETAK">Završetak</label></td>
-                <td><input type="datetime"      name="zavrsetak"      id="actionZAVRSETAK"      placeholder=""/></td>
+                <td><input type="datetime"      name="zavrsetak"      id="actionZAVRSETAK"  /></td>
             </tr>
             <tr>
                 <td><label for="actionGRANICA">Granica</label></td>

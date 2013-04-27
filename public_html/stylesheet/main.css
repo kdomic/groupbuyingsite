@@ -410,7 +410,7 @@ header nav select {
     margin-top: 15px;
 }
 
-#caption {
+.caption {
     font-family: Impact, sans-serif;
     font-size: 100%;
     margin: 0;
