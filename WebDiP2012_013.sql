@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 27, 2013 at 01:36 AM
+-- Generation Time: Apr 28, 2013 at 12:27 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -223,11 +223,21 @@ CREATE TABLE IF NOT EXISTS `komentari` (
   `id_korisnika` int(11) NOT NULL,
   `id_ponude` int(11) NOT NULL,
   `komentar` text NOT NULL,
+  `ocjena` int(11) NOT NULL,
   `datum` datetime NOT NULL,
+  `aktivan` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `fk_komentari_1` (`id_korisnika`),
   KEY `fk_komentari_2` (`id_ponude`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `komentari`
+--
+
+INSERT INTO `komentari` (`id`, `id_korisnika`, `id_ponude`, `komentar`, `ocjena`, `datum`, `aktivan`) VALUES
+(4, 33, 8, 'Ovo su opasni znakovi /*--+123 --', 2, '2013-04-27 16:10:33', 1),
+(5, 1, 8, 'Ovo je neki drugi komentar', 4, '2013-04-25 00:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -256,15 +266,15 @@ CREATE TABLE IF NOT EXISTS `korisnici` (
   `ovlasti` mediumint(9) NOT NULL COMMENT '1 reg_user\n2 mod\n3 admin',
   `aktivan` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0-ne; 1-da',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=44 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=36 ;
 
 --
 -- Dumping data for table `korisnici`
 --
 
 INSERT INTO `korisnici` (`id`, `ime`, `prezime`, `adresa`, `pbr`, `mjesto`, `telefon`, `email`, `oib`, `open_id`, `opomena`, `deaktiviran`, `zamrznut`, `blokiran`, `datum_registracije`, `email_potvrda`, `password`, `ovlasti`, `aktivan`) VALUES
-(1, 'Ana', 'AmiÄ‡', 'Anina 21', '10000', 'Zagreb', '098365111', 'ana@ana.com', '1', 0, 1, 1, '0000-00-00 00:00:00', 1, '0000-00-00 00:00:00', '1', 'fe226311733808ccd88d7483dfc01ca63d835081', 1, 1),
-(2, 'JukiÄ‡', 'Kaptol 85', '31000', 'Osjek', '031949320', 'kdomic@foi.hr', '05864405589', '0', 1, 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 'b521caa6e1db82e5a01c924a419870cb72b81635', 'da4b9237bacccdf19c0760cab7aec4a8359010b0', 3, 0),
+(1, 'Ana', 'AmiÄ‡', 'Anina 21', '10000', 'Zagreb', '098365111', 'ana@ana.com', '1', 0, 1, 1, '0000-00-00 00:00:00', 1, '0000-00-00 00:00:00', '1', '98fc7b34760face5e268bff318180e05861a970f', 1, 1),
+(2, 'JukiÄ‡', 'DadoviÄ‡', 'Kaptol 85', '31000', 'Osjek', '031949320', 'kdomic@f1oi.hr', '05864405589', 1, 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 'b521caa6e1db82e5a01c924a419870cb72b81635', 'da4b9237bacccdf19c0760cab7aec4a8359010b0', 3, 0),
 (3, 'Karlo', 'BlaÅ¾eviÄ‡', 'Maksimir 43', '31000', 'Osjek', '031255327', 'karlo@nekimail.com', '53274892846', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-01 00:00:00', 'aktiviran', '912c106a14310615dfe86b9b571cbacf77849a6f', 3, 1),
 (4, 'Mia', 'Grgi&#263;', 'Kaptol 61', '20000', 'Dubrovnik', '020443851', 'mia@nekimail.com', '73626866178', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-03 00:00:00', 'aktiviran', 'lozinka', 1, 1),
 (5, 'Sara', 'Filipovi&#263;', 'Trg Petra Kre&#353;imira Četvrtog 97', '51000', 'Rijeka', '051462878', 'sara@nekimail.com', '18364659824', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-03 00:00:00', 'aktiviran', 'lozinka', 1, 1),
@@ -294,15 +304,7 @@ INSERT INTO `korisnici` (`id`, `ime`, `prezime`, `adresa`, `pbr`, `mjesto`, `tel
 (30, 'Ana', 'Juri&#263;', 'Trg bana Josipa Jela&#269;i&#263;a 11', '35000', 'Slavnosni Brod', '035369839', 'ana@nekimail.com', '10323237862', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-03 00:00:00', 'aktiviran', 'lozinka', 1, 1),
 (31, 'Krunoslav', 'Domic', '', '', '', '', 'krunoslavdomic@gmail.com', '', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-19 18:36:50', '0', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 1),
 (33, 'Pero', 'PeriÄ‡', 'Perina ulica 22', '', '', '', 'pero@pero.com', '05864405589', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-19 18:55:49', '0', '98fc7b34760face5e268bff318180e05861a970f', 1, 0),
-(35, 'admin', 'admin', '', '', '', '', 'admin@admin.com', '', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-19 19:47:06', '0', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 1),
-(36, '', '', '', '', '', '', '', '', 0, 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', '', 0, 11),
-(37, '', '', '', '', '', '', '', '', 0, 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', '', 0, 11),
-(38, 'Nika', 'JukiÄ‡', 'Kaptol 85', '31000', 'Osjek', '031949320', 'kdomic@foi.hr', '90007392709', 0, 1, 0, '0000-00-00 00:00:00', 0, '2013-04-03 00:00:00', 'aktiviran', 'd033e22ae348aeb5660fc2140aec35850c4da997', 2, 11),
-(39, 'Nika1', 'JukiÄ‡', 'Kaptol 85', '31000', 'Osjek', '031949320', 'kdomic@foi.hr', '90007392709', 0, 1, 0, '0000-00-00 00:00:00', 0, '2013-04-03 00:00:00', 'aktiviran', 'd033e22ae348aeb5660fc2140aec35850c4da997', 2, 11),
-(40, 'Nika', 'JukiÄ‡', 'Kaptol 85', '31000', 'Osjek', '031949320', 'kdomic@foi.hr', '90007392709', 0, 1, 0, '0000-00-00 00:00:00', 0, '2013-04-03 00:00:00', 'aktiviran', 'd033e22ae348aeb5660fc2140aec35850c4da997', 2, 11),
-(41, 'Nika1', 'JukiÄ‡1', 'Kaptol 851', '31000', 'Osjek1', '0319493201', 'kdomic@foi.hr', '90007392709', 0, 1, 0, '0000-00-00 00:00:00', 0, '2013-04-03 00:00:00', 'aktiviran', 'd033e22ae348aeb5660fc2140aec35850c4da997', 2, 11),
-(42, 'Nika', 'JukiÄ‡', 'Kaptol 85', '31000', 'Osjek', '031949320', 'kdomic@foi.hr', '90007392709', 0, 1, 0, '0000-00-00 00:00:00', 0, '2013-04-03 00:00:00', 'aktiviran', 'd033e22ae348aeb5660fc2140aec35850c4da997', 2, 11),
-(43, 'Janko', 'JankoviÄ‡', 'JanjiÄeva 55', '52465', 'Tar', '091566366', 'jaja@titi.com', '', 0, 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 'da39a3ee5e6b4b0d3255bfef95601890afd80709', 0, 0);
+(35, 'admin', 'admin', '', '', '', '', 'admin@admin.com', '', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-19 19:47:06', '0', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -319,17 +321,7 @@ CREATE TABLE IF NOT EXISTS `kosarica` (
   PRIMARY KEY (`id`),
   KEY `fk_kosarica_1` (`id_korisnika`),
   KEY `fk_kosarica_2` (`id_akcije`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
-
---
--- Dumping data for table `kosarica`
---
-
-INSERT INTO `kosarica` (`id`, `id_korisnika`, `id_akcije`, `operacija`, `datum`) VALUES
-(1, 1, 1, 0, '2013-04-01 01:59:50'),
-(2, 1, 1, 1, '2013-04-01 01:59:50'),
-(3, 1, 2, 0, '2013-04-01 01:59:50'),
-(4, 1, 2, 2, '2013-04-01 01:59:50');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -479,19 +471,10 @@ CREATE TABLE IF NOT EXISTS `moderatori` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_korisnika` int(11) NOT NULL,
   `id_kategorije` int(11) NOT NULL,
-  `aktivan` tinyint(4) NOT NULL COMMENT '0 nema mogucnost moderiranja\n1 ima',
   PRIMARY KEY (`id`),
   KEY `fk_moderatori_1` (`id_korisnika`),
   KEY `fk_moderatori_2` (`id_kategorije`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
-
---
--- Dumping data for table `moderatori`
---
-
-INSERT INTO `moderatori` (`id`, `id_korisnika`, `id_kategorije`, `aktivan`) VALUES
-(1, 1, 1, 1),
-(2, 1, 2, 1);
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
 
 -- --------------------------------------------------------
 
@@ -502,19 +485,19 @@ INSERT INTO `moderatori` (`id`, `id_korisnika`, `id_kategorije`, `aktivan`) VALU
 CREATE TABLE IF NOT EXISTS `newsletter` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_korisnika` int(11) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `kategorija` int(11) NOT NULL,
   `aktivan` tinyint(4) NOT NULL COMMENT '0 neaktivan\n1 aktivan',
   PRIMARY KEY (`id`),
   KEY `fk_newsletter_1` (`id_korisnika`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `newsletter`
 --
 
-INSERT INTO `newsletter` (`id`, `id_korisnika`, `aktivan`) VALUES
-(1, 25, 1),
-(2, 26, 1),
-(3, 27, 1);
+INSERT INTO `newsletter` (`id`, `id_korisnika`, `email`, `kategorija`, `aktivan`) VALUES
+(5, 33, 'kdomic@foi.hr', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -703,7 +686,7 @@ CREATE TABLE IF NOT EXISTS `racuni` (
   `placeno` tinyint(4) NOT NULL COMMENT '0 ne\n1 da',
   PRIMARY KEY (`id`),
   KEY `fk_racuni_1` (`id_korisnika`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
 
 --
 -- Dumping data for table `racuni`
@@ -716,7 +699,8 @@ INSERT INTO `racuni` (`id`, `id_korisnika`, `datum`, `placeno`) VALUES
 (20, 2, '2013-04-22 21:46:28', 1),
 (21, 33, '2013-04-26 21:54:05', 1),
 (22, 33, '2013-04-26 22:07:04', 1),
-(23, 33, '2013-04-27 01:30:31', 1);
+(23, 33, '2013-04-27 01:30:31', 1),
+(24, 33, '2013-04-27 15:42:09', 1);
 
 -- --------------------------------------------------------
 
@@ -732,7 +716,7 @@ CREATE TABLE IF NOT EXISTS `racuni_akcije` (
   PRIMARY KEY (`id`),
   KEY `fk_racuni_akcije_1` (`id_racuna`),
   KEY `fk_racuni_akcije_2` (`id_akcije`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
 
 --
 -- Dumping data for table `racuni_akcije`
@@ -748,7 +732,8 @@ INSERT INTO `racuni_akcije` (`id`, `id_racuna`, `id_akcije`, `kolicina`) VALUES
 (14, 21, 16, 1),
 (15, 21, 25, 1),
 (16, 22, 39, 1),
-(17, 23, 3, 1);
+(17, 23, 3, 1),
+(18, 24, 8, 1);
 
 -- --------------------------------------------------------
 
