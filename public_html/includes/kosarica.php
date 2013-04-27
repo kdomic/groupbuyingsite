@@ -13,12 +13,13 @@
 		public $datum;
 
 		public static function getUserPurchases($id){
-			$query  = 'SELECT ra.id_akcije, a.id_ponude, r.datum, p.cijena, a.popust ';
+			$query  = 'SELECT ra.id_akcije, a.id_ponude, r.datum, p.cijena, a.popust, p.naslov ';
 			$query .= 'FROM racuni AS r ';
 			$query .= 'JOIN racuni_akcije AS ra ON ra.id_racuna=r.id ';
 			$query .= 'JOIN akcije AS a ON ra.id_akcije=a.id ';
 			$query .= 'JOIN ponude AS p ON a.id_ponude=p.id ';
 			$query .= 'WHERE r.id_korisnika='.$id;
+            $query .= ' ORDER BY r.datum ASC';
             $data = DatabaseObject::find_by_raw_sql($query);
 			if(empty($data)){
                 xmlStatusSend(0);

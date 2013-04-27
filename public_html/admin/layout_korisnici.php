@@ -94,6 +94,15 @@
             <td colspan="2"><button id="btnSaveUser" >Pospremi</button></td>
             </tr>
         </table>
-        <div id="userUpdateStatus" class=""><span></span></div>                       
+        <div id="userUpdateStatus" class=""><span></span></div> 
+        <br><br>
+        <p>Povijest kupovina</p>
+        <table>
+            <table id="userPurchases">
+                <thead><tr>
+                    <th>ID akcije</th><th>Naziv ponude</th><th>Datum</th><th>Cijena</th></thead>
+                <tbody></tbody>
+            </table>
+        </table>                      
     </div>
 </div>

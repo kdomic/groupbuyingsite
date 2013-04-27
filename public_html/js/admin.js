@@ -155,10 +155,11 @@ function initUserTable(protocol) {
     if(protocol==2) initUserTable(3);
 }
 
-function editUser(num){    
+function editUser(num){
     $('#userUpdateStatus').slideUp("fast");    
     $('#allUsers').hide();
     $('#singleUser').show();
+    userPurchases(num);    
     var userData = getUserData(num);
     var userInput = $('#singleUser td input');
     for(var i=0; i<(userData.length-1); i++)
@@ -216,6 +217,18 @@ function checkEmailAvailability() {
         $('#userUpdateStatus').html("Email zauzet!").addClass("error").removeClass("success").slideDown("slow");
     else
         $('#userUpdateStatus').html("").removeClass("error").slideUp("slow");
+}
+
+function userPurchases(num) {
+    var dataTable = $('#userPurchases').dataTable();
+    var xml = sendToPhp(new Array(1,num),"../get_purchases.php");
+    $(xml).find('kupnja').each(function(){
+        var data = new Array();
+        $(this).children().each(function(){
+            data.push($(this).text());
+        });
+        dataTable.fnAddData([data[0],data[4],data[2],data[3]]);
+    });
 }
 
 /* === CATEGORIES === */
