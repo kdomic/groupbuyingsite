@@ -11,7 +11,7 @@
 	switch((int)$data[0]){
 		case 1: Moderatori::getAll(); break;
 		case 3: Moderatori::set($data);break;		
-		//case 5: Moderatori::set($data[1]);break;
+		case 5: Moderatori::remove($data[1]);break;
 	}
 
 ?>

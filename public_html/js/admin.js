@@ -277,7 +277,14 @@ function initModsTable() {
             });
             dataTable.fnAddData([data[0],data[1],data[2], "ukloni"]);
         });
-    });  
+    });
+    dataTable.$('td:nth-child(4)').addClass("row").click(function(){
+        var aPos = dataTable.fnGetPosition( this );
+        var aData = dataTable.fnGetData( aPos[0] );
+        console.log(aData);
+        var xml = sendToPhp(new Array('5',aData[0]),'../getSet_moderatori.php');
+        initModsTable();
+    });
 }
 
 function saveMod() {
