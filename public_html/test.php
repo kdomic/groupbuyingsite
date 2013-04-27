@@ -1,9 +1,6 @@
 <?php require_once('includes/initialize.php'); ?>
-<pre>
-	<?php
-		print_r(Vrijeme::remainingTime('2013-07-01 00:00:00'));
-	?>
-</pre>
+<?php print_r(XmlPonuda::get(1)); ?>
+
 
 
 

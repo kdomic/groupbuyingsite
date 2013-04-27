@@ -32,7 +32,8 @@
             $query .= 'a.aktivan=1 ';
             $query .= 'AND p.aktivan=1 ';
             $query .= 'AND prod.aktivan=1 ';
-            $query .= 'AND a.datum_zavrsetka >= now() ';
+            $query .= 'AND a.datum_pocetka <= "'.Vrijeme::nowWithOffset().'" ';
+            $query .= 'AND a.datum_zavrsetka > "'.Vrijeme::nowWithOffset().'" ';
             $data = DatabaseObject::find_by_raw_sql($query);
             xmlStatusSend(array_shift($data[0]));
         }
@@ -54,8 +55,10 @@
                 $id *= (-1);
                 $query .= 'AND a.id='.$id;
             } else {
-                $query .= 'AND a.datum_pocetka <= now() ';
-                $query .= 'AND a.datum_zavrsetka > now() ';
+                $query .= 'AND a.datum_pocetka <= "'.Vrijeme::nowWithOffset().'" ';
+                $query .= 'AND a.datum_zavrsetka > "'.Vrijeme::nowWithOffset().'" ';
+                //$query .= 'AND a.datum_pocetka <= now() ';
+                //$query .= 'AND a.datum_zavrsetka > now() ';
                 $query .= 'ORDER BY a.istaknuto DESC, a.datum_zavrsetka ASC ';
                 $query .= 'LIMIT 1 OFFSET '.($id-1);
             }
@@ -88,8 +91,9 @@
                 $xml->sliderOfferBoughtT2 = 'Do sada kupljeno '.$xml->sliderOfferBoughtVal;
             }
             $xml->sliderOfferTime = array_shift($data[0]);
-            $xml->sliderOfferTime = Vrijeme::timeWithOffset($xml->sliderOfferTime);
-            $xml->sliderOfferTime = Vrijeme::remainingTime($xml->sliderOfferTime);
+            //$xml->sliderOfferTime = Vrijeme::timeWithOffset($xml->sliderOfferTime);
+            //$xml->sliderOfferTime = Vrijeme::remainingTime($xml->sliderOfferTime);
+            $xml->sliderOfferTime = Vrijeme::remainingTimeWithOffset($xml->sliderOfferTime);
             $xml->shortDesc = htmlentities(array_shift($data[0]));
             $xml->shortDesc .= htmlentities(array_shift($data[0]));
             $xml->desc = htmlentities(array_shift($data[0]));

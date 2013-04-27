@@ -284,7 +284,13 @@ function sliderChange(selectedOffer){
 
 function sliderImgChange(img){
     var time = 400;
-    if(jQuery.type(img) !== "string") img = img.src;
+    if(jQuery.type(img) !== "string"){
+        var attr = $(img).attr('src');
+        if (typeof attr !== 'undefined' && attr !== false)
+            img = img.src;
+        else
+            return;
+    }
     $('.sliderImg img').css({opacity: 1.0}).animate({opacity: 0}, time);
     $('.sliderImg img').delay(time+10)
                        .queue(function(next){
@@ -355,12 +361,10 @@ function initOffers(){
 function addOneOffer(){
     var xml = sendToPhp(new Array(),"get_offer.php?count=1");
     var status = $(xml).find('status').text();
-    console.log(status+">="+currentOfferNum);
     if(status>=currentOfferNum)        
         addNewOffer(currentOfferNum);
     else
         $('#layout_content_universal').hide();
-
     currentOfferNum++;
 }
 

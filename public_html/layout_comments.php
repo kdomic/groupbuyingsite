@@ -10,7 +10,7 @@
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam consectetur egestas nisi, at rutrum metus euismod sit amet. Proin sagittis tellus nec mauris molestie non aliquam tortor pretium. Proin eget magna erat. Integer porta faucibus tellus.
         </div>
         <div class="commentAuthor">
-            <img src="https://www.phpbb.com/community/download/file.php?avatar=192443_1357502265.gif" alt="Slika korisnika" />
+            <img src="#" alt="Slika korisnika" />
             <h1>Pero Perić</h1>
             <h2>Broj kupovina: 15</h2>
         </div>
