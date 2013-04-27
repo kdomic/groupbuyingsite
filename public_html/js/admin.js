@@ -223,7 +223,6 @@ function saveUser(){
         protocolData.push($($('#singleUser input')[i]).val());
     protocolData.push($('#singleUser input:radio[name=vidljivost]:checked').val());
 
-    console.log(protocolData);
     var xml = sendToPhp(protocolData,'../getSet_korisnici.php');
     var status = $(xml).find('status').text();
     if(status==='1'){
@@ -281,7 +280,6 @@ function initModsTable() {
     dataTable.$('td:nth-child(4)').addClass("row").click(function(){
         var aPos = dataTable.fnGetPosition( this );
         var aData = dataTable.fnGetData( aPos[0] );
-        console.log(aData);
         var xml = sendToPhp(new Array('5',aData[0]),'../getSet_moderatori.php');
         initModsTable();
     });
@@ -721,15 +719,17 @@ function saveAction(){
 /* ==== SALES === */
 
 function initSalesTable() {
-    var dataTable = $('#allSales').dataTable();
+    var dataTable = $('#allSales').dataTable().columnFilter({
+        aoColumns:[null,null,null,{type: "select",values: kategorijeNazivi()},{type: "select",values: prodavateljiNazivi()},null,null]
+    });
+    dataTable.fnClearTable();
     var xml = sendToPhp(new Array('1'),"../get_purchases.php");
     $(xml).find('kupnja').each(function(){
         var data = new Array();
         $(this).children().each(function(){
             data.push($(this).text());
         });
-        console.log(data);
-        dataTable.fnAddData([ data[0],data[1]+' '+data[2],data[3],data[4],data[5],data[6] ]);
+        dataTable.fnAddData([ data[0],data[1]+' '+data[2],data[3],data[4],data[5],data[6],data[7] ]);
     });
 }
 
@@ -829,8 +829,6 @@ function userDropSelectOptions(field){
     });
 }
 
-
-
 function prodavateljiDropSelectOptions(field){
     $('#'+field+" option").remove();    
     var protocolData = new Array();
@@ -847,6 +845,23 @@ function prodavateljiDropSelectOptions(field){
             $('#'+field).append("<option value="+data[0]+">"+data[2]+"</option>");
         });
     });
+}
+
+function prodavateljiNazivi(){
+    var xml = sendToPhp(new Array('1'),'../getSet_prodavatelji.php');
+    var dataSet = $(xml).find('prodavatelji');
+    var data = new Array();
+    var nazivi = new Array();
+    $(dataSet).each(function(){    
+        $(this).children().each(function(){
+            data = []; 
+            $(this).children().each(function(){
+                data.push($(this).text());
+            });
+            nazivi.push(data[2]);
+        });
+    });
+    return nazivi;
 }
 
 function categoryDropSelectOptions(field,type,userID){
@@ -866,6 +881,23 @@ function categoryDropSelectOptions(field,type,userID){
             $('#'+field).append("<option value="+data[0]+">"+data[1]+"</option>");
         });
     });
+}
+
+function kategorijeNazivi(){
+    var xml = sendToPhp(new Array('1'),'../getSet_kategorije.php');
+    var dataSet = $(xml).find('kategorije');
+    var data = new Array();
+    var nazivi = new Array();
+    $(dataSet).each(function(){    
+        $(this).children().each(function(){
+            data = []; 
+            $(this).children().each(function(){
+                data.push($(this).text());
+            });
+            nazivi.push(data[1]);
+        });
+    });
+    return nazivi;
 }
 
 function offersDropSelectOptions(field){

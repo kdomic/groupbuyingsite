@@ -13,13 +13,14 @@
 		public $datum;
 
         public static function getAll(){
-            $query  = 'SELECT ra.id_akcije, k.ime, k.prezime, p.naslov, kat.naziv as kategorija , r.datum, p.cijena, a.popust  ';
+            $query  = 'SELECT ra.id_akcije, k.ime, k.prezime, p.naslov, kat.naziv as kategorija, prod.naziv as prodavatelj, r.datum, p.cijena, a.popust ';
             $query .= 'FROM racuni AS r ';
             $query .= 'JOIN racuni_akcije AS ra ON ra.id_racuna=r.id ';
             $query .= 'JOIN akcije AS a ON ra.id_akcije=a.id ';
             $query .= 'JOIN ponude AS p ON a.id_ponude=p.id ';
             $query .= 'JOIN korisnici AS k ON r.id_korisnika=k.id ';            
             $query .= 'JOIN kategorije AS kat ON  p.id_kategorije=kat.id ';
+            $query .= 'JOIN prodavatelji AS prod ON  p.id_prodavatelja=prod.id ';            
             $query .= 'ORDER BY r.datum ASC';
             $data = DatabaseObject::find_by_raw_sql($query);
             if(empty($data)){

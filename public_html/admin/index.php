@@ -14,7 +14,7 @@
         <script type="text/javascript" src="../js/admin.js"></script> 
         <script type="text/javascript" src="../js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="../js/jquery-ui-1.10.2.custom.js"></script>
-
+        <script type="text/javascript" src="../js/jquery.dataTables.columnFilter.js"></script>
     </head>    
     
     <body>
