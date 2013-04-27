@@ -96,11 +96,13 @@
         </table>
         <div id="userUpdateStatus" class=""><span></span></div> 
         <br><br>
-        <p>Povijest kupovina</p>
-        <table id="userPurchases">
-            <thead><tr>
-                <th>ID akcije</th><th>Naziv ponude</th><th>Datum</th><th>Cijena</th></thead>
-            <tbody></tbody>
-        </table>                    
+        <div id="userPurHistory">
+            <p>Povijest kupovina</p>
+            <table id="userPurchases">
+                <thead><tr>
+                    <th>ID akcije</th><th>Naziv ponude</th><th>Datum</th><th>Cijena</th></thead>
+                <tbody></tbody>
+            </table>
+        </div>
     </div>
 </div>

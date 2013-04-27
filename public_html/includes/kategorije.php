@@ -36,6 +36,23 @@
 			$xmlDoc->formatOutput = true;
 			echo $xmlDoc->saveXML();
 		}
+
+		public static function getNotSelected($id){
+			$query  = "SELECT * FROM kategorije AS k ";
+			$query .= "WHERE NOT EXISTS (SELECT * FROM moderatori AS m WHERE k.id=m.id_kategorije AND m.id_korisnika={$id})";
+			$_k = self::find_by_sql($query);
+			$xmlDoc = new DOMDocument();
+			$root = $xmlDoc->appendChild($xmlDoc->createElement("kategorije"));
+			foreach($_k as $k){
+				$kategorija = $root->appendChild($xmlDoc->createElement("kategorija"));
+				$kategorija->appendChild($xmlDoc->createElement("id", $k->id));
+				$kategorija->appendChild($xmlDoc->createElement("naziv", $k->naziv));
+				$kategorija->appendChild($xmlDoc->createElement("aktivna", $k->aktivna ? "Da" : "Ne"));		
+			}
+			header("Content-Type: text/xml");
+			$xmlDoc->formatOutput = true;
+			echo $xmlDoc->saveXML();			
+		}
 		
 		public static function set($data)
 		{

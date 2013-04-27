@@ -33,9 +33,12 @@ function layout_showModeratori(){
     hideAll();    
     userSelectType = 2;    
     initUserTable(2);
+    modsDropSelectOptions('modSelectUser');
+    initModsTable();
     $('#singleUser').hide();
     $('#allUsers').show();
     $('#korisnici').show();
+    $('#moderatori').show();    
     $('.menuCurrent').removeClass('menuCurrent');
     $($('#sidebar li')[2]).addClass('menuCurrent');    
 }
@@ -183,6 +186,7 @@ function editUser(num){
     $('#userUpdateStatus').slideUp("fast");    
     $('#allUsers').hide();
     $('#singleUser').show();
+    $('#userPurHistory').show();
     userPurchases(num);    
     var userData = getUserData(num);
     var userInput = $('#singleUser td input');
@@ -197,6 +201,8 @@ function editUser(num){
 
 function newUser(){
     $('#allUsers').hide();
+    $('#userPurHistory').hide();    
+    $('#moderatori').hide();
     $('#singleUser').show();
     $('#singleUser input:text').val('');
     $($('#singleUser input')[0]).val('Novi korisnik');
@@ -254,6 +260,77 @@ function userPurchases(num) {
         dataTable.fnAddData([data[0],data[4],data[2],data[3]]);
     });
 }
+
+/* === MODS === */
+
+function initModsTable() {
+    var dataTable = $('#modTables').dataTable();  
+    dataTable.fnClearTable();
+    var xml = sendToPhp(new Array('1'),'../getSet_moderatori.php');
+    var dataSet = $(xml).find('moderatori');
+    var data = new Array();
+    $(dataSet).each(function(){    
+        $(this).children().each(function(){
+            data = []; 
+            $(this).children().each(function(){
+                data.push($(this).text());
+            });
+            dataTable.fnAddData([data[0],data[1],data[2], "ukloni"]);
+        });
+    });  
+}
+
+function saveMod() {
+    var protocolData = new Array('3');
+    protocolData.push($('#modSelectUser').val());
+    protocolData.push($('#modeSelectCat').val());
+    var xml = sendToPhp(protocolData,'../getSet_moderatori.php'); 
+    var status = $(xml).find('status').text();
+    if(status==='1')
+        $('#modUpdateStatus').html("Zapis pohranjen").addClass("success").removeClass("error").slideDown("slow").delay(2000).slideUp("slow");
+    else 
+        $('#modUpdateStatus').html("Greška prilikom pohrane").addClass("error").removeClass("success").slideDown("slow").delay(2000).slideUp("slow");    
+    initModsTable();
+    categoryDropSelectOptions('modeSelectCat',5,$('#modSelectUser').val());
+}
+
+function modsDropSelectOptions(field){
+    $('#'+field+" option").remove();
+    $('#'+field).append('<option disabled selected>--- Izaberi korisnika ---</option>');
+    var protocolData = new Array('6');
+    var xml = sendToPhp(protocolData,'../getSet_korisnici.php');    
+    var users = $(xml).find('korisnici');
+    var user = new Array();
+    $(users).each(function(){    
+        $(this).children().each(function(){
+            user = []; 
+            $(this).children().each(function(){
+                user.push($(this).text());
+            });
+            $('#'+field).append("<option value="+user[0]+">"+user[1]+' '+user[2]+"</option>");
+        });
+    });
+    var protocolData = new Array('7');
+    var xml = sendToPhp(protocolData,'../getSet_korisnici.php');    
+    var users = $(xml).find('korisnici');
+    var user = new Array();
+    $(users).each(function(){    
+        $(this).children().each(function(){
+            user = []; 
+            $(this).children().each(function(){
+                user.push($(this).text());
+            });
+            $('#'+field).append("<option value="+user[0]+">"+user[1]+' '+user[2]+"</option>");
+        });
+    });
+}
+
+function showCatDropSelectOptions(){
+    $('#btnNewMod').removeAttr("disabled");
+    categoryDropSelectOptions('modeSelectCat',5,$('#modSelectUser').val());
+}
+
+
 
 /* === CATEGORIES === */
 
@@ -418,7 +495,7 @@ function initOffersTable(){
 
 function newOffer(){
     prodavateljiDropSelectOptions('offerPRODAVATELJ');
-    categoryDropSelectOptions('offerKATEGORIJA');
+    categoryDropSelectOptions('offerKATEGORIJA',1,0);
     $('#allOffers').hide();
     $('#singleOffer').show();
     $('#singleOffer input:text').val('');
@@ -430,7 +507,7 @@ function newOffer(){
 
 function editOffer(num){
     prodavateljiDropSelectOptions('offerPRODAVATELJ');
-    categoryDropSelectOptions('offerKATEGORIJA');
+    categoryDropSelectOptions('offerKATEGORIJA',1,0);
     var protocolData = new Array('2',num);
     var xml = sendToPhp(protocolData,'../getSet_ponude.php');
     var data = new Array();
@@ -745,6 +822,8 @@ function userDropSelectOptions(field){
     });
 }
 
+
+
 function prodavateljiDropSelectOptions(field){
     $('#'+field+" option").remove();    
     var protocolData = new Array();
@@ -763,10 +842,11 @@ function prodavateljiDropSelectOptions(field){
     });
 }
 
-function categoryDropSelectOptions(field){
+function categoryDropSelectOptions(field,type,userID){
     $('#'+field+" option").remove();
     var protocolData = new Array();
-    protocolData.push(1);
+    protocolData.push(type);
+    protocolData.push(userID);
     var xml = sendToPhp(protocolData,'../getSet_kategorije.php');
     var cats = $(xml).find('kategorije');
     var data = new Array();

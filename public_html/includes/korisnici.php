@@ -67,6 +67,11 @@
                     if($ovlasti!=NULL)
                         if((int)$d->ovlasti!=$ovlasti) continue;
                     $data = $root->appendChild($xmlDoc->createElement("korisnik"));
+                    switch($d->ovlasti){
+                        case 1: $d->ovlasti = "Korisnik"; break;
+                        case 2: $d->ovlasti = "Mod"; break;
+                        case 3: $d->ovlasti = "Admin"; break;                        
+                    }
                     $d->aktivan = $d->aktivan==1 ? "Da" : "Ne";
                     foreach ($d as $key => $value) {
                         $data->appendChild($xmlDoc->createElement($key, htmlentities($value)));

@@ -1,21 +1,17 @@
 <div id="moderatori">
-    <select>
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>        
+    <br><br><hr><br>    
+    <select id="modSelectUser" onchange="showCatDropSelectOptions();">            
     </select>
-    <select>
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>        
-    </select>    
-    <button id="btnNewMod">Dodaj novog moderatora</button>        
-    <table id="userTable">
+    <select id="modeSelectCat"> 
+        <option>Prvo odaberi korisnika</option>       
+    </select>        
+    <button id="btnNewMod" onclick="saveMod();" disabled >Dodaj ovlasti</button>        
+    <table id="modTables">
         <thead><tr>
-            <th>ID</th><th>Ime i prezime</th><th>Kategorija</th><th>Aktivno</th>
-         </tr></thead>
+            <th>ID</th><th>Ime i prezime</th><th>Kategorija</th><th>Ukloni</th></thead>
         <tbody></tbody>
-    </table>   
+    </table> 
+    <div class="clear"></div>
+    <div id="modUpdateStatus" class=""><span></span></div>  
 </div>
+
