@@ -33,12 +33,15 @@
                     <li>Akcije</li>
                     <li>Sistemsko vrijeme</li>
                     <li>Pregled prodaje</li>
+                    <li>Komentari</li>
+
                 </ul>                                                                           
             </div>
 
             <div id="content">                
                 <?php include('layout_pocetna.php'); ?>           
                 <?php include('layout_korisnici.php'); ?>
+                <?php include('layout_moderatori.php'); ?>                
                 <?php include('layout_prodavatelji.php'); ?> 
                 <?php include('layout_kategorije.php'); ?> 
                 <?php include('layout_gradovi.php'); ?>                                     
@@ -46,8 +49,7 @@
                 <?php include('layout_akcije.php'); ?> 
                 <?php include('layout_vrijeme.php'); ?> 
                 <?php include('layout_prodaja.php'); ?> 
-
-
+                <?php include('layout_komentari.php'); ?> 
             </div> 
             <div class="clear"></div>        
         </div>

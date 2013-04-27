@@ -14,6 +14,8 @@ function hideAll(){
     $('#akcije').hide();
     $('#vrijeme').hide();
     $('#prodaja').hide();
+    $('#moderatori').hide();
+    $('#komentari').hide();
 }
 
 function layout_showKorisnici(){
@@ -104,6 +106,15 @@ function layout_showProdaja(){
     $($('#sidebar li')[9]).addClass('menuCurrent');    
 }
 
+
+function layout_showKomentari(){
+    hideAll();
+    initCommentsTable();
+    $('#komentari').show();
+    $('.menuCurrent').removeClass('menuCurrent');
+    $($('#sidebar li')[10]).addClass('menuCurrent');    
+}
+
 /* === ONLOAD === */
 $(document).ready(function(){
     //!!!! PROVJERA OVLASTI - getSet_korisnici.php
@@ -120,6 +131,8 @@ $(document).ready(function(){
     $($('#sidebar li')[7]).click(function(){layout_showAkcije();});
     $($('#sidebar li')[8]).click(function(){layout_showVrijeme();});
     $($('#sidebar li')[9]).click(function(){layout_showProdaja();});
+    $($('#sidebar li')[10]).click(function(){layout_showKomentari();});
+
 
 
 
@@ -636,17 +649,64 @@ function initSalesTable() {
     });
 }
 
+/* === TIME OFFSET === */
 
-/*
-function initCategoriesTable(){ }
+function initTimeTable(){
+    var xml = sendToPhp(new Array('1'),'../getSet_vrijeme.php');
+    var status = $(xml).find('status').text();
+    $('#currentTimeOffset').html(status);
+}
 
-function newCategory(){ }
+function saveTime() {
+    sendToPhp(new Array('2'),'../getSet_vrijeme.php');
+    initTimeTable();
+}
 
-function editCategory(num){ }
+/* === AJAX status SEND/R === */
+function sendToPhp(dataString,url){
+    var jsonString = JSON.stringify(dataString);
+    var data;
+    $.ajax({
+         type: "POST",
+         url: url,
+         data: {data : jsonString}, 
+         cache: false,
+         async:false,
+         success: function(xml){
+             data = xml;
+         }
+     });
+     return data;
+}
 
-function saveCategory(){ }
+/* === COMMENTS === */
 
-*/
+function initCommentsTable(){
+    var dataTable = $('#commentsTable').dataTable();
+    dataTable.fnClearTable();
+    var xml = sendToPhp(new Array('1'),'../getSet_komentari.php');
+    var dataSet = $(xml).find('komentari');
+    var data = new Array();
+    $(dataSet).each(function(){    
+        $(this).children().each(function(){
+            data = []; 
+            $(this).children().each(function(){
+                data.push($(this).text());
+            });
+            dataTable.fnAddData([ data[0],data[1],data[3],data[5],data[6] ]);
+        });
+    });    
+    dataTable.$('td:nth-child(5)').addClass("row").click(function(){
+        var aPos = dataTable.fnGetPosition( this );
+        var aData = dataTable.fnGetData( aPos[0] );
+        var xml = sendToPhp(new Array('4',aData[0]),'../getSet_komentari.php');
+        initCommentsTable();
+    });
+}
+
+
+
+
 
 /* === USER DROP SELECT */
 
@@ -739,35 +799,6 @@ function offersDropSelectOptions(field){
     });
 }
 
-/* === TIME OFFSET === */
-
-function initTimeTable(){
-    var xml = sendToPhp(new Array('1'),'../getSet_vrijeme.php');
-    var status = $(xml).find('status').text();
-    $('#currentTimeOffset').html(status);
-}
-
-function saveTime() {
-    sendToPhp(new Array('2'),'../getSet_vrijeme.php');
-    initTimeTable();
-}
-
-/* === AJAX status SEND/R === */
-function sendToPhp(dataString,url){
-    var jsonString = JSON.stringify(dataString);
-    var data;
-    $.ajax({
-         type: "POST",
-         url: url,
-         data: {data : jsonString}, 
-         cache: false,
-         async:false,
-         success: function(xml){
-             data = xml;
-         }
-     });
-     return data;
-}
 
 /* === SESSION and USER DATA === */
 function sessionCheck() {

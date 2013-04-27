@@ -1,5 +1,5 @@
 <?php require_once('includes/initialize.php'); ?>
-<?php Komantari::canIpost(33,25); ?>
+<?php Komantari::getAll(); ?>
 
 
 

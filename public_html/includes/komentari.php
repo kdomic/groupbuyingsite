@@ -19,7 +19,7 @@
         }
 
         public static function find_by_ponuda($id_ponude) {
-            return self::find_by_sql("SELECT * FROM ".static::$table_name." WHERE id_ponude={$id_ponude}");
+            return self::find_by_sql("SELECT * FROM ".static::$table_name." WHERE id_ponude={$id_ponude} AND aktivan=1");
         }
 
         public static function canIpost($id_korisnika, $id_ponude){
@@ -29,6 +29,7 @@
 			$query .= 'JOIN akcije AS a ON a.id = ra.id_akcije ';
 			$query .= 'WHERE r.id_korisnika ='.$id_korisnika.' ';
 			$query .= 'AND a.id_ponude='.$id_ponude.' ';
+
 			$data = DatabaseObject::find_by_raw_sql($query);
             if(empty($data)){
                 xmlStatusSend(0);
@@ -38,6 +39,26 @@
             	else
             		xmlStatusSend(2);
             }
+        }
+
+        public static function getAll() {
+            $_d = self::find_all();
+            $xmlDoc = new DOMDocument();
+            $root = $xmlDoc->appendChild($xmlDoc->createElement("komentari"));
+            foreach ($_d as $d){
+                $data = $root->appendChild($xmlDoc->createElement("komentar"));
+                $k = Korisnici::find_by_id($d->id_korisnika);                
+                $d->id_korisnika = $k->ime.' '.$k->prezime;
+                $d->ocjena = 'images/stars'.$d->ocjena.'.png';
+                $d->datum = date("d.m.Y.", strtotime($d->datum));
+                $d->aktivan = $d->aktivan==1 ? "Da" : "Ne";
+                foreach ($d as $key => $value) {
+                    $data->appendChild($xmlDoc->createElement($key, htmlentities($value)));
+                }
+            }
+            header("Content-Type: text/xml");
+            $xmlDoc->formatOutput = true;
+            echo $xmlDoc->saveXML();
         }
 
         public static function set($data) {
@@ -71,6 +92,13 @@
             $xmlDoc->formatOutput = true;
             echo $xmlDoc->saveXML();
 		}
+
+        public static function changeVisibility($id){
+            $d = self::find_by_id($id);
+            $d->aktivan += 1;
+            $d->aktivan %= 2;
+            $d->save();
+        }
 
 
     }
