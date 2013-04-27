@@ -190,6 +190,7 @@ function loginUser(){
             $('#btnShowDropboxAccount').removeClass("hide");
         }, 1000);
         reloadBasket();
+        $('#layout_sidebar_newsletter').show();
     } else {
         $('#loginStatus').removeClass("warning").addClass("error");
         $('#loginStatus span').html("Uneseni podatci nisu ispravni");
@@ -656,7 +657,7 @@ function getUserData(id){
     return data;    
 }
 
-/* COUNTDOWN  */
+/* === COUNTDOWN ===  */
 
 var countdown = $.timer(function() {startCountdown();}); /*https://code.google.com/p/jquery-timer/*/
 
@@ -687,18 +688,64 @@ function decreaseTime(element){
     $(element).text(_d+' dana '+_h+':'+_m+':'+_s);
 }
 
+/* === NEWSLETTER ==== */
+
+function initNewsletter(){
+    categoryDropSelectOptions('newsletterSelect');
+}
+
+function saveNewsletter(){
+    var protocolData = new Array('3','-1');
+    protocolData.push(sessionCheck());
+    protocolData.push($('#newsletterEmail').val());
+    protocolData.push($('#newsletterSelect').val());
+    if(protocolData[3]=="" || !emailPattern.test(protocolData[3])){
+        $('#newsletterStatus').html("Upišite e-mail").addClass("boxOnly").slideDown("slow").delay(4000).slideUp("slow");
+        return;
+    }
+    protocolData.push(1);
+    var xml = sendToPhp(protocolData,'getSet_newsletter.php'); 
+    var status = $(xml).find('status').text();
+    if(status==='1')
+        $('#newsletterStatus').html("Pretplata pohranjena").addClass("boxOnly").slideDown("slow").delay(4000).slideUp("slow");
+    else 
+        $('#newsletterStatus').html("Greška").addClass("boxOnly").slideDown("slow").delay(4000).slideUp("slow");
+}
+
+function categoryDropSelectOptions(field){
+    $('#'+field+" option").remove();
+    $('#'+field).append("<option value=0>Sve kategorije</option>");
+    var xml = sendToPhp(new Array('1'),'getSet_kategorije.php');
+    var cats = $(xml).find('kategorije');
+    var data = new Array();
+    $(cats).each(function(){    
+        $(this).children().each(function(){
+            data = []; 
+            $(this).children().each(function(){
+                data.push($(this).text());
+            });
+            $('#'+field).append("<option value="+data[0]+">"+data[1]+"</option>");
+        });
+    });
+}
+
 /* === ONLOAD === */
 $(document).ready(function() {
     if(sessionCheck()){
         $('#btnShowDropboxLogin').addClass("hide");        
         $('#btnShowDropboxPurchases').removeClass("hide");
-        $('#btnShowDropboxAccount').removeClass("hide");
+        $('#btnShowDropboxAccount').removeClass("hide");        
     }
     $('#inputLozinkaP').keypress(function(e) {if(e.which == 13)loginUser();});    
     reloadBasket();   
     showIndexLayout();
     startCountdown();
-    countdown.set({ time : 1000, autostart : true });    
+    countdown.set({ time : 1000, autostart : true });
+    initNewsletter();
+
+
+    /*EVENTS*/
+    $('#newsletterSubmit').click(function(){saveNewsletter();});
 });
 
 /* === LAYOUTS === */
@@ -726,7 +773,7 @@ function showIndexLayout() {
                                   .show();
     $('#layout_sidebar_search').show();
     $('#layout_sidebar_basket').show(); 
-    $('#layout_sidebar_newsletter').show();
+    if(sessionCheck()) $('#layout_sidebar_newsletter').show();
 }
 
 function hideIndexLayou() {
@@ -778,6 +825,7 @@ function hideCheckoutLayout() {
     $('#layout_sidebar_universal').hide();
     $('#layout_content_universal').hide();
 }
+
 
 var backQuene = new Array();
 

@@ -1,15 +1,9 @@
 <div class="sidebarWrapper" id="layout_sidebar_newsletter">
     <h1>Newsletter</h1>
     <div>
-        <form action="#">
-            <input class="newsletterEmail" type="email" placeholder="E-mail" required>
-            <input class="newsletterSubmit" type="submit" value="&gt;">
-            <select class="newsletterSelect">
-                <option>Svi gradovi</option>
-                <option>Zagreb</option>
-                <option>Osijek</option>
-                <option>Varaždin</option>    
-            </select>
-        </form> 
+        <input id="newsletterEmail" class="newsletterEmail" type="email" placeholder="E-mail" required>
+        <input id="newsletterSubmit" class="newsletterSubmit" type="submit" value="&gt;">
+        <select id="newsletterSelect" class="newsletterSelect"></select>
+        <div id="newsletterStatus" class=""><span></span></div>
     </div>                    
 </div>

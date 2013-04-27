@@ -24,8 +24,7 @@
     require_once ('vrijeme.php'); 
     require_once ('kosarica.php');    
     require_once ('komentari.php');
-    require_once ('moderatori.php');    
-
-
+    require_once ('moderatori.php');
+    require_once ('newsletter.php');    
 
 ?>
