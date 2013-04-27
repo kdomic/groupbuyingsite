@@ -13,6 +13,7 @@ function hideAll(){
     $('#ponude').hide();
     $('#akcije').hide();
     $('#vrijeme').hide();
+    $('#prodaja').hide();
 }
 
 function layout_showKorisnici(){
@@ -95,6 +96,14 @@ function layout_showVrijeme(){
     $($('#sidebar li')[8]).addClass('menuCurrent');    
 }
 
+function layout_showProdaja(){
+    hideAll();
+    initSalesTable();
+    $('#prodaja').show();
+    $('.menuCurrent').removeClass('menuCurrent');
+    $($('#sidebar li')[9]).addClass('menuCurrent');    
+}
+
 /* === ONLOAD === */
 $(document).ready(function(){
     //!!!! PROVJERA OVLASTI - getSet_korisnici.php
@@ -110,6 +119,8 @@ $(document).ready(function(){
     $($('#sidebar li')[6]).click(function(){layout_showPonude();});
     $($('#sidebar li')[7]).click(function(){layout_showAkcije();});
     $($('#sidebar li')[8]).click(function(){layout_showVrijeme();});
+    $($('#sidebar li')[9]).click(function(){layout_showProdaja();});
+
 
 
     $('#btnNewUser').click(function(){newUser();});
@@ -221,7 +232,7 @@ function checkEmailAvailability() {
 
 function userPurchases(num) {
     var dataTable = $('#userPurchases').dataTable();
-    var xml = sendToPhp(new Array(1,num),"../get_purchases.php");
+    var xml = sendToPhp(new Array(2,num),"../get_purchases.php");
     $(xml).find('kupnja').each(function(){
         var data = new Array();
         $(this).children().each(function(){
@@ -610,9 +621,20 @@ function saveAction(){
     layout_showAkcije();
 }
 
+/* ==== SALES === */
 
-
-
+function initSalesTable() {
+    var dataTable = $('#allSales').dataTable();
+    var xml = sendToPhp(new Array('1'),"../get_purchases.php");
+    $(xml).find('kupnja').each(function(){
+        var data = new Array();
+        $(this).children().each(function(){
+            data.push($(this).text());
+        });
+        console.log(data);
+        dataTable.fnAddData([ data[0],data[1]+' '+data[2],data[3],data[4],data[5],data[6] ]);
+    });
+}
 
 
 /*

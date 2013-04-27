@@ -34,7 +34,7 @@ function userPurchases() {
     $('#purchasesBox').html('');
     var userID = sessionCheck();
     if(!userID) error();
-    var xml = sendToPhp(new Array(1,userID),"get_purchases.php");
+    var xml = sendToPhp(new Array(2,userID),"get_purchases.php");
     var status = $(xml).find('status').text();
     if(status==='0'){
         $('#purStatus span').html("Nažalost Vi još nemate niti jednu kupovinu");      

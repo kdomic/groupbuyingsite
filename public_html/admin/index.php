@@ -32,6 +32,7 @@
                     <li>Ponude</li>
                     <li>Akcije</li>
                     <li>Sistemsko vrijeme</li>
+                    <li>Pregled prodaje</li>
                 </ul>                                                                           
             </div>
 
@@ -44,6 +45,7 @@
                 <?php include('layout_ponude.php'); ?> 
                 <?php include('layout_akcije.php'); ?> 
                 <?php include('layout_vrijeme.php'); ?> 
+                <?php include('layout_prodaja.php'); ?> 
 
 
             </div> 
