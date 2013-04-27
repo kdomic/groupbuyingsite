@@ -1,6 +1,5 @@
 <?php require_once('includes/initialize.php'); ?>
-<?php print_r(XmlPonuda::get(1)); ?>
-
+<?php print_r(Kosarica::getUserHitory(1)); ?>
 
 
 

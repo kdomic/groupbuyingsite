@@ -108,6 +108,7 @@ header nav select {
 
 .dropboxTiles:hover {
     border: 1px solid#05c4e7;
+    cursor: pointer;
 }
 
 .dropboxTiles img {

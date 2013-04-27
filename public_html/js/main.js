@@ -30,7 +30,28 @@ function userAccount() {
 }
 
 function userPurchases() {
-    if(!sessionCheck()) error();
+    $('#purStatus').hide();
+    $('#purchasesBox').html('');
+    var userID = sessionCheck();
+    if(!userID) error();
+    var xml = sendToPhp(new Array(1,userID),"get_purchases.php");
+    var status = $(xml).find('status').text();
+    if(status==='0'){
+        $('#purStatus span').html("Nažalost Vi još nemate niti jednu kupovinu");      
+        $('#purStatus').slideDown("slow");
+        return;
+    }
+    $(xml).find('kupnja').each(function(){
+        var data = new Array();
+        $(this).children().each(function(){
+            data.push($(this).text());
+        });
+        $('#purchasesBox').append('\
+<div class="dropboxTiles">\
+<a onclick="loadOfferDetails('+data[0]+');"><img src="'+data[1]+'" alt="Ponuda"></a>\
+<h1>'+data[2]+' <i>za</i> '+data[3]+'</h1>\
+</div>');
+    });
 }
 
 /* === REGISTER === */
@@ -574,7 +595,7 @@ function sessionCheck() {
     data.push('2');
     var xml = sendToPhp(data,"includes/session.php");
     var status = $(xml).find('status').text();
-    return parseInt(status);
+    return parseInt(status); //userID
 }
 
 function getUserData(id){
@@ -740,7 +761,7 @@ function goBack() {
     }
 }
 
-/* === === */
+/* === Message Box === */
 
 function msgBoxShow(title, content, type) {
     $.msgBox({

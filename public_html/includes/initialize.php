@@ -21,6 +21,8 @@
     require_once ('gradovi.php');
     require_once ('gradovi_akcije.php');
     require_once ('akcije.php');   
-    require_once ('vrijeme.php');    
+    require_once ('vrijeme.php'); 
+    require_once ('kosarica.php');    
+
 
 ?>
