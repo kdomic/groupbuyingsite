@@ -23,6 +23,7 @@
     require_once ('akcije.php');   
     require_once ('vrijeme.php'); 
     require_once ('kosarica.php');    
+    require_once ('komentari.php');    
 
 
 ?>

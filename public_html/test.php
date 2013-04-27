@@ -1,5 +1,5 @@
 <?php require_once('includes/initialize.php'); ?>
-<?php print_r(Kosarica::getUserHitory(1)); ?>
+<?php Komantari::canIpost(33,25); ?>
 
 
 

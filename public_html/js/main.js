@@ -221,7 +221,6 @@ function userInformationChange(){
     protocolData = protocolData.concat(userData);
     var xml = sendToPhp(protocolData,'getSet_korisnici.php');
     var status = $(xml).find('status').text();
-    console.log(status);
     accountMess('dropboxCol1Status',status);
 }
 
@@ -435,7 +434,6 @@ function getOffer(load){
 function loadOfferDetails(num){
     goTop();
     num = num *(-1);
-    console.log(num);
     var data = getOffer(num);
     sliderChange(num);
     var img = data[14].split(';');
@@ -454,6 +452,53 @@ function loadOfferDetails(num){
     $($('#layout_sidebar_offer_details div')[1]).html(data[1]+'<br/><a href=""><img src="images/basketAdd.png" alt="slika" /></a>');
     showOfferLayou();
     backQuene.push(parseInt(num)*(-1));
+    showHideComment(data[0]);
+    loadComments(data[0]);
+}
+
+/* === COMMENTS === */
+
+function showHideComment(offerID){
+    $('#newCommentArea').hide();
+    $('#commentPONUDA').val(offerID);
+    var userID = sessionCheck();
+    var xml = sendToPhp(new Array(5,userID,offerID),"getSet_komentari.php");
+    var status = $(xml).find('status').text();
+    if(status==1) $('#newCommentArea').show();
+}
+
+function saveNewComment(){
+    var protocolData = new Array(3,-1);
+    protocolData.push(sessionCheck());    
+    protocolData.push($('#commentPONUDA').val());
+    protocolData.push($('#commentKOMANTAR').val());
+    protocolData.push($('#commentOCJENA').val());
+    protocolData.push(1);
+    var xml = sendToPhp(protocolData,"getSet_komentari.php");
+    console.log(protocolData);
+    loadComments(protocolData[3]);
+}
+
+function loadComments(offerID){
+    var empty = true;
+    $('#commentBox').html('');
+    var xml = sendToPhp(new Array(6,offerID),"getSet_komentari.php");
+    $(xml).find('komentar').each(function(){
+        var data = new Array();
+        $(this).children().each(function(){
+            data.push($(this).text());
+        });
+        if(data.length<1)return;
+        $('#commentBox').append('\
+<div class="comment"><div class="commentText">'+data[3]+'</div>\
+<div class="commentAuthor">\
+<img src="'+data[4]+'" alt="Ocjena" />\
+<h1>'+data[1]+'</h1>\
+<h2>'+data[5]+'</h2>\
+</div><div class="clear"></div></div>');
+        empty = false;
+    });
+    if(empty) $('#commentBox').html('Za ovaj proizvod nema još komentara');
 }
 
 /* === BASKET ==== */

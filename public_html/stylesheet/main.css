@@ -627,8 +627,8 @@ header nav select {
     padding: 5px;
     border: 1px solid #000;
     border-radius: 0 0 10px 10px;
+    cursor: pointer;
 }
-
 
 /* === Sidebar === */
 

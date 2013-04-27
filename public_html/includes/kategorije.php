@@ -36,6 +36,7 @@
 			$xmlDoc->formatOutput = true;
 			echo $xmlDoc->saveXML();
 		}
+		
 		public static function set($data)
 		{
 			$k = new Kategorije();
