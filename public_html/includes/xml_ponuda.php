@@ -67,10 +67,10 @@
             if(empty($data)){
                 xmlStatusSend(0);
                 return;
-            }           
+            }
             $xml = new XmlPonuda();
             $xml->id = array_shift($data[0]);
-            if(in_array($xml->id , explode(";", $protocolData[2]))){
+            if($idOrg>0 && in_array($xml->id , explode(";", $protocolData[2]))){
                 $protocolData[1]--;
                 self::get($protocolData);
                 return;
