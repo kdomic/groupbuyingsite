@@ -523,6 +523,70 @@ function searchStop(){
     initOffers();
 }
 
+/* === NEWSLETTER ==== */
+
+function initNewsletter(){
+    categoryDropSelectOptions('newsletterSelect',0);
+}
+
+function saveNewsletter(){
+    var protocolData = new Array('3','-1');
+    protocolData.push(sessionCheck());
+    protocolData.push($('#newsletterEmail').val());
+    protocolData.push($('#newsletterSelect').val());
+    if(protocolData[3]=="" || !emailPattern.test(protocolData[3])){
+        $('#newsletterStatus').html("Upišite e-mail").addClass("boxOnly").slideDown("slow").delay(4000).slideUp("slow");
+        return;
+    }
+    protocolData.push(1);
+    var xml = sendToPhp(protocolData,'getSet_newsletter.php'); 
+    var status = $(xml).find('status').text();
+    if(status==='1')
+        $('#newsletterStatus').html("Pretplata pohranjena").addClass("boxOnly").slideDown("slow").delay(4000).slideUp("slow");
+    else 
+        $('#newsletterStatus').html("Greška").addClass("boxOnly").slideDown("slow").delay(4000).slideUp("slow");
+}
+
+function categoryDropSelectOptions(field,filter){
+    $('#'+field+" option").remove();
+    if(filter)
+        $('#'+field).append('<option class="selectDrop" value=0>Sve kategorije</option>');
+    else
+        $('#'+field).append("<option value=0>Sve kategorije</option>");
+    var xml = sendToPhp(new Array('1'),'getSet_kategorije.php');
+    var cats = $(xml).find('kategorije');
+    var data = new Array();
+    $(cats).each(function(){    
+        $(this).children().each(function(){
+            data = []; 
+            $(this).children().each(function(){
+                data.push($(this).text());
+            });
+            if(filter)
+                $('#'+field).append('<option class="selectDrop" value='+data[0]+'>'+data[1]+'</option>');
+            else
+                $('#'+field).append("<option value="+data[0]+">"+data[1]+"</option>");                
+        });
+    });
+}
+
+function cityDropSelectOptions(field){
+    $('#'+field+" option").remove();
+    $('#'+field).append('<option class="selectDrop" value=0>Sve gradovi</option>');
+    var xml = sendToPhp(new Array('1'),'getSet_gradovi.php');
+    var cats = $(xml).find('gradovi');
+    var data = new Array();
+    $(cats).each(function(){    
+        $(this).children().each(function(){
+            data = []; 
+            $(this).children().each(function(){
+                data.push($(this).text());
+            });
+                $('#'+field).append('<option class="selectDrop" value='+data[0]+'>'+data[1]+'</option>');              
+        });
+    });
+}
+
 /* === BASKET ==== */
 
 function addOfferToBasket(num){
@@ -709,69 +773,7 @@ function decreaseTime(element){
     $(element).text(_d+' dana '+_h+':'+_m+':'+_s);
 }
 
-/* === NEWSLETTER ==== */
 
-function initNewsletter(){
-    categoryDropSelectOptions('newsletterSelect',0);
-}
-
-function saveNewsletter(){
-    var protocolData = new Array('3','-1');
-    protocolData.push(sessionCheck());
-    protocolData.push($('#newsletterEmail').val());
-    protocolData.push($('#newsletterSelect').val());
-    if(protocolData[3]=="" || !emailPattern.test(protocolData[3])){
-        $('#newsletterStatus').html("Upišite e-mail").addClass("boxOnly").slideDown("slow").delay(4000).slideUp("slow");
-        return;
-    }
-    protocolData.push(1);
-    var xml = sendToPhp(protocolData,'getSet_newsletter.php'); 
-    var status = $(xml).find('status').text();
-    if(status==='1')
-        $('#newsletterStatus').html("Pretplata pohranjena").addClass("boxOnly").slideDown("slow").delay(4000).slideUp("slow");
-    else 
-        $('#newsletterStatus').html("Greška").addClass("boxOnly").slideDown("slow").delay(4000).slideUp("slow");
-}
-
-function categoryDropSelectOptions(field,filter){
-    $('#'+field+" option").remove();
-    if(filter)
-        $('#'+field).append('<option class="selectDrop" value=0>Sve kategorije</option>');
-    else
-        $('#'+field).append("<option value=0>Sve kategorije</option>");
-    var xml = sendToPhp(new Array('1'),'getSet_kategorije.php');
-    var cats = $(xml).find('kategorije');
-    var data = new Array();
-    $(cats).each(function(){    
-        $(this).children().each(function(){
-            data = []; 
-            $(this).children().each(function(){
-                data.push($(this).text());
-            });
-            if(filter)
-                $('#'+field).append('<option class="selectDrop" value='+data[0]+'>'+data[1]+'</option>');
-            else
-                $('#'+field).append("<option value="+data[0]+">"+data[1]+"</option>");                
-        });
-    });
-}
-
-function cityDropSelectOptions(field){
-    $('#'+field+" option").remove();
-    $('#'+field).append('<option class="selectDrop" value=0>Sve gradovi</option>');
-    var xml = sendToPhp(new Array('1'),'getSet_gradovi.php');
-    var cats = $(xml).find('gradovi');
-    var data = new Array();
-    $(cats).each(function(){    
-        $(this).children().each(function(){
-            data = []; 
-            $(this).children().each(function(){
-                data.push($(this).text());
-            });
-                $('#'+field).append('<option class="selectDrop" value='+data[0]+'>'+data[1]+'</option>');              
-        });
-    });
-}
 
 /* === ONLOAD === */
 $(document).ready(function() {
@@ -794,6 +796,8 @@ $(document).ready(function() {
     /*EVENTS*/
     $('#newsletterSubmit').click(function(){saveNewsletter();});
     $('#searchSubmit').click(function(){searchStart();});
+    $('#searchTitle').keypress(function(e) {if(e.which == 13)searchStart();});
+
 });
 
 /* === LAYOUTS === */
