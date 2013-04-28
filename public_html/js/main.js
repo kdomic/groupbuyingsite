@@ -454,6 +454,7 @@ function loadOfferDetails(num){
     showOfferLayou();
     backQuene.push(parseInt(num)*(-1));
     showHideComment(data[0]);
+    console.log("Saljem signal");
     loadComments(data[0]);
 }
 
@@ -476,19 +477,22 @@ function saveNewComment(){
     protocolData.push($('#commentOCJENA').val());
     protocolData.push(1);
     var xml = sendToPhp(protocolData,"getSet_komentari.php");
-    console.log(protocolData);
     loadComments(protocolData[3]);
 }
 
 function loadComments(offerID){
+    console.log("Pokrecem ucitavanje za ponutu: "+offerID);
+
     var empty = true;
     $('#commentBox').html('');
     var xml = sendToPhp(new Array(6,offerID),"getSet_komentari.php");
+    console.log(xml);
     $(xml).find('komentar').each(function(){
         var data = new Array();
         $(this).children().each(function(){
             data.push($(this).text());
         });
+        console.log(data);
         if(data.length<1)return;
         $('#commentBox').append('\
 <div class="comment"><div class="commentText">'+data[3]+'</div>\

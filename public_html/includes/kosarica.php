@@ -36,7 +36,7 @@
                 $d['cijena'] = str_replace('.', ',', sprintf("%01.2f", $d['cijena'])).' kn';
                 foreach ($d as $key => $value){
                     if($key=='popust') continue;
-                    $ponuda->appendChild($xmlDoc->createElement($key, $value));
+                    $ponuda->appendChild($xmlDoc->createElement(toUtf8($key), toUtf8($value)));
                 }
             }
             header("Content-Type: text/xml");
@@ -67,7 +67,7 @@
                 $d['cijena'] = str_replace('.', ',', sprintf("%01.2f", $d['cijena'])).' kn';
                 foreach ($d as $key => $value){
                 	if($key=='popust') continue;
-                    $ponuda->appendChild($xmlDoc->createElement($key, $value));
+                    $ponuda->appendChild($xmlDoc->createElement(toUtf8($key), toUtf8($value)));
                 }
             }
             header("Content-Type: text/xml");

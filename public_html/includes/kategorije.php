@@ -15,9 +15,9 @@
 			$root = $xmlDoc->appendChild($xmlDoc->createElement("kategorije"));
 			foreach($_k as $k){
 				$kategorija = $root->appendChild($xmlDoc->createElement("kategorija"));
-				$kategorija->appendChild($xmlDoc->createElement("id", $k->id));
-				$kategorija->appendChild($xmlDoc->createElement("naziv", $k->naziv));
-				$kategorija->appendChild($xmlDoc->createElement("aktivna", $k->aktivna ? "Da" : "Ne"));		
+				$kategorija->appendChild($xmlDoc->createElement("id", toUtf8($k->id)));
+				$kategorija->appendChild($xmlDoc->createElement("naziv", toUtf8($k->naziv)));
+				$kategorija->appendChild($xmlDoc->createElement("aktivna", $k->aktivna ? toUtf8("Da") : toUtf8("Ne")));		
 			}
 			header("Content-Type: text/xml");
 			$xmlDoc->formatOutput = true;
@@ -45,9 +45,9 @@
 			$root = $xmlDoc->appendChild($xmlDoc->createElement("kategorije"));
 			foreach($_k as $k){
 				$kategorija = $root->appendChild($xmlDoc->createElement("kategorija"));
-				$kategorija->appendChild($xmlDoc->createElement("id", $k->id));
-				$kategorija->appendChild($xmlDoc->createElement("naziv", $k->naziv));
-				$kategorija->appendChild($xmlDoc->createElement("aktivna", $k->aktivna ? "Da" : "Ne"));		
+				$kategorija->appendChild($xmlDoc->createElement("id", toUtf8($k->id)));
+				$kategorija->appendChild($xmlDoc->createElement("naziv", toUtf8($k->naziv)));
+				$kategorija->appendChild($xmlDoc->createElement("aktivna", $k->aktivna ? toUtf8("Da") : toUtf8("Ne")));	
 			}
 			header("Content-Type: text/xml");
 			$xmlDoc->formatOutput = true;

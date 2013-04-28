@@ -22,7 +22,7 @@
                 $d->id_korisnika = $k->ime.' '.$k->prezime;
                 $d->id_kategorije = $kat->naziv;
                 foreach ($d as $key => $value) {
-                    $data->appendChild($xmlDoc->createElement($key, htmlentities($value)));
+                    $data->appendChild($xmlDoc->createElement($key, toUtf8($value)));
                 }
             }
             header("Content-Type: text/xml");

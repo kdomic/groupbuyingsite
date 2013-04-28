@@ -53,7 +53,7 @@
                 $d->datum = date("d.m.Y.", strtotime($d->datum));
                 $d->aktivan = $d->aktivan==1 ? "Da" : "Ne";
                 foreach ($d as $key => $value) {
-                    $data->appendChild($xmlDoc->createElement($key, htmlentities($value)));
+                    $data->appendChild($xmlDoc->createElement($key, toUtf8($value)));
                 }
             }
             header("Content-Type: text/xml");
@@ -85,7 +85,7 @@
                 $d->datum = date("d.m.Y.", strtotime($d->datum));
                 $d->aktivan = $d->aktivan==1 ? "Da" : "Ne";
                 foreach ($d as $key => $value) {
-                    $data->appendChild($xmlDoc->createElement($key, htmlentities($value)));
+                    $data->appendChild($xmlDoc->createElement($key, toUtf8($value)));
                 }
             }
             header("Content-Type: text/xml");

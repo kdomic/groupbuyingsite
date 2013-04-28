@@ -42,7 +42,7 @@
                 $p->id_kategorije = $kategorija->naziv;
                 $p->aktivan = $p->aktivan==1 ? "Da" : "Ne";                
                 foreach ($p as $key => $value) {
-                    $ponuda->appendChild($xmlDoc->createElement($key, htmlentities($value)));
+                    $ponuda->appendChild($xmlDoc->createElement($key, toUtf8($value)));
                 }
             }
             header("Content-Type: text/xml");
@@ -56,7 +56,7 @@
             $root = $xmlDoc->appendChild($xmlDoc->createElement("ponude"));
             $ponuda = $root->appendChild($xmlDoc->createElement("ponuda"));
             foreach ($p as $key => $value) {
-                $ponuda->appendChild($xmlDoc->createElement($key, htmlentities($value)));
+                $ponuda->appendChild($xmlDoc->createElement($key, toUtf8($value)));
             }
             header("Content-Type: text/xml");
             $xmlDoc->formatOutput = true;

@@ -19,7 +19,7 @@
                     $data = $root->appendChild($xmlDoc->createElement("grad"));
                     $d->aktivan = $d->aktivan==1 ? "Da" : "Ne";
                     foreach ($d as $key => $value) {
-                        $data->appendChild($xmlDoc->createElement($key, htmlentities($value)));
+                        $data->appendChild($xmlDoc->createElement($key, toUtf8($value)));
                     }
                 }
                 header("Content-Type: text/xml");
@@ -34,7 +34,7 @@
                 $root = $xmlDoc->appendChild($xmlDoc->createElement("gradovi"));
                 $data = $root->appendChild($xmlDoc->createElement("grad"));
                 foreach ($d as $key => $value) {
-                    $data->appendChild($xmlDoc->createElement($key, htmlentities($value)));
+                    $data->appendChild($xmlDoc->createElement($key, toUtf8($value)));
                 }
                 header("Content-Type: text/xml");
                 $xmlDoc->formatOutput = true;
