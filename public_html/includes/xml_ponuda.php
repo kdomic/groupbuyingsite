@@ -35,7 +35,7 @@
             $query .= 'AND prod.aktivan=1 ';
             $query .= 'AND a.datum_pocetka <= "'.Vrijeme::nowWithOffset().'" ';
             $query .= 'AND a.datum_zavrsetka > "'.Vrijeme::nowWithOffset().'" ';
-            if($protocolData[6]==1){ 
+            if($protocolData[6]==1 && $protocolData[3]!=''){ 
                 $query .= 'AND (p.naslov LIKE "%'.$protocolData[3].'%" ';
                 $query .= 'OR p.podnaslov LIKE "%'.$protocolData[3].'%" ';
                 $query .= 'OR k.naziv LIKE "%'.$protocolData[3].'%") ';
@@ -66,7 +66,7 @@
             } else {
                 $query .= 'AND a.datum_pocetka <= "'.Vrijeme::nowWithOffset().'" ';
                 $query .= 'AND a.datum_zavrsetka > "'.Vrijeme::nowWithOffset().'" ';
-                if($protocolData[6]==1){ 
+                if($protocolData[6]==1 && $protocolData[3]!=''){ 
                     $query .= 'AND (p.naslov LIKE "%'.$protocolData[3].'%" ';
                     $query .= 'OR p.podnaslov LIKE "%'.$protocolData[3].'%" ';
                     $query .= 'OR k.naziv LIKE "%'.$protocolData[3].'%") ';

@@ -712,7 +712,7 @@ function decreaseTime(element){
 /* === NEWSLETTER ==== */
 
 function initNewsletter(){
-    categoryDropSelectOptions('newsletterSelect');
+    categoryDropSelectOptions('newsletterSelect',0);
 }
 
 function saveNewsletter(){
@@ -733,9 +733,12 @@ function saveNewsletter(){
         $('#newsletterStatus').html("Greška").addClass("boxOnly").slideDown("slow").delay(4000).slideUp("slow");
 }
 
-function categoryDropSelectOptions(field){
+function categoryDropSelectOptions(field,filter){
     $('#'+field+" option").remove();
-    $('#'+field).append("<option value=0>Sve kategorije</option>");
+    if(filter)
+        $('#'+field).append('<option class="selectDrop" value=0>Sve kategorije</option>');
+    else
+        $('#'+field).append("<option value=0>Sve kategorije</option>");
     var xml = sendToPhp(new Array('1'),'getSet_kategorije.php');
     var cats = $(xml).find('kategorije');
     var data = new Array();
@@ -745,7 +748,27 @@ function categoryDropSelectOptions(field){
             $(this).children().each(function(){
                 data.push($(this).text());
             });
-            $('#'+field).append("<option value="+data[0]+">"+data[1]+"</option>");
+            if(filter)
+                $('#'+field).append('<option class="selectDrop" value='+data[0]+'>'+data[1]+'</option>');
+            else
+                $('#'+field).append("<option value="+data[0]+">"+data[1]+"</option>");                
+        });
+    });
+}
+
+function cityDropSelectOptions(field){
+    $('#'+field+" option").remove();
+    $('#'+field).append('<option class="selectDrop" value=0>Sve gradovi</option>');
+    var xml = sendToPhp(new Array('1'),'getSet_gradovi.php');
+    var cats = $(xml).find('gradovi');
+    var data = new Array();
+    $(cats).each(function(){    
+        $(this).children().each(function(){
+            data = []; 
+            $(this).children().each(function(){
+                data.push($(this).text());
+            });
+                $('#'+field).append('<option class="selectDrop" value='+data[0]+'>'+data[1]+'</option>');              
         });
     });
 }
@@ -764,6 +787,9 @@ $(document).ready(function() {
     countdown.set({ time : 1000, autostart : true });
     initNewsletter();
 
+    /*FILTERS*/
+    cityDropSelectOptions('dropFilterCitys');
+    categoryDropSelectOptions("dropFilterCategories",1);
 
     /*EVENTS*/
     $('#newsletterSubmit').click(function(){saveNewsletter();});
