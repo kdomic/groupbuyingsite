@@ -29,7 +29,9 @@
             $query .= 'JOIN ponude AS p ON a.id_ponude=p.id ';
             $query .= 'JOIN prodavatelji AS prod ON p.id_prodavatelja=prod.id ';
             $query .= 'JOIN kategorije AS k ON p.id_kategorije=k.id ';
-            $query .= 'JOIN gradovi_akcije AS ga ON ga.id_akcije=a.id ';                        
+            if($protocolData[6]==1 && $protocolData[4]!=''){
+                $query .= 'JOIN gradovi_akcije AS ga ON ga.id_akcije=a.id ';             
+            }           
             $query .= 'WHERE ';
             $query .= 'a.aktivan=1 ';
             $query .= 'AND p.aktivan=1 ';
@@ -63,7 +65,9 @@
             $query .= 'JOIN ponude AS p ON a.id_ponude=p.id ';
             $query .= 'JOIN prodavatelji AS prod ON p.id_prodavatelja=prod.id ';
             $query .= 'JOIN kategorije AS k ON p.id_kategorije=k.id ';
-            $query .= 'JOIN gradovi_akcije AS ga ON ga.id_akcije=a.id ';                                                        
+            if($protocolData[6]==1 && $protocolData[4]!=''){
+                $query .= 'JOIN gradovi_akcije AS ga ON ga.id_akcije=a.id ';             
+            }                                                         
             $query .= 'WHERE ';
             $query .= 'a.aktivan=1 ';
             $query .= 'AND p.aktivan=1 ';
@@ -97,7 +101,7 @@
             }
             $xml = new XmlPonuda();
             $xml->id = array_shift($data[0]);
-            if($idOrg>0 && in_array($xml->id , explode(";", $protocolData[2]))){
+            if($idOrg>0 && in_array($xml->id , explode(";", $protocolData[2])) && (int)$protocolData[7]==0){
                 $protocolData[1]--;
                 self::get($protocolData);
                 return;

@@ -288,9 +288,10 @@ function sliderChange(selectedOffer){
     if(selectedOffer===null){
         sliderNum = sliderNum+1;
         selectedOffer = sliderNum;        
-        sliderNum = sliderNum%sliderMaxNum;        
+        sliderNum = sliderNum%sliderMaxNum;       
     }else{
         sliderNum = selectedOffer;
+        sliderNum = sliderNum%sliderMaxNum;
         timer.pause();        
         //data = getOffer(selectedOffer,0);
     }    
@@ -298,7 +299,7 @@ function sliderChange(selectedOffer){
     var index = $('.sliderImgNum a').length-selectedOffer;
     $('.sliderImgNum a').removeClass('current');
     $($('.sliderImgNum a')[index]).addClass('current');
-    data = getOffer(sliderMaxNum-index+1,0);
+    data = getOffer(sliderMaxNum-index+1,0,1);
     slideOfferChange(data);
     sliderImgChange(data[12]);
 }
@@ -409,7 +410,7 @@ function addOneOffer(){
 }
 
 function addNewOffer(load){
-    var data = getOffer(load,1);
+    var data = getOffer(load,1,0);
     loadedOffers.push(data[0]);
     var $div = $('\
 <div class="offer">\
@@ -429,9 +430,9 @@ function addNewOffer(load){
     $('#layout_offers').append($div);
 }
 
-function getOffer(load,filterOn){
+function getOffer(load,filterOn,slider){
     var data = new Array();
-    var protocolData = new Array('1', load, loadedOffers.join(";"), filterTitle, filterCity, filterCategory, filterOn);
+    var protocolData = new Array('1', load, loadedOffers.join(";"), filterTitle, filterCity, filterCategory, filterOn, slider);
     var xml = sendToPhp(protocolData,"get_offer.php");
     var offer = $(xml).find('offer'); //var offer = $(xml).find('offer[id='+selectedOffer+']');
     $(offer).each(function(){
@@ -449,7 +450,7 @@ function getOffer(load,filterOn){
 function loadOfferDetails(num){
     goTop();
     num = num *(-1);
-    var data = getOffer(num,0);
+    var data = getOffer(num,0,0);
     sliderChange(num);
     var img = data[14].split(';');
     img.pop();
@@ -548,7 +549,6 @@ function categoriesFilterStart(){
 }
 
 function categoriesFilterStop(){
-    console.log("da");
     filterCategory = '';
     $('#dropFilterCategories option').eq(0).prop('selected',true);
     initOffers();
@@ -735,7 +735,7 @@ function checkoutPay() {
 }
 
 /* === AJAX status SEND/R === */
-function sendToPhp(dataString,url){
+function sendToPhp(dataString,url){    
     var jsonString = JSON.stringify(dataString);
     var data;
     $.ajax({
