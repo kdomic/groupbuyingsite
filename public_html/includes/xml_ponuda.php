@@ -28,7 +28,8 @@
             $query .= 'FROM  akcije AS a ';
             $query .= 'JOIN ponude AS p ON a.id_ponude=p.id ';
             $query .= 'JOIN prodavatelji AS prod ON p.id_prodavatelja=prod.id ';
-            $query .= 'JOIN kategorije AS k ON p.id_kategorije=k.id ';            
+            $query .= 'JOIN kategorije AS k ON p.id_kategorije=k.id ';
+            $query .= 'JOIN gradovi_akcije AS ga ON ga.id_akcije=a.id ';                        
             $query .= 'WHERE ';
             $query .= 'a.aktivan=1 ';
             $query .= 'AND p.aktivan=1 ';
@@ -39,6 +40,9 @@
                 $query .= 'AND (p.naslov LIKE "%'.$protocolData[3].'%" ';
                 $query .= 'OR p.podnaslov LIKE "%'.$protocolData[3].'%" ';
                 $query .= 'OR k.naziv LIKE "%'.$protocolData[3].'%") ';
+            }
+            if($protocolData[6]==1 && $protocolData[4]!=''){ 
+                $query .= 'AND ga.id_grada='.$protocolData[4].' ';
             }
             if($protocolData[6]==1 && $protocolData[5]!=''){ 
                 $query .= 'AND k.id='.$protocolData[5].' ';
@@ -58,7 +62,8 @@
             $query .= 'FROM  akcije AS a ';
             $query .= 'JOIN ponude AS p ON a.id_ponude=p.id ';
             $query .= 'JOIN prodavatelji AS prod ON p.id_prodavatelja=prod.id ';
-            $query .= 'JOIN kategorije AS k ON p.id_kategorije=k.id ';                        
+            $query .= 'JOIN kategorije AS k ON p.id_kategorije=k.id ';
+            $query .= 'JOIN gradovi_akcije AS ga ON ga.id_akcije=a.id ';                                                        
             $query .= 'WHERE ';
             $query .= 'a.aktivan=1 ';
             $query .= 'AND p.aktivan=1 ';
@@ -75,6 +80,9 @@
                     $query .= 'AND (p.naslov LIKE "%'.$protocolData[3].'%" ';
                     $query .= 'OR p.podnaslov LIKE "%'.$protocolData[3].'%" ';
                     $query .= 'OR k.naziv LIKE "%'.$protocolData[3].'%") ';
+                }
+                if($protocolData[6]==1 && $protocolData[4]!=''){ 
+                    $query .= 'AND ga.id_grada='.$protocolData[4].' ';
                 }
                 if($protocolData[6]==1 && $protocolData[5]!=''){ 
                     $query .= 'AND k.id='.$protocolData[5].' ';

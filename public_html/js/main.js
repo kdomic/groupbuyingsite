@@ -383,10 +383,16 @@ function initOffers(){
     initOfferNum = 1;
     if(filterTitle==''&&filterCity==''&&filterCategory=='')
         currentOfferNum = 5; //prve 4 su za gore!
-    else
+    else {
         currentOfferNum = 1;
-    if(filterTitle!=0)
-        $('#layout_offers').append('<input type="checkbox" name="searchOn" value="1" checked onclick="searchStop();">Pretraga uključena za: '+filterTitle);
+        $('#layout_offers').append('Filteri:  ');
+    }
+    if(filterTitle!='')
+        $('#layout_offers').append('<input type="checkbox" name="searchOn" value="1" checked onclick="searchStop();">Traži: '+filterTitle);
+    if(filterCategory!='')
+        $('#layout_offers').append('<input type="checkbox" name="searchOn" value="1" checked onclick="categoriesFilterStop();">Po kategorijama');
+    if(filterCity!='')
+        $('#layout_offers').append('<input type="checkbox" name="searchOn" value="1" checked onclick="citysFilterStop();">Po gradovima');    
     loadedOffers = new Array();
     for(var i = 0; i<initOfferNum; i++)
         addOneOffer();
@@ -523,12 +529,30 @@ function searchStop(){
     initOffers();
 }
 
-function categoriesFilterStart(){
-    filterCategory = $('#dropFilterCategories').val();
+function citysFilterStart(){
+    filterCity = $('#dropFilterCitys').val();
+    if(filterCity==0) citysFilterStop();
     initOffers();
-    console.log(filterCategory); 
 }
 
+function citysFilterStop(){
+    filterCity = '';
+    $('#dropFilterCitys option').eq(0).prop('selected',true);    
+    initOffers();
+}
+
+function categoriesFilterStart(){
+    filterCategory = $('#dropFilterCategories').val();
+    if(filterCategory==0) categoriesFilterStop();        
+    initOffers();
+}
+
+function categoriesFilterStop(){
+    console.log("da");
+    filterCategory = '';
+    $('#dropFilterCategories option').eq(0).prop('selected',true);
+    initOffers();
+}
 
 /* === NEWSLETTER ==== */
 
@@ -799,6 +823,7 @@ $(document).ready(function() {
     /*FILTERS*/
     cityDropSelectOptions('dropFilterCitys');
     categoryDropSelectOptions("dropFilterCategories",1);
+    $('#dropFilterCitys').change(function(){citysFilterStart();});    
     $('#dropFilterCategories').change(function(){categoriesFilterStart();});
 
     /*EVENTS*/
