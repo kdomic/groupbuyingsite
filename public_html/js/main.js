@@ -523,6 +523,13 @@ function searchStop(){
     initOffers();
 }
 
+function categoriesFilterStart(){
+    filterCategory = $('#dropFilterCategories').val();
+    initOffers();
+    console.log(filterCategory); 
+}
+
+
 /* === NEWSLETTER ==== */
 
 function initNewsletter(){
@@ -792,6 +799,7 @@ $(document).ready(function() {
     /*FILTERS*/
     cityDropSelectOptions('dropFilterCitys');
     categoryDropSelectOptions("dropFilterCategories",1);
+    $('#dropFilterCategories').change(function(){categoriesFilterStart();});
 
     /*EVENTS*/
     $('#newsletterSubmit').click(function(){saveNewsletter();});
@@ -877,7 +885,6 @@ function hideCheckoutLayout() {
     $('#layout_sidebar_universal').hide();
     $('#layout_content_universal').hide();
 }
-
 
 var backQuene = new Array();
 

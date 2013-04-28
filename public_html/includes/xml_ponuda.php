@@ -40,6 +40,9 @@
                 $query .= 'OR p.podnaslov LIKE "%'.$protocolData[3].'%" ';
                 $query .= 'OR k.naziv LIKE "%'.$protocolData[3].'%") ';
             }
+            if($protocolData[6]==1 && $protocolData[5]!=''){ 
+                $query .= 'AND k.id='.$protocolData[5].' ';
+            }
             //print_r($query);
             $data = DatabaseObject::find_by_raw_sql($query);
             xmlStatusSend(array_shift($data[0]));
@@ -66,13 +69,16 @@
             } else {
                 $query .= 'AND a.datum_pocetka <= "'.Vrijeme::nowWithOffset().'" ';
                 $query .= 'AND a.datum_zavrsetka > "'.Vrijeme::nowWithOffset().'" ';
+                //$query .= 'AND a.datum_pocetka <= now() ';
+                //$query .= 'AND a.datum_zavrsetka > now() ';
                 if($protocolData[6]==1 && $protocolData[3]!=''){ 
                     $query .= 'AND (p.naslov LIKE "%'.$protocolData[3].'%" ';
                     $query .= 'OR p.podnaslov LIKE "%'.$protocolData[3].'%" ';
                     $query .= 'OR k.naziv LIKE "%'.$protocolData[3].'%") ';
+                }
+                if($protocolData[6]==1 && $protocolData[5]!=''){ 
+                    $query .= 'AND k.id='.$protocolData[5].' ';
                 }                
-                //$query .= 'AND a.datum_pocetka <= now() ';
-                //$query .= 'AND a.datum_zavrsetka > now() ';
                 $query .= 'ORDER BY a.istaknuto DESC, a.datum_zavrsetka ASC ';
                 $query .= 'LIMIT 1 OFFSET '.($id-1);
             }            
