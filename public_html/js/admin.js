@@ -789,10 +789,6 @@ function initCommentsTable(){
     });
 }
 
-
-
-
-
 /* === USER DROP SELECT */
 
 function userDropSelect(field){
