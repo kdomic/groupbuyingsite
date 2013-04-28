@@ -380,7 +380,7 @@ function initOffers(){
 }
 
 function addOneOffer(){
-    var xml = sendToPhp(new Array(),"get_offer.php?count=1");
+    var xml = sendToPhp(new Array('2'),"get_offer.php");
     var status = $(xml).find('status').text();
     if(status>=currentOfferNum)        
         addNewOffer(currentOfferNum);
@@ -411,21 +411,14 @@ function addNewOffer(load){
 
 function getOffer(load){
     var data = new Array();
-    $.ajax({
-        url:'get_offer.php?num='+load,
-        async:false,
-        type: 'GET',
-        dataType: 'xml',
-        success: function(xml) {
-            var offer = $(xml).find('offer'); //var offer = $(xml).find('offer[id='+selectedOffer+']');
-            $(offer).each(function(){
-                $(this).children().each(function(){
-                    var _data = $(this).text();
-                    _data = _data.replace(/"/g, '');
-                    data.push(_data);
-                });
-            });
-        }
+    var xml = sendToPhp(new Array('1', load),"get_offer.php");
+    var offer = $(xml).find('offer'); //var offer = $(xml).find('offer[id='+selectedOffer+']');
+    $(offer).each(function(){
+        $(this).children().each(function(){
+            var _data = $(this).text();
+            _data = _data.replace(/"/g, '');
+            data.push(_data);
+        });
     });
     return data;
 }
