@@ -38,9 +38,10 @@
             xmlStatusSend(array_shift($data[0]));
         }
 
-        public static function get($id)
+        public static function get($protocolData)
         {
-            $id = (int)$id;
+            $id = (int)$protocolData[1];
+            $idOrg = $id;
             $query  = 'SELECT a.id AS akcija, p.id AS ponuda, p.naslov, p.podnaslov, p.cijena, a.popust, ';
             $query .= '(SELECT sum(ra.kolicina) FROM racuni_akcije as ra WHERE ra.id_akcije=a.id GROUP BY ra.id_akcije ) as kupljeno, ';
             $query .= 'a.granica, a.datum_zavrsetka, p.opis_naslov, p.opis_kratki, p.opis, p.napomena, p.karta_x, p.karta_y ';
@@ -61,7 +62,7 @@
                 //$query .= 'AND a.datum_zavrsetka > now() ';
                 $query .= 'ORDER BY a.istaknuto DESC, a.datum_zavrsetka ASC ';
                 $query .= 'LIMIT 1 OFFSET '.($id-1);
-            }
+            }            
             $data = DatabaseObject::find_by_raw_sql($query);
             if(empty($data)){
                 xmlStatusSend(0);
@@ -69,6 +70,11 @@
             }           
             $xml = new XmlPonuda();
             $xml->id = array_shift($data[0]);
+            if(in_array($xml->id , explode(";", $protocolData[2]))){
+                $protocolData[1]--;
+                self::get($protocolData);
+                return;
+            }
             $za_sluku = array_shift($data[0]);
             $xml->title = array_shift($data[0]);
             $xml->subtitle = array_shift($data[0]);

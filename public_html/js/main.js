@@ -371,10 +371,12 @@ function hideIfTimeIsUp(){
 
 var initOfferNum;
 var currentOfferNum;
+var loadedOffers;
 
 function initOffers(){
     initOfferNum = 1;
     currentOfferNum = 5; //prve 4 su za gore!
+    loadedOffers = new Array();
     for(var i = 0; i<initOfferNum; i++)
         addOneOffer();
 }
@@ -391,6 +393,7 @@ function addOneOffer(){
 
 function addNewOffer(load){
     var data = getOffer(load);
+    loadedOffers.push(data[0]);
     var $div = $('\
 <div class="offer">\
 <img src="'+data[12]+'" alt="slika" onclick="loadOfferDetails('+data[0]+');"/>\
@@ -411,7 +414,9 @@ function addNewOffer(load){
 
 function getOffer(load){
     var data = new Array();
-    var xml = sendToPhp(new Array('1', load),"get_offer.php");
+    var protocolData = new Array('1', load, loadedOffers.join(";"));
+    console.log(protocolData);
+    var xml = sendToPhp(protocolData,"get_offer.php");
     var offer = $(xml).find('offer'); //var offer = $(xml).find('offer[id='+selectedOffer+']');
     $(offer).each(function(){
         $(this).children().each(function(){

@@ -1,5 +1,13 @@
 <?php require_once('includes/initialize.php'); ?>
-<?php Komantari::getAll(); ?>
+<?php 
+	$protocoldata[] = 1;
+	$protocoldata[] = 77;
+	$protocoldata[] = 1;
+	$protocoldata[] = 8;
+	$protocoldata[] = 18;
+	$protocoldata[] = 88;
+	echo in_array(77, $protocoldata);
+?>
 
 
 

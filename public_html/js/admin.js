@@ -409,7 +409,7 @@ function initSellersTable(){
     protocolData.push(1);
     var xml = sendToPhp(protocolData,'../getSet_prodavatelji.php');
     var dataSet = $(xml).find('prodavatelji');
-    var data = new Array();
+    var data = new Array();    
     $(dataSet).each(function(){    
         $(this).children().each(function(){
             data = []; 
@@ -485,6 +485,7 @@ function initOffersTable(){
     protocolData.push(1);
     var xml = sendToPhp(protocolData,'../getSet_ponude.php');
     var dataSet = $(xml).find('ponude');
+    console.log(dataSet);
     var data = new Array();
     $(dataSet).each(function(){    
         $(this).children().each(function(){
@@ -575,7 +576,7 @@ function initCitysTable(){
     var protocolData = new Array();
     protocolData.push(1);
     var xml = sendToPhp(protocolData,'../getSet_gradovi.php');
-    var dataSet = $(xml).find('gradovi');
+    var dataSet = $(xml).find('gradovi');    
     var data = new Array();
     $(dataSet).each(function(){    
         $(this).children().each(function(){
@@ -900,14 +901,32 @@ function kategorijeNazivi(){
     return nazivi;
 }
 
-function offersDropSelectOptions(field){
+function categoryDropSelectOptions(field,type,userID){
     $('#'+field+" option").remove();
     var protocolData = new Array();
-    protocolData.push(1);
-    var xml = sendToPhp(protocolData,'../getSet_ponude.php');
-    var cats = $(xml).find('ponude');
+    protocolData.push(type);
+    protocolData.push(userID);
+    var xml = sendToPhp(protocolData,'../getSet_kategorije.php');
+    var cats = $(xml).find('kategorije');
     var data = new Array();
     $(cats).each(function(){    
+        $(this).children().each(function(){
+            data = []; 
+            $(this).children().each(function(){
+                data.push($(this).text());
+            });
+            $('#'+field).append("<option value="+data[0]+">"+data[1]+"</option>");
+        });
+    });
+}
+
+
+function offersDropSelectOptions(field){
+    $('#'+field+" option").remove();
+    var xml = sendToPhp(new Array('1'),'../getSet_ponude.php');
+    var dataSet = $(xml).find('ponude');
+    var data = new Array();
+    $(dataSet).each(function(){    
         $(this).children().each(function(){
             data = []; 
             $(this).children().each(function(){
@@ -917,7 +936,6 @@ function offersDropSelectOptions(field){
         });
     });
 }
-
 
 /* === SESSION and USER DATA === */
 function sessionCheck() {

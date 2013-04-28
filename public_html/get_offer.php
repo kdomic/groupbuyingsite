@@ -9,7 +9,7 @@
 
 	$data = json_decode(stripslashes($_POST['data']));	
 	switch((int)$data[0]){
-		case 1: XmlPonuda::get($data[1]); break;
+		case 1: XmlPonuda::get($data); break;
 		case 2: XmlPonuda::count(); break;
 		//case 3: Prodavatelji::set($data); break;		
 		//case 4: Prodavatelji::set($data); break;
