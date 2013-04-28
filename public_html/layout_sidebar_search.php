@@ -1,7 +1,5 @@
 <div id="layout_sidebar_search">
-    <form id="searchbox">
-        <input id="search" type="text" placeholder="Pretraga">
-        <input id="submit" type="submit" value="Traži">
-    </form>
+        <input id="searchTitle" type="text" placeholder="Pretraga">
+        <input id="searchSubmit" type="submit" value="Traži">
 </div>
 <div class="clear"></div>

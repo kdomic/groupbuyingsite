@@ -292,13 +292,13 @@ function sliderChange(selectedOffer){
     }else{
         sliderNum = selectedOffer;
         timer.pause();        
-        data = getOffer(selectedOffer);
+        //data = getOffer(selectedOffer,0);
     }    
     sliderPlayIcon();
     var index = $('.sliderImgNum a').length-selectedOffer;
     $('.sliderImgNum a').removeClass('current');
     $($('.sliderImgNum a')[index]).addClass('current');
-    data = getOffer(sliderMaxNum-index+1);
+    data = getOffer(sliderMaxNum-index+1,0);
     slideOfferChange(data);
     sliderImgChange(data[12]);
 }
@@ -373,16 +373,27 @@ var initOfferNum;
 var currentOfferNum;
 var loadedOffers;
 
+var filterTitle = '';
+var filterCity = '';
+var filterCategory = '';
+
 function initOffers(){
+    $('#layout_offers').html('');
+    $('#layout_content_universal').show();
     initOfferNum = 1;
-    currentOfferNum = 5; //prve 4 su za gore!
+    if(filterTitle==''&&filterCity==''&&filterCategory=='')
+        currentOfferNum = 5; //prve 4 su za gore!
+    else
+        currentOfferNum = 1;
+    if(filterTitle!=0)
+        $('#layout_offers').append('<input type="checkbox" name="searchOn" value="1" checked onclick="searchStop();">Pretraga uključena za: '+filterTitle);
     loadedOffers = new Array();
     for(var i = 0; i<initOfferNum; i++)
         addOneOffer();
 }
 
 function addOneOffer(){
-    var xml = sendToPhp(new Array('2'),"get_offer.php");
+    var xml = sendToPhp(new Array('2', 0, 0, filterTitle, filterCity, filterCategory, 1),"get_offer.php");
     var status = $(xml).find('status').text();
     if(status>=currentOfferNum)        
         addNewOffer(currentOfferNum);
@@ -392,7 +403,7 @@ function addOneOffer(){
 }
 
 function addNewOffer(load){
-    var data = getOffer(load);
+    var data = getOffer(load,1);
     loadedOffers.push(data[0]);
     var $div = $('\
 <div class="offer">\
@@ -412,10 +423,9 @@ function addNewOffer(load){
     $('#layout_offers').append($div);
 }
 
-function getOffer(load){
+function getOffer(load,filterOn){
     var data = new Array();
-    var protocolData = new Array('1', load, loadedOffers.join(";"));
-    console.log(protocolData);
+    var protocolData = new Array('1', load, loadedOffers.join(";"), filterTitle, filterCity, filterCategory, filterOn);
     var xml = sendToPhp(protocolData,"get_offer.php");
     var offer = $(xml).find('offer'); //var offer = $(xml).find('offer[id='+selectedOffer+']');
     $(offer).each(function(){
@@ -433,7 +443,7 @@ function getOffer(load){
 function loadOfferDetails(num){
     goTop();
     num = num *(-1);
-    var data = getOffer(num);
+    var data = getOffer(num,0);
     sliderChange(num);
     var img = data[14].split(';');
     img.pop();
@@ -452,7 +462,6 @@ function loadOfferDetails(num){
     showOfferLayou();
     backQuene.push(parseInt(num)*(-1));
     showHideComment(data[0]);
-    console.log("Saljem signal");
     loadComments(data[0]);
 }
 
@@ -479,18 +488,14 @@ function saveNewComment(){
 }
 
 function loadComments(offerID){
-    console.log("Pokrecem ucitavanje za ponutu: "+offerID);
-
     var empty = true;
     $('#commentBox').html('');
     var xml = sendToPhp(new Array(6,offerID),"getSet_komentari.php");
-    console.log(xml);
     $(xml).find('komentar').each(function(){
         var data = new Array();
         $(this).children().each(function(){
             data.push($(this).text());
         });
-        console.log(data);
         if(data.length<1)return;
         $('#commentBox').append('\
 <div class="comment"><div class="commentText">'+data[3]+'</div>\
@@ -502,6 +507,20 @@ function loadComments(offerID){
         empty = false;
     });
     if(empty) $('#commentBox').html('Za ovaj proizvod nema još komentara');
+}
+
+/* === SEARCH === */
+
+function searchStart(){
+    var title = $('#searchTitle').val();    
+    if(title.length<3) return;      
+    filterTitle = title;
+    initOffers();
+}
+
+function searchStop(){
+    filterTitle = '';
+    initOffers();
 }
 
 /* === BASKET ==== */
@@ -748,6 +767,7 @@ $(document).ready(function() {
 
     /*EVENTS*/
     $('#newsletterSubmit').click(function(){saveNewsletter();});
+    $('#searchSubmit').click(function(){searchStart();});
 });
 
 /* === LAYOUTS === */

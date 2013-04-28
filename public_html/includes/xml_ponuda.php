@@ -22,18 +22,25 @@
         public $x;
         public $y;
         
-        public static function count()
+        public static function count($protocolData)
         {
             $query  = 'SELECT count(*) ';
             $query .= 'FROM  akcije AS a ';
             $query .= 'JOIN ponude AS p ON a.id_ponude=p.id ';
             $query .= 'JOIN prodavatelji AS prod ON p.id_prodavatelja=prod.id ';
+            $query .= 'JOIN kategorije AS k ON p.id_kategorije=k.id ';            
             $query .= 'WHERE ';
             $query .= 'a.aktivan=1 ';
             $query .= 'AND p.aktivan=1 ';
             $query .= 'AND prod.aktivan=1 ';
             $query .= 'AND a.datum_pocetka <= "'.Vrijeme::nowWithOffset().'" ';
             $query .= 'AND a.datum_zavrsetka > "'.Vrijeme::nowWithOffset().'" ';
+            if($protocolData[6]==1){ 
+                $query .= 'AND (p.naslov LIKE "%'.$protocolData[3].'%" ';
+                $query .= 'OR p.podnaslov LIKE "%'.$protocolData[3].'%" ';
+                $query .= 'OR k.naziv LIKE "%'.$protocolData[3].'%") ';
+            }
+            //print_r($query);
             $data = DatabaseObject::find_by_raw_sql($query);
             xmlStatusSend(array_shift($data[0]));
         }
@@ -48,6 +55,7 @@
             $query .= 'FROM  akcije AS a ';
             $query .= 'JOIN ponude AS p ON a.id_ponude=p.id ';
             $query .= 'JOIN prodavatelji AS prod ON p.id_prodavatelja=prod.id ';
+            $query .= 'JOIN kategorije AS k ON p.id_kategorije=k.id ';                        
             $query .= 'WHERE ';
             $query .= 'a.aktivan=1 ';
             $query .= 'AND p.aktivan=1 ';
@@ -58,6 +66,11 @@
             } else {
                 $query .= 'AND a.datum_pocetka <= "'.Vrijeme::nowWithOffset().'" ';
                 $query .= 'AND a.datum_zavrsetka > "'.Vrijeme::nowWithOffset().'" ';
+                if($protocolData[6]==1){ 
+                    $query .= 'AND (p.naslov LIKE "%'.$protocolData[3].'%" ';
+                    $query .= 'OR p.podnaslov LIKE "%'.$protocolData[3].'%" ';
+                    $query .= 'OR k.naziv LIKE "%'.$protocolData[3].'%") ';
+                }                
                 //$query .= 'AND a.datum_pocetka <= now() ';
                 //$query .= 'AND a.datum_zavrsetka > now() ';
                 $query .= 'ORDER BY a.istaknuto DESC, a.datum_zavrsetka ASC ';

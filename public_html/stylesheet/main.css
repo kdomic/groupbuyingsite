@@ -712,12 +712,12 @@ header nav select {
 
 /* === Sidebar Search === */
 
-#search, #submit {
+#searchTitle, #searchSubmit {
     float: left;
     margin: 20px 0 0 5px;
 }
 
-#search {    
+#searchTitle {    
     padding: 5px 9px;
     height: 23px;
     width: 120px;
@@ -727,7 +727,7 @@ header nav select {
     outline: none;    
 }
 
-#submit {
+#searchSubmit {
     height: 35px;
     width: 60px;
     padding: 0;
@@ -742,7 +742,7 @@ header nav select {
     color: #23441e;
 }
 
-#submit:hover {		
+#searchSubmit:hover {		
     background: #95d788;
     background-image: -moz-linear-gradient(#6cbb6b, #95d788);
     background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #95d788),color-stop(1, #6cbb6b));
