@@ -37,9 +37,9 @@
             foreach ($_p as $p){                
                 $prodavatelj = Prodavatelji::find_by_id($p->id_prodavatelja);
                 $kategorija = Kategorije::find_by_id($p->id_kategorije);
-                if(isset($data[1]))
-                    if(!$p->aktivan || !$kategorija->aktivan || !$prodavatelj->aktivan)
-                        continue;
+                //if(isset($data[1]))
+                    //if(!$p->aktivan || !$kategorija->aktivan || !$prodavatelj->aktivan)
+                        //continue;
                 $p->id_prodavatelja = $prodavatelj->naziv ;                                        
                 $p->id_kategorije = $kategorija->naziv;
                 $p->aktivan = $p->aktivan==1 ? "Da" : "Ne";
