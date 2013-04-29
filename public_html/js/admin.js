@@ -442,7 +442,7 @@ function editSeller(num){
         data.push($(this).text());
     });
     $('#sellerID').val(data[0]);
-    $('#sellerKORISNIK option').eq(parseInt(data[1])-1).attr('selected', 'selected');
+    $('#sellerKORISNIK option').eq(parseInt(data[1])-1).prop('selected',true);
     $('#sellerNAZIV').val(data[2]);
     $('#sellerADRESA').val(data[3]);
     $('#sellerKONTAKT').val(data[4]); 
@@ -485,7 +485,6 @@ function initOffersTable(){
     protocolData.push(1);
     var xml = sendToPhp(protocolData,'../getSet_ponude.php');
     var dataSet = $(xml).find('ponude');
-    console.log(dataSet);
     var data = new Array();
     $(dataSet).each(function(){    
         $(this).children().each(function(){

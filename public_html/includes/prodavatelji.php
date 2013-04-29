@@ -41,7 +41,8 @@
 			$xmlDoc = new DOMDocument();
 			$root = $xmlDoc->appendChild($xmlDoc->createElement("prodavatelji"));
 			$prodavatelj = $root->appendChild($xmlDoc->createElement("prodavatelj"));
-			$prodavatelj->appendChild($xmlDoc->createElement("id_korisnika", toUtf8($k->ime.' '.$k->prezime)));
+			$prodavatelj->appendChild($xmlDoc->createElement("id", $p->id));		
+			$prodavatelj->appendChild($xmlDoc->createElement("id_korisnika", $p->id_korisnika));
 			$prodavatelj->appendChild($xmlDoc->createElement("naziv", toUtf8($p->naziv)));
 			$prodavatelj->appendChild($xmlDoc->createElement("adresa", toUtf8($p->adresa)));
 			$prodavatelj->appendChild($xmlDoc->createElement("kontakt", toUtf8($p->kontakt)));
