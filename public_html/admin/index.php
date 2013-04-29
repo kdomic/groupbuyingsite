@@ -18,26 +18,29 @@
     </head>    
     
     <body>
+        <header>
+            <div class="headerLeft">Administracija portala</div>
+            <div class="headerRight">Početna</div>
+        </header>
+        <nav>
+            <ul>
+                <li class="menuCurrent"><img src="../images/admin_pocetna.png" alt="Početna"/></li>
+                <li><img src="../images/admin_korisnici.png" alt="Korisnici"/></li>
+                <li><img src="../images/admin_moderatori.png" alt="Moderatori"/></li>
+                <li><img src="../images/admin_prodavatelji.png" alt="Prodavatelji"/></li>
+                <li><img src="../images/admin_kategorije.png" alt="Kategorije"/></li>
+                <li><img src="../images/admin_gradovi.png" alt="Gradovi"/></li>                    
+                <li><img src="../images/admin_ponude.png" alt="Ponude"/></li>
+                <li><img src="../images/admin_akcije.png" alt="Akcije"/></li>
+                <li><img src="../images/admin_prodaja.png" alt="Pregled prodaje"/></li>
+                <li><img src="../images/admin_komentari.png" alt="Komentari"/></li>
+                <li><img src="../images/admin_postavke.png" alt="Sistemsko vrijeme"/></li>                
+            </ul>  
+        </nav>
 
-        <div id="outerDiv" class="outerWrapper">
-            <div id="header"><h1>Administracija portala</h1></div>
-            <div id="sidebar">
-                <ul>
-                    <li class="menuCurrent">Početna</li>
-                    <li>Korisnici</li>
-                    <li>Moderatori</li>
-                    <li>Prodavatelji</li>
-                    <li>Kategorije</li>
-                    <li>Gradovi</li>                    
-                    <li>Ponude</li>
-                    <li>Akcije</li>
-                    <li>Sistemsko vrijeme</li>
-                    <li>Pregled prodaje</li>
-                    <li>Komentari</li>
+        <div class="clear"></div> 
 
-                </ul>                                                                           
-            </div>
-
+        <div id="outerDiv">
             <div id="content">                
                 <?php include('layout_pocetna.php'); ?>           
                 <?php include('layout_korisnici.php'); ?>
@@ -47,11 +50,12 @@
                 <?php include('layout_gradovi.php'); ?>                                     
                 <?php include('layout_ponude.php'); ?> 
                 <?php include('layout_akcije.php'); ?> 
-                <?php include('layout_vrijeme.php'); ?> 
                 <?php include('layout_prodaja.php'); ?> 
                 <?php include('layout_komentari.php'); ?> 
+                <?php include('layout_vrijeme.php'); ?> 
             </div> 
             <div class="clear"></div>        
         </div>
+
     </body>            
 </html>

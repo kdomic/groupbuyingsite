@@ -1,4 +1,5 @@
 <div id="komentari">
+	<h1>Komentari</h1>
     Za promjenu vidljivosti samo klikni na <i>"DA"</i> ili <i>"NE"</i> <br/><br/>
     <table id="commentsTable">
         <thead><tr>

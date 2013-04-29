@@ -1,4 +1,5 @@
 <div id="ponude">
+    <h1>Ponude</h1>
 	<div id="allOffers">
     	<button id="btnNewOffer">Dodaj novu ponudu</button>
         <div class="clear"></div> 

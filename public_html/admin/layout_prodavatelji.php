@@ -1,4 +1,5 @@
 <div id="prodavatelji">
+    <h1>Prodavatelji</h1>
     <div id="allSellers">
     	<button id="btnNewSeller">Dodaj novog prodavatelja</button>
         <div class="clear"></div> 

@@ -342,7 +342,7 @@ function slideOfferChange(data) {
                                  });
     $('.sliderOfferTime h2').fadeOut(time, function() { $(this).text(data[11]).fadeIn(time); });
     $('.sliderOfferFriend a').unbind('click');
-    $($('.sliderOfferFriend a')[0]).click(function(){alert("napraviti")});
+    $($('.sliderOfferFriend a')[0]).click(function(){addOfferToBasket(data[0]);});
     $($('.sliderOfferFriend a')[1]).click(function(){loadOfferDetails(data[0]);});    
     $('.sliderOfferBuy a').remove('a');
     $('.sliderOfferBuy img').remove('img');

@@ -14,7 +14,7 @@
         </div>
         <div class="sliderOfferFriend">
             <a><img src="images/gift.png" alt="Gift" /><h1>Pokloni<br>prijatelju</h1></a>
-            <a><img src="images/info.png" alt="Detalji" /><h1>Više<br>detalja</h1></a>
+            <a><img src="images/info.png" alt="Detalji" /><h1>Više detalja</h1></a>
         </div>
         <div class="sliderOfferBought"><h1></h1><meter value="0" min="0" max="0">0</meter><h2></h2></div>
         <div class="sliderOfferTime"><h1>Preostalo vremena: </h1><h2></h2></div>

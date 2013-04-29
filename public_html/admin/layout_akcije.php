@@ -1,4 +1,5 @@
 <div id="akcije">
+    <h1>Akcije</h1>
     <div id="allActions">
         <button id="btnNewAction">Dodaj novu akciju</button>
         <div class="clear"></div> 

@@ -1,5 +1,6 @@
-<div id="moderatori">
-    <br><br><hr><br>    
+<div id="moderatori">    
+    <br><br><hr><br> 
+    <h1>Moderatori</h1>   
     <select id="modSelectUser" onchange="showCatDropSelectOptions();">            
     </select>
     <select id="modeSelectCat"> 

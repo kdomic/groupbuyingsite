@@ -1,4 +1,5 @@
 <div id="kategorije">
+    <h1>Kategorije</h1>
     <div id="allCategories">
         <button id="btnNewCategory">Dodaj novu kategoriju</button>
         <div class="clear"></div> 

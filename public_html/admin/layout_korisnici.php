@@ -1,4 +1,5 @@
 <div id="korisnici">
+    <h1>Korisnici</h1>
     <div id="allUsers">
         <button id="btnNewUser">Dodaj novog korisnika</button>        
         <table id="userTable">
