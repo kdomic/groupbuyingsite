@@ -35,21 +35,24 @@ header {
     color: #fff;
 }
 
-.headerLeft, .headerRight {
-    margin: 12px;
-    font-size: 120%;
-}
-
 .headerLeft {
     width: 45%;
     float: left;
     text-align: left;
+    font-size: 120%;
+    margin: 12px;    
 }
 
 .headerRight {
     width: 45%;
     float: right;
     text-align: right;
+    margin: 8px 20px 0 0;
+}
+
+a {
+    text-decoration: none;
+    cursor: pointer;
 }
 
 /* === MENU === */

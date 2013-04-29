@@ -20,7 +20,7 @@
     <body>
         <header>
             <div class="headerLeft">Administracija portala</div>
-            <div class="headerRight">Početna</div>
+            <div class="headerRight"><a href="../"><img src="../images/home.png" alt="Početna" /></a></div>
         </header>
         <nav>
             <ul>
