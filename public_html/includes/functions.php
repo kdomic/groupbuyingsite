@@ -13,6 +13,11 @@
         return date("Y-m-d H:i:s",strtotime($value));
     }
 
+    function timeForScreenLong($value=''){
+        if($value=='0000-00-00 00:00:00') return 0;
+        return date("d.m.Y - H:i",strtotime($value));
+    }
+
     function toUtf8($value) {
         return mb_detect_encoding($value, "UTF-8") == "UTF-8" ? $value : $s = utf8_encode($value);
     }

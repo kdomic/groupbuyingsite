@@ -35,15 +35,18 @@ $(document).ready(function(){
     $('#btnSaveOffer').click(function(){saveOffer();});
     $('#btnSaveAction').click(function(){saveAction();});
     $('#btnSaveTime').click(function(){saveTime();});
+
+
+    $('#userEMAIL').blur(function(){checkEmailAvailability('userEMAIL')});
+
 });
-
-
 
 /* === LAYOUTS === */
 
 function hideAll(){
     $('#pocetna').hide();
     $('#korisnici').hide();
+    $('#moderatori').hide();    
     $('#prodavatelji').hide();    
     $('#kategorije').hide();
     $('#gradovi').hide();    
@@ -51,7 +54,6 @@ function hideAll(){
     $('#akcije').hide();
     $('#vrijeme').hide();
     $('#prodaja').hide();
-    $('#moderatori').hide();
     $('#komentari').hide();
 }
 
@@ -145,7 +147,6 @@ function layout_showProdaja(){
     $($('nav li')[8]).addClass('menuCurrent');    
 }
 
-
 function layout_showKomentari(){
     hideAll();
     initCommentsTable();
@@ -161,8 +162,6 @@ function layout_showVrijeme(){
     $('.menuCurrent').removeClass('menuCurrent');
     $($('nav li')[10]).addClass('menuCurrent');    
 }
-
-
 
 /* === USER EDIT === */
 
@@ -192,14 +191,37 @@ function initUserTable(protocol) {
 function editUser(num){
     $('#userUpdateStatus').slideUp("fast");    
     $('#allUsers').hide();
+    $('#moderatori').hide();
+    $('#userUpdateStatus').hide();    
     $('#singleUser').show();
     $('#userPurHistory').show();
     userPurchases(num);    
     var userData = getUserData(num);
-    var userInput = $('#singleUser td input');
-    for(var i=0; i<(userData.length-1); i++)
-        $($(userInput)[i]).val(userData[i]);
-    if(userData[userData.length-1]==1)
+    $('#userID').val(userData[0]);
+    $('#userIME').val(userData[1]);
+    $('#userPREZIME').val(userData[2]);
+    $('#userADRESA').val(userData[3]);
+    $('#userPBR').val(userData[4]);
+    $('#userMJESTO').val(userData[5]);
+    $('#userTELEFON').val(userData[6]);
+    $('#userEMAIL').val(userData[7]);
+    $('#userOIB').val(userData[8]);
+    $('#userOPENID option').eq(userData[9]).prop('selected',true);
+    $('#userOPOMENA').val(userData[10]);
+    if(userData[11]==1)
+        $('#singleUser input:radio[name=deaktiviran][value="1"]').prop('checked', true);
+    else
+        $('#singleUser input:radio[name=deaktiviran][value="0"]').prop('checked', true);
+    var dt = userData[12].split(" ");
+    console.log(dt[1]);
+    $('#userZAMRZNUTdate').val(dt[0]);
+    $('#userZAMRZNUTtime').val(dt[1]);    
+    $('#userBLOKIRAN').val(userData[13]);
+    $('#userDATUM').val(userData[14]);    
+    $('#userPOTVRDA').val(userData[15]);
+    $('#userLOZINKA').val(userData[16]);
+    $('#userOVLASTI').val(userData[17]);
+    if(userData[18]==1)
         $('#singleUser input:radio[name=vidljivost][value="1"]').prop('checked', true);
     else
         $('#singleUser input:radio[name=vidljivost][value="0"]').prop('checked', true);
@@ -210,49 +232,101 @@ function newUser(){
     $('#allUsers').hide();
     $('#userPurHistory').hide();    
     $('#moderatori').hide();
+    $('#userUpdateStatus').hide();
     $('#singleUser').show();
     $('#singleUser input:text').val('');
+    $('#userOPOMENA').val(0);
+    $('#userEMAIL').val('');
+    $('#userLOZINKA').val('');
+    $('#userZAMRZNUTdate').val('0000-00-00');
+    $('#userZAMRZNUTtime').val('00:00:00');    
     $($('#singleUser input')[0]).val('Novi korisnik');
-    $('#singleUser input:radio[name=vidljivost]').prop('checked', false);
+    $('#singleUser input:radio').prop('checked', false);
+    $('#singleUser input:radio[name=deaktiviran][value="0"]').prop('checked', true);    
     $('#singleUser input:radio[name=vidljivost][value="1"]').prop('checked', true);
 }
 
 function saveUser(){
+    //console.log($('#userZAMRZNUTdate').val());
+    //console.log($('#userZAMRZNUTtime').val());
+    //console.log($('#userZAMRZNUTdate').val()+' '+$('#userZAMRZNUTtime').val());return;
     var protocolData = new Array();
     if($($('#singleUser input')[0]).val()=="Novi korisnik"){
         protocolData.push(3);        
         protocolData.push(-1);
     } else {
         protocolData.push(4);
-        protocolData.push($($('#singleUser input')[0]).val());
-    }
-    for(var i=1; i<(19-1); i++)
-        protocolData.push($($('#singleUser input')[i]).val());
+        protocolData.push($('#userID').val());
+    }    
+    protocolData.push($('#userIME').val());
+    protocolData.push($('#userPREZIME').val());
+    protocolData.push($('#userADRESA').val());
+    protocolData.push($('#userPBR').val());
+    protocolData.push($('#userMJESTO').val());
+    protocolData.push($('#userTELEFON').val());
+    protocolData.push($('#userEMAIL').val());
+    protocolData.push($('#userOIB').val());
+    protocolData.push($('#userOPENID').val());
+    protocolData.push($('#userOPOMENA').val());
+    protocolData.push($('#singleUser input:radio[name=deaktiviran]:checked').val());
+    if($('#userZAMRZNUTdate').val()=='')
+        protocolData.push('0000-00-00 00:00:00');        
+    else  
+        protocolData.push($('#userZAMRZNUTdate').val()+' '+$('#userZAMRZNUTtime').val());
+    protocolData.push($('#userBLOKIRAN').val());
+    protocolData.push($('#userDATUM').val());
+    protocolData.push($('#userPOTVRDA').val());
+    protocolData.push($('#userLOZINKA').val());
+    protocolData.push($('#userOVLASTI').val());
     protocolData.push($('#singleUser input:radio[name=vidljivost]:checked').val());
-
+    console.log(protocolData);
+    var i;
+    if(protocolData[17].length===0) i=17;
+    if(!CheckOIB(protocolData[9])) i=9;
+    if(!emailPattern.test(protocolData[8])) i=8;
+    if(!checkEmailAvailability('userEMAIL')) i=8;
+    if(protocolData[3].length===0) i=3
+    if(protocolData[2].length===0) i=2;
+    switch(i){
+        case 2: 
+            $('#userUpdateStatus').html("Ime je obavezno polje!").removeClass("info").removeClass("error").addClass("warning").slideDown("slow");
+            $('#userIME').focus();
+            return false;
+        case 3: 
+            $('#userUpdateStatus').html("Prezime je obavezno polje!").removeClass("info").removeClass("error").addClass("warning").slideDown("slow");
+            $('#userPREZIME').focus();
+            return false;
+        case 8: 
+            $('#userUpdateStatus').html("Email nije unešen ili je neispravan!").removeClass("info").removeClass("error").addClass("warning").slideDown("slow");
+            $('#userEMAIL').focus();
+            return false;
+        case 9: 
+            $('#userUpdateStatus').html("Oib je neispravan").removeClass("info").removeClass("error").addClass("warning").slideDown("slow");
+            $('#userOIB').focus();
+            return false;
+        case 17: 
+            $('#userUpdateStatus').html("Lozinka je obavezno polje!").removeClass("info").removeClass("error").addClass("warning").slideDown("slow");
+            $('#userLOZINKA').focus();
+            return false;
+        default:
+            $('#userUpdateStatus').html("").slideUp("slow");
+    }
     var xml = sendToPhp(protocolData,'../getSet_korisnici.php');
     var status = $(xml).find('status').text();
-    if(status==='1'){
-        $('#userUpdateStatus').html("Zapis pohranjen").addClass("success").removeClass("error").slideDown("slow");
+    if(status===''){
+        $('#userUpdateStatus').html("Nema izmjena").removeClass("info").removeClass("error").addClass("warning").slideDown("slow");
+    } else if(status==='1'){
+        $('#userUpdateStatus').html("Zapis pohranjen").removeClass("error").removeClass("warning").addClass("info").slideDown("slow");
         setTimeout(function(){
             $('#singleUser').hide();
             $('#allUsers').show();
             initUserTable(userSelectType);
+            if(userSelectType==2)$('#moderatori').show();
         }, 1000);
     } else {
-        $('#userUpdateStatus').html("Greška prilikom pohrane").addClass("error").removeClass("success").slideDown("slow");
+        $('#userUpdateStatus').html("Greška prilikom pohrane").removeClass("info").removeClass("warning").addClass("error").slideDown("slow");
     }
-}
-
-function checkEmailAvailability() {
-    if(originalEmail == $('#userEMAIL').val())return;
-    var dataString = new Array('','',$('#userEMAIL').val(),'','','');
-    var xml = sendToPhp(dataString,"../includes/register.php");
-    var status = $(xml).find('status').text();
-    if(status==='1')
-        $('#userUpdateStatus').html("Email zauzet!").addClass("error").removeClass("success").slideDown("slow");
-    else
-        $('#userUpdateStatus').html("").removeClass("error").slideUp("slow");
+    console.log(protocolData);
 }
 
 function userPurchases(num) {
@@ -786,6 +860,7 @@ function saveTime() {
 
 /* === AJAX status SEND/R === */
 function sendToPhp(dataString,url){
+    $("body").css("cursor", "progress");    
     var jsonString = JSON.stringify(dataString);
     var data;
     $.ajax({
@@ -797,9 +872,11 @@ function sendToPhp(dataString,url){
          success: function(xml){
              data = xml;
          }
-     });
-     return data;
+    });
+    $("body").css("cursor", "default");    
+    return data;
 }
+
 
 /* === USER DROP SELECT */
 
@@ -962,6 +1039,7 @@ function getUserData(id){
     $(parsedXML).children().each(function(){
         data.push($(this).text());
     });
+    console.log("Parsano: "+data);
     return data;
 }
 
@@ -1016,4 +1094,18 @@ function CheckOIB(oib) { //http://v2009.dizzy.hr/oib/
     var kontrolni = 11 - a;
     if (kontrolni == 10) kontrolni = 0;
     return kontrolni == parseInt(oib.substr(10, 1));
+}
+
+function checkEmailAvailability(field) {
+    if(originalEmail == $('#'+field).val())return true;
+    var dataString = new Array('','',$('#'+field).val(),'','','');
+    var xml = sendToPhp(dataString,"../includes/register.php");
+    var status = $(xml).find('status').text();
+    if(status==='1'){
+        $('#userUpdateStatus').html("Email zauzet!").removeClass("info").removeClass("error").addClass("warning").slideDown("slow");
+        return false;
+    }else{
+        $('#userUpdateStatus').html("").removeClass("warning").slideUp("slow");
+        return true;
+    }
 }

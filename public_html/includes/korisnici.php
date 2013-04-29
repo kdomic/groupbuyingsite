@@ -72,6 +72,8 @@
                         case 2: $d->ovlasti = "Mod"; break;
                         case 3: $d->ovlasti = "Admin"; break;                        
                     }
+                    $d->zamrznut = timeForScreenLong($d->zamrznut) ? : "Nije";
+                    $d->deaktiviran = $d->deaktiviran==1 ? "Da" : "Ne";                    
                     $d->aktivan = $d->aktivan==1 ? "Da" : "Ne";
                     foreach ($d as $key => $value) {
                         $data->appendChild($xmlDoc->createElement($key, toUtf8($value)));

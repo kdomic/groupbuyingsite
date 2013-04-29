@@ -252,7 +252,7 @@ function accountMess(id,status){
         $('#'+id+' span').html("Izmjene pohranjene");      
     } else if(status==='') {
         $('#'+id).removeClass("info").removeClass("error").addClass("warning");
-        $('#'+id).html("Podatci nisu izmjenjeni");
+        $('#'+id).html("Nema izmjena");
     } else {
         $('#'+id).removeClass("info").removeClass("warning").addClass("error");
         $('#'+id+' span').html("Pohrana nije uspjela");

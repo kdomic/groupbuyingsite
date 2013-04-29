@@ -109,6 +109,11 @@ nav ul li:hover, .menuCurrent {
     cursor: pointer;
 }
 
+.legend {
+    font-size: 75%;
+    text-align: center;
+}
+
 /* === Reset === */
 
 .clear {
