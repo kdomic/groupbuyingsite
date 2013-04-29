@@ -26,6 +26,9 @@
 					break;
 				case 3:
 					$this->save();
+					break;
+				case 4:
+					$this->getTotal();
 					break;					
 			}			
 		}
@@ -81,7 +84,20 @@
 			}
 			unset($_SESSION['basket']);
 			xmlStatusSend(1);
-		}	
+		}
+
+		public function getTotal(){
+			$data = explode(';', $_SESSION['basket']);
+			array_pop($data);
+			$suma = 0.00;
+			foreach ($data as $d) {
+				$id_akcije = (int)$d;
+				$a = Akcije::find_by_id($id_akcije);
+				$p = Ponude::find_by_id($a->id_ponude);
+				$suma += $p->cijena-$p->cijena*$a->popust/100;
+			}
+			xmlStatusSend( str_replace('.', ',', sprintf("%01.2f", $suma)) );
+		}
 
 	}
 

@@ -492,6 +492,7 @@ function saveNewComment(){
     protocolData.push(1);
     var xml = sendToPhp(protocolData,"getSet_komentari.php");
     loadComments(protocolData[3]);
+    $('#newCommentArea').hide();
 }
 
 function loadComments(offerID){
@@ -709,10 +710,11 @@ function checkout(){
 }
 
 function checkoutPay() {
-    var sum = 0;
+    var xml = sendToPhp(new Array('4'),"includes/basket.php");
+    var sum = $(xml).find('status').text();
     $.msgBox({
         title: "Proces naplate",
-        content: "Ukupan iznos za naplatu: "+sum+"kn",
+        content: "Ukupan iznos za naplatu: "+sum+" kn",
         type: "confirm",
         buttons: [{ value: "Prihvati" }, { value: "Povratak" }],
         success: function (result) {
