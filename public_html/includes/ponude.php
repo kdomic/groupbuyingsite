@@ -30,17 +30,20 @@
         public $karta_y;
         public $aktivan;
 
-        public static function getAll(){
+        public static function getAll($data){
             $_p = self::find_all();
             $xmlDoc = new DOMDocument();
             $root = $xmlDoc->appendChild($xmlDoc->createElement("ponude"));
-            foreach ($_p as $p){
-                $ponuda = $root->appendChild($xmlDoc->createElement("ponuda"));
+            foreach ($_p as $p){                
                 $prodavatelj = Prodavatelji::find_by_id($p->id_prodavatelja);
                 $kategorija = Kategorije::find_by_id($p->id_kategorije);
+                if(isset($data[1]))
+                    if(!$p->aktivan || !$kategorija->aktivan || !$prodavatelj->aktivan)
+                        continue;
                 $p->id_prodavatelja = $prodavatelj->naziv ;                                        
                 $p->id_kategorije = $kategorija->naziv;
-                $p->aktivan = $p->aktivan==1 ? "Da" : "Ne";                
+                $p->aktivan = $p->aktivan==1 ? "Da" : "Ne";
+                $ponuda = $root->appendChild($xmlDoc->createElement("ponuda"));                            
                 foreach ($p as $key => $value) {
                     $ponuda->appendChild($xmlDoc->createElement($key, toUtf8(htmlentities($value))));
                 }

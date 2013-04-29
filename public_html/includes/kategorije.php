@@ -3,11 +3,11 @@
     class Kategorije extends DatabaseObject { 
 
 		protected static $table_name = "kategorije";
-		protected static $db_fields = array('id','naziv','aktivna');
+		protected static $db_fields = array('id','naziv','aktivan');
 
 		public $id;
 		public $naziv;
-		public $aktivna;
+		public $aktivan;
 
 		public static function getAll(){
 			$_k = self::find_all();		
@@ -17,7 +17,7 @@
 				$kategorija = $root->appendChild($xmlDoc->createElement("kategorija"));
 				$kategorija->appendChild($xmlDoc->createElement("id", toUtf8($k->id)));
 				$kategorija->appendChild($xmlDoc->createElement("naziv", toUtf8($k->naziv)));
-				$kategorija->appendChild($xmlDoc->createElement("aktivna", $k->aktivna ? toUtf8("Da") : toUtf8("Ne")));		
+				$kategorija->appendChild($xmlDoc->createElement("aktivan", $k->aktivan ? toUtf8("Da") : toUtf8("Ne")));		
 			}
 			header("Content-Type: text/xml");
 			$xmlDoc->formatOutput = true;
@@ -31,7 +31,7 @@
 			$kategorija = $root->appendChild($xmlDoc->createElement("kategorija"));
 			$kategorija->appendChild($xmlDoc->createElement("id", $k->id));
 			$kategorija->appendChild($xmlDoc->createElement("naziv", $k->naziv));
-			$kategorija->appendChild($xmlDoc->createElement("aktivna", $k->aktivna ? "Da" : "Ne"));		
+			$kategorija->appendChild($xmlDoc->createElement("aktivan", $k->aktivan ? "Da" : "Ne"));		
 			header("Content-Type: text/xml");
 			$xmlDoc->formatOutput = true;
 			echo $xmlDoc->saveXML();
@@ -47,7 +47,7 @@
 				$kategorija = $root->appendChild($xmlDoc->createElement("kategorija"));
 				$kategorija->appendChild($xmlDoc->createElement("id", toUtf8($k->id)));
 				$kategorija->appendChild($xmlDoc->createElement("naziv", toUtf8($k->naziv)));
-				$kategorija->appendChild($xmlDoc->createElement("aktivna", $k->aktivna ? toUtf8("Da") : toUtf8("Ne")));	
+				$kategorija->appendChild($xmlDoc->createElement("aktivan", $k->aktivan ? toUtf8("Da") : toUtf8("Ne")));	
 			}
 			header("Content-Type: text/xml");
 			$xmlDoc->formatOutput = true;
@@ -59,7 +59,7 @@
 			$k = new Kategorije();
 			if((int)$data[0]===4) $k = self::find_by_id($data[1]);
 			$k->naziv = $data[2];
-			$k->aktivna = $data[3];
+			$k->aktivan = $data[3];
 			xmlStatusSend($k->save());
 		}
     } 

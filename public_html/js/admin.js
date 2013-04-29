@@ -919,7 +919,7 @@ function categoryDropSelectOptions(field,type,userID){
 
 function offersDropSelectOptions(field){
     $('#'+field+" option").remove();
-    var xml = sendToPhp(new Array('1'),'../getSet_ponude.php');
+    var xml = sendToPhp(new Array('1','1'),'../getSet_ponude.php');
     var dataSet = $(xml).find('ponude');
     var data = new Array();
     $(dataSet).each(function(){    
