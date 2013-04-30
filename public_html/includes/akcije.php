@@ -70,5 +70,11 @@
                 xmlStatusSend($d->save());
             }
 
+            public static function getPicId($id) //5
+            {
+                $d = self::find_by_id($id);
+                xmlStatusSend($d->id_ponude);
+            }
+
     }
 ?>

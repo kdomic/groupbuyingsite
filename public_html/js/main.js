@@ -46,9 +46,6 @@ function userAccount() {
         $('#infoCol').append("Od strane: "+data[1]+"<br>");
         $('#infoCol').append("Razlog:<br>"+data[2]);        
     }
-
-    //$('#infoCol').html('Zadnja opomena izrečena Vam je dana 18.05.2013. - 18:55 od strane korisnika Krunoslav Domic, a glasi: <br> Ovo je opomena nemoj se tako ponašati');
-
 }
 
 function userPurchases() {
@@ -700,7 +697,9 @@ function reloadBasket() {
     if(data.length===0)$('#basket').html('Košarica je prazna');
     while(data.length>0){
         var num = data.pop();
-        var $div = $('<img src="offers/ponuda_'+leadZero(num)+'/01.jpg" alt="slika" onclick="loadOfferDetails('+num+')"/>');
+        var _xml = sendToPhp(new Array('5',num), 'getSet_akcije.php' );
+        var status = $(_xml).find('status').text();
+        var $div = $('<img src="offers/ponuda_'+leadZero(status)+'/01.jpg" alt="slika" onclick="loadOfferDetails('+num+')"/>');
         $('#basket').append($div);
         $('.buttonGreen').show();
     }
