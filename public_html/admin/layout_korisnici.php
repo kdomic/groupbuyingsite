@@ -117,7 +117,7 @@
             </table>
             <div id="userUpdateStatus" class=""><span></span></div> 
         </div>
-        <div class="leftHalf">
+        <div class="leftHalf" id="userWarnHalf">
             <h1>Opomene</h1>
             <table id="userWarn">
                 <thead><tr> <th>ID</th><th>Opomena</th><th>Datum</th> </tr></thead>

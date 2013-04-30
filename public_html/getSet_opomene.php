@@ -15,7 +15,8 @@
 		case 2: Opomene::get($data[1]);break;
 		case 3: Opomene::set($data);break;
 		//case 4: Opomene::set($data);break;
-		case 5: Opomene::count($data[i]);break;
+		case 5: Opomene::count($data[1]);break;
+		case 6: Opomene::getLast($data[1]);break;
 	}
 
 ?>

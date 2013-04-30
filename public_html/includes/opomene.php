@@ -48,6 +48,22 @@
             xmlStatusSend( array_shift($row) );
         }
 
+        public static function getLast($id) //6
+        {
+            $_d = self::find_by_user($id);
+            $d = array_pop($_d);
+            $xmlDoc = new DOMDocument();
+            $root = $xmlDoc->appendChild($xmlDoc->createElement("opomene"));
+            $data = $root->appendChild($xmlDoc->createElement("opomena"));                
+            $data->appendChild($xmlDoc->createElement("datum", toUtf8(timeForScreenLong($d->datum))));
+            $k = Korisnici::find_by_id($d->id_moderatora);
+            $data->appendChild($xmlDoc->createElement("moderator", toUtf8($k->ime.' '.$k->prezime)));
+            $data->appendChild($xmlDoc->createElement("opis", toUtf8($d->opis)));
+            header("Content-Type: text/xml");
+            $xmlDoc->formatOutput = true;
+            echo $xmlDoc->saveXML();
+        }
+
         
 
     }

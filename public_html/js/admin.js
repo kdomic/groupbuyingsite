@@ -166,7 +166,7 @@ function layout_showVrijeme(){
 
 /* === USER EDIT === */
 
-function initUserTable(protocol) {     
+function initUserTable(protocol) {   
     var dataTable = $('#userTable').dataTable();
     if(protocol!=3)dataTable.fnClearTable();
     var protocolData = new Array(); //1-all, 6-mods, 7-admins
@@ -186,7 +186,7 @@ function initUserTable(protocol) {
         });
     });    
     dataTable.$('tr').addClass("row").click(function(){editUser(dataTable.fnGetData(this)[0])});
-    if(protocol==2) initUserTable(3);
+    if(protocol==2) initUserTable(3);  
 }
 
 function editUser(num){
@@ -196,6 +196,8 @@ function editUser(num){
     $('#userUpdateStatus').hide();    
     $('#singleUser').show();
     $('#userPurHistory').show();
+    $('#userWarnHalf').show();
+    $('#userPurHistory').show();  
     userPurchases(num);    
     var userData = getUserData(num);
     $('#userID').val(userData[0]);
@@ -238,6 +240,8 @@ function newUser(){
     $('#userPurHistory').hide();    
     $('#moderatori').hide();
     $('#userUpdateStatus').hide();
+    $('#userWarnHalf').hide();
+    $('#userPurHistory').hide();  
     $('#singleUser').show();
     $('#singleUser input:text').val('');
     $('#singleUser input:radio').prop('checked', false);

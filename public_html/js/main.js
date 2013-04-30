@@ -22,11 +22,33 @@ function userAccount() {
     $('#inputMjestoA').val(userData[5]);
     $('#inputTelefonA').val(userData[6]);
     $('#inputOibA').val(userData[8]);
-    $('#inputEmailA').val(userData[7]);
-
-    $('#infoCol').html('ok');
+    $('#inputEmailA').val(userData[7]);    
     $('#dropboxCol1Status').hide();
     $('#dropboxCol2Status').hide();
+
+    var xml = sendToPhp(new Array('5', userId),'getSet_opomene.php');
+    var status = $(xml).find('status').text();    
+    if(parseInt(status)>0) {
+        $('#infoCol').html('Broj opomena: '+status+'<br>');
+        var xml = sendToPhp(new Array('6',userId),'getSet_opomene.php');
+        var dataSet = $(xml).find('opomene');
+        var data = new Array();
+        $(dataSet).each(function(){    
+            $(this).children().each(function(){
+                $(this).children().each(function(){
+                    data.push($(this).text());
+                });
+            });
+        });
+        console.log(data);
+        $('#infoCol').append("<i>---Zadnja opomena---</i><br>");
+        $('#infoCol').append("Datum: "+data[0]+"<br>");
+        $('#infoCol').append("Od strane: "+data[1]+"<br>");
+        $('#infoCol').append("Razlog:<br>"+data[2]);        
+    }
+
+    //$('#infoCol').html('Zadnja opomena izrečena Vam je dana 18.05.2013. - 18:55 od strane korisnika Krunoslav Domic, a glasi: <br> Ovo je opomena nemoj se tako ponašati');
+
 }
 
 function userPurchases() {
