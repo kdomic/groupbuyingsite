@@ -22,19 +22,20 @@
             return self::find_by_sql("SELECT * FROM ".static::$table_name." WHERE id_ponude={$id_ponude} AND aktivan=1");
         }
 
-        public static function canIpost($id_korisnika, $id_ponude){
-			$query  = 'SELECT r.id_korisnika, a.id_ponude  ';
-			$query .= 'FROM racuni AS r ';
-			$query .= 'JOIN racuni_akcije AS ra ON ra.id_racuna=r.id ';
-			$query .= 'JOIN akcije AS a ON a.id = ra.id_akcije ';
-			$query .= 'WHERE r.id_korisnika ='.$id_korisnika.' ';
-			$query .= 'AND a.id_ponude='.$id_ponude.' ';
-
+        public static function canIpost($id_korisnika, $id_akcije){
+            $akcija = Akcije::find_by_id($id_akcije);
+            $query   = 'SELECT r.id_korisnika, p.id ';
+            $query  .= 'FROM ponude AS p ';
+            $query  .= 'JOIN akcije AS a ON a.id_ponude=p.id ';
+            $query  .= 'JOIN racuni_akcije AS ra ON ra.id_akcije=a.id ';
+            $query  .= 'JOIN racuni AS r ON r.id=ra.id_racuna ';
+            $query  .= 'WHERE p.id='.$akcija->id_ponude;
+            $query  .= ' AND r.id_korisnika='.$id_korisnika;
 			$data = DatabaseObject::find_by_raw_sql($query);
             if(empty($data)){
                 xmlStatusSend(0);
             } else {
-            	if(!self::find_if_exist($id_korisnika, $id_ponude))
+            	if(!self::find_if_exist($id_korisnika, $akcija->id_ponude))
             		xmlStatusSend(1);
             	else
             		xmlStatusSend(2);
@@ -69,12 +70,15 @@
 			$k->ocjena = array_pop($data);
 			$k->komentar = array_pop($data);
 			$k->id_ponude = array_pop($data);
+            $akcija = Akcije::find_by_id($k->id_ponude);
+            $k->id_ponude = $akcija->id_ponude;
 			$k->id_korisnika = array_pop($data);
 			xmlStatusSend($k->save());
 		}
 
-		public static function getCommentForOffer($id_ponude) {
-			$_d = self::find_by_ponuda($id_ponude);
+		public static function getCommentForOffer($id_akcije) {
+            $akcija = Akcije::find_by_id($id_akcije);
+			$_d = self::find_by_ponuda($akcija->id_ponude);
 			$xmlDoc = new DOMDocument();
             $root = $xmlDoc->appendChild($xmlDoc->createElement("komentari"));
             foreach ($_d as $d){

@@ -489,6 +489,7 @@ function loadOfferDetails(num){
     backQuene.push(parseInt(num)*(-1));
     showHideComment(data[0]);
     loadComments(data[0]);
+    console.log(data);
 }
 
 /* === COMMENTS === */
@@ -499,6 +500,8 @@ function showHideComment(offerID){
     var userID = sessionCheck();
     var xml = sendToPhp(new Array(5,userID,offerID),"getSet_komentari.php");
     var status = $(xml).find('status').text();
+    console.log(status);
+
     if(status==1) $('#newCommentArea').show();
 }
 
