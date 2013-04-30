@@ -5,7 +5,7 @@
         <table id="userTable">
             <thead><tr>
                 <th>ID</th><th>Ime i prezime</th><th>Email</th>
-                <th>Zamrznut do</th><th>B</th><th>D</th><th>O</th><th>Ovlasti</th><th>A</th>
+                <th>Zamrznut do</th><th>D</th><th>Ovlasti</th><th>A</th>
              </tr></thead>
             <tbody></tbody>
         </table>
@@ -63,10 +63,6 @@
                 </td>
             </tr>
             <tr>
-                <td><label for="userOPOMENA">Opomena</label></td>
-                <td><input type="number"      name="opomena"  id="userOPOMENA" min="0"/></td>
-            </tr>
-            <tr>
                 <td><label for="userDEAKTIVIRAN">Deaktiviran</label></td>
                 <td>
                     <input type="radio" name="deaktiviran" value="1" id="userDEAKTIVIRAN">Da
@@ -81,16 +77,17 @@
                 </td>
             </tr>
             <tr>
-                <td><label for="userBLOKIRAN">Blokiran</label></td>
-                <td><input type="text"      name="blokiran" id="userBLOKIRAN"   placeholder="" /></td>
-            </tr>
-            <tr>
                 <td><label for="userDATUM">Datum registracije</label></td>
-                <td><input type="text"      name="datum"    id="userDATUM"      placeholder="" /></td>
+                <td><input type="text"      name="datum"    id="userDATUM"      readonly placeholder="Popunjava sustav"/></td>
             </tr>
             <tr>
                 <td><label for="userPOTVRDA">Email potvrda</label></td>
-                <td><input type="text"      name="potvrda"  id="userPOTVRDA"    placeholder="" /></td>
+                <td>
+                    <select name="potvrda"  id="userPOTVRDA">
+                        <option value="0">Aktiviran</option>
+                        <option>Nije aktiviran</option> 
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td><label for="userLOZINKA">Lozinka</label></td>
@@ -98,7 +95,13 @@
             </tr>                          
             <tr>
                 <td><label for="userOVLASTI">Ovlasti</label></td>
-                <td><input type="text"      name="ovlasti"  id="userOVLASTI"    placeholder="" /></td>
+                <td>
+                    <select name="ovlasti"  id="userOVLASTI">
+                        <option value="1">Korisnik</option>
+                        <option value="2">Moderator</option> 
+                        <option value="3">Administrator</option>                                            
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td><label for="userAKTIVNA">Vidljivost</label></td>

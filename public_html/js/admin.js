@@ -181,7 +181,7 @@ function initUserTable(protocol) {
             $(this).children().each(function(){
                 user.push($(this).text());
             });
-            dataTable.fnAddData([user[0],user[1]+' '+user[2],user[7],user[12],user[13],user[11],user[10],user[17],user[18]]);
+            dataTable.fnAddData([ user[0],user[1]+' '+user[2],user[7],user[11],user[10],user[15],user[16] ]);
         });
     });    
     dataTable.$('tr').addClass("row").click(function(){editUser(dataTable.fnGetData(this)[0])});
@@ -207,25 +207,28 @@ function editUser(num){
     $('#userEMAIL').val(userData[7]);
     $('#userOIB').val(userData[8]);
     $('#userOPENID option').eq(userData[9]).prop('selected',true);
-    $('#userOPOMENA').val(userData[10]);
-    if(userData[11]==1)
+    if(userData[10]==1)
         $('#singleUser input:radio[name=deaktiviran][value="1"]').prop('checked', true);
     else
         $('#singleUser input:radio[name=deaktiviran][value="0"]').prop('checked', true);
-    var dt = userData[12].split(" ");
-    console.log(dt[1]);
+    var dt = userData[11].split(" ");
     $('#userZAMRZNUTdate').val(dt[0]);
     $('#userZAMRZNUTtime').val(dt[1]);    
-    $('#userBLOKIRAN').val(userData[13]);
-    $('#userDATUM').val(userData[14]);    
-    $('#userPOTVRDA').val(userData[15]);
-    $('#userLOZINKA').val(userData[16]);
-    $('#userOVLASTI').val(userData[17]);
-    if(userData[18]==1)
+    $('#userDATUM').val(userData[12]);    
+    if(userData[13]==0){
+        $('#userPOTVRDA option').eq(0).prop('selected',true);
+        $('#userPOTVRDA').prop('disabled', 'disabled');
+    } else {
+        $('#userPOTVRDA option').eq(1).prop('selected',true).val(userData[13]);
+        $('#userPOTVRDA').prop('disabled', false);    
+    }
+    $('#userLOZINKA').val(userData[14]);
+    $('#userOVLASTI option').eq(parseInt(userData[15])-1).prop('selected', true);    
+    if(userData[16]==1)
         $('#singleUser input:radio[name=vidljivost][value="1"]').prop('checked', true);
     else
         $('#singleUser input:radio[name=vidljivost][value="0"]').prop('checked', true);
-    originalEmail = $('#userEMAIL').val();
+    originalEmail = $('#userEMAIL').val(); //aktiviran
 }
 
 function newUser(){
@@ -235,21 +238,21 @@ function newUser(){
     $('#userUpdateStatus').hide();
     $('#singleUser').show();
     $('#singleUser input:text').val('');
-    $('#userOPOMENA').val(0);
-    $('#userEMAIL').val('');
-    $('#userLOZINKA').val('');
-    $('#userZAMRZNUTdate').val('0000-00-00');
-    $('#userZAMRZNUTtime').val('00:00:00');    
-    $($('#singleUser input')[0]).val('Novi korisnik');
     $('#singleUser input:radio').prop('checked', false);
+    $($('#singleUser input')[0]).val('Novi korisnik');
+    $('#userEMAIL').val('');
+    $('#userOPENID option').eq(0).prop('selected', true); 
     $('#singleUser input:radio[name=deaktiviran][value="0"]').prop('checked', true);    
+    $('#userZAMRZNUTdate').val('0000-00-00');
+    $('#userZAMRZNUTtime').val('00:00:00');
+    $('#userPOTVRDA').prop('disabled', 'disabled');        
+    $('#userPOTVRDA option').eq(0).prop('selected', true); 
+    $('#userLOZINKA').val('');            
+    $('#userOVLASTI option').eq(0).prop('selected', true);
     $('#singleUser input:radio[name=vidljivost][value="1"]').prop('checked', true);
 }
 
 function saveUser(){
-    //console.log($('#userZAMRZNUTdate').val());
-    //console.log($('#userZAMRZNUTtime').val());
-    //console.log($('#userZAMRZNUTdate').val()+' '+$('#userZAMRZNUTtime').val());return;
     var protocolData = new Array();
     if($($('#singleUser input')[0]).val()=="Novi korisnik"){
         protocolData.push(3);        
@@ -267,21 +270,18 @@ function saveUser(){
     protocolData.push($('#userEMAIL').val());
     protocolData.push($('#userOIB').val());
     protocolData.push($('#userOPENID').val());
-    protocolData.push($('#userOPOMENA').val());
     protocolData.push($('#singleUser input:radio[name=deaktiviran]:checked').val());
     if($('#userZAMRZNUTdate').val()=='')
         protocolData.push('0000-00-00 00:00:00');        
     else  
         protocolData.push($('#userZAMRZNUTdate').val()+' '+$('#userZAMRZNUTtime').val());
-    protocolData.push($('#userBLOKIRAN').val());
     protocolData.push($('#userDATUM').val());
     protocolData.push($('#userPOTVRDA').val());
     protocolData.push($('#userLOZINKA').val());
     protocolData.push($('#userOVLASTI').val());
     protocolData.push($('#singleUser input:radio[name=vidljivost]:checked').val());
-    console.log(protocolData);
     var i;
-    if(protocolData[17].length===0) i=17;
+    if(protocolData[15].length===0) i=15;
     if(!CheckOIB(protocolData[9])) i=9;
     if(!emailPattern.test(protocolData[8])) i=8;
     if(!checkEmailAvailability('userEMAIL')) i=8;
@@ -304,7 +304,7 @@ function saveUser(){
             $('#userUpdateStatus').html("Oib je neispravan").removeClass("info").removeClass("error").addClass("warning").slideDown("slow");
             $('#userOIB').focus();
             return false;
-        case 17: 
+        case 15: 
             $('#userUpdateStatus').html("Lozinka je obavezno polje!").removeClass("info").removeClass("error").addClass("warning").slideDown("slow");
             $('#userLOZINKA').focus();
             return false;
@@ -326,7 +326,6 @@ function saveUser(){
     } else {
         $('#userUpdateStatus').html("Greška prilikom pohrane").removeClass("info").removeClass("warning").addClass("error").slideDown("slow");
     }
-    console.log(protocolData);
 }
 
 function userPurchases(num) {
@@ -1039,7 +1038,6 @@ function getUserData(id){
     $(parsedXML).children().each(function(){
         data.push($(this).text());
     });
-    console.log("Parsano: "+data);
     return data;
 }
 
@@ -1080,6 +1078,7 @@ function htmlDencodeEntities(s){
 
 function CheckOIB(oib) { //http://v2009.dizzy.hr/oib/
     oib = oib.toString();
+    if (oib.length==0) return true;    
     if (oib.length != 11) return false;
     var b = parseInt(oib, 10);
     if (isNaN(b)) return false;

@@ -13,10 +13,8 @@
                                             'email',
                                             'oib',
                                             'open_id',
-                                            'opomena',
                                             'deaktiviran',
                                             'zamrznut',
-                                            'blokiran',
                                             'datum_registracije',
                                             'email_potvrda',
                                             'password',
@@ -32,15 +30,13 @@
             public $email;              //[7]
             public $oib;                //[8]
             public $open_id;            //[9]
-            public $opomena;            //[10]
-            public $deaktiviran;        //[11]
-            public $zamrznut;           //[12]
-            public $blokiran;           //[13]
-            public $datum_registracije; //[14]
-            public $email_potvrda;      //[15]
-            public $password;           //[16]
-            public $ovlasti;            //[17]
-            public $aktivan;            //[18]
+            public $deaktiviran;        //[10]
+            public $zamrznut;           //[11]
+            public $datum_registracije; //[12]
+            public $email_potvrda;      //[13]
+            public $password;           //[14]
+            public $ovlasti;            //[15]
+            public $aktivan;            //[16]
             
             public static function find_by_email($id=0) {
                 $result_array = self::find_by_sql("SELECT * FROM ".static::$table_name." WHERE email='{$id}' LIMIT 1");
@@ -90,6 +86,7 @@
                 $xmlDoc = new DOMDocument();
                 $root = $xmlDoc->appendChild($xmlDoc->createElement("korisnici"));
                 $data = $root->appendChild($xmlDoc->createElement("korisnik"));
+                $d->datum_registracije = timeForScreenLong($d->datum_registracije);                
                 foreach ($d as $key => $value) {
                     $data->appendChild($xmlDoc->createElement($key, toUtf8($value)));
                 }
@@ -107,11 +104,9 @@
                 $newPass= array_pop($data);
                 $d->password = is_sha1($newPass) ? $newPass : sha1($newPass);
                 $d->email_potvrda = array_pop($data);
-                $d->datum_registracije = array_pop($data);
-                $d->blokiran = array_pop($data);
+                $d->datum_registracije = array_pop($data)=='' ? date("Y-m-d H:i:s") : timeForMysql($d->datum_registracije);
                 $d->zamrznut = array_pop($data);
                 $d->deaktiviran = array_pop($data);
-                $d->opomena = array_pop($data);
                 $d->open_id = array_pop($data);
                 $d->oib = array_pop($data);
                 $d->email = array_pop($data);
