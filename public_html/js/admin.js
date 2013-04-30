@@ -28,14 +28,15 @@ $(document).ready(function(){
     $('#btnNewOffer').click(function(){newOffer();});
     $('#btnNewAction').click(function(){newAction();});
 
-    $('#btnSaveUser').click(function(){saveUser();}); 
+    $('#btnSaveUser').click(function(){saveUser();});
+    $('#btnUserWarnNew').click(function(){saveWarn();}); 
+
     $('#btnSaveSeller').click(function(){saveSeller();});        
     $('#btnSaveCategory').click(function(){saveCategory();});    
     $('#btnSaveCity').click(function(){saveCity();});
     $('#btnSaveOffer').click(function(){saveOffer();});
     $('#btnSaveAction').click(function(){saveAction();});
     $('#btnSaveTime').click(function(){saveTime();});
-
 
     $('#userEMAIL').blur(function(){checkEmailAvailability('userEMAIL')});
 
@@ -228,7 +229,8 @@ function editUser(num){
         $('#singleUser input:radio[name=vidljivost][value="1"]').prop('checked', true);
     else
         $('#singleUser input:radio[name=vidljivost][value="0"]').prop('checked', true);
-    originalEmail = $('#userEMAIL').val(); //aktiviran
+    originalEmail = $('#userEMAIL').val();
+    initWarnTable();
 }
 
 function newUser(){
@@ -289,23 +291,23 @@ function saveUser(){
     if(protocolData[2].length===0) i=2;
     switch(i){
         case 2: 
-            $('#userUpdateStatus').html("Ime je obavezno polje!").removeClass("info").removeClass("error").addClass("warning").slideDown("slow");
+            $('#userUpdateStatus').html("Ime je obavezno polje!").removeClass("info").removeClass("error").addClass("warning").slideDown("slow").delay(2000).slideUp("slow");;
             $('#userIME').focus();
             return false;
         case 3: 
-            $('#userUpdateStatus').html("Prezime je obavezno polje!").removeClass("info").removeClass("error").addClass("warning").slideDown("slow");
+            $('#userUpdateStatus').html("Prezime je obavezno polje!").removeClass("info").removeClass("error").addClass("warning").slideDown("slow").delay(2000).slideUp("slow");;
             $('#userPREZIME').focus();
             return false;
         case 8: 
-            $('#userUpdateStatus').html("Email nije unešen ili je neispravan!").removeClass("info").removeClass("error").addClass("warning").slideDown("slow");
+            $('#userUpdateStatus').html("Email nije unešen ili je neispravan!").removeClass("info").removeClass("error").addClass("warning").slideDown("slow").delay(2000).slideUp("slow");;
             $('#userEMAIL').focus();
             return false;
         case 9: 
-            $('#userUpdateStatus').html("Oib je neispravan").removeClass("info").removeClass("error").addClass("warning").slideDown("slow");
+            $('#userUpdateStatus').html("Oib je neispravan").removeClass("info").removeClass("error").addClass("warning").slideDown("slow").delay(2000).slideUp("slow");;
             $('#userOIB').focus();
             return false;
         case 15: 
-            $('#userUpdateStatus').html("Lozinka je obavezno polje!").removeClass("info").removeClass("error").addClass("warning").slideDown("slow");
+            $('#userUpdateStatus').html("Lozinka je obavezno polje!").removeClass("info").removeClass("error").addClass("warning").slideDown("slow").delay(2000).slideUp("slow");;
             $('#userLOZINKA').focus();
             return false;
         default:
@@ -314,9 +316,9 @@ function saveUser(){
     var xml = sendToPhp(protocolData,'../getSet_korisnici.php');
     var status = $(xml).find('status').text();
     if(status===''){
-        $('#userUpdateStatus').html("Nema izmjena").removeClass("info").removeClass("error").addClass("warning").slideDown("slow");
+        $('#userUpdateStatus').html("Nema izmjena").removeClass("info").removeClass("error").addClass("warning").slideDown("slow").delay(2000).slideUp("slow");;
     } else if(status==='1'){
-        $('#userUpdateStatus').html("Zapis pohranjen").removeClass("error").removeClass("warning").addClass("info").slideDown("slow");
+        $('#userUpdateStatus').html("Zapis pohranjen").removeClass("error").removeClass("warning").addClass("info").slideDown("slow").delay(2000).slideUp("slow");;
         setTimeout(function(){
             $('#singleUser').hide();
             $('#allUsers').show();
@@ -324,7 +326,7 @@ function saveUser(){
             if(userSelectType==2)$('#moderatori').show();
         }, 1000);
     } else {
-        $('#userUpdateStatus').html("Greška prilikom pohrane").removeClass("info").removeClass("warning").addClass("error").slideDown("slow");
+        $('#userUpdateStatus').html("Greška prilikom pohrane").removeClass("info").removeClass("warning").addClass("error").slideDown("slow").delay(2000).slideUp("slow");;
     }
 }
 
@@ -338,6 +340,43 @@ function userPurchases(num) {
         });
         dataTable.fnAddData([data[0],data[4],data[2],data[3]]);
     });
+}
+
+function initWarnTable(){
+    var dataTable = $('#userWarn').dataTable();
+    dataTable.fnClearTable();
+    var xml = sendToPhp(new Array('2',$('#userID').val()),'../getSet_opomene.php');
+    var dataSet = $(xml).find('opomene');
+    var data = new Array();
+    $(dataSet).each(function(){    
+        $(this).children().each(function(){
+            data = []; 
+            $(this).children().each(function(){
+                data.push($(this).text());
+            });
+            dataTable.fnAddData([data[0],data[1],data[2]]);
+        });
+    });
+}
+
+function saveWarn(){
+    if($('#userWarnNew').val()==''){
+        $('#userWarnStatus').html("Upišite opis").addClass("error").removeClass("success").slideDown("slow").delay(2000).slideUp("slow");    
+        return;
+    }
+    var protocolData = new Array('3');
+    protocolData.push($('#userID').val());
+    protocolData.push(sessionCheck());
+    protocolData.push($('#userWarnNew').val());
+    var xml = sendToPhp(protocolData,'../getSet_opomene.php');
+    var status = $(xml).find('status').text();    
+    if(status==='1') {
+        $('#userWarnStatus').html("Zapis pohranjen").addClass("success").removeClass("error").slideDown("slow").delay(2000).slideUp("slow");
+        $('#userWarnNew').val('')
+    } else {
+        $('#userWarnStatus').html("Greška prilikom pohrane").addClass("error").removeClass("success").slideDown("slow").delay(2000).slideUp("slow");    
+    }
+    initWarnTable();
 }
 
 /* === MODS === */

@@ -103,6 +103,15 @@ nav ul li:hover, .menuCurrent {
     border-radius: 15px;
 }
 
+.leftHalf {
+    width: 49%;
+    float: left;
+}
+
+#userWarnNew{
+    width: 100%;
+}
+
 /* === TABLE === */
 
 .row:hover {

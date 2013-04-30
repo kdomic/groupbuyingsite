@@ -26,5 +26,6 @@
     require_once ('komentari.php');
     require_once ('moderatori.php');
     require_once ('newsletter.php');    
+    require_once ('opomene.php');    
 
 ?>
