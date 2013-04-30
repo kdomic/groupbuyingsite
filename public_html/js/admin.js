@@ -22,15 +22,15 @@ $(document).ready(function(){
     $($('nav li')[10]).click(function(){layout_showVrijeme();});
 
     $('#btnNewUser').click(function(){newUser();});
+    $('#btnUserWarnNew').click(function(){saveWarn();});
+    $('#btnNewMod').click(function(){saveMod();});    
     $('#btnNewSeller').click(function(){newSeller();});
     $('#btnNewCategory').click(function(){newCategory();});
     $('#btnNewCity').click(function(){newCity();});
     $('#btnNewOffer').click(function(){newOffer();});
     $('#btnNewAction').click(function(){newAction();});
 
-    $('#btnSaveUser').click(function(){saveUser();});
-    $('#btnUserWarnNew').click(function(){saveWarn();}); 
-
+    $('#btnSaveUser').click(function(){saveUser();});     
     $('#btnSaveSeller').click(function(){saveSeller();});        
     $('#btnSaveCategory').click(function(){saveCategory();});    
     $('#btnSaveCity').click(function(){saveCity();});
@@ -39,6 +39,7 @@ $(document).ready(function(){
     $('#btnSaveTime').click(function(){saveTime();});
 
     $('#userEMAIL').blur(function(){checkEmailAvailability('userEMAIL')});
+    $('#modSelectUser').change(function(){showCatDropSelectOptions()});
 
 });
 
