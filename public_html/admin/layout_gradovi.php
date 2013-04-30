@@ -29,5 +29,6 @@
             <td colspan="2"><button id="btnSaveCity">Pospremi</button></td>
             </tr>                            
         </table>
+        <div id="citysUpdateStatus" class=""><span></span></div>
     </div>
 </div>

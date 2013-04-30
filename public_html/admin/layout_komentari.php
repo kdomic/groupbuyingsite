@@ -6,5 +6,7 @@
             <th>ID</th><th>Ime i prezime</th><th>Komentar</th><th>Datum</th><th>Aktivno</th>
          </tr></thead>
         <tbody></tbody>
-    </table>   
+    </table> 
+    <div class="clear"></div>
+    <div id="commentsUpdateStatus" class=""><span></span></div>     
 </div>

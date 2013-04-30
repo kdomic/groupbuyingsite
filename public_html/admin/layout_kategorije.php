@@ -29,5 +29,6 @@
             <td colspan="2"><button id="btnSaveCategory" >Pospremi</button></td>
             </tr>                            
         </table>
-    </div>
+        <div id="categoriesUpdateStatus" class=""><span></span></div>
+    </div>    
 </div>

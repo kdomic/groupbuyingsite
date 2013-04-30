@@ -317,20 +317,14 @@ function saveUser(){
         default:
             $('#userUpdateStatus').html("").slideUp("slow");
     }
-    var xml = sendToPhp(protocolData,'../getSet_korisnici.php');
-    var status = $(xml).find('status').text();
-    if(status===''){
-        $('#userUpdateStatus').html("Nema izmjena").removeClass("info").removeClass("error").addClass("warning").slideDown("slow").delay(2000).slideUp("slow");;
-    } else if(status==='1'){
-        $('#userUpdateStatus').html("Zapis pohranjen").removeClass("error").removeClass("warning").addClass("info").slideDown("slow").delay(2000).slideUp("slow");;
+    var xml = sendToPhp(protocolData,'../getSet_korisnici.php');    
+    if(phpStatus(xml,'userUpdateStatus')){
         setTimeout(function(){
             $('#singleUser').hide();
             $('#allUsers').show();
             initUserTable(userSelectType);
             if(userSelectType==2)$('#moderatori').show();
         }, 1000);
-    } else {
-        $('#userUpdateStatus').html("Greška prilikom pohrane").removeClass("info").removeClass("warning").addClass("error").slideDown("slow").delay(2000).slideUp("slow");;
     }
 }
 
@@ -373,13 +367,7 @@ function saveWarn(){
     protocolData.push(sessionCheck());
     protocolData.push($('#userWarnNew').val());
     var xml = sendToPhp(protocolData,'../getSet_opomene.php');
-    var status = $(xml).find('status').text();    
-    if(status==='1') {
-        $('#userWarnStatus').html("Zapis pohranjen").addClass("success").removeClass("error").slideDown("slow").delay(2000).slideUp("slow");
-        $('#userWarnNew').val('')
-    } else {
-        $('#userWarnStatus').html("Greška prilikom pohrane").addClass("error").removeClass("success").slideDown("slow").delay(2000).slideUp("slow");    
-    }
+    phpStatus(xml,'userWarnStatus');    
     initWarnTable();
 }
 
@@ -404,6 +392,7 @@ function initModsTable() {
         var aPos = dataTable.fnGetPosition( this );
         var aData = dataTable.fnGetData( aPos[0] );
         var xml = sendToPhp(new Array('5',aData[0]),'../getSet_moderatori.php');
+        phpStatus(xml,'modUpdateStatus');         
         initModsTable();
     });
 }
@@ -413,11 +402,7 @@ function saveMod() {
     protocolData.push($('#modSelectUser').val());
     protocolData.push($('#modeSelectCat').val());
     var xml = sendToPhp(protocolData,'../getSet_moderatori.php'); 
-    var status = $(xml).find('status').text();
-    if(status==='1')
-        $('#modUpdateStatus').html("Zapis pohranjen").addClass("success").removeClass("error").slideDown("slow").delay(2000).slideUp("slow");
-    else 
-        $('#modUpdateStatus').html("Greška prilikom pohrane").addClass("error").removeClass("success").slideDown("slow").delay(2000).slideUp("slow");    
+    phpStatus(xml,'modUpdateStatus'); 
     initModsTable();
     categoryDropSelectOptions('modeSelectCat',5,$('#modSelectUser').val());
 }
@@ -456,71 +441,6 @@ function modsDropSelectOptions(field){
 function showCatDropSelectOptions(){
     $('#btnNewMod').removeAttr("disabled");
     categoryDropSelectOptions('modeSelectCat',5,$('#modSelectUser').val());
-}
-
-
-
-/* === CATEGORIES === */
-
-function initCategoriesTable() { 
-    var dataTable = $('#categoriesTable').dataTable();
-    dataTable.fnClearTable();
-    var protocolData = new Array();
-    protocolData.push(1);
-    var xml = sendToPhp(protocolData,'../getSet_kategorije.php');
-    var cats = $(xml).find('kategorije');
-    var cat = new Array();
-    $(cats).each(function(){    
-        $(this).children().each(function(){
-            cat = []; 
-            $(this).children().each(function(){
-                cat.push($(this).text());
-            });
-            dataTable.fnAddData([cat[0],cat[1],cat[2]]);
-        });
-    });    
-    dataTable.$('tr').addClass("row").click(function(){editCategory(dataTable.fnGetData(this)[0])});
-}
-
-function newCategory(){
-    $('#allCategories').hide();
-    $('#singleCategory').show();
-    $('#singleCategory input:text').val('');
-    $($('#singleCategory input')[0]).val('Nova kategorija');
-    $('#singleCategory input:radio[name=vidljivost]').prop('checked', false);
-    $('#singleCategory input:radio[name=vidljivost][value="1"]').prop('checked', true);
-}
-
-function editCategory(num){
-    var data = new Array('2',num);
-    var xml = sendToPhp(data,'../getSet_kategorije.php');
-    var catData = new Array();
-    var user = $(xml).find('kategorija');
-    $(user).children().each(function(){catData.push($(this).text())});
-    $('#categoryID').val(catData[0]);
-    $('#categoryNAZIV').val(catData[1]);
-    if(catData[2]=="Da")
-        $('#singleCategory input:radio[name=vidljivost][value="1"]').prop('checked', true);
-    else
-        $('#singleCategory input:radio[name=vidljivost][value="0"]').prop('checked', true);
-
-    $('#allCategories').hide();
-    $('#singleCategory').show();
-}
-
-function saveCategory(){
-    var data = new Array();
-    if($($('#singleCategory input')[0]).val()=="Nova kategorija"){
-        data.push(3);        
-        data.push(-1);
-    } else {
-        data.push(4);        
-        data.push($($('#singleCategory input')[0]).val());
-    }
-    data.push($($('#singleCategory input')[1]).val());
-    data.push($('#singleCategory input:radio[name=vidljivost]:checked').val());
-    var xml = sendToPhp(data,'../getSet_kategorije.php');
-    layout_showKategorije();
 }
 
 /* === SELLERS === */
@@ -596,7 +516,134 @@ function saveSeller(){
     data.push($('#sellerOIB').val());
     data.push($('#singleSeller input:radio[name=vidljivost]:checked').val());
     var xml = sendToPhp(data,'../getSet_prodavatelji.php');
-    layout_showProdavatelji();
+    if(phpStatus(xml,'sellerUpdateStatus')) setTimeout(function(){ layout_showProdavatelji(); }, 1000);
+}
+
+/* === CATEGORIES === */
+
+function initCategoriesTable() { 
+    var dataTable = $('#categoriesTable').dataTable();
+    dataTable.fnClearTable();
+    var protocolData = new Array();
+    protocolData.push(1);
+    var xml = sendToPhp(protocolData,'../getSet_kategorije.php');
+    var cats = $(xml).find('kategorije');
+    var cat = new Array();
+    $(cats).each(function(){    
+        $(this).children().each(function(){
+            cat = []; 
+            $(this).children().each(function(){
+                cat.push($(this).text());
+            });
+            dataTable.fnAddData([cat[0],cat[1],cat[2]]);
+        });
+    });    
+    dataTable.$('tr').addClass("row").click(function(){editCategory(dataTable.fnGetData(this)[0])});
+}
+
+function newCategory(){
+    $('#allCategories').hide();
+    $('#singleCategory').show();
+    $('#singleCategory input:text').val('');
+    $($('#singleCategory input')[0]).val('Nova kategorija');
+    $('#singleCategory input:radio[name=vidljivost]').prop('checked', false);
+    $('#singleCategory input:radio[name=vidljivost][value="1"]').prop('checked', true);
+}
+
+function editCategory(num){
+    var data = new Array('2',num);
+    var xml = sendToPhp(data,'../getSet_kategorije.php');
+    var catData = new Array();
+    var user = $(xml).find('kategorija');
+    $(user).children().each(function(){catData.push($(this).text())});
+    $('#categoryID').val(catData[0]);
+    $('#categoryNAZIV').val(catData[1]);
+    if(catData[2]=="Da")
+        $('#singleCategory input:radio[name=vidljivost][value="1"]').prop('checked', true);
+    else
+        $('#singleCategory input:radio[name=vidljivost][value="0"]').prop('checked', true);
+
+    $('#allCategories').hide();
+    $('#singleCategory').show();
+}
+
+function saveCategory(){
+    var data = new Array();
+    if($($('#singleCategory input')[0]).val()=="Nova kategorija"){
+        data.push(3);        
+        data.push(-1);
+    } else {
+        data.push(4);        
+        data.push($($('#singleCategory input')[0]).val());
+    }
+    data.push($($('#singleCategory input')[1]).val());
+    data.push($('#singleCategory input:radio[name=vidljivost]:checked').val());
+    var xml = sendToPhp(data,'../getSet_kategorije.php');       
+    if(phpStatus(xml,'categoriesUpdateStatus')) setTimeout(function(){ layout_showKategorije(); }, 1000);      
+}
+
+/* === CITYS === */
+
+function initCitysTable(){
+    var dataTable = $('#citysTable').dataTable();
+    dataTable.fnClearTable();
+    var protocolData = new Array();
+    protocolData.push(1);
+    var xml = sendToPhp(protocolData,'../getSet_gradovi.php');
+    var dataSet = $(xml).find('gradovi');    
+    var data = new Array();
+    $(dataSet).each(function(){    
+        $(this).children().each(function(){
+            data = []; 
+            $(this).children().each(function(){
+                data.push($(this).text());
+            });
+            dataTable.fnAddData([data[0],data[1],data[2]]);
+        });
+    });    
+    dataTable.$('tr').addClass("row").click(function(){editCity(dataTable.fnGetData(this)[0])}); 
+}
+
+function newCity(){
+    $('#allCitys').hide();
+    $('#singleCity').show();
+    $('#singleCity input:text').val('');
+    $($('#singleCity input')[0]).val('Novi unos');
+    $('#singleCity input:radio[name=vidljivost]').prop('checked', false);
+    $('#singleCity input:radio[name=vidljivost][value="1"]').prop('checked', true);
+}
+
+function editCity(num){
+    var protocolData = new Array('2',num);
+    var xml = sendToPhp(protocolData,'../getSet_gradovi.php');
+    var data = new Array();
+    var parsedXML = $(xml).find('grad');
+    $(parsedXML).children().each(function(){
+        data.push($(this).text());
+    });
+    $('#cityID').val(data[0]);
+    $('#cityNAZIV').val(data[1]);    
+    if(data[2]=="1")
+        $('#singleCity input:radio[name=vidljivost][value="1"]').prop('checked', true);
+    else
+        $('#singleCity input:radio[name=vidljivost][value="0"]').prop('checked', true);
+    $('#singleCity').show();
+    $('#allCitys').hide();
+}
+
+function saveCity(){
+    var data = new Array();
+    if($($('#singleCity input')[0]).val()=="Novi unos"){
+        data.push(3);
+        data.push(-1);
+    } else {
+        data.push(4);        
+        data.push($($('#singleCity input')[0]).val());
+    }
+    data.push($('#cityNAZIV').val());  
+    data.push($('#singleCity input:radio[name=vidljivost]:checked').val());
+    var xml = sendToPhp(data,'../getSet_gradovi.php');
+    if(phpStatus(xml,'citysUpdateStatus')) setTimeout(function(){ layout_showGradovi(); }, 1000);
 }
 
 /* === OFFERS === */
@@ -687,73 +734,8 @@ function saveOffer(){
     data.push($('#offerKARTAY').val());
     data.push($('#singleOffer input:radio[name=vidljivost]:checked').val());
     var xml = sendToPhp(data,'../getSet_ponude.php');
-    layout_showPonude();
+    if(phpStatus(xml,'offerUpdateStatus')) setTimeout(function(){ layout_showPonude(); }, 1000);
 }
-
-/* === CITYS === */
-
-function initCitysTable(){
-    var dataTable = $('#citysTable').dataTable();
-    dataTable.fnClearTable();
-    var protocolData = new Array();
-    protocolData.push(1);
-    var xml = sendToPhp(protocolData,'../getSet_gradovi.php');
-    var dataSet = $(xml).find('gradovi');    
-    var data = new Array();
-    $(dataSet).each(function(){    
-        $(this).children().each(function(){
-            data = []; 
-            $(this).children().each(function(){
-                data.push($(this).text());
-            });
-            dataTable.fnAddData([data[0],data[1],data[2]]);
-        });
-    });    
-    dataTable.$('tr').addClass("row").click(function(){editCity(dataTable.fnGetData(this)[0])}); 
-}
-
-function newCity(){
-    $('#allCitys').hide();
-    $('#singleCity').show();
-    $('#singleCity input:text').val('');
-    $($('#singleCity input')[0]).val('Novi unos');
-    $('#singleCity input:radio[name=vidljivost]').prop('checked', false);
-    $('#singleCity input:radio[name=vidljivost][value="1"]').prop('checked', true);
-}
-
-function editCity(num){
-    var protocolData = new Array('2',num);
-    var xml = sendToPhp(protocolData,'../getSet_gradovi.php');
-    var data = new Array();
-    var parsedXML = $(xml).find('grad');
-    $(parsedXML).children().each(function(){
-        data.push($(this).text());
-    });
-    $('#cityID').val(data[0]);
-    $('#cityNAZIV').val(data[1]);    
-    if(data[2]=="1")
-        $('#singleCity input:radio[name=vidljivost][value="1"]').prop('checked', true);
-    else
-        $('#singleCity input:radio[name=vidljivost][value="0"]').prop('checked', true);
-    $('#singleCity').show();
-    $('#allCitys').hide();
-}
-
-function saveCity(){
-    var data = new Array();
-    if($($('#singleCity input')[0]).val()=="Novi unos"){
-        data.push(3);
-        data.push(-1);
-    } else {
-        data.push(4);        
-        data.push($($('#singleCity input')[0]).val());
-    }
-    data.push($('#cityNAZIV').val());  
-    data.push($('#singleCity input:radio[name=vidljivost]:checked').val());
-    var xml = sendToPhp(data,'../getSet_gradovi.php');
-    layout_showGradovi();
-}
-
 
 /* === ACTION === */
 
@@ -816,7 +798,6 @@ function editAction(num){
         $('#singleAction input:radio[name=vidljivost][value="0"]').prop('checked', true);
     $('#singleAction').show();
     $('#allActions').hide();
-
 }
 
 function saveAction(){
@@ -836,10 +817,11 @@ function saveAction(){
     data.push($('#singleAction input:radio[name=istaknuto]:checked').val());    
     data.push($('#singleAction input:radio[name=vidljivost]:checked').val());
     var xml = sendToPhp(data,'../getSet_akcije.php');
-    layout_showAkcije();
+    if(phpStatus(xml,'actionUpdateStatus')) setTimeout(function(){ layout_showAkcije(); }, 1000);
 }
 
 /* ==== SALES === */
+
 var filterInit = 0;
 
 function initSalesTable() {
@@ -883,7 +865,7 @@ function initCommentsTable(){
         var aPos = dataTable.fnGetPosition( this );
         var aData = dataTable.fnGetData( aPos[0] );
         var xml = sendToPhp(new Array('4',aData[0]),'../getSet_komentari.php');
-        initCommentsTable();
+        if(phpStatus(xml,'commentsUpdateStatus')) initCommentsTable();
     });
 }
 
@@ -917,6 +899,19 @@ function sendToPhp(dataString,url){
     });
     $("body").css("cursor", "default");    
     return data;
+}
+
+function phpStatus(xml,field){userUpdateStatus
+    var status = $(xml).find('status').text();
+    if(status===''){
+        $('#'+field).html("Nema izmjena").removeClass("info").removeClass("error").addClass("warning").slideDown("slow").delay(1500).slideUp("slow");
+    } else if(status==='1'){
+        $('#'+field).html("Zapis pohranjen").removeClass("error").removeClass("warning").addClass("info").slideDown("slow").delay(1500).slideUp("slow");        
+        return true;
+    } else {
+        $('#'+field).html("Greška prilikom pohrane").removeClass("info").removeClass("warning").addClass("error").slideDown("slow").delay(1500).slideUp("slow");
+    }
+    return false;
 }
 
 

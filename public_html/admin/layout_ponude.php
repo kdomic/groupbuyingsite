@@ -70,5 +70,6 @@
             <td colspan="2"><button id="btnSaveOffer" >Pospremi</button></td>
             </tr>
         </table>
+        <div id="offerUpdateStatus" class=""><span></span></div>        
     </div>
 </div>

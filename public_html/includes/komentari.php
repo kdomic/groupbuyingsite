@@ -97,7 +97,7 @@
             $d = self::find_by_id($id);
             $d->aktivan += 1;
             $d->aktivan %= 2;
-            $d->save();
+            xmlStatusSend($d->save());
         }
 
 

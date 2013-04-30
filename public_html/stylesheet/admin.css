@@ -112,6 +112,10 @@ nav ul li:hover, .menuCurrent {
     width: 100%;
 }
 
+input[type="text"], input[type="password"], input[type="email"] {
+    width: 250px;
+}
+
 /* === TABLE === */
 
 .row:hover {

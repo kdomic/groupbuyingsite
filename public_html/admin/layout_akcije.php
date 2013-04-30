@@ -52,5 +52,6 @@
             <td colspan="2"><button id="btnSaveAction">Pospremi</button></td>
             </tr>                            
         </table>
+        <div id="actionUpdateStatus" class=""><span></span></div>                
     </div>
 </div>
