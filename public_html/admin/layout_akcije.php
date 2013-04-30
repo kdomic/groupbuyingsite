@@ -20,19 +20,25 @@
             </tr>                                        
             <tr>
                 <td><label for="actionPOPUST">Popust</label></td>
-                <td><input type="text"      name="popust"      id="actionPOPUST"      placeholder=""/></td>
+                <td><input type="number"      name="popust"      id="actionPOPUST" min="0" max="100"/>%</td>
             </tr>
             <tr>
-                <td><label for="actionPOCETAK">Početak</label></td>
-                <td><input type="datetime"      name="pocetak"      id="actionPOCETAK" /></td>
+                <td><label for="actionPOCETAKdate">Početak</label></td>
+                <td>
+                    <input type="date"      name="pocetakDate" id="actionPOCETAKdate"/>
+                    <input type="time"      name="pocetakTime" id="actionPOCETAKtime"/>                    
+                </td>
             </tr>
             <tr>
-                <td><label for="actionZAVRSETAK">Završetak</label></td>
-                <td><input type="datetime"      name="zavrsetak"      id="actionZAVRSETAK"  /></td>
+                <td><label for="actionZAVRSETAKdate">Završetak</label></td>
+                <td>
+                    <input type="date"      name="zavrsetakDate" id="actionZAVRSETAKdate"/>
+                    <input type="time"      name="zavrsetakTime" id="actionZAVRSETAKtime"/>                    
+                </td>
             </tr>
             <tr>
                 <td><label for="actionGRANICA">Granica</label></td>
-                <td><input type="text"      name="limit"      id="actionGRANICA"      placeholder=""/></td>
+                <td><input type="number"      name="limit"      id="actionGRANICA" min="0"/></td>
             </tr>
             <tr>
                 <td><label for="actionISTAKNUTO">Istaknuto</label></td>

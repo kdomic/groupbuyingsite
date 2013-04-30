@@ -765,7 +765,13 @@ function newAction(){
     $('#allActions').hide();  
     $('#singleAction').show();
     $('#singleAction input:text').val('');
-    $($('#singleAction input')[0]).val('Novi unos');
+    $('#actionPOPUST').val('0');
+    $('#actionPOCETAKdate').val('0000-00-00');
+    $('#actionPOCETAKtime').val('00:00:00');
+    $('#actionZAVRSETAKdate').val('0000-00-00');
+    $('#actionZAVRSETAKtime').val('00:00:00');
+    $('#actionGRANICA').val('0');      
+    $($('#singleAction input')[0]).val('Novi unos');    
     $('#singleAction input:radio[name=istaknuto]').prop('checked', false);
     $('#singleAction input:radio[name=istaknuto][value="0"]').prop('checked', true);
     $('#singleAction input:radio[name=vidljivost]').prop('checked', false);
@@ -784,14 +790,18 @@ function editAction(num){
     $('#actionID').val(data[0]);
     $('#actionPONUDA option').eq(parseInt(data[1])-1).attr('selected', 'selected');        
     $('#actionPOPUST').val(data[2]);
-    $('#actionPOCETAK').val(data[3]);
-    $('#actionZAVRSETAK').val(data[4]);
+    $('#actionPOCETAK').val();
+    var dt = data[3].split(" ");
+    $('#actionPOCETAKdate').val(dt[0]);
+    $('#actionPOCETAKtime').val(dt[1]);     
+    var dt = data[4].split(" ");
+    $('#actionZAVRSETAKdate').val(dt[0]);
+    $('#actionZAVRSETAKtime').val(dt[1]); 
     $('#actionGRANICA').val(data[5]);
     if(data[6]=="1")
         $('#singleAction input:radio[name=istaknuto][value="1"]').prop('checked', true);
     else
         $('#singleAction input:radio[name=istaknuto][value="0"]').prop('checked', true);
-
 
     if(data[7]=="1")
         $('#singleAction input:radio[name=vidljivost][value="1"]').prop('checked', true);
@@ -812,8 +822,14 @@ function saveAction(){
     }
     data.push($('#actionPONUDA').val());
     data.push($('#actionPOPUST').val());
-    data.push($('#actionPOCETAK').val());
-    data.push($('#actionZAVRSETAK').val());
+    if($('#actionPOCETAKdate').val()=='')
+        data.push('0000-00-00 00:00:00');        
+    else  
+        data.push($('#actionPOCETAKdate').val()+' '+$('#actionPOCETAKtime').val());
+    if($('#actionZAVRSETAKdate').val()=='')
+        data.push('0000-00-00 00:00:00');        
+    else  
+        data.push($('#actionZAVRSETAKdate').val()+' '+$('#actionZAVRSETAKtime').val());
     data.push($('#actionGRANICA').val());
     data.push($('#singleAction input:radio[name=istaknuto]:checked').val());    
     data.push($('#singleAction input:radio[name=vidljivost]:checked').val());
@@ -883,7 +899,8 @@ function saveTime() {
     initTimeTable();
 }
 
-/* === AJAX status SEND/R === */
+/* === AJAX STATUS SEND/R === */
+
 function sendToPhp(dataString,url){
     $("body").css("cursor", "progress");    
     var jsonString = JSON.stringify(dataString);
@@ -1060,7 +1077,8 @@ function offersDropSelectOptions(field){
     });
 }
 
-/* === SESSION and USER DATA === */
+/* === SESSION AND USER DATA === */
+
 function sessionCheck() {
     var data = new Array();
     data.push('2');
@@ -1080,7 +1098,7 @@ function getUserData(id){
     return data;
 }
 
-/* === Message Box=== */
+/* === MESSAGE BOX === */
 
 function msgBoxShow(title, content, type) {
     $.msgBox({

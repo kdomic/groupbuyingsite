@@ -29,6 +29,8 @@
                     $data = $root->appendChild($xmlDoc->createElement("akcija"));
                     $ponuda = Ponude::find_by_id($d->id_ponude);
                     $d->id_ponude = $ponuda->naslov;
+                    $d->datum_pocetka = timeForScreenLong($d->datum_pocetka);
+                    $d->datum_zavrsetka = timeForScreenLong($d->datum_zavrsetka);                    
                     $d->istaknuto = $d->istaknuto==1 ? "Da" : "Ne";
                     $d->aktivan = $d->aktivan==1 ? "Da" : "Ne";
                     foreach ($d as $key => $value) {
