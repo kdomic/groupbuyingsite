@@ -875,7 +875,7 @@ function initCommentsTable(){
             $(this).children().each(function(){
                 data.push($(this).text());
             });
-            dataTable.fnAddData([ data[0],data[1],data[3],data[5],data[6] ]);
+            dataTable.fnAddData([ data[0],data[7],data[1],data[3],data[5],data[6] ]);
         });
     });    
     dataTable.$('td:nth-child(5)').addClass("row").click(function(){

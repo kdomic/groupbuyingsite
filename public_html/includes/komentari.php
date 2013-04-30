@@ -56,6 +56,8 @@
                 foreach ($d as $key => $value) {
                     $data->appendChild($xmlDoc->createElement($key, toUtf8($value)));
                 }
+                $p = Ponude::find_by_id($d->id_ponude);
+                $data->appendChild($xmlDoc->createElement("ponuda", toUtf8($p->naslov)));
             }
             header("Content-Type: text/xml");
             $xmlDoc->formatOutput = true;
