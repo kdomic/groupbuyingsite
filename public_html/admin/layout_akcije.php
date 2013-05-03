@@ -58,6 +58,19 @@
             <td colspan="2"><button id="btnSaveAction">Pospremi</button></td>
             </tr>                            
         </table>
-        <div id="actionUpdateStatus" class=""><span></span></div>                
+        <br>
+        Poveži akciju sa gradom: 
+        <select id="citysActionsOptions" disabled>
+            <option>Moguće tek nakon pohrane</option>
+        </select>        
+        <br>
+        <table id="citysActionsTables">
+            <thead><tr>
+                <th>ID</th><th>Naziv</th><th>Ukloni</th></thead>
+            <tbody></tbody>
+        </table>
+        <div class="clear"></div>
+        <div id="actionUpdateStatus" class=""><span></span></div>  
+
     </div>
 </div>

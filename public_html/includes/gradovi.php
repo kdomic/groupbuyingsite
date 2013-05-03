@@ -49,5 +49,22 @@
                 $d->ime = array_pop($data);
                 xmlStatusSend($d->save());
             }
+
+            public static function getNotSelected($id) //5
+            {                
+                $query  = "SELECT * FROM gradovi AS g ";
+                $query .= "WHERE NOT EXISTS (SELECT * FROM gradovi_akcije AS ga WHERE ga.id_grada=g.id AND ga.id_akcije={$id})";            
+                $_k = self::find_by_sql($query);
+                $xmlDoc = new DOMDocument();
+                $root = $xmlDoc->appendChild($xmlDoc->createElement("gradovi"));
+                foreach($_k as $k){
+                    $kategorija = $root->appendChild($xmlDoc->createElement("grad"));
+                    $kategorija->appendChild($xmlDoc->createElement("id", toUtf8($k->id)));
+                    $kategorija->appendChild($xmlDoc->createElement("ime", toUtf8($k->ime)));
+                }
+                header("Content-Type: text/xml");
+                $xmlDoc->formatOutput = true;
+                echo $xmlDoc->saveXML();
+            }
     }
 ?>

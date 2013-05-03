@@ -763,6 +763,8 @@ function initActionsTable(){
 function newAction(){
     offersDropSelectOptions('actionPONUDA');
     $('#allActions').hide();  
+    $('#citysActionsTables').hide();
+    $('#citysActionsOptions').attr("disabled", true);    
     $('#singleAction').show();
     $('#singleAction input:text').val('');
     $('#actionPOPUST').val('0');
@@ -778,7 +780,7 @@ function newAction(){
     $('#singleAction input:radio[name=vidljivost][value="1"]').prop('checked', true);
 }
 
-function editAction(num){
+function editAction(num){    
     offersDropSelectOptions('actionPONUDA');    
     var protocolData = new Array('2',num);
     var xml = sendToPhp(protocolData,'../getSet_akcije.php');
@@ -788,6 +790,7 @@ function editAction(num){
         data.push($(this).text());
     });
     $('#actionID').val(data[0]);
+    citysActionsShow(data[0]);
     $('#actionPONUDA option').eq(parseInt(data[1])-1).attr('selected', 'selected');        
     $('#actionPOPUST').val(data[2]);
     $('#actionPOCETAK').val();
@@ -835,6 +838,54 @@ function saveAction(){
     data.push($('#singleAction input:radio[name=vidljivost]:checked').val());
     var xml = sendToPhp(data,'../getSet_akcije.php');
     if(phpStatus(xml,'actionUpdateStatus')) setTimeout(function(){ layout_showAkcije(); }, 1000);
+}
+
+function citysActionsShow(id) {
+    $('#citysActionsTables').show();    
+    var dataTable = $('#citysActionsTables').dataTable();  
+    dataTable.fnClearTable();
+    var xml = sendToPhp(new Array('2',id),'../getSet_gradoviAkcije.php');
+    var dataSet = $(xml).find('gradovi');
+    var data = new Array();
+    $(dataSet).each(function(){    
+        $(this).children().each(function(){
+            data = []; 
+            $(this).children().each(function(){
+                data.push($(this).text());
+            });
+            dataTable.fnAddData([data[0],data[1], "ukloni"]);
+        });
+    });
+    dataTable.$('td:nth-child(3)').addClass("row").click(function(){
+        var aPos = dataTable.fnGetPosition( this );
+        var aData = dataTable.fnGetData( aPos[0] );
+        var xml = sendToPhp(new Array('5',aData[0]),'../getSet_gradoviAkcije.php');
+        phpStatus(xml,'actionUpdateStatus');         
+        citysActionsShow(id);
+    });
+
+    $('#citysActionsOptions').removeAttr("disabled");
+    $('#citysActionsOptions option').remove();    
+    $('#citysActionsOptions').append("<option value=0>---Izaberi grad---</option>");
+    var xml = sendToPhp(new Array('5',id),'../getSet_gradovi.php');
+    var dataSet = $(xml).find('gradovi');
+    var data = new Array();
+    $(dataSet).each(function(){    
+        $(this).children().each(function(){
+            data = []; 
+            $(this).children().each(function(){
+                data.push($(this).text());
+            });
+            $('#citysActionsOptions').append("<option value="+data[0]+">"+data[1]+"</option>");
+        });
+    });
+    $('#citysActionsOptions').change(function(){
+        var city = $(this).val();
+        if(city==0) return;
+        var xml = sendToPhp(new Array('3',city,id),'../getSet_gradoviAkcije.php');
+        phpStatus(xml,'actionUpdateStatus');         
+        citysActionsShow(id);
+    });
 }
 
 /* ==== SALES === */
