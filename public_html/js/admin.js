@@ -790,6 +790,7 @@ function editAction(num){
         data.push($(this).text());
     });
     $('#actionID').val(data[0]);
+    console.log("Akcija: "+data[0]);
     citysActionsShow(data[0]);
     $('#actionPONUDA option').eq(parseInt(data[1])-1).attr('selected', 'selected');        
     $('#actionPOPUST').val(data[2]);
@@ -879,13 +880,18 @@ function citysActionsShow(id) {
             $('#citysActionsOptions').append("<option value="+data[0]+">"+data[1]+"</option>");
         });
     });
+
     $('#citysActionsOptions').change(function(){
         var city = $(this).val();
+        var action = $('#actionID').val();
         if(city==0) return;
-        var xml = sendToPhp(new Array('3',city,id),'../getSet_gradoviAkcije.php');
+        //console.log("Grad: "+ city);
+        //console.log("Akcija: "+ action);
+        var xml = sendToPhp(new Array('3',city,action),'../getSet_gradoviAkcije.php');
         phpStatus(xml,'actionUpdateStatus');         
-        citysActionsShow(id);
+        citysActionsShow(action);
     });
+
 }
 
 /* ==== SALES === */
