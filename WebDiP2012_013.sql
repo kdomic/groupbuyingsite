@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 28, 2013 at 12:27 AM
+-- Generation Time: May 03, 2013 at 09:13 PM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -37,15 +37,15 @@ CREATE TABLE IF NOT EXISTS `akcije` (
   `aktivan` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `fk_akcije_1` (`id_ponude`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=51 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=53 ;
 
 --
 -- Dumping data for table `akcije`
 --
 
 INSERT INTO `akcije` (`id`, `id_ponude`, `popust`, `datum_pocetka`, `datum_zavrsetka`, `granica`, `istaknuto`, `aktivan`) VALUES
-(1, 1, 44, '2013-04-03 00:00:01', '2013-04-30 00:00:02', 9, 0, 1),
-(2, 2, 65, '2013-04-27 01:35:30', '2013-04-30 15:00:00', 9, 1, 1),
+(1, 1, 60, '2013-04-29 00:00:01', '2013-05-10 00:00:02', 10, 0, 1),
+(2, 2, 65, '2013-04-27 01:35:30', '2013-04-30 15:00:00', 16, 1, 1),
 (3, 3, 70, '2013-04-03 00:00:00', '2013-05-01 00:00:00', 3, 0, 1),
 (4, 4, 0, '2013-04-04 00:00:00', '2013-09-15 00:00:00', 3, 0, 1),
 (5, 5, 50, '2013-04-02 00:00:00', '2013-05-25 00:00:00', 6, 0, 0),
@@ -53,7 +53,7 @@ INSERT INTO `akcije` (`id`, `id_ponude`, `popust`, `datum_pocetka`, `datum_zavrs
 (7, 7, 55, '2013-04-04 00:00:00', '2013-04-30 00:00:00', 8, 0, 1),
 (8, 8, 50, '2013-04-04 00:00:00', '2013-05-08 00:00:00', 10, 0, 1),
 (9, 9, 50, '2013-04-03 00:00:00', '2013-04-05 00:00:00', 7, 0, 1),
-(10, 10, 73, '2013-04-03 00:00:00', '2013-04-06 00:00:00', 6, 0, 1),
+(10, 10, 73, '2013-04-03 00:00:00', '2013-05-06 00:00:00', 6, 0, 1),
 (11, 11, 67, '2013-04-03 00:00:00', '2013-04-06 00:00:00', 9, 0, 1),
 (12, 12, 0, '2013-04-02 00:00:00', '2013-04-05 00:00:00', 9, 0, 1),
 (13, 13, 0, '2013-04-04 00:00:00', '2013-04-08 00:00:00', 9, 0, 1),
@@ -93,7 +93,9 @@ INSERT INTO `akcije` (`id`, `id_ponude`, `popust`, `datum_pocetka`, `datum_zavrs
 (47, 2, 10, '1970-01-01 01:00:00', '1970-01-01 01:00:00', 0, 0, 0),
 (48, 2, 10, '1970-01-01 01:00:00', '1970-01-01 01:00:00', 0, 0, 0),
 (49, 6, 50, '2013-04-01 14:00:00', '2013-04-08 14:00:00', 50, 0, 0),
-(50, 47, 99, '2013-04-20 00:00:00', '2013-05-20 00:00:00', 199, 1, 0);
+(50, 47, 99, '2013-04-20 00:00:00', '2013-05-20 00:00:00', 199, 1, 0),
+(51, 40, 50, '2013-04-29 00:00:00', '2013-04-29 00:00:00', 20, 1, 1),
+(52, 40, 0, '2013-04-29 00:00:00', '2013-05-04 00:00:00', 0, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -114,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `gradovi` (
 
 INSERT INTO `gradovi` (`id`, `ime`, `aktivan`) VALUES
 (1, 'Zagreb', 1),
-(2, 'VaraÅ¾din', 0),
+(2, 'VaraÅ¾din', 1),
 (3, 'Rijaka', 1);
 
 -- --------------------------------------------------------
@@ -130,58 +132,23 @@ CREATE TABLE IF NOT EXISTS `gradovi_akcije` (
   PRIMARY KEY (`id`),
   KEY `fk_gradovi_akcije_1` (`id_grada`),
   KEY `fk_gradovi_akcije_2` (`id_akcije`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=46 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=104 ;
 
 --
 -- Dumping data for table `gradovi_akcije`
 --
 
 INSERT INTO `gradovi_akcije` (`id`, `id_grada`, `id_akcije`) VALUES
-(1, 1, 1),
-(2, 1, 2),
-(3, 1, 3),
-(4, 1, 4),
-(5, 1, 5),
-(6, 1, 6),
-(7, 1, 7),
-(8, 1, 8),
-(9, 1, 9),
-(10, 1, 10),
-(11, 1, 11),
-(12, 1, 12),
-(13, 1, 13),
-(14, 1, 14),
-(15, 1, 15),
-(16, 1, 16),
-(17, 1, 17),
-(18, 1, 18),
-(19, 1, 19),
-(20, 1, 20),
-(21, 1, 21),
-(22, 1, 22),
-(23, 1, 23),
-(24, 1, 24),
-(25, 1, 25),
-(26, 1, 26),
-(27, 1, 27),
-(28, 1, 28),
-(29, 1, 29),
-(30, 1, 30),
-(31, 1, 31),
-(32, 1, 32),
-(33, 1, 33),
-(34, 1, 34),
-(35, 1, 35),
-(36, 1, 36),
-(37, 1, 37),
-(38, 1, 38),
-(39, 1, 39),
-(40, 1, 40),
-(41, 1, 41),
-(42, 1, 42),
-(43, 1, 43),
-(44, 1, 44),
-(45, 1, 45);
+(90, 1, 2),
+(94, 2, 2),
+(95, 1, 3),
+(96, 1, 5),
+(97, 1, 7),
+(99, 3, 1),
+(100, 1, 52),
+(101, 2, 3),
+(102, 3, 52),
+(103, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -192,7 +159,7 @@ INSERT INTO `gradovi_akcije` (`id`, `id_grada`, `id_akcije`) VALUES
 CREATE TABLE IF NOT EXISTS `kategorije` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `naziv` varchar(45) NOT NULL,
-  `aktivna` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0 neaktivna\n1 aktivna',
+  `aktivan` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0 neaktivna1 aktivna',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
 
@@ -200,7 +167,7 @@ CREATE TABLE IF NOT EXISTS `kategorije` (
 -- Dumping data for table `kategorije`
 --
 
-INSERT INTO `kategorije` (`id`, `naziv`, `aktivna`) VALUES
+INSERT INTO `kategorije` (`id`, `naziv`, `aktivan`) VALUES
 (1, 'prva-kategorija', 1),
 (2, 'sport-i-rekreacija', 1),
 (3, 'cuvari-zdravlja', 1),
@@ -229,7 +196,7 @@ CREATE TABLE IF NOT EXISTS `komentari` (
   PRIMARY KEY (`id`),
   KEY `fk_komentari_1` (`id_korisnika`),
   KEY `fk_komentari_2` (`id_ponude`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `komentari`
@@ -237,7 +204,10 @@ CREATE TABLE IF NOT EXISTS `komentari` (
 
 INSERT INTO `komentari` (`id`, `id_korisnika`, `id_ponude`, `komentar`, `ocjena`, `datum`, `aktivan`) VALUES
 (4, 33, 8, 'Ovo su opasni znakovi /*--+123 --', 2, '2013-04-27 16:10:33', 1),
-(5, 1, 8, 'Ovo je neki drugi komentar', 4, '2013-04-25 00:00:00', 1);
+(5, 1, 8, 'Ovo je neki drugi komentar', 4, '2013-04-25 00:00:00', 1),
+(6, 33, 3, 'Ovo je moj komentar', 5, '2013-04-28 00:41:54', 1),
+(9, 33, 16, 'dsfasgdÅ¡pÄ‘Å¾Ä‡', 1, '2013-04-29 19:40:58', 1),
+(12, 33, 40, 'Ovo je za one solarne', 4, '2013-04-30 21:04:47', 1);
 
 -- --------------------------------------------------------
 
@@ -256,55 +226,58 @@ CREATE TABLE IF NOT EXISTS `korisnici` (
   `email` varchar(45) NOT NULL,
   `oib` varchar(11) NOT NULL,
   `open_id` mediumint(9) DEFAULT '0' COMMENT '0 - normalno\n1- facebook\n2 - google',
-  `opomena` mediumint(9) DEFAULT '0' COMMENT 'Brojanje opomena nakon trece ide deakrtivacija',
   `deaktiviran` tinyint(4) DEFAULT '0' COMMENT '0 aktiviran\n1 deaktiviran',
   `zamrznut` datetime DEFAULT NULL COMMENT 'Datum do kojeg je aktiviran',
-  `blokiran` tinyint(4) DEFAULT NULL COMMENT '0  nije\n1 blokiran',
   `datum_registracije` datetime DEFAULT NULL,
   `email_potvrda` varchar(45) DEFAULT NULL,
   `password` varchar(45) NOT NULL,
   `ovlasti` mediumint(9) NOT NULL COMMENT '1 reg_user\n2 mod\n3 admin',
   `aktivan` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0-ne; 1-da',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=36 ;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=41 ;
 
 --
 -- Dumping data for table `korisnici`
 --
 
-INSERT INTO `korisnici` (`id`, `ime`, `prezime`, `adresa`, `pbr`, `mjesto`, `telefon`, `email`, `oib`, `open_id`, `opomena`, `deaktiviran`, `zamrznut`, `blokiran`, `datum_registracije`, `email_potvrda`, `password`, `ovlasti`, `aktivan`) VALUES
-(1, 'Ana', 'AmiÄ‡', 'Anina 21', '10000', 'Zagreb', '098365111', 'ana@ana.com', '1', 0, 1, 1, '0000-00-00 00:00:00', 1, '0000-00-00 00:00:00', '1', '98fc7b34760face5e268bff318180e05861a970f', 1, 1),
-(2, 'JukiÄ‡', 'DadoviÄ‡', 'Kaptol 85', '31000', 'Osjek', '031949320', 'kdomic@f1oi.hr', '05864405589', 1, 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 'b521caa6e1db82e5a01c924a419870cb72b81635', 'da4b9237bacccdf19c0760cab7aec4a8359010b0', 3, 0),
-(3, 'Karlo', 'BlaÅ¾eviÄ‡', 'Maksimir 43', '31000', 'Osjek', '031255327', 'karlo@nekimail.com', '53274892846', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-01 00:00:00', 'aktiviran', '912c106a14310615dfe86b9b571cbacf77849a6f', 3, 1),
-(4, 'Mia', 'Grgi&#263;', 'Kaptol 61', '20000', 'Dubrovnik', '020443851', 'mia@nekimail.com', '73626866178', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-03 00:00:00', 'aktiviran', 'lozinka', 1, 1),
-(5, 'Sara', 'Filipovi&#263;', 'Trg Petra Kre&#353;imira Četvrtog 97', '51000', 'Rijeka', '051462878', 'sara@nekimail.com', '18364659824', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-03 00:00:00', 'aktiviran', 'lozinka', 1, 1),
-(6, 'Filip', 'Markovi&#263;', 'Maksimir 60', '31000', 'Osjek', '031765206', 'filip@nekimail.com', '48609332257', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-06 00:00:00', 'aktiviran', 'lozinka', 1, 1),
-(7, 'Lara', 'Kova&#269;', 'Gunduli&#263;eva ulica 100', '52440', 'Pore&#269;', '052210802', 'lara@nekimail.com', '58676644396', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-06 00:00:00', 'aktiviran', 'lozinka', 1, 1),
-(8, 'Mirjana', 'Mari&#263;', 'Nova cesta 22', '21000', 'Split', '021640176', 'mirjana@nekimail.com', '91214714864', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-02 00:00:00', 'aktiviran', 'lozinka', 1, 1),
-(9, 'Lucija', 'Horvat', 'Cvjetni trg 96', '52100', 'Pula', '052208827', 'lucija@nekimail.com', '93230190668', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-01 00:00:00', 'aktiviran', 'lozinka', 1, 1),
-(10, 'Petra', 'Vidovi&#263;', 'Maksimir 43', '52440', 'Pore&#269;', '052308482', 'petra@nekimail.com', '11057943083', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-07 00:00:00', 'aktiviran', 'lozinka', 1, 1),
-(11, 'Dragica', 'Pavi&#263;', 'Trg Petra Kre&#353;imira Četvrtog 80', '42000', 'Vara&#382;din', '042774855', 'dragica@nekimail.com', '92747525668', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-02 00:00:00', 'aktiviran', 'lozinka', 1, 1),
-(12, 'Fran', '&#352;imi&#263;', 'Maksimir 54', '52000', 'Pazin', '052126765', 'fran@nekimail.com', '98898488412', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-06 00:00:00', 'aktiviran', 'lozinka', 1, 1),
-(13, 'Nada', '&#352;ari&#263;', 'Maksimir 92', '52100', 'Pula', '052650410', 'nada@nekimail.com', '22443367674', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-03 00:00:00', 'aktiviran', 'lozinka', 1, 1),
-(14, 'Luka', 'Tomi&#263;', 'Dolac 78', '42000', 'Vara&#382;din', '042182587', 'luka@nekimail.com', '35418981691', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-08 00:00:00', 'aktiviran', 'lozinka', 1, 1),
-(15, 'Josip', 'Mati&#263;', 'Trg bana Josipa Jela&#269;i&#263;a 6', '42000', 'Vara&#382;din', '042195486', 'josip@nekimail.com', '44954969755', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-01 00:00:00', 'aktiviran', 'lozinka', 1, 1),
-(16, 'Mario', 'Babi&#263;', 'Trg &#382;rtava fa&#353;izma 83', '52100', 'Pula', '052252957', 'mario@nekimail.com', '56572407461', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-03 00:00:00', 'aktiviran', 'lozinka', 1, 1),
-(17, 'Marija', 'Kne&#382;evi&#263;', 'Trg bana Josipa Jela&#269;i&#263;a 46', '31000', 'Osjek', '031586645', 'marija@nekimail.com', '93663267243', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-06 00:00:00', 'aktiviran', 'lozinka', 1, 1),
-(18, 'Dora', 'Vukovi&#263;', 'Dolac 91', '42000', 'Vara&#382;din', '042439681', 'dora@nekimail.com', '15004553113', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-04 00:00:00', 'aktiviran', 'lozinka', 1, 1),
-(19, 'Ljubica', 'Peri&#263;', 'Gunduli&#263;eva ulica 45', '20000', 'Dubrovnik', '020377478', 'ljubica@nekimail.com', '38239346842', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-08 00:00:00', 'aktiviran', 'lozinka', 1, 1),
-(20, 'Marko', 'Kova&#269;evi&#263;', 'Trg &#382;rtava fa&#353;izma 70', '35000', 'Slavnosni Brod', '035738358', 'marko@nekimail.com', '44319502356', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-08 00:00:00', 'aktiviran', 'lozinka', 1, 1),
-(21, 'Ema', 'Bo&#353;njak', 'Maksimir 57', '20000', 'Dubrovnik', '020804305', 'ema@nekimail.com', '46121510021', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-07 00:00:00', 'aktiviran', 'lozinka', 1, 1),
-(22, 'Lana', 'Perkovi&#263;', 'Gunduli&#263;eva ulica 32', '20000', 'Dubrovnik', '020237690', 'lana@nekimail.com', '45314395977', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-08 00:00:00', 'aktiviran', 'lozinka', 1, 1),
-(24, 'David', 'Radi&#263;', 'Gunduli&#263;eva ulica 63', '42000', 'Vara&#382;din', '042367310', 'david@nekimail.com', '72037333554', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-04 00:00:00', 'aktiviran', 'lozinka', 1, 1),
-(25, 'Tomislav', 'Petrovi&#263;', 'Trg Petra Kre&#353;imira Četvrtog 98', '52100', 'Pula', '052780822', 'tomislav@nekimail.com', '16533550224', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-01 00:00:00', 'aktiviran', 'lozinka', 1, 1),
-(26, 'Ivan', 'Lovri&#263;', 'Trg Petra Kre&#353;imira Četvrtog 99', '52100', 'Pula', '052944359', 'ivan@nekimail.com', '21242686890', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-02 00:00:00', 'aktiviran', 'lozinka', 1, 1),
-(27, 'Marica', 'Popovi&#263;', 'Trg Petra Kre&#353;imira Četvrtog 83', '52000', 'Pazin', '052330212', 'marica@nekimail.com', '28861321926', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-07 00:00:00', 'aktiviran', 'lozinka', 1, 1),
-(28, 'Ivica', 'Pavlovi&#263;', 'Gornji grad 2', '31000', 'Osjek', '031451563', 'ivica@nekimail.com', '60187343516', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-03 00:00:00', 'aktiviran', 'lozinka', 1, 1),
-(29, 'Stjepan', 'Novak', 'Trg bana Josipa Jela&#269;i&#263;a 78', '35000', 'Slavnosni Brod', '035416396', 'stjepan@nekimail.com', '55994485769', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-01 00:00:00', 'aktiviran', 'lozinka', 1, 1),
-(30, 'Ana', 'Juri&#263;', 'Trg bana Josipa Jela&#269;i&#263;a 11', '35000', 'Slavnosni Brod', '035369839', 'ana@nekimail.com', '10323237862', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-03 00:00:00', 'aktiviran', 'lozinka', 1, 1),
-(31, 'Krunoslav', 'Domic', '', '', '', '', 'krunoslavdomic@gmail.com', '', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-19 18:36:50', '0', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 1),
-(33, 'Pero', 'PeriÄ‡', 'Perina ulica 22', '', '', '', 'pero@pero.com', '05864405589', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-19 18:55:49', '0', '98fc7b34760face5e268bff318180e05861a970f', 1, 0),
-(35, 'admin', 'admin', '', '', '', '', 'admin@admin.com', '', 0, 0, 0, '0000-00-00 00:00:00', 0, '2013-04-19 19:47:06', '0', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 1);
+INSERT INTO `korisnici` (`id`, `ime`, `prezime`, `adresa`, `pbr`, `mjesto`, `telefon`, `email`, `oib`, `open_id`, `deaktiviran`, `zamrznut`, `datum_registracije`, `email_potvrda`, `password`, `ovlasti`, `aktivan`) VALUES
+(1, 'Ana', 'AniÄ‡', 'Anina 25', '10000', 'Zagre', '098365111', 'ana@ana.com', '05864405589', 0, 0, '0000-00-00 00:00:00', '2013-04-01 14:25:00', '0', '356a192b7913b04c54574d18c28d46e6395428ab', 3, 1),
+(2, 'JukiÄ‡', 'DadoviÄ‡', 'Kaptol 12', '31000', 'Osjek', '031949320', 'kdomic@foi.hr', '', 0, 1, '0000-00-00 00:00:00', '2013-04-01 00:00:00', '0', 'da4b9237bacccdf19c0760cab7aec4a8359010b0', 1, 1),
+(3, 'Karlo', 'BlaÅ¾eviÄ‡', 'Maksimir 43', '31000', 'Osjek', '031255327', 'karlo@nekimail.com', '53274892846', 2, 1, '2013-04-30 00:00:00', '2013-04-01 00:00:00', '0', 'b6589fc6ab0dc82cf12099d1c2d40ab994e8410c', 1, 1),
+(4, 'Mia', 'GrgiÄ‡', 'Kaptol 61', '20000', 'Dubrovnik', '020443851', 'mia@nekimail.com', '73626866178', 0, 0, '0000-00-00 00:00:00', '2013-04-03 00:00:00', '0', '912c106a14310615dfe86b9b571cbacf77849a6f', 1, 1),
+(5, 'Sara', 'FilipoviÄ‡', 'Trg Petra KreÅ¡imira ?etvrtog 97', '51000', 'Rijeka', '051462878', 'sara@nekimail.com', '18364659824', 0, 0, '0000-00-00 00:00:00', '2013-04-03 00:00:00', '0', 'da39a3ee5e6b4b0d3255bfef95601890afd80709', 1, 1),
+(6, 'Filip', 'Markovi&#263;', 'Maksimir 60', '31000', 'Osjek', '031765206', 'filip@nekimail.com', '48609332257', 0, 0, '0000-00-00 00:00:00', '2013-04-06 00:00:00', '0', 'lozinka', 1, 1),
+(7, 'Lara', 'Kova&#269;', 'Gunduli&#263;eva ulica 100', '52440', 'Pore&#269;', '052210802', 'lara@nekimail.com', '58676644396', 0, 0, '0000-00-00 00:00:00', '2013-04-06 00:00:00', '0', 'lozinka', 1, 1),
+(8, 'Mirjana', 'Mari&#263;', 'Nova cesta 22', '21000', 'Split', '021640176', 'mirjana@nekimail.com', '91214714864', 0, 0, '0000-00-00 00:00:00', '2013-04-02 00:00:00', '0', 'lozinka', 1, 1),
+(9, 'Lucija', 'Horvat', 'Cvjetni trg 96', '52100', 'Pula', '052208827', 'lucija@nekimail.com', '93230190668', 0, 0, '0000-00-00 00:00:00', '2013-04-01 00:00:00', '0', 'lozinka', 1, 1),
+(10, 'Petra', 'Vidovi&#263;', 'Maksimir 43', '52440', 'Pore&#269;', '052308482', 'petra@nekimail.com', '11057943083', 0, 0, '0000-00-00 00:00:00', '2013-04-07 00:00:00', '0', 'lozinka', 1, 1),
+(11, 'Dragica', 'Pavi&#263;', 'Trg Petra Kre&#353;imira Četvrtog 80', '42000', 'Vara&#382;din', '042774855', 'dragica@nekimail.com', '92747525668', 0, 0, '0000-00-00 00:00:00', '2013-04-02 00:00:00', '0', 'lozinka', 1, 1),
+(12, 'Fran', '&#352;imi&#263;', 'Maksimir 54', '52000', 'Pazin', '052126765', 'fran@nekimail.com', '98898488412', 0, 0, '0000-00-00 00:00:00', '2013-04-06 00:00:00', '0', 'lozinka', 1, 1),
+(13, 'Nada', '&#352;ari&#263;', 'Maksimir 92', '52100', 'Pula', '052650410', 'nada@nekimail.com', '22443367674', 0, 0, '0000-00-00 00:00:00', '2013-04-03 00:00:00', '0', 'lozinka', 1, 1),
+(14, 'Luka', 'Tomi&#263;', 'Dolac 78', '42000', 'Vara&#382;din', '042182587', 'luka@nekimail.com', '35418981691', 0, 0, '0000-00-00 00:00:00', '2013-04-08 00:00:00', '0', 'lozinka', 1, 1),
+(15, 'Josip', 'Mati&#263;', 'Trg bana Josipa Jela&#269;i&#263;a 6', '42000', 'Vara&#382;din', '042195486', 'josip@nekimail.com', '44954969755', 0, 0, '0000-00-00 00:00:00', '2013-04-01 00:00:00', '0', 'lozinka', 1, 1),
+(16, 'Mario', 'Babi&#263;', 'Trg &#382;rtava fa&#353;izma 83', '52100', 'Pula', '052252957', 'mario@nekimail.com', '56572407461', 0, 0, '0000-00-00 00:00:00', '2013-04-03 00:00:00', '0', 'lozinka', 1, 1),
+(17, 'Marija', 'Kne&#382;evi&#263;', 'Trg bana Josipa Jela&#269;i&#263;a 46', '31000', 'Osjek', '031586645', 'marija@nekimail.com', '93663267243', 0, 0, '0000-00-00 00:00:00', '2013-04-06 00:00:00', '0', 'lozinka', 1, 1),
+(18, 'Dora', 'Vukovi&#263;', 'Dolac 91', '42000', 'Vara&#382;din', '042439681', 'dora@nekimail.com', '15004553113', 0, 0, '0000-00-00 00:00:00', '2013-04-04 00:00:00', '0', 'lozinka', 1, 1),
+(19, 'Ljubica', 'Peri&#263;', 'Gunduli&#263;eva ulica 45', '20000', 'Dubrovnik', '020377478', 'ljubica@nekimail.com', '38239346842', 0, 0, '0000-00-00 00:00:00', '2013-04-08 00:00:00', '0', 'lozinka', 1, 1),
+(20, 'Marko', 'Kova&#269;evi&#263;', 'Trg &#382;rtava fa&#353;izma 70', '35000', 'Slavnosni Brod', '035738358', 'marko@nekimail.com', '44319502356', 0, 0, '0000-00-00 00:00:00', '2013-04-08 00:00:00', '0', 'lozinka', 1, 1),
+(21, 'Ema', 'Bo&#353;njak', 'Maksimir 57', '20000', 'Dubrovnik', '020804305', 'ema@nekimail.com', '46121510021', 0, 0, '0000-00-00 00:00:00', '2013-04-07 00:00:00', '0', 'lozinka', 1, 1),
+(22, 'Lana', 'Perkovi&#263;', 'Gunduli&#263;eva ulica 32', '20000', 'Dubrovnik', '020237690', 'lana@nekimail.com', '45314395977', 0, 0, '0000-00-00 00:00:00', '2013-04-08 00:00:00', '0', 'lozinka', 1, 1),
+(24, 'David', 'Radi&#263;', 'Gunduli&#263;eva ulica 63', '42000', 'Vara&#382;din', '042367310', 'david@nekimail.com', '72037333554', 0, 0, '0000-00-00 00:00:00', '2013-04-04 00:00:00', '0', 'lozinka', 1, 1),
+(25, 'Tomislav', 'Petrovi&#263;', 'Trg Petra Kre&#353;imira Četvrtog 98', '52100', 'Pula', '052780822', 'tomislav@nekimail.com', '16533550224', 0, 0, '0000-00-00 00:00:00', '2013-04-01 00:00:00', '0', 'lozinka', 1, 1),
+(26, 'Ivan', 'Lovri&#263;', 'Trg Petra Kre&#353;imira Četvrtog 99', '52100', 'Pula', '052944359', 'ivan@nekimail.com', '21242686890', 0, 0, '0000-00-00 00:00:00', '2013-04-02 00:00:00', '0', 'lozinka', 1, 1),
+(27, 'Marica', 'Popovi&#263;', 'Trg Petra Kre&#353;imira Četvrtog 83', '52000', 'Pazin', '052330212', 'marica@nekimail.com', '28861321926', 0, 0, '0000-00-00 00:00:00', '2013-04-07 00:00:00', '0', 'lozinka', 1, 1),
+(28, 'Ivica', 'Pavlovi&#263;', 'Gornji grad 2', '31000', 'Osjek', '031451563', 'ivica@nekimail.com', '60187343516', 0, 0, '0000-00-00 00:00:00', '2013-04-03 00:00:00', '0', 'lozinka', 1, 1),
+(29, 'Stjepan', 'Novak', 'Trg bana Josipa Jela&#269;i&#263;a 78', '35000', 'Slavnosni Brod', '035416396', 'stjepan@nekimail.com', '55994485769', 0, 0, '0000-00-00 00:00:00', '2013-04-01 00:00:00', '0', 'lozinka', 1, 1),
+(30, 'Ana', 'Juri&#263;', 'Trg bana Josipa Jela&#269;i&#263;a 11', '35000', 'Slavnosni Brod', '035369839', 'ana@nekimail.com', '10323237862', 0, 0, '0000-00-00 00:00:00', '2013-04-03 00:00:00', '0', 'lozinka', 1, 1),
+(31, 'Krunoslav', 'Domic', '', '', '', '', 'krunoslavdomic@gmail.com', '', 0, 0, '0000-00-00 00:00:00', '2013-04-19 18:36:50', '0', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 1),
+(33, 'Pero', 'PeriÄ‡', 'Perina ulica 22', '10000', 'zagreb', '098123456', 'pero@pero.com', '05864405589', 0, 0, '0000-00-00 00:00:00', '2013-04-19 18:55:49', '0', '98fc7b34760face5e268bff318180e05861a970f', 1, 0),
+(35, 'admin', 'admin', '', '', '', '', 'admin@admin.com', '', 0, 0, '0000-00-00 00:00:00', '2013-04-19 19:47:06', '0', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 1),
+(37, 'Krunoslav', 'Domic', 'Rogovici 12', '52', '2', '2', 'kd1omic@foi.hr', '05864405589', 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 0, 1),
+(38, 'Ivo', 'IvuÄ‡', 'Nova adresa 25', '52000', 'Pazin', '052443220', 'ivic@gmail.com', '05864405589', 0, 0, '0000-00-00 00:00:00', '2013-04-30 14:25:21', '0', 'da39a3ee5e6b4b0d3255bfef95601890afd80709', 0, 1),
+(39, 'sadf', 'dfs', 'df', '14451', 'dsfsd', '', '', '05864405589', 0, 0, '0000-00-00 00:00:00', '2013-04-30 14:27:28', '0', 'da39a3ee5e6b4b0d3255bfef95601890afd80709', 0, 1),
+(40, 'fdsa', 'fdas', '', '', '', '', 'dsfdasf@dasdsa.com', '05864405589', 0, 0, '0000-00-00 00:00:00', '2013-04-30 14:31:00', '0', 'a90b11921a9e74b409d29065255ea704a70ac1dc', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -474,7 +447,16 @@ CREATE TABLE IF NOT EXISTS `moderatori` (
   PRIMARY KEY (`id`),
   KEY `fk_moderatori_1` (`id_korisnika`),
   KEY `fk_moderatori_2` (`id_kategorije`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+
+--
+-- Dumping data for table `moderatori`
+--
+
+INSERT INTO `moderatori` (`id`, `id_korisnika`, `id_kategorije`) VALUES
+(1, 1, 2),
+(6, 1, 3),
+(7, 1, 5);
 
 -- --------------------------------------------------------
 
@@ -497,7 +479,8 @@ CREATE TABLE IF NOT EXISTS `newsletter` (
 --
 
 INSERT INTO `newsletter` (`id`, `id_korisnika`, `email`, `kategorija`, `aktivan`) VALUES
-(5, 33, 'kdomic@foi.hr', 0, 1);
+(5, 33, 'kdomic@foi.hr', 0, 1),
+(6, 33, 'pero@pero.com', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -514,14 +497,23 @@ CREATE TABLE IF NOT EXISTS `opomene` (
   PRIMARY KEY (`id`),
   KEY `fk_opomene_1` (`id_korisnika`),
   KEY `fk_opomene_2` (`id_moderatora`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
 
 --
 -- Dumping data for table `opomene`
 --
 
 INSERT INTO `opomene` (`id`, `id_korisnika`, `id_moderatora`, `datum`, `opis`) VALUES
-(1, 2, 1, '2013-04-01 01:59:50', 'Izri&#263;e se opomena radi testiranja sustava');
+(2, 1, 33, '2013-04-30 15:33:37', 'Ovo je prva opomena za usera Anu ID=1'),
+(3, 1, 33, '2013-04-30 15:39:34', 'Kruno'),
+(4, 1, 33, '2013-04-30 15:39:52', 'Kruno'),
+(5, 2, 33, '2013-04-30 15:40:30', 'Opomena korisniku 2'),
+(6, 3, 33, '2013-04-30 15:40:56', 'E ovaj ID 3 nije normalan'),
+(7, 1, 33, '2013-04-30 15:51:59', '4 komentar'),
+(10, 33, 33, '2013-04-30 16:05:27', 'Ovo ti je prva opomena'),
+(11, 33, 33, '2013-04-30 16:15:49', 'Nova opomena'),
+(12, 1, 33, '2013-04-30 17:49:06', 'Opomena'),
+(13, 1, 33, '2013-04-30 17:51:00', 'dfsafd');
 
 -- --------------------------------------------------------
 
@@ -553,7 +545,7 @@ CREATE TABLE IF NOT EXISTS `ponude` (
 --
 
 INSERT INTO `ponude` (`id`, `id_prodavatelja`, `id_kategorije`, `naslov`, `podnaslov`, `cijena`, `opis_naslov`, `opis_kratki`, `opis`, `napomena`, `karta_x`, `karta_y`, `aktivan`) VALUES
-(1, 1, 1, 'Otputujte na 2 dana u svijet wellness u&#382;itaka u prekrasnom Pomurju', 'Za 1.018 kn &#269;eka vas no&#263;enje s doru&#269;kom za 2 osobe uz neograni&#269;eno kori&#353;tenje wellnessa u hotelu Son&#269;na hi&#353;a', 2036, 'Tra&#382;ite svoje mjesto pod suncem?', 'nsjeveroistok susjedne Slovenijerasko&scaron;an wellness i u&#382;ivanje u prirodi, vo&#382;nja biciklom, golf, bogata gastronomska ponuda, vrhunska vinakupon je mogu&#263;e iskoristiti samo od ponedjeljka do petkadatum: 01.04.2013. - 31.12.2013.', 'Svatko od nas ponekad po&#382;eli pobje&#263;i od u&#382;urbanog &#382;ivota, barem nakratko.Uzmite si par slobodnih dana i oti&#273;ite u svijet opu&scaron;tanja u prekrasnom Pomurju, na sjeveroistoku susjedne nam Slovenije. Dozvolite da va&scaron;e &#382;ivote ponovo obasja sunce kojim sjaji Son&#269;na hi&scaron;a.Design boutique hotel Son&#269;na hi&scaron;a nalazi se u pomurskom naselju Banovci, poznatom po svojim termama. Ovaj ljupki hotel je novoizgra&#273;ena vila koja sadr&#382;i pet prostranih i ukusno namje&scaron;tenih soba. Ovdje mo&#382;ete u&#382;ivati u potpunom opu&scaron;tanju &nbsp;kojeg vam nudi rasko&scaron;an wellness. U Son&#269;nom wellnessu preporu&#269;ujemo vam finsku i biljnu saunu. Nakon saune, mo&#382;ete se opustiti uz ugodnu glazbu, &#269;aj i vo&#263;e te hidromasa&#382;ni bazen. Na va&scaron; zahtjev, njihovi iskusni maseri dodirima &#263;e vas odvesti u stanje potpune opu&scaron;tenosti i ravnote&#382;e. Dobro ste do&scaron;li i u njihov Son&#269;ni vrt gdje &#263;e svatko prona&#263;i svoje mjesto pod Suncem. Tu se mo&#382;ete izle&#382;avati pod vedrim nebom, &#269;itati knjigu, br&#269;kati se u masa&#382;nom bazenu ili spojiti na internet.I izvan hotela &#269;ekaju vas prekrasne stvari! Pomurje je zemlja golemih polja i brda, roda i mlinova na vodi, ljekovite vode i valovitih vinorodnih bre&#382;uljaka. Ono vas zove na &scaron;etnju brdima, du&#382; potoka i preko ravnih polja. Mo&#382;ete se odlu&#269;iti i na vo&#382;nju biciklom kroz planine koje nude prekrasan pogled. Istra&#382;ite i gastronomsku ponudu u lokalnim restoranima, koji nude degustaciju finih vina i kulinarskih specijaliteta. Moderni nomadi ovdje mogu zaigrati i golf.U&#382;ivajte cijelim bi&#263;em u Son&#269;noj hi&scaron;i!', 'Mogu&#263;nost pla&#263;anja Amex-om do 6 rata bez kamata i naknada&nbsp;Kupon mo&#382;ete koristiti odmah po primitkuJedna osoba mo&#382;e koristiti 5 kupona na svoje imeJedna osoba mo&#382;e pokloniti 5 kuponaJedan kupon vrijedi za 2 osobePonuda uklju&#269;uje:&nbsp;2 dana / 1 no&#263;enje s doru&#269;kom za dvije osobe uz svje&#382;e vo&#263;e u sobi, neograni&#269;eno&nbsp;kori&scaron;tenje wellnessa, kori&scaron;tenje sauna, upotrebu unutarnjeg masa&#382;nog bazena, 1 klasi&#269;nu masa&#382;u cijelog tijela za jednu osobu, upotrebu ru&#269;nika,ogrta&#269;a te upotrebu kozmetike&nbsp;Loccitane(mlijeko za tijelo)Nadoplata za djecu:- 40% od Kupi me cijeneObavezna nadoplata- boravi&scaron;na pristrojba pla&#263;a se na licu mjesta 1,10&euro; po osobi po danuMogu&#263;nost nadoplate: - dodatna masa&#382;a 266 kn/35&euro; po osobiCjenik mo&#382;ete provjeriti ovdjeBoravak ku&#263;nih ljubimaca nije dopu&scaron;tenProvjera raspolo&#382;ivosti prije kupnje kupona i potvrda rezervacije po primitku kupona na +386 (0)2 588 8238 ili na mail booking@soncna-hisa.si prema raspolo&#382;ivostiRok iskoristivosti kupona: 01.04.2013. - 31.12.2013.&nbsp;(kupon je mogu&#263;e iskoristiti samo od ponedjeljka do petka)Kupon se smatra iskori&scaron;tenim ukoliko je korisnik rezervirao termin, a nije do&scaron;ao ili otkazao termin 7 dana prije dolaskaNakon isteka roka iskoristivosti kupon nije mogu&#263;e koristiti', '46.572588', '16.167186', 0),
+(1, 1, 1, 'Otputujte na 2 dana u svijet wellness u&#382;itaka u prekrasnom Pomurju', 'Za 1.018 kn &#269;eka vas no&#263;enje s doru&#269;kom za 2 osobe uz neograni&#269;eno kori&#353;tenje wellnessa u hotelu Son&#269;na hi&#353;a', 2036, 'Tra&#382;ite svoje mjesto pod suncem?', 'nsjeveroistok susjedne Slovenijerasko&scaron;an wellness i u&#382;ivanje u prirodi, vo&#382;nja biciklom, golf, bogata gastronomska ponuda, vrhunska vinakupon je mogu&#263;e iskoristiti samo od ponedjeljka do petkadatum: 01.04.2013. - 31.12.2013.', 'Svatko od nas ponekad po&#382;eli pobje&#263;i od u&#382;urbanog &#382;ivota, barem nakratko.Uzmite si par slobodnih dana i oti&#273;ite u svijet opu&scaron;tanja u prekrasnom Pomurju, na sjeveroistoku susjedne nam Slovenije. Dozvolite da va&scaron;e &#382;ivote ponovo obasja sunce kojim sjaji Son&#269;na hi&scaron;a.Design boutique hotel Son&#269;na hi&scaron;a nalazi se u pomurskom naselju Banovci, poznatom po svojim termama. Ovaj ljupki hotel je novoizgra&#273;ena vila koja sadr&#382;i pet prostranih i ukusno namje&scaron;tenih soba. Ovdje mo&#382;ete u&#382;ivati u potpunom opu&scaron;tanju &nbsp;kojeg vam nudi rasko&scaron;an wellness. U Son&#269;nom wellnessu preporu&#269;ujemo vam finsku i biljnu saunu. Nakon saune, mo&#382;ete se opustiti uz ugodnu glazbu, &#269;aj i vo&#263;e te hidromasa&#382;ni bazen. Na va&scaron; zahtjev, njihovi iskusni maseri dodirima &#263;e vas odvesti u stanje potpune opu&scaron;tenosti i ravnote&#382;e. Dobro ste do&scaron;li i u njihov Son&#269;ni vrt gdje &#263;e svatko prona&#263;i svoje mjesto pod Suncem. Tu se mo&#382;ete izle&#382;avati pod vedrim nebom, &#269;itati knjigu, br&#269;kati se u masa&#382;nom bazenu ili spojiti na internet.I izvan hotela &#269;ekaju vas prekrasne stvari! Pomurje je zemlja golemih polja i brda, roda i mlinova na vodi, ljekovite vode i valovitih vinorodnih bre&#382;uljaka. Ono vas zove na &scaron;etnju brdima, du&#382; potoka i preko ravnih polja. Mo&#382;ete se odlu&#269;iti i na vo&#382;nju biciklom kroz planine koje nude prekrasan pogled. Istra&#382;ite i gastronomsku ponudu u lokalnim restoranima, koji nude degustaciju finih vina i kulinarskih specijaliteta. Moderni nomadi ovdje mogu zaigrati i golf.U&#382;ivajte cijelim bi&#263;em u Son&#269;noj hi&scaron;i!', 'Mogu&#263;nost pla&#263;anja Amex-om do 6 rata bez kamata i naknada&nbsp;Kupon mo&#382;ete koristiti odmah po primitkuJedna osoba mo&#382;e koristiti 5 kupona na svoje imeJedna osoba mo&#382;e pokloniti 5 kuponaJedan kupon vrijedi za 2 osobePonuda uklju&#269;uje:&nbsp;2 dana / 1 no&#263;enje s doru&#269;kom za dvije osobe uz svje&#382;e vo&#263;e u sobi, neograni&#269;eno&nbsp;kori&scaron;tenje wellnessa, kori&scaron;tenje sauna, upotrebu unutarnjeg masa&#382;nog bazena, 1 klasi&#269;nu masa&#382;u cijelog tijela za jednu osobu, upotrebu ru&#269;nika,ogrta&#269;a te upotrebu kozmetike&nbsp;Loccitane(mlijeko za tijelo)Nadoplata za djecu:- 40% od Kupi me cijeneObavezna nadoplata- boravi&scaron;na pristrojba pla&#263;a se na licu mjesta 1,10&euro; po osobi po danuMogu&#263;nost nadoplate: - dodatna masa&#382;a 266 kn/35&euro; po osobiCjenik mo&#382;ete provjeriti ovdjeBoravak ku&#263;nih ljubimaca nije dopu&scaron;tenProvjera raspolo&#382;ivosti prije kupnje kupona i potvrda rezervacije po primitku kupona na +386 (0)2 588 8238 ili na mail booking@soncna-hisa.si prema raspolo&#382;ivostiRok iskoristivosti kupona: 01.04.2013. - 31.12.2013.&nbsp;(kupon je mogu&#263;e iskoristiti samo od ponedjeljka do petka)Kupon se smatra iskori&scaron;tenim ukoliko je korisnik rezervirao termin, a nije do&scaron;ao ili otkazao termin 7 dana prije dolaskaNakon isteka roka iskoristivosti kupon nije mogu&#263;e koristiti', '46.572588', '16.167186', 1),
 (2, 2, 2, 'Mala &#353;kola jahanja u Alminoj potkovici', 'Za 159 kn &#269;ekaju vas 3 &#353;kolska sata dru&#382;enja s konjima i naravno, jahanje', 450, 'Oduvijek vam je san bio nau&#269;iti jahati? Danas ga ostvarite!', 'nNapomeneKupon je mogu&#263;e koristiti odmah po primitkuJedna osoba mo&#382;e koristiti 3 kupona na svoje imeJedna osoba mo&#382;e pokloniti 3 kuponaKupon vrijedi za jednu osobuPonuda uklju&#269;uje: malu &scaron;kolu jahanja u trajanju od 3 &scaron;kolska sata - 2x45min jahanja, 45min teorijeCjenik mo&#382;ete pogledati ovdje&Scaron;kola jahanja namijenjena je odraslima i djeci od 8 godina na vi&scaron;eTermini se dogovaraju prema individualnim mogu&#263;nostima polaznikaObavezna telefonska najava 3 dana unaprijed na (091) 5205 187 svaki dan od 10 do 13 i od 16 do 19 sati, najkasanije do 1.5.2013.Rok iskoristivosti kupona: 10.5.2013.Nakon isteka roka iskoristivosti kupon nije mogu&#263;e koristitiKupon se smatra iskori&scaron;tenim ukoliko je korisnik rezervirao termin, a nije do&scaron;ao ili otkazao najmanje 24 sata ranije', '', '', '45.838786', '16.024761', 1),
 (3, 3, 3, 'U&#382;ivajte u blagodatima 2 masa&#382;e i prekontrolirajte atlas', 'U Corpus valens &#269;ekaju vas 2 opu&#353;taju&#263;e masa&#382;e cijelog tijela i kontrola atlasa, prvog vratnog kralje&#353;ka', 500, 'Svima je potrebna masa&#382;a!', 'nporavnavanje mi&scaron;i&#263;nih vlakanaosloba&#273;anje negativne energijedotok kisika i hranjivih tvari do svake i najmanje stanice', 'Masa&#382;a je vrlo va&#382;na za sve ljude u svim stadijima &#382;ivota. Za one koji ne mogu vje&#382;bati, masa&#382;a je odli&#269;na alternativa za pobolj&scaron;anje rasta i razvoja tijela. Tako&#273;er se preporu&#269;uje prije i poslije sportske aktivnosti. Masa&#382;om se zagrijavaju i omek&scaron;avaju tkiva, te poravnavaju mi&scaron;i&#263;na vlakna. Tretmanom masa&#382;nog istezanja opu&scaron;tamo meko tkivo u okolini zgloba i na taj na&#269;in vra&#263;amo njegovu funkcionalnost. U&#269;estalost provo&#273;enja tretmana ubla&#382;ava mi&scaron;i&#263;nu napetost, omogu&#263;uje kontinuiran rad krvo&#382;ilnog sustava, osloba&#273;a negativnu energiju, pru&#382;a normalan dotok kisika i hranjivih tvari do svake i najmanje stanice, stimulira rad unutarnjih organa. Masa&#382;om dovodimo tijelo u prirodnu ravnote&#382;u.U sklopu dana&scaron;nje ponude, Corpus valens &#263;e vam pru&#382;iti dvije vrhunske masa&#382;e cijelog tijela, a uz to &#263;ete dobiti pregled atlasa. Atlas je prvi vratni kralje&#382;ak i nosioc glave. Ako se nalazi u neprirodnom polo&#382;aju, atlasa vr&scaron;i pritisak na vratnu kralje&#382;nicu, a mi tu te&#382;inu osje&#263;amo kao napetost, bol u vratu i ramenima, kralje&#382;nici, imamo glavobolju i niz ostalih zdravstvenih tegoba. Zato ga je potrebno prekontrolirati, i prema potrebi namjestiti.Vidimo se u Corpus valens!&nbsp;', 'Kupon je mogu&#263;e koristiti odmah po primitkuJedna osoba mo&#382;e koristiti 1 kupon na svoje imeJedna osoba mo&#382;e pokloniti 5 kuponaPonuda uklju&#269;uje:&nbsp;2 masa&#382;e cijelog tijela (45min svaka) te kontrolu atlasa&nbsp;Cjenik mo&#382;ete pogledati ovdjeTim:- Roman Kokori&#263;: medicinsko-sportski maser, Atlas Vitalogie terapeut- Marina Piska&#269;: vi&scaron;i fiziotarapeutRadno vrijeme po dogovoruNajava 2 dana unaprijed na (092) 3048 252&nbsp;Rok iskoristivosti kupona: 2.7.2013.Nakon isteka roka iskoristivosti kupon nije mogu&#263;e koristiti', '45.812873', '15.985461', 1),
 (4, 1, 4, 'Semestralni te&#269;ajevi stranih jezika za 990 kn', 'U&#269;ite engleski ili talijanski jezik kroz cijeli proljetni semestar u &#353;koli stranih jezika Latina u centru Zagreba', 0, 'Progovorite i na stranim jezicima', '\n&Scaron;kola Latina&nbsp;posjeduje certifikat ISO 9001:2008predava&#269;i su izvorni govornici ili profesori stranih jezika s dugogodi&scaron;njim iskustvommogu&#263;nost pla&#263;anja Amexom do&nbsp;6 rata bez kamata i naknada', '&Scaron;kola stranih jezika Latina posjeduje certifikat ISO 9001:2008, sustav upravljanja kvalitetom u podru&#269;ju usluga poduke stranih jezika i prevo&#273;enja.&nbsp;Iskustva korisnika mo&#382;ete pogledati ovdje.&nbsp;Napomenut &#263;emo samo kako je Latina vrlo kvalitetna &scaron;kola i jedina &#269;iji je program rada i organizacije i u vrijeme krize na izuzetno visokom stupnju, a subvencionirana je dr&#382;avnim bespovratnim sredstvima RH. U &scaron;koli Latina radi mlada visokoobrazovana ekipa profesora koji se prilago&#273;avaju va&scaron;im potrebama. Nastava se odr&#382;ava na vrlo kreativne na&#269;ine i nikada nije dosadno. Profesori su boravili i u inozemstvu pa &#263;e vam uz jezik prenijeti i kulturolo&scaron;ke navike zemlje &#269;iji jezik u&#269;ite.&nbsp;U dana&scaron;njoj ponudi mo&#382;ete upisati te&#269;aj engleskog ili talijanskog jezika te brusiti njegovo znanje tijekom cijelog semestra. Prilikom odabira odgovaraju&#263;eg stupnja te&#269;aja, mo&#382;ete do&#263;i na testiranje ili sami izvr&scaron;iti samoprocjenu pomo&#263;u tablice na stranicama &scaron;kole. Te&#269;aj je posve&#263;en op&#263;em jeziku i konverzacijskim treninzima u komunikaciji uz aktualne &#382;ivotne situacije, te sadr&#382;i gramatiku prema programu.&nbsp;U&#269;imo zajedno u &scaron;koli za strane jezike Latina!', 'Mogu&#263;nost pla&#263;anja Amexom do 6 rata bez kamata i naknadaKupon je mogu&#263;e koristiti&nbsp;od 6.4. - po&#269;etak semestraJedna osoba mo&#382;e koristiti 2 kupona na svoje imeJedna osoba mo&#382;e pokloniti 5 kupona1 kupon = 1 jezikPonuda uklju&#269;uje:&nbsp;po&#269;etni subotnji te&#269;ajevi engleskog ili talijanskog jezika kroz cijeli proljetni semestar u&nbsp;Latina - &scaron;koli stranih jezika&nbsp;u trajanju od 40 &scaron;k. satiPotrebno predznanje: nije potrebnoCjenik mo&#382;ete pogledati ovdjeTermini:Engleski A1&nbsp; &nbsp; Sub 9 - 11,15hTalijanski A1&nbsp; &nbsp; Sub 11,30 - 13,45h&nbsp; &nbsp;&nbsp;Termine nije mogu&#263;e kombinirati, grupe imaju svoj fiksni termin i polaznik pripada grupi za koju se unaprijed odlu&#269;iNadoknada propu&scaron;tenih satova nije mogu&#263;a u drugim grupamaPrije kupovine kupona&nbsp;obavezno provjerite raspolo&#382;ivost termina za odabrani jezik na&nbsp;latina@latina.hrPrijavu za te&#269;aj mo&#382;ete izvr&scaron;iti odmah po primitku kupona putem e-maila: latina@latina.hr s osobnim podacima i odabranim te&#269;ajemNakon &scaron;to mail-om potvrdite termin te&#269;aja, isti nije mogu&#263;e vi&scaron;e otkazati ili mijenjati &nbsp;- kupon se smatra iskori&scaron;tenim u slu&#269;aju nedolaskaNajni&#382;a dob za pristupanje te&#269;aju je 15 godinaPo zavr&scaron;etku te&#269;aja&nbsp;pi&scaron;e se zavr&scaron;ni test i dobiva se&nbsp;Potvrda o zavr&scaron;enom stupnju znanja prema Europskom referentnom okviru&nbsp;za u&#269;enje stranih jezikaRok iskoristivosti kupona: 6.4.2013. (po&#269;etak te&#269;aja)Nakon isteka roka iskoristivosti kupon nije mogu&#263;e koristiti&nbsp;', '45.807751', '15.980698', 1),
@@ -593,7 +585,7 @@ INSERT INTO `ponude` (`id`, `id_prodavatelja`, `id_kategorije`, `naslov`, `podna
 (37, 1, 3, 'Vrijeme je za kompletan ginekolo&#353;ki pregled', 'Ovaj pregled u Privatnoj ginekolo&#353;koj ordinaciji dr. Predrag &#272;uri&#263; uklju&#269;uje ultrazvuk, Papa test i color doppler', 790, 'Pregled koji se treba obaviti', '\nmogu&#263;nost pla&#263;anja Amexom do&nbsp;6 rata bez kamata i naknadapreporuka je obaviti kompletan ginekolo&scaron;ki pregled barem jednom godi&scaron;nje', 'Svi ginekolozi svijeta sla&#382;u se da bi svaka &#382;ena trebala barem jednom godi&scaron;nje obaviti kompletan ginekolo&scaron;ki pregled. Zato ova ponuda pada ba&scaron; u zgodno vrijeme. Ako niste posjetili ginekologa ove godine, jo&scaron; uvijek stignete, a ako jeste, pregled mo&#382;e biti jedna od prvih stvari koju &#263;ete napraviti ovog prolje&#263;a. Pri tome &#263;ete jo&scaron; i u&scaron;tedjeti. Zato upi&scaron;ite u svoj planer posjetu Privatnoj ginekolo&scaron;koj ordinaciji dr. Predrag &#272;uri&#263;.Kompletan ginekolo&scaron;ki pregled uklju&#269;uje ultrazvuk, Papa test i color doppler. Vrlo je va&#382;no redovito obavljati ove preglede, i to bez obzira u kojoj se &#382;ivotnoj dobi nalazite. Poliklinika je opremljena vrhunskim ure&#273;ajima, a u njoj rade izvrsni doktori.Do&#273;ite na pregled u Privatnu ginekolo&scaron;ku ordinaciju dr. Predrag &#272;uri&#263;!', 'Mogu&#263;nost pla&#263;anja Amexom do 6 rata bez kamata i naknadaKupon je mogu&#263;e koristiti odmah po primitkuJedna osoba mo&#382;e koristiti 1 kupon na svoje imeJedna osoba mo&#382;e pokloniti 5 kuponaPonuda uklju&#269;uje&nbsp;kompletan ginekolo&scaron;ki pregled: ultrazvuk, Papa test i color dopplerCjenik mo&#382;ete pogledati ovdjeRadno vrijeme:&nbsp; &nbsp; Pon - sri - &#269;et 13 - 19h&nbsp; &nbsp; Uto - pet 10 - 14hNajava 2 dana unaprijed na (01)&nbsp;4813 700Rok iskoristivosti kupona: 25.5.2013.Nakon isteka roka iskoristivosti kupon nije mogu&#263;e koristiti', '45.812387', '15.983359', 1),
 (38, 1, 9, 'Pljeskavice punjene kajmakom za dvije osobe u bistrou Chef', 'U&#382;ivajte u specijalitetima s ro&#353;tilja na novoj lokaciji va&#353;eg omiljenog restorana', 70, '&Scaron;to ka&#382;ete na fine pljeskavice s kajmakom?', '\nterasanova lokacija (Jablanska 24)', '&Scaron;to ka&#382;ete na fine pljeskavice s kajmakom? Takva gozba se ne propu&scaron;ta, pogotovo kada je za njenu pripremu zadu&#382;en vrhunski Team restorana&nbsp;Chef!&nbsp;U dana&scaron;njoj ponudi &#269;ekaju vas 2 porcije pljeskavica s kajmakom, lepinjom, ajvarom i lukom. Kao i uvijek, va&scaron;e &#263;e porcije biti svje&#382;e pripremljene i od najboljih sastojaka. Vi samo trebate odabrati osobu s kojom &#263;ete podijeliti ovaj gastronomski u&#382;itak!&nbsp;Restoran Chef odnedavno se nalazi na novoj lokaciji, u Jablanskoj ulici u Pre&#269;kom. Otvaranje novog lokala obilje&#382;eno je i stvaranjem novog, jo&scaron; boljeg jelovnika. Tako vas od sada ovdje o&#269;ekuju nekoliko novih jela, neka stara prera&#273;ena jela, a ona koja ste najvi&scaron;e voljeli, ostala su onakva kakva su bila! U Chefu s posebnom pa&#382;njom brinu o kvaliteti sirovina.&nbsp;Okusite najbolje delicije u restoranu Chef!', 'Kupon je mogu&#263;e koristiti odmah po primitku, radnim danima osim subotom i nedjeljomJedna osoba mo&#382;e koristiti 5 kupona na svoje imeJedna osoba mo&#382;e pokloniti 5 kuponaKupon vrijedi za dvije osobeKuponi se ne mogu spajatiPonuda uklju&#269;uje:&nbsp;dvije pljeskavice s kajmakom, lepinjom, ajvarom i lukom&nbsp;Cjenik mo&#382;ete pogledati ovdjeU slu&#269;aju ve&#263;eg iznosa mogu&#263;a nadoplataPi&#263;e nije&nbsp;uklju&#269;eno u cijenuKonzumacija hrane je mogu&#263;a isklju&#269;ivo u restoranuNajava 1 dan unaprijed na&nbsp;(01)&nbsp;8887 787Radno vrijeme kuhinje:&nbsp; &nbsp; Pon - ned 11 - 22hRadno vrijeme restorana:&nbsp; &nbsp; Pon - ned 8 - 24hRok iskoristivosti kupona: 30.4.2013.Nakon isteka roka iskoristivosti kupon nije mogu&#263;e koristiti', '45.798072', '15.913664', 1),
 (39, 1, 7, 'Oglasite svoje smje&#353;tajne kapacitete, najam automobila i plovila za 90 kn', 'Predstavite svoju turisti&#269;ku ponudu na www.smjestaj-na-jadranu.net uz 70% popusta', 300, 'Pripremite se za sezonu...', '\nNapomeneKupon mo&#382;ete koristiti odmah po primitkuJedna osoba mo&#382;e koristiti 2 kupona na svoje imeJedna osoba mo&#382;e pokloniti 3 kuponaJedan kupon vrijedi za jedan ugostiteljski objekatPonuda uklju&#269;uje&nbsp;ogla&scaron;avanje smje&scaron;tajnih kapaciteta, najma automobila i plovila na web stranici www.smjestaj-na-jadranu.net:- &#269;lanstvo od jedne godine- 12 fotografija objekta- opis smje&scaron;tajnih kapaciteta- opis mjesta gdje se nalazi smje&scaron;taj kao i aktivnosti- vrste soba- cijene smje&scaron;taja- direktni kontakt gost-iznajmljiva&#269; smje&scaron;taja putem kontakt forme- prikaz lokacije na google mapi- pop-up galerija- prikaz opremljenosti (ponude) apartmanaCjenik mo&#382;ete provjeriti ovdjeNajavu je potrebno izvr&scaron;iti do jedan dan prije postavljanja na portal&nbsp;Rok iskoristivosti kupona: 6.4.2013.Nakon isteka roka iskoristivosti kupon nije mogu&#263;e koristiti', '', '', '', '', 1),
-(40, 1, 7, 'Solarni panel SOLE 140-140W', 'U&#382;ivajte u blagodatima struje na sun&#269;ev pogon za samo 1.473 kn', 2947, 'Sunce nam se vratilo, iskoristite ga!', '\nva&#382;no:&nbsp;solarni akumulator stacionarni Sole 120Ah-12V vi&scaron;e nije dostupan ve&#263;&nbsp;Sole 85Ah-12Vmogu&#263;nost pla&#263;anja Amexom do&nbsp;6 rata bez kamata i naknadajamstvo od 25 godina', 'Ako nemate dostupnu struju u va&scaron;oj vikendici, ili mo&#382;da plovite morem bez komfora najpotrebnijih elektri&#269;nih aparata, vrijeme je da nabavite solar panele iz tvrtke Hvaljen budi! Napunite mobitele i fri&#382;idere snagom Sunca...&nbsp;Iz dana&scaron;nje ponude odaberite solarni panel SOLE 140-140W. On ima temperaturni koeficijent snage od 0,4%/C te jamstvo na izlaznu snagu (81% snage) od 25 godina. Posjeduje regulator 12/24V 1010 10A, Inverter - pretvara&#269; mod sinus 300W-vr&scaron;ne snage 600W 12-230V i Solarni akumulator stacionarni Sole 85Ah-12V.&nbsp;Iskoristite energiju Sunca uz tvrtku Hvaljen budi!', 'Mogu&#263;nost pla&#263;anja Amexom do 6 rata bez kamata i naknadaKupon je mogu&#263;e koristiti odmah po primitkuJedna osoba mo&#382;e koristiti 2 kupona na svoje imeJedna osoba mo&#382;e pokloniti 2 kuponaPonuda uklju&#269;uje:&nbsp;- solarni panel SOLE 140 - 140W-&nbsp;regulator 12/24V 1010 10A-&nbsp;inverter - pretvara&#269; mod sinus 300W-&nbsp;solarni akumulator stacionarni Sole 85Ah-12VCjenik mo&#382;ete pogledati ovdjeProizvo&#273;a&#269;ko jamstvo se odnosi isklju&#269;ivo na solarni panelProizvod se preuzima osobno na adresi: Bani 73 (Poslovna zona Buzin), Zagreb uz prethodnu najavu na (091) 6608 065&nbsp;i predo&#269;enje kuponaRok iskoristivosti kupona: 1.6.2013.Nakon isteka roka iskoristivosti kupon nije mogu&#263;e koristiti', '45.754522', '16.003733', 1),
+(40, 1, 7, 'Solarni panel SOLE 140-140W', 'Krunoslav&lt;p&gt;Domic&lt;/p&gt;', 2947, 'Ovo je normalni opis<p><br></p>', 'A ovo je kratki opis<p><br></p>', 'Ovo je dugi opis<p>Ovo je drugi red</p><p>TreÄ‡i....</p>', '<b>Ovo je napomena!</b><p>Drugi red<br></p><p></p><p>TreÄ‡i red</p><p>Da da ovo radi!</p><p></p><p></p>', '45.754522', '16.003733', 1),
 (41, 1, 7, 'Fotografiranje za osobne dokumente', 'Za 19 kn napravite fotografije za osobnu iskaznicu, biometrijsku putovnicu i voza&#269;ku dozvolu u studiju Foto Mondo', 38, 'U EU s novim fotkama na dokumentima...', '\nNapomeneKupon je mogu&#263;e koristiti odmah po primitkuJedna osoba mo&#382;e koristiti 1 kupon na svoje imeJedna osoba mo&#382;e pokloniti 2 kuponaPonuda uklju&#269;uje:&nbsp;fotografije za dokumenteCjenik mo&#382;ete pogledati ovdjeKontakt broj&nbsp;(042) 213 085Rok iskoristivosti kupona:&nbsp;26.4.2013.Kupon se smatra iskori&scaron;tenim ukoliko je korisnik rezervirao termin, a nije do&scaron;ao ili nije otkazao termin najmanje 24h ranijeNakon isteka roka iskoristivosti kupon nije mogu&#263;e koristiti', '', '', '46.304764', '16.336262', 1),
 (42, 1, 2, 'Do&#382;ivite ljepotu kanuinga na Uni', 'Avantura u kanuu, kupanje na slapovima Une te cijeli dan u&#382;ivanja u prirodi za samo 99 kn', 200, 'Osjetite zov divljine!', '\nrok iskoristivosti kupona: 3.9.2013.udaljenost od Zagreba samo 2 sata vo&#382;njegratis kori&scaron;tenje sadr&#382;aja unutar centrapoklon za prvih 200 prijavljenih za program', 'Ne propustite priliku za jedinstvenom avanturom na rijeci o &#269;ijoj se ljepoti govori na svim stranama svijeta. Provedite cjelodnevni odmor na svje&#382;em zraku, u carstvu divljine, u dru&scaron;tvu dobrih prijatelja!&nbsp;Centar Futurum smje&scaron;ten je u prostranstvima netaknute divljine, me&#273;u 4 gorska klanca protkanim potocima. Sa svojim novim ruhom, on pru&#382;a mno&scaron;tvo interesantnih sadr&#382;aja ljubiteljima prirode. &#381;elite li osjetiti &#269;ari divljine, ljubaznost doma&#263;ina te vo&#382;nju kanuima po Uni onda ste na pravom mjestu. Od Zagreba vam treba samo 2 sata vo&#382;nje.&nbsp;Na mjestu polaska dobit &#263;ete kratke upute i preuzeti opremu. Onda kre&#263;e put kanuima po vodenoj stazi preko mno&scaron;tva kaskada u zagrljaju krajolika rijeke Une. Tu i tamo &#263;ete stati, odmoriti se ili kupati pod slapovima. Prije ili poslije kanuinga, mo&#382;ete u&#382;ivati u gratis kori&scaron;tenju sadr&#382;aja unutar centra, &scaron;etnjama gorskim klancima ili priklju&#269;iti nekim aktivnostima koje su na programu taj dan.&nbsp;Rijeka Una &#263;e vas ostaviti bez daha. To je jedna kristalno &#269;ista rijeka koja je zarobila mnoga srca svojih posjetitelja. Vjerujemo da &#263;ete se i vi zaljubiti u nju na prvi pogled. Vidimo se na Uni!', 'Kupon je mogu&#263;e koristiti vikendima od&nbsp;1.6. do 3.9.2013.Jedna osoba mo&#382;e koristiti 1 kupon na svoje imeJedna osoba mo&#382;e pokloniti 10 kuponaJedan kupon vrijedi za jednu osobuPonuda uklju&#269;uje: kratku obuku, najam &#269;amaca za kanu za 2 - 3 osobe, kori&scaron;tenje potrebne opreme, stru&#269;no vodstvo i organizacijuOdlazak do mjesta polaska je u vlastitom&nbsp;aran&#382;manuDetalje ponude, mogu&#263;e termine te dodatne aktivnosti mo&#382;ete pogledati ovdjeCjenik mo&#382;ete provjeriti ovdjeMinimalna starosna dob za kanuing je 7 god uz pratnju roditelja ili starateljaSvaki sudionik kanuinga obavezan je sklopiti policu osiguranja od nezgode za taj dan (osiguravatelj po izboru korisnika kupona)&nbsp;Grupe se formiraju na temelju dnevnih prijava i rezervacija&nbsp;na (099) 8857 895 te uz obaveznu pismenu potvrdu putem maila na associated.futurum@gmail.com&nbsp;sa sljede&#263;im podacima&nbsp;radi sastavljanja liste sudionika&nbsp;(ime, prezime, OIB ili JMBG ili br O.I.)Najava mminimalno 48h prije polaskaZa prvih 200 prijavljenih te uz konzumaciju obroka i pi&#263;a unutar centra -&nbsp;besplatno dvodnevno kampiranje u Eco kampu Futurum tijekom vikenda,&nbsp;u ve&#269;ernjim satima zabava uz logorsku vatru uz malo jezero te&nbsp;mno&scaron;tvo ostalih rekreativnih sadr&#382;ajaObavezan dolazak s KupiMe kuponomU podru&#269;je centra Futurum nije dozvoljen unos ni konzumacija vlastite hrane i pi&#263;aOtkazivanje rezervacije potrebno je u&#269;initi najmanje 48h prije zakazanog termina jer u protivnom gubite pravo na terminRok iskoristivosti kupona: 3.9.2013.Nakon isteka roka iskoristivosti kupon nije mogu&#263;e koristiti', '45.129016', '16.264915', 1),
 (43, 1, 2, 'Rafting avantura na donjem toku Mre&#382;nice', 'U&#382;ivajte u trosatnoj pustolovini kroz brzace i slapove Mre&#382;nice uz Terra Croatica za samo 129 kn', 260, 'Zaveslajte Mre&#382;nicom!', '\nneopisiva zabava i adrenalinjedna od najljep&scaron;ih rijeka u Hrvatskoj93 sedrena nezaboravna slapapromotivna cijena ru&#269;ka za vlasnike Kupi Me kuponarok iskoristivosti kupona: 30.9.2013.', 'Za ljubitelje prirode i avanture, ne postoji bolji provod od raftinga. Neko&#263; je to bio jedan od najva&#382;nijih na&#269;ina prijevoza, a danas je izvor neopisive zabave. I &scaron;to je najbolje, do vrhunske rafting avanture ne trebate putovati daleko, nego samo do obli&#382;nje Mre&#382;nice.Rafting je prekrasan na&#269;in da do&#382;ivite nenaru&scaron;enu prirodu Hrvatske. Uz ekipu iz Terra Croatica, do&#382;ivjet &#263;ete neispri&#269;anu pri&#269;u o jednoj od najljep&scaron;ih hrvatskih rijeka - Mre&#382;nici. Oni &#263;e vas provesti preko nekih od najljep&scaron;ih slapova i barijera od kojih jednostavno zastane dah.Rijeka Mre&#382;nica zaslu&#382;uje posebno mjesto me&#273;u rijekama hrvatskog kr&scaron;a. Ono po &#269;emu se ona posebno isti&#269;e su &#269;ak 93 sedrena slapa, koja ispresijecaju rijeku stvaraju&#263;i me&#273;u sobom ujezerene dijelove toka. Zato ne sumnjamo da &#263;ete u&#382;ivati u ovoj &#269;aroliji prirode!Vidimo se na Mre&#382;nici!', 'Kupon je mogu&#263;e koristiti odmah po primitkuJedna osoba mo&#382;e koristiti 10 kupona na svoje imeJedna osoba mo&#382;e pokloniti 10 kuponaJedan kupon vrijedi za jednu osobuPonuda uklju&#269;uje: rafting na Mre&#382;nici u trajanju od 3hDonosioci KupiMe kupona ostvaruju&nbsp;ru&#269;ak u restoranu Zeleni kut po promotivnoj cijeni od 35 kn - pla&#263;a se na licu mjestaMjesto okupljanja: Restoran Zeleni kut Pu&scaron;kari&#263;, Zve&#269;aj 109Odlazak do mjesta polaska je u vlastitom aran&#382;manuNajava 7 dana unaprijed, radnim danom od 9 do 15h na (091) 4133 920 ili putem e-maila: info@raft.com.hrRok iskoristivosti kupona: 30.9.2013.Nakon isteka roka iskoristivosti kupon nije mogu&#263;e koristiti', '45.396838', '15.430899', 1),
@@ -628,9 +620,9 @@ CREATE TABLE IF NOT EXISTS `prodavatelji` (
 
 INSERT INTO `prodavatelji` (`id`, `id_korisnika`, `naziv`, `adresa`, `kontakt`, `info`, `oib`, `aktivan`) VALUES
 (1, 11, 'Dragicina firma', 'Banovci 3 c, 9241 VerÅ¾ej, Slovenija', '+386025888238', 'http://www.soncna-hisa.si ', '82275477684', 1),
-(2, 1, 'Firma 2', '?ret b.b., Zagreb, Hrvatska', '0915205187', 'http://www.facebook.com/almina.potkovica', '20371366570', 1),
-(3, 3, 'Firma 3', 'Iblerov trg  4, Zagreb, Hrvatska', '0923048252', 'http://www.corpusvalens.com', '30160999168', 1),
-(4, 5, 'Firma 4', 'Pavla Hatza 7, Petrinjska 42a, Zagreb, Hrvats', '014572877,09145', 'http://www.latina.hr', '52123914876', 1),
+(2, 1, 'Ana d.o.o.', '?ret b.b., Zagreb, Hrvatska', '0915205187', 'http://www.facebook.com/almina.potkovica', '20371366570', 1),
+(3, 3, 'Petrol d.o.o.', 'Iblerov trg  4, Zagreb, Hrvatska', '0923048252', 'http://www.corpusvalens.com', '30160999168', 0),
+(4, 5, 'Frank d.d.', 'Pavla Hatza 7, Petrinjska 42a, Zagreb, Hrvats', '014572877,09145', 'http://www.latina.hr', '52123914876', 1),
 (5, 5, '1', 'Otokara Ker&#353;ovanija 16, Osijek, Hrvatska', '031284-444', 'http://tinyurl.com/bmwsqdv', '38897124326', 1),
 (6, 1, '1', 'Beli&#263;i 21, Kastav, Hrvatska', '051691602,09575', 'http://life-estetic.com/', '22629910132', 1),
 (7, 3, '1', 'Ivana Mu&#382;evi&#263;a bb, Crikvenica, Hrva', '098259755', 'http://www.adrenalinpark.eu', '17785400474', 1),
@@ -686,7 +678,7 @@ CREATE TABLE IF NOT EXISTS `racuni` (
   `placeno` tinyint(4) NOT NULL COMMENT '0 ne\n1 da',
   PRIMARY KEY (`id`),
   KEY `fk_racuni_1` (`id_korisnika`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=27 ;
 
 --
 -- Dumping data for table `racuni`
@@ -700,7 +692,9 @@ INSERT INTO `racuni` (`id`, `id_korisnika`, `datum`, `placeno`) VALUES
 (21, 33, '2013-04-26 21:54:05', 1),
 (22, 33, '2013-04-26 22:07:04', 1),
 (23, 33, '2013-04-27 01:30:31', 1),
-(24, 33, '2013-04-27 15:42:09', 1);
+(24, 33, '2013-04-27 15:42:09', 1),
+(25, 33, '2013-04-29 19:57:27', 1),
+(26, 33, '2013-04-30 19:09:59', 1);
 
 -- --------------------------------------------------------
 
@@ -716,7 +710,7 @@ CREATE TABLE IF NOT EXISTS `racuni_akcije` (
   PRIMARY KEY (`id`),
   KEY `fk_racuni_akcije_1` (`id_racuna`),
   KEY `fk_racuni_akcije_2` (`id_akcije`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
 
 --
 -- Dumping data for table `racuni_akcije`
@@ -733,7 +727,10 @@ INSERT INTO `racuni_akcije` (`id`, `id_racuna`, `id_akcije`, `kolicina`) VALUES
 (15, 21, 25, 1),
 (16, 22, 39, 1),
 (17, 23, 3, 1),
-(18, 24, 8, 1);
+(18, 24, 8, 1),
+(19, 25, 2, 1),
+(20, 25, 7, 1),
+(21, 26, 51, 1);
 
 -- --------------------------------------------------------
 

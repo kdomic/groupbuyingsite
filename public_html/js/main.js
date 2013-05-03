@@ -344,7 +344,7 @@ function sliderImgChange(img){
 function slideOfferChange(data) {         
     var time = 400;
     $('.sliderCaption h1').fadeOut(time, function() { $(this).text(data[1]).fadeIn(time); });
-    $('.sliderCaption h2').fadeOut(time, function() { $(this).text(data[2]).fadeIn(time); });
+    $('.sliderCaption h2').fadeOut(time, function() { $(this).text( data[2] ).fadeIn(time); });
     $('.sliderOfferBuy h2').fadeOut(time, function() { $(this).text(data[3]).fadeIn(time); });
     $('.sliderOfferDiscount h2.u').fadeOut(time, function() { $(this).text(data[4]).fadeIn(time); });
     $('.sliderOfferDiscount h2.p').fadeOut(time, function() { $(this).text(data[5]).fadeIn(time); });
@@ -457,7 +457,7 @@ function getOffer(load,filterOn,slider){
     $(offer).each(function(){
         $(this).children().each(function(){
             var _data = $(this).text();
-            _data = _data.replace(/"/g, '');
+            //_data = _data.replace(/"/g, '');
             data.push(_data);
         });
     });
@@ -479,9 +479,9 @@ function loadOfferDetails(num){
         var $div = $('<img src="'+path+'" alt="slika" onclick="sliderImgChange(this);"/>');
         $('.imgGallery').append($div);
     }
-    $('.shortDesc').text(htmlDencodeEntities(data[15]));
-    $('.desc').text(htmlDencodeEntities(data[16]));
-    $($('#layout_sidebar_offer_details div')[0]).html(htmlDencodeEntities(data[17])); 
+    $('.shortDesc').html( data[15] );
+    $('.desc').html(data[16]);
+    $($('#layout_sidebar_offer_details div')[0]).html(data[17]); 
     map_x = parseFloat(data[18]);
     map_y = parseFloat(data[19]);  
     $($('#layout_sidebar_offer_details div')[1]).html(data[1]+'<br/><a href=""><img src="images/basketAdd.png" alt="slika" /></a>');
@@ -489,7 +489,6 @@ function loadOfferDetails(num){
     backQuene.push(parseInt(num)*(-1));
     showHideComment(data[0]);
     loadComments(data[0]);
-    console.log(data);
 }
 
 /* === COMMENTS === */
@@ -509,12 +508,14 @@ function saveNewComment(){
     var protocolData = new Array(3,-1);
     protocolData.push(sessionCheck());    
     protocolData.push($('#commentPONUDA').val());
-    protocolData.push($('#commentKOMANTAR').val());
+    var kom = $('#commentKOMANTAR').val();    
+    protocolData.push(kom.replace(/\n/g,"<br>"));
     protocolData.push($('#commentOCJENA').val());
     protocolData.push(1);
     var xml = sendToPhp(protocolData,"getSet_komentari.php");
     loadComments(protocolData[3]);
     $('#newCommentArea').hide();
+    console.log(protocolData);
 }
 
 function loadComments(offerID){

@@ -7,7 +7,10 @@
         <link rel="stylesheet" type="text/css" href="../stylesheet/admin.css" />
         <link rel="stylesheet" type="text/css" href="../stylesheet/msgBoxLight.css" />        
         <link rel="stylesheet" type="text/css" href="../stylesheet/jquery.dataTables.css" />
-        <link rel="stylesheet" type="text/css" href="../stylesheet/jquery-ui-1.10.2.custom.css" />        
+        <link rel="stylesheet" type="text/css" href="../stylesheet/jquery-ui-1.10.2.custom.css" />
+        <link rel="stylesheet" type="text/css" href="../stylesheet/jquery-te-1.3.5.css" />        
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+        <script type="text/javascript" src="../js/encoder.js"></script>            
         <script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
         <script type="text/javascript" src="../js/jquery.timer.js"></script>
         <script type="text/javascript" src="../js/jquery.msgBox.js"></script>
@@ -15,6 +18,7 @@
         <script type="text/javascript" src="../js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="../js/jquery-ui-1.10.2.custom.js"></script>
         <script type="text/javascript" src="../js/jquery.dataTables.columnFilter.js"></script>
+        <script type="text/javascript" src="../js/jquery-te-1.3.5.min.js"></script>        
     </head>    
     
     <body>

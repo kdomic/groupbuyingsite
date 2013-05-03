@@ -70,7 +70,7 @@
 			$k->aktivan = array_pop($data);
 			if((int)$data[0]===3)$k->datum = date("Y-m-d H:i:s");
 			$k->ocjena = array_pop($data);
-			$k->komentar = array_pop($data);
+			$k->komentar = nl2br(array_pop($data));
 			$k->id_ponude = array_pop($data);
             $akcija = Akcije::find_by_id($k->id_ponude);
             $k->id_ponude = $akcija->id_ponude;

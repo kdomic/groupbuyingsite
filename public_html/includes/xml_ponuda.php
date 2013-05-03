@@ -131,10 +131,10 @@
             //$xml->sliderOfferTime = Vrijeme::timeWithOffset($xml->sliderOfferTime);
             //$xml->sliderOfferTime = Vrijeme::remainingTime($xml->sliderOfferTime);
             $xml->sliderOfferTime = Vrijeme::remainingTimeWithOffset($xml->sliderOfferTime);
-            $xml->shortDesc = htmlentities(array_shift($data[0]));
-            $xml->shortDesc .= htmlentities(array_shift($data[0]));
-            $xml->desc = htmlentities(array_shift($data[0]));
-            $xml->remark = htmlentities(array_shift($data[0]));
+            $xml->shortDesc = array_shift($data[0]);
+            $xml->shortDesc .= '<p>'.array_shift($data[0]).'</p>';
+            $xml->desc = array_shift($data[0]);
+            $xml->remark = array_shift($data[0]);
             $xml->x = array_shift($data[0]);
             $xml->y = array_shift($data[0]);                        
             $xml->sliderOfferBoughtImg = ('offers/ponuda_'.sprintf("%05d", $za_sluku).'/01.jpg');

@@ -41,6 +41,8 @@ $(document).ready(function(){
     $('#userEMAIL').blur(function(){checkEmailAvailability('userEMAIL')});
     $('#modSelectUser').change(function(){showCatDropSelectOptions()});
 
+    $('.jqte-test').jqte();
+
 });
 
 /* === LAYOUTS === */
@@ -591,6 +593,7 @@ function initCitysTable(){
     var protocolData = new Array();
     protocolData.push(1);
     var xml = sendToPhp(protocolData,'../getSet_gradovi.php');
+    console.log(xml);
     var dataSet = $(xml).find('gradovi');    
     var data = new Array();
     $(dataSet).each(function(){    
@@ -652,9 +655,8 @@ function saveCity(){
 function initOffersTable(){
     var dataTable = $('#offersTable').dataTable();
     dataTable.fnClearTable();
-    var protocolData = new Array();
-    protocolData.push(1);
-    var xml = sendToPhp(protocolData,'../getSet_ponude.php');
+    var xml = sendToPhp(new Array('1'),'../getSet_ponude.php');
+    console.log(xml);
     var dataSet = $(xml).find('ponude');
     var data = new Array();
     $(dataSet).each(function(){    
@@ -664,9 +666,11 @@ function initOffersTable(){
                 data.push($(this).text());
             });
             dataTable.fnAddData([data[0],data[2],data[3],data[1],data[data.length-1]]);
+                console.log(data);
+
         });
     });    
-    dataTable.$('tr').addClass("row").click(function(){editOffer(dataTable.fnGetData(this)[0])}); 
+    dataTable.$('tr').addClass("row").click(function(){editOffer(dataTable.fnGetData(this)[0])});
 }
 
 function newOffer(){
@@ -679,6 +683,9 @@ function newOffer(){
     $($('#singleOffer input')[0]).val('Novi unos');
     $('#singleOffer input:radio[name=vidljivost]').prop('checked', false);
     $('#singleOffer input:radio[name=vidljivost][value="1"]').prop('checked', true);
+    googleMapsAdmin(45.813023, 15.977898, 'Pozicija');
+    $('#offerKARTAX').val(45.813023);
+    $('#offerKARTAY').val(15.977898);
 }
 
 function editOffer(num){
@@ -692,24 +699,24 @@ function editOffer(num){
         data.push($(this).text());
     });
     $('#offerID').val(data[0]);
-    $('#offerNASLOV').val(data[3]);
-    $('#offerPODNASLOV').val(data[4]);
+    $('#offerNASLOV').jqteVal(data[3]);
+    $('#offerPODNASLOV').jqteVal(Encoder.htmlEncode(data[4]));
     $('#offerCIJENA').val(data[5]);
-    $('#offerOPISNASLOV').val(data[6]);
-    $('#offerOPISKRATKI').val(data[7]);
-    $('#offerOPIS').val(data[8]);
-    $('#offerNAPOMENA').val(data[9]);
+    $('#offerOPISNASLOV').jqteVal(data[6]);
+    $('#offerOPISKRATKI').jqteVal(data[7]);
+    $('#offerOPIS').jqteVal(data[8]);
+    $('#offerNAPOMENA').jqteVal(data[9]);
     $('#offerKARTAX').val(data[10]);
-    $('#offerKARTAY').val(data[11]);
+    $('#offerKARTAY').val(data[11]);    
     $('#offerPRODAVATELJ option').eq(parseInt(data[1])-1).attr('selected', 'selected');    
     $('#offerKATEGORIJA option').eq(parseInt(data[2])-1).attr('selected', 'selected');
     if(data[data.length-1]=="1")
         $('#singleOffer input:radio[name=vidljivost][value="1"]').prop('checked', true);
     else
         $('#singleOffer input:radio[name=vidljivost][value="0"]').prop('checked', true);
-
     $('#singleOffer').show();
     $('#allOffers').hide();
+    googleMapsAdmin(data[10], data[11], data[3]);
 }
 
 function saveOffer(){
@@ -790,7 +797,6 @@ function editAction(num){
         data.push($(this).text());
     });
     $('#actionID').val(data[0]);
-    console.log("Akcija: "+data[0]);
     citysActionsShow(data[0]);
     $('#actionPONUDA option').eq(parseInt(data[1])-1).attr('selected', 'selected');        
     $('#actionPOPUST').val(data[2]);
@@ -1221,4 +1227,26 @@ function checkEmailAvailability(field) {
         $('#userUpdateStatus').html("").removeClass("warning").slideUp("slow");
         return true;
     }
+}
+
+function googleMapsAdmin(map_x, map_y, title){
+    var latlng = new google.maps.LatLng(map_x, map_y);
+    var map = new google.maps.Map(document.getElementById('map'), {
+        center: latlng,
+        zoom: 11,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+    var marker = new google.maps.Marker({
+        position: latlng,
+        map: map,
+        title: title,
+        draggable: true
+    });
+    google.maps.event.addListener(marker, 'dragend', function(a) {
+        //var div = document.createElement('div');
+        //div.innerHTML = a.latLng.lat().toFixed(4) + ', ' + a.latLng.lng().toFixed(4);
+        //document.getElementsByTagName('body')[0].appendChild(div);
+        $('#offerKARTAX').val(a.latLng.lat().toFixed(4));
+        $('#offerKARTAY').val(a.latLng.lng().toFixed(4));
+    });
 }

@@ -31,21 +31,21 @@
         public $aktivan;
 
         public static function getAll($data){
-            $_p = self::find_all();
+            $_d = self::find_all();
             $xmlDoc = new DOMDocument();
             $root = $xmlDoc->appendChild($xmlDoc->createElement("ponude"));
-            foreach ($_p as $p){                
-                $prodavatelj = Prodavatelji::find_by_id($p->id_prodavatelja);
-                $kategorija = Kategorije::find_by_id($p->id_kategorije);
+            foreach ($_d as $d){                
+                $prodavatelj = Prodavatelji::find_by_id($d->id_prodavatelja);
+                $kategorija = Kategorije::find_by_id($d->id_kategorije);
+                $d->id_prodavatelja = $prodavatelj->naziv ;
+                $d->id_kategorije = $kategorija->naziv;
+                $d->aktivan = $d->aktivan==1 ? "Da" : "Ne";
                 //if(isset($data[1]))
-                    //if(!$p->aktivan || !$kategorija->aktivan || !$prodavatelj->aktivan)
+                    //if(!$d->aktivan || !$kategorija->aktivan || !$prodavatelj->aktivan)
                         //continue;
-                $p->id_prodavatelja = $prodavatelj->naziv ;                                        
-                $p->id_kategorije = $kategorija->naziv;
-                $p->aktivan = $p->aktivan==1 ? "Da" : "Ne";
-                $ponuda = $root->appendChild($xmlDoc->createElement("ponuda"));                            
-                foreach ($p as $key => $value) {
-                    $ponuda->appendChild($xmlDoc->createElement($key, toUtf8(htmlentities($value))));
+                $data = $root->appendChild($xmlDoc->createElement("ponuda"));
+                foreach ($d as $key => $value) {
+                    $data->appendChild($xmlDoc->createElement($key, toUtf8($value)));
                 }
             }
             header("Content-Type: text/xml");
@@ -59,7 +59,7 @@
             $root = $xmlDoc->appendChild($xmlDoc->createElement("ponude"));
             $ponuda = $root->appendChild($xmlDoc->createElement("ponuda"));
             foreach ($p as $key => $value) {
-                $ponuda->appendChild($xmlDoc->createElement($key, toUtf8(htmlentities($value))));
+                $ponuda->appendChild($xmlDoc->createElement($key, toUtf8($value)));
             }
             header("Content-Type: text/xml");
             $xmlDoc->formatOutput = true;

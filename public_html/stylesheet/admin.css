@@ -165,3 +165,9 @@ input[type="text"], input[type="password"], input[type="email"] {
     background-color: #FFBABA;
     background-image: url('../images/error.png');
 }
+
+#map {
+    width: 100%;
+    height: 300px;
+    margin: 0;
+}
