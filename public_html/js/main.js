@@ -88,8 +88,13 @@ function registerUser(){
         $('#regStatus').removeClass("error").removeClass("warning").addClass("info");
         $('#regStatus span').html("Registracija izvršena!<br/>Možete se prijaviti");      
         $('#regStatus').slideDown("slow");
+    } else if(status==='-1') {
+        $('#regStatus').removeClass("info").removeClass("error").addClass("warning");
+        $('#regStatus span').html("Kriva verifikacija");
+        $('#btnRegister').removeAttr("disabled");        
+        $('#regStatus').slideDown("slow");
     } else {
-        $('#regStatus').removeClass("warning").addClass("error");
+        $('#regStatus').removeClass("info").removeClass("warning").addClass("error");
         $('#regStatus span').html("Registracija neuspjela!<br/>Pokušajte ponovno");
         $('#btnRegister').removeAttr("disabled");        
         $('#regStatus').slideDown("slow");
@@ -107,36 +112,41 @@ function checkIsEmpty(){
     switch(i){
         case 0: 
             $('#regStatus span').html("Ime je obavezno polje!");
-            $('#regStatus').slideDown("slow");
+            $('#regStatus').removeClass("error").removeClass("info").addClass("warning").slideDown("slow");
             $('#inputIme').focus();
               return false;
         case 1: 
             $('#regStatus span').html("Prezime je obavezno polje!");
-            $('#regStatus').slideDown("slow");
+            $('#regStatus').removeClass("error").removeClass("info").addClass("warning").slideDown("slow");
             $('#inputPrezime').focus();
             return false;
         case 2: 
             $('#regStatus span').html("Email nije unešen ili je neispravan!");
-            $('#regStatus').slideDown("slow");
+            $('#regStatus').removeClass("error").removeClass("info").addClass("warning").slideDown("slow");
             $('#inputEmail').focus();
             return false;
         case 3: 
             $('#regStatus span').html("Lozinka je obavezno polje!");
-            $('#regStatus').slideDown("slow");
+            $('#regStatus').removeClass("error").removeClass("info").addClass("warning").slideDown("slow");
             $('#inputLozinka').focus();
             return false;
         case 4: 
             $('#regStatus span').html("Potvrda lozinke je obavezna");
-            $('#regStatus').slideDown("slow");
+            $('#regStatus').removeClass("error").removeClass("info").addClass("warning").slideDown("slow");
             $('#inputLozinka2').focus();
             return false;
         case 5: 
             $('#regStatus span').html("Morate prihvatiti uvijete");
-            $('#regStatus').slideDown("slow");
+            $('#regStatus').removeClass("error").removeClass("info").addClass("warning").slideDown("slow");
+            $('#uvjeti').focus();
+            return false;
+        case 6: 
+            $('#regStatus span').html("Verifikacija nije upisana");
+            $('#regStatus').removeClass("error").removeClass("info").addClass("warning").slideDown("slow");
             $('#uvjeti').focus();
             return false;
         default:
-            $('#regStatus').slideUp("slow");
+            $('#regStatus').removeClass("error").removeClass("info").addClass("warning").slideUp("slow");
             $('#regStatus span').html("");
             return true;
     }
@@ -178,6 +188,7 @@ function parseRegForm(){
     data.push($('#inputLozinka').val());    //3
     data.push($('#inputLozinka2').val());   //4
     data.push($('#uvjeti').is(':checked')); //5
+    data.push($('#inputCaptcha').val()); //5
     return data;
 }
 

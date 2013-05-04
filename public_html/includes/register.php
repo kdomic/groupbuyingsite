@@ -17,7 +17,11 @@
             $this->lozinka = $data[3];
             $this->lozinka2 = $data[4];
             $this->uvjeti = $data[5];
-            if(isset($data[6])){
+            if($data[6]!=$_SESSION['captcha']){
+                xmlStatusSend(-1);
+                return;
+            }
+            if(isset($data[7])){
                 if(!strlen($this->ime) || !strlen($this->prezime) || !strlen($this->email) || !strlen($this->lozinka) || !$this->uvjeti || $this->lozinka!=$this->lozinka)
                     xmlStatusSend(0);
                 else

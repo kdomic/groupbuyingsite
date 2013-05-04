@@ -28,6 +28,10 @@
                     <td><input type="checkbox"  name="uvijeti"  id="uvjeti"/></td>
                 </tr>
                 <tr>
+                    <td><img src="captcha.php" alt="Captcha" /></td>
+                    <td><input type="text"      name="captcha"      id="inputCaptcha" laceholder="Unesi potvrdu"/></td>
+                </tr>
+                <tr>
                     <td colspan="2"><button id="btnRegister" onclick="registerUser();" >Registriraj me</button></td>
                 </tr>
             </table>        
