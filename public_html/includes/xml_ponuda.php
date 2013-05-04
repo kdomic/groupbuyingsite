@@ -104,6 +104,7 @@
             $xml->id = array_shift($data[0]);
             if($idOrg>0 && in_array($xml->id , explode(";", $protocolData[2])) && (int)$protocolData[7]==0){
                 $protocolData[1]--;
+                if($protocolData[1]<1) return;
                 self::get($protocolData);
                 return;
             }

@@ -455,8 +455,9 @@ function addNewOffer(load,field,specialFilter){
         filterCategory = tempCat;
         filterCity = tempCity;
         filterCategory = tempTitle;
+    } else {
+        loadedOffers.push(data[0]);
     }
-    loadedOffers.push(data[0]);
     var $div = $('\
 <div class="offer">\
 <img src="'+data[12]+'" alt="slika" onclick="loadOfferDetails('+data[0]+');"/>\
