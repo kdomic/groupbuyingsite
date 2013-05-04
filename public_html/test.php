@@ -1,6 +1,7 @@
 <?php require_once('includes/initialize.php'); ?>
 <?php
-
+	echo $_SESSION['imgPath'];
+/*
 	$ponude = Ponude::find_all();
 	foreach ($ponude as $p) {
 		$nova = Ponude::find_by_id($p->id);
@@ -13,4 +14,5 @@
 		//print_r($p);
 	}
 	echo "kraj";
+*/
 ?>

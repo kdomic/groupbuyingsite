@@ -593,7 +593,6 @@ function initCitysTable(){
     var protocolData = new Array();
     protocolData.push(1);
     var xml = sendToPhp(protocolData,'../getSet_gradovi.php');
-    console.log(xml);
     var dataSet = $(xml).find('gradovi');    
     var data = new Array();
     $(dataSet).each(function(){    
@@ -656,7 +655,6 @@ function initOffersTable(){
     var dataTable = $('#offersTable').dataTable();
     dataTable.fnClearTable();
     var xml = sendToPhp(new Array('1'),'../getSet_ponude.php');
-    console.log(xml);
     var dataSet = $(xml).find('ponude');
     var data = new Array();
     $(dataSet).each(function(){    
@@ -666,8 +664,6 @@ function initOffersTable(){
                 data.push($(this).text());
             });
             dataTable.fnAddData([data[0],data[2],data[3],data[1],data[data.length-1]]);
-                console.log(data);
-
         });
     });    
     dataTable.$('tr').addClass("row").click(function(){editOffer(dataTable.fnGetData(this)[0])});

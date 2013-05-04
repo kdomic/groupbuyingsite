@@ -55,6 +55,8 @@
 
         public static function get($id){
             $p = self::find_by_id($id);
+            $path = getcwd().'/offers/ponuda_'.sprintf("%05d", $p->id).'/';
+            $_SESSION['imgPath'] = $path; 
             $xmlDoc = new DOMDocument();
             $root = $xmlDoc->appendChild($xmlDoc->createElement("ponude"));
             $ponuda = $root->appendChild($xmlDoc->createElement("ponuda"));
@@ -67,7 +69,7 @@
         }
 
         public static function set($data)
-        {         
+        {               
             $p = new Ponude();
             if((int)$data[0]===4) $p = self::find_by_id($data[1]);            
             $p->aktivan = array_pop($data);
@@ -81,8 +83,14 @@
             $p->podnaslov = array_pop($data);
             $p->naslov = array_pop($data);
             $p->id_kategorije = array_pop($data);
-            $p->id_prodavatelja = array_pop($data);
+            $p->id_prodavatelja = array_pop($data);            
             xmlStatusSend($p->save());            
+            $path = getcwd().'/offers/ponuda_'.sprintf("%05d", $p->id).'/'; 
+            $_SESSION['imgPath'] = $path;                            
+            if((int)$data[0]===3){
+                mkdir($path,0777,true);
+            }
+
         }
     } 
 ?>

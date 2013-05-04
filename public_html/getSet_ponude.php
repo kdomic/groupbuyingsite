@@ -9,6 +9,9 @@
 	*/
 
 	$data = json_decode(stripslashes($_POST['data']));
+    //echo "<pre>";
+    //print_r($_POST['data']);
+    //echo "</pre>";
 	switch((int)$data[0]){
 		case 1: Ponude::getAll($data); break;
 		case 2: Ponude::get($data[1]);break;
