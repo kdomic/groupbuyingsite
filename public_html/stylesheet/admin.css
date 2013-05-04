@@ -116,6 +116,12 @@ input[type="text"], input[type="password"], input[type="email"] {
     width: 250px;
 }
 
+#galleryOffer img {
+    width: 80px;
+    height: 60px;
+    margin-left: 5px;
+}
+
 /* === TABLE === */
 
 .row:hover {

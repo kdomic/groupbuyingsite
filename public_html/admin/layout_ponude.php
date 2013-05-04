@@ -76,8 +76,15 @@
         <div class="clear"></div>
         <div id="map"></div>
         <br>
-        <div id="queue"></div>
-        <input id="file_upload" name="file_upload" type="file" multiple="true">
+        <p>Slike je moguće pohraniti nakon spremanja ponude
+            <br>Moraju biti imenovane rednim brojem u PNG formatu (npg. 1.png, 2.png ...)
+            <br>Slika 1.png biti će glavna slika
+            <br>Brisanje slika se vrši klikom na samu sliku</p>
+        <div id="offerImgBox">
+            <div id="queue"></div>
+            <input id="file_upload" name="file_upload" type="file" multiple="true">        
+            <div id="galleryOffer"></div>
+        </div>
         <br>
         <td colspan="2"><button id="btnSaveOffer" >Pospremi</button></td>        
         <div class="clear"></div>          
@@ -94,7 +101,8 @@
                 'token'     : '<?php echo md5('unique_salt' . $timestamp);?>'
             },
             'swf'      : '../includes/uploadify.swf',
-            'uploader' : '../includes/uploadify.php'
+            'uploader' : '../includes/uploadify.php',
+            'onUploadComplete' : function(file) {reloadGallery();}
         });
     });
 </script>

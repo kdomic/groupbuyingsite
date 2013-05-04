@@ -674,8 +674,9 @@ function newOffer(){
     categoryDropSelectOptions('offerKATEGORIJA',1,0);
     $('#allOffers').hide();
     $('#singleOffer').show();
+    $('#offerImgBox').hide();
     $('#singleOffer input:text').val('');
-    $('#singleOffer textarea').val('');
+    $('#singleOffer textarea').jqteVal('');
     $($('#singleOffer input')[0]).val('Novi unos');
     $('#singleOffer input:radio[name=vidljivost]').prop('checked', false);
     $('#singleOffer input:radio[name=vidljivost][value="1"]').prop('checked', true);
@@ -710,9 +711,11 @@ function editOffer(num){
         $('#singleOffer input:radio[name=vidljivost][value="1"]').prop('checked', true);
     else
         $('#singleOffer input:radio[name=vidljivost][value="0"]').prop('checked', true);
+    $('#offerImgBox').show();    
     $('#singleOffer').show();
     $('#allOffers').hide();
     googleMapsAdmin(data[10], data[11], data[3]);
+    imgGallery(data[13],data[14]);
 }
 
 function saveOffer(){
@@ -739,6 +742,33 @@ function saveOffer(){
     data.push($('#singleOffer input:radio[name=vidljivost]:checked').val());
     var xml = sendToPhp(data,'../getSet_ponude.php');
     if(phpStatus(xml,'offerUpdateStatus')) setTimeout(function(){ layout_showPonude(); }, 1000);
+}
+
+function imgGallery(path,list){
+    var img = list.split(';');
+    img.pop();
+    $('#galleryOffer').html('');
+    while(img.length>0){
+        var _path = '../'+path+'/'+img.pop();
+        var $div = $('<img src="'+_path+'" alt="slika" onclick="imgGalleryDelete(this);"/>');
+        $('#galleryOffer').append($div);
+    }
+}
+
+function imgGalleryDelete(img){
+    var xml = sendToPhp(new Array('5',img.src),'../getSet_ponude.php');
+    reloadGallery();
+}
+
+function reloadGallery(){
+    var protocolData = new Array('2',$($('#singleOffer input')[0]).val());
+    var xml = sendToPhp(protocolData,'../getSet_ponude.php');
+    var data = new Array();
+    var parsedXML = $(xml).find('ponuda');
+    $(parsedXML).children().each(function(){
+        data.push($(this).text());
+    });
+    imgGallery(data[13],data[14]);    
 }
 
 /* === ACTION === */
