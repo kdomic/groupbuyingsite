@@ -94,6 +94,7 @@
             if((int)$data[0]===3){
                 mkdir($path,0777,true);
             }
+            Logovi::logoviOp('10',$p->id);                       
         }
 
         function imgList(){

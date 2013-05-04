@@ -66,6 +66,7 @@
 			$p->naziv = array_pop($data);
 			$p->id_korisnika = array_pop($data);
 			xmlStatusSend($p->save());
+            Logovi::logoviOp('9',$p->id);			
 		}
     } 
 ?>

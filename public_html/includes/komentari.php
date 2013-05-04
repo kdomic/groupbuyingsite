@@ -104,6 +104,7 @@
             $d->aktivan += 1;
             $d->aktivan %= 2;
             xmlStatusSend($d->save());
+            Logovi::logoviOp('12',$d->id);
         }
 
 

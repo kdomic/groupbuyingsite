@@ -68,6 +68,7 @@
                 $d->popust = array_pop($data);
                 $d->id_ponude = array_pop($data);
                 xmlStatusSend($d->save());
+                Logovi::logoviOp('11',$d->id);                       
             }
 
             public static function getPicId($id) //5

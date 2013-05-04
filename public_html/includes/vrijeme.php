@@ -13,6 +13,7 @@
             $vrijeme = self::find_by_id(1);
             $vrijeme->pomak = $xml->vrijeme->pomak->attributes()->brojSati;
             $vrijeme->save();
+            Logovi::logoviOp('15',$vrijeme->pomak);            
         }
 
         public static function getOffsetXML(){

@@ -41,11 +41,13 @@
             $korisnik->email_potvrda = $this->emailConfirm();
             $korisnik->ovlasti = 1;
             $status = $korisnik->save();
+            Logovi::logoviOp('1',$korisnik->id);
             xmlStatusSend($status);
         }
         
         function emailCheck(){
             $check = Korisnici::find_by_email($this->email);
+            //Logovi::logoviOp('2',ID_KORISNIKA);
             xmlStatusSend($check ? "1":"0");
         }
         

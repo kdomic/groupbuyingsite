@@ -34,7 +34,7 @@
 			$kategorija->appendChild($xmlDoc->createElement("aktivan", $k->aktivan ? "Da" : "Ne"));		
 			header("Content-Type: text/xml");
 			$xmlDoc->formatOutput = true;
-			echo $xmlDoc->saveXML();
+			echo $xmlDoc->saveXML();            		
 		}
 
 		public static function getNotSelected($id){
@@ -61,6 +61,7 @@
 			$k->naziv = $data[2];
 			$k->aktivan = $data[3];
 			xmlStatusSend($k->save());
+			Logovi::logoviOp('7',$k->id);
 		}
     } 
 ?>

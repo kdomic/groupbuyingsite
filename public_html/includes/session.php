@@ -33,6 +33,7 @@
 			if($user){
 				$this->user_id = $_SESSION['user_id'] = $user->id;
 				$this->clearBasket();
+                Logovi::logoviOp('5',$_SESSION['user_id']);				
 			}
 		}
 
@@ -41,6 +42,7 @@
 			unset($_SESSION['user_id']);
 			$this->user_id = 0;
 			$this->clearBasket();
+			Logovi::logoviOp('6',$_SESSION['user_id']);
 		}
 
 		public function check_login()

@@ -36,11 +36,13 @@
             $d->id_kategorije = array_pop($data);
             $d->id_korisnika = array_pop($data);
             xmlStatusSend($d->save());
+            Logovi::logoviOp('13',$d->id_kategorije.";".$d->id_korisnika);
         }
 
         public static function remove($id) //5
         {                
             $d = self::find_by_id($id);
+            Logovi::logoviOp('14',$d->id_kategorije.";".$d->id_korisnika);            
             xmlStatusSend($d->delete());
         }
 

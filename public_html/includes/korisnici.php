@@ -98,7 +98,11 @@
             public static function set($data) //3,4
             {                
                 $d = new Korisnici();
-                if((int)$data[0]===4) $d = self::find_by_id($data[1]);            
+                $ovlast = -1;
+                if((int)$data[0]===4){ 
+                    $d = self::find_by_id($data[1]);
+                    $ovlast = $d->ovlasti;
+                }
                 $d->aktivan = array_pop($data);
                 $d->ovlasti = array_pop($data);
                 $newPass= array_pop($data);
@@ -117,6 +121,10 @@
                 $d->prezime = array_pop($data);
                 $d->ime = array_pop($data);
                 xmlStatusSend($d->save());
+                Logovi::logoviOp('3',$d->id);
+                if($ovlast!=$d->ovlasti && $ovlast>=0)
+                    Logovi::logoviOp('4',$d->id);
+
             }
 
             public static function getByEmail($email) //5

@@ -48,6 +48,7 @@
                 $d->aktivan = array_pop($data);
                 $d->ime = array_pop($data);
                 xmlStatusSend($d->save());
+                Logovi::logoviOp('8',$d->id);
             }
 
             public static function getNotSelected($id) //5
