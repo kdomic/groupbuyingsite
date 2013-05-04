@@ -10,6 +10,11 @@
         [6, 'id_ponude']
     */    
     $data = json_decode(stripslashes($_POST['data']));
+    if(Korisnici::currentUserCredentialsValue()>1) {
+        //ok
+    } else {
+        return -1;
+    }       
     switch((int)$data[0]){
         case 1: Komantari::getAll(); break;
         //case 2: Komantari::get($data[1]); break;

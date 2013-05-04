@@ -9,6 +9,11 @@
 	*/
 
 	$data = json_decode(stripslashes($_POST['data']));
+	if(Korisnici::currentUserCredentialsValue()>1) {
+        //ok
+    } else {
+        return -1;
+    }		
     //echo "<pre>";
     //print_r($_POST['data']);
     //echo "</pre>";

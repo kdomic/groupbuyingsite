@@ -9,7 +9,11 @@
             public $id;             //[0]
             public $id_korisnika;   //[1]
             public $id_kategorije;  //[2]
-            
+        
+        public static function find_by_korisnik($id_korisnika) {
+            return self::find_by_sql("SELECT * FROM ".static::$table_name." WHERE id_korisnika=".$id_korisnika);
+        }
+
         public static function getAll() //1
         {
             $_d = self::find_all();

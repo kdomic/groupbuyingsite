@@ -134,5 +134,25 @@
                 else self::get($d->id);
             }
 
+            public static function currentUserCredentials(){
+                if(isset($_SESSION['user_id'])){
+                    $d = self::find_by_id($_SESSION['user_id']);
+                    if(!$d) xmlStatusSend(0);
+                    else xmlStatusSend($d->ovlasti);
+                } else {
+                    xmlStatusSend(0);
+                }                
+            }
+
+            public static function currentUserCredentialsValue(){
+                if(isset($_SESSION['user_id'])){
+                    $d = self::find_by_id($_SESSION['user_id']);
+                    if(!$d) return 0;
+                    else  return $d->ovlasti;
+                }
+                return 0;
+            }
+
+
     }
 ?>

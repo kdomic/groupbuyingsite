@@ -63,5 +63,25 @@
 			xmlStatusSend($k->save());
 			Logovi::logoviOp('7',$k->id);
 		}
+
+		public static function getAllForMods(){
+			$_k = self::find_all();
+			$kor = Korisnici::find_by_id($_SESSION['user_id']); 
+			$_m = Moderatori::find_by_korisnik($_SESSION['user_id']);
+			$filter;
+			if($kor->ovlasti==2)
+				foreach ($_m as $m)
+					$filter[] = $m->id_kategorije;
+			$xmlDoc = new DOMDocument();
+			$root = $xmlDoc->appendChild($xmlDoc->createElement("kategorije"));
+			foreach($_k as $k){
+				if(!empty($filter) && !in_array($k->id, $filter)) continue;
+				$kategorija = $root->appendChild($xmlDoc->createElement("kategorija"));
+				$kategorija->appendChild($xmlDoc->createElement("naziv", toUtf8($k->naziv)));
+			}
+			header("Content-Type: text/xml");
+			$xmlDoc->formatOutput = true;
+			echo $xmlDoc->saveXML();
+		}
     } 
 ?>

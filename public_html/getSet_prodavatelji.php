@@ -8,7 +8,12 @@
 		[4, 'ID', ...]	- set() update
 	*/
 
-	$data = json_decode(stripslashes($_POST['data']));	
+	$data = json_decode(stripslashes($_POST['data']));
+	if(Korisnici::currentUserCredentialsValue()>1) {
+        //ok
+    } else {
+        return -1;
+    }			
 	switch((int)$data[0]){
 		case 1: Prodavatelji::getAll(); break;
 		case 2: Prodavatelji::get($data[1]);break;

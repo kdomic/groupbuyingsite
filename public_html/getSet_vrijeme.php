@@ -7,6 +7,11 @@
 
 	*/
 	$data = json_decode(stripslashes($_POST['data']));	
+	if(Korisnici::currentUserCredentialsValue()==3) {
+        //ok
+    } else {
+        return -1;
+    }		
 	switch((int)$data[0]){
 		case 1: Vrijeme::getOffsetXML(); break;
 		case 2: Vrijeme::setOffset(); break;

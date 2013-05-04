@@ -10,6 +10,11 @@
 
 	*/
 	$data = json_decode(stripslashes($_POST['data']));	
+	if(Korisnici::currentUserCredentialsValue()>1) {
+        //ok
+    } else {
+        return -1;
+    }	
 	switch((int)$data[0]){
 		case 1: Akcije::getAll(); break;
 		case 2: Akcije::get($data[1]);break;

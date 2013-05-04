@@ -8,6 +8,11 @@
 
 	*/
 	$data = json_decode(stripslashes($_POST['data']));	
+	if(Korisnici::currentUserCredentialsValue()==3) {
+        //ok
+    } else {
+        return -1;
+    }	
 	switch((int)$data[0]){
 		case 1: Moderatori::getAll(); break;
 		case 3: Moderatori::set($data);break;		

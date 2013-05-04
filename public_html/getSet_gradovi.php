@@ -9,7 +9,12 @@
 		[5, ID_akcije]	- Oni koji još nisu pridruženi akciji
 	*/
 
-	$data = json_decode(stripslashes($_POST['data']));	
+	$data = json_decode(stripslashes($_POST['data']));
+	if(Korisnici::currentUserCredentialsValue()>1) {
+        //ok
+    } else {
+        return -1;
+    }			
 	switch((int)$data[0]){
 		case 1: Gradovi::getAll(); break;
 		case 2: Gradovi::get($data[1]);break;

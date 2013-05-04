@@ -5,7 +5,19 @@ var userSelectType; //ova nam je da se znamo vratiti poslje pohrane korisnika il
 /* === ONLOAD === */
 
 $(document).ready(function(){
-    //!!!! PROVJERA OVLASTI - getSet_korisnici.php
+    var cred = parseInt(currentUserCredentials());    
+    console.log(cred);
+    if(cred==3){
+        //all show
+    }
+    if(cred==2){
+        $($('nav li')[1]).hide();
+        $($('nav li')[2]).hide();
+        $($('nav li')[10]).hide();
+    } else {
+        error();
+    }
+
     hideAll();
     layout_showPocetna();
     //EVENTS
@@ -917,8 +929,6 @@ function citysActionsShow(id) {
         var city = $(this).val();
         var action = $('#actionID').val();
         if(city==0) return;
-        //console.log("Grad: "+ city);
-        //console.log("Akcija: "+ action);
         var xml = sendToPhp(new Array('3',city,action),'../getSet_gradoviAkcije.php');
         phpStatus(xml,'actionUpdateStatus');         
         citysActionsShow(action);
@@ -1114,7 +1124,7 @@ function categoryDropSelectOptions(field,type,userID){
 }
 
 function kategorijeNazivi(){
-    var xml = sendToPhp(new Array('1'),'../getSet_kategorije.php');
+    var xml = sendToPhp(new Array('6'),'../getSet_kategorije.php');
     var dataSet = $(xml).find('kategorije');
     var data = new Array();
     var nazivi = new Array();
@@ -1124,7 +1134,7 @@ function kategorijeNazivi(){
             $(this).children().each(function(){
                 data.push($(this).text());
             });
-            nazivi.push(data[1]);
+            nazivi.push(data[0]);
         });
     });
     return nazivi;
@@ -1187,6 +1197,12 @@ function getUserData(id){
     return data;
 }
 
+function currentUserCredentials() {
+    var xml = sendToPhp(new Array('8'),"../getSet_korisnici.php");
+    var status = $(xml).find('status').text();
+    return parseInt(status);
+}
+
 /* === MESSAGE BOX === */
 
 function msgBoxShow(title, content, type) {
@@ -1211,7 +1227,7 @@ function leadZero(str) {
 }
 
 function error() {
-    document.location.reload(true);
+    window.location.href="../";
 }
 
 function htmlEncodeEntities(s){
