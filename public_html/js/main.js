@@ -400,7 +400,7 @@ function hideIfTimeIsUp(){
 
 /* === OFFERS ==== */
 
-var initOfferNum;
+var initOfferNum = 1;
 var currentOfferNum;
 var loadedOffers;
 
@@ -411,7 +411,7 @@ var filterCategory = '';
 function initOffers(){
     $('#layout_offers').html('');
     $('#layout_content_universal').show();
-    initOfferNum = 1;
+    //initOfferNum = 1;
     if(filterTitle==''&&filterCity==''&&filterCategory=='')
         currentOfferNum = 5; //prve 4 su za gore!
     else {
@@ -863,6 +863,11 @@ $(document).ready(function() {
     categoryDropSelectOptions("dropFilterCategories",1);
     $('#dropFilterCitys').change(function(){citysFilterStart();});    
     $('#dropFilterCategories').change(function(){categoriesFilterStart();});
+    $('#dropFilterNum').change(function(){
+        initOfferNum = $('#dropFilterNum').val();
+        initOffers();
+    });
+
 
     /*EVENTS*/
     $('#newsletterSubmit').click(function(){saveNewsletter();});
