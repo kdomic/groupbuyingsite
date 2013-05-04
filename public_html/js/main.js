@@ -433,14 +433,29 @@ function addOneOffer(){
     var xml = sendToPhp(new Array('2', 0, 0, filterTitle, filterCity, filterCategory, 1),"get_offer.php");
     var status = $(xml).find('status').text();
     if(status>=currentOfferNum)        
-        addNewOffer(currentOfferNum);
+        addNewOffer(currentOfferNum,'layout_offers',0);
     else
         $('#layout_content_universal').hide();
     currentOfferNum++;
 }
 
-function addNewOffer(load){
+function addNewOffer(load,field,specialFilter){
+    var tempTitle, tempCity, tempCat;
+    if(specialFilter!=0){
+        tempCat = filterCategory;
+        tempCity = filterCity;
+        tempTitle = filterCategory;
+        filterCategory = specialFilter;
+        filterCity = '';
+        filterCategory = '';
+        loadedOffers = new Array();
+    }
     var data = getOffer(load,1,0);
+    if(specialFilter!=0){
+        filterCategory = tempCat;
+        filterCity = tempCity;
+        filterCategory = tempTitle;
+    }
     loadedOffers.push(data[0]);
     var $div = $('\
 <div class="offer">\
@@ -457,7 +472,7 @@ function addNewOffer(load){
 </div>\
 </div>\
 ');
-    $('#layout_offers').append($div);
+    $('#'+field).append($div);
 }
 
 function getOffer(load,filterOn,slider){
@@ -468,7 +483,6 @@ function getOffer(load,filterOn,slider){
     $(offer).each(function(){
         $(this).children().each(function(){
             var _data = $(this).text();
-            //_data = _data.replace(/"/g, '');
             data.push(_data);
         });
     });
@@ -500,6 +514,9 @@ function loadOfferDetails(num){
     backQuene.push(parseInt(num)*(-1));
     showHideComment(data[0]);
     loadComments(data[0]);
+    $('#layout_recomended_offers').html('<div class="caption">Uz ovaj proizvod možda će vas još zanimati</div>');
+    addNewOffer(1,'layout_recomended_offers', data[20]);
+    addNewOffer(2,'layout_recomended_offers', data[20]);
 }
 
 /* === COMMENTS === */
@@ -733,7 +750,7 @@ function checkout(){
     while(data.length>0){
         var num = data.pop();
         num = num*(-1);
-        addNewOffer(num);
+        addNewOffer(num,'layout_offers',0);
     }
     $('#layout_content_universal').html('<div class="buttonLongGreen" onclick="checkoutPay();">Plati</div>');
     $('#layout_sidebar_universal h1').html('Opis pllaćanja');

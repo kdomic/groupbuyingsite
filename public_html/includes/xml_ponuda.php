@@ -21,6 +21,7 @@
         public $remark;
         public $x;
         public $y;
+        public $category;
         
         public static function count($protocolData)
         {
@@ -60,7 +61,7 @@
             $idOrg = $id;
             $query  = 'SELECT a.id AS akcija, p.id AS ponuda, p.naslov, p.podnaslov, p.cijena, a.popust, ';
             $query .= '(SELECT sum(ra.kolicina) FROM racuni_akcije as ra WHERE ra.id_akcije=a.id GROUP BY ra.id_akcije ) as kupljeno, ';
-            $query .= 'a.granica, a.datum_zavrsetka, p.opis_naslov, p.opis_kratki, p.opis, p.napomena, p.karta_x, p.karta_y ';
+            $query .= 'a.granica, a.datum_zavrsetka, p.opis_naslov, p.opis_kratki, p.opis, p.napomena, p.karta_x, p.karta_y, k.id ';
             $query .= 'FROM  akcije AS a ';
             $query .= 'JOIN ponude AS p ON a.id_ponude=p.id ';
             $query .= 'JOIN prodavatelji AS prod ON p.id_prodavatelja=prod.id ';
@@ -139,6 +140,7 @@
             $xml->y = array_shift($data[0]);                        
             $xml->sliderOfferBoughtImg = ('offers/ponuda_'.sprintf("%05d", $za_sluku).'/01.jpg');
             $xml->imgList($za_sluku);
+            $xml->category  = array_shift($data[0]);
             $xml->save();            
         }
         
@@ -167,6 +169,7 @@
             $offerTag->appendChild($xmlDoc->createElement("remark", toUtf8($this->remark)));
             $offerTag->appendChild($xmlDoc->createElement("x", toUtf8($this->x)));
             $offerTag->appendChild($xmlDoc->createElement("y", toUtf8($this->y)));
+            $offerTag->appendChild($xmlDoc->createElement("category", toUtf8($this->category)));            
             header("Content-Type: text/xml");
             $xmlDoc->formatOutput = true;
             echo $xmlDoc->saveXML();
