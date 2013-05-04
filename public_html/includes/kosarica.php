@@ -12,6 +12,15 @@
 		public $operacija;
 		public $datum;
 
+        public static function kosaricaOp($item, $op){//1-dodano;2-kupljeno
+            $k = new Kosarica();
+            $k->id_korisnika = $_SESSION['user_id'];
+            $k->id_akcije = $item;
+            $k->operacija = $op;
+            $k->datum = date("Y-m-d H:i:s");
+            $k->save();
+        }
+
         public static function getAll(){
             $query  = 'SELECT ra.id_akcije, k.ime, k.prezime, p.naslov, kat.naziv as kategorija, prod.naziv as prodavatelj, r.datum, p.cijena, a.popust ';
             $query .= 'FROM racuni AS r ';

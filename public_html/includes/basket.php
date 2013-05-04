@@ -39,6 +39,7 @@
 				$_SESSION['basket'] .= $value.';';
 			else
 				$_SESSION['basket'] = $value.';';
+			Kosarica::kosaricaOp($value,'1');
 		}		
 
 		public function remove($value='')
@@ -76,6 +77,7 @@
 			$data = explode(';', $_SESSION['basket']);
 			array_pop($data);
 			foreach ($data as $d) {
+				Kosarica::kosaricaOp((int)$d,'2');
 				$racun_akcije = new Racuni_akcije();
 				$racun_akcije->id_racuna = $racun->id;
 				$racun_akcije->id_akcije = (int)$d;
