@@ -967,7 +967,7 @@ function initCommentsTable(){
             dataTable.fnAddData([ data[0],data[7],data[1],data[3],data[5],data[6] ]);
         });
     });    
-    dataTable.$('td:nth-child(5)').addClass("row").click(function(){
+    dataTable.$('td:nth-child(6)').addClass("row").click(function(){
         var aPos = dataTable.fnGetPosition( this );
         var aData = dataTable.fnGetData( aPos[0] );
         var xml = sendToPhp(new Array('4',aData[0]),'../getSet_komentari.php');
