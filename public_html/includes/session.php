@@ -2,7 +2,8 @@
 <?php
 	/*	Procedure
 			['1',email,password]	data[0]==1 - login 
-			['2']					data[0]==2 - checkLogin 
+			['2']					data[0]==2 - checkLogin
+			['3'] 					data[0]==3 - logout
 	*/
 	class Session
 	{
@@ -25,6 +26,9 @@
 				case 2:
 					xmlStatusSend($this->user_id);
 					break;
+				case 3:
+					xmlStatusSend($this->logout());
+					break;
 			}
 		}
 
@@ -43,6 +47,7 @@
 			$this->user_id = 0;
 			$this->clearBasket();
 			Logovi::logoviOp('6',$_SESSION['user_id']);
+			return 1;
 		}
 
 		public function check_login()

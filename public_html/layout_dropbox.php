@@ -135,6 +135,7 @@
             <div id="dropboxCol2Status" class="hide"><span></span></div>
     </div>
     <div class="dropboxLeft">
+        <button id="btnLogOut" onclick="logoutUser();">ODJAVA</button><br><br>
         Obavjesti<br/><br/>
         <span id="infoCol">Nema obavjesti</span>
     </div>

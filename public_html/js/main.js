@@ -229,6 +229,11 @@ function loginUser(){
     }
 }
 
+function logoutUser(){
+    var xml = sendToPhp(new Array('3'),"includes/session.php");
+    error();    
+}
+
 /*=== USER SETTINGS ===*/
 
 function userInformationChange(){
