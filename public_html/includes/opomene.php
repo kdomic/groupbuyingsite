@@ -15,6 +15,14 @@
             return self::find_by_sql("SELECT * FROM ".static::$table_name." WHERE id_korisnika=".$id);
         }
 
+        public static function count_for_user($id) {
+            global $database;
+            $sql = "SELECT COUNT(*) FROM ".static::$table_name." WHERE id_korisnika=".$id;
+            $result_set = $database->db_query($sql);
+            $row = $database->db_fetch_array($result_set);
+            return array_shift($row);
+        }
+
         public static function get($id) //2
         {
             $_d = self::find_by_user($id);
@@ -36,8 +44,13 @@
             $o->opis = array_pop($data);
             $o->datum = date("Y-m-d H:i:s");
             $o->id_moderatora = array_pop($data);
-            $o->id_korisnika = array_pop($data);
+            $o->id_korisnika = array_pop($data);            
 			xmlStatusSend($o->save());
+            if(self::count_for_user($o->id_korisnika)>2){
+                $k = Korisnici::find_by_id($o->id_korisnika);
+                $k->deaktiviran = 1;
+                $k->save();
+            }
 		}
 
         public static function count($id) {

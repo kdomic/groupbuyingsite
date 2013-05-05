@@ -10,11 +10,6 @@
 	*/
 
 	$data = json_decode(stripslashes($_POST['data']));
-	if(Korisnici::currentUserCredentialsValue()==3) {
-        //ok
-    } else {
-        return -1;
-    }
 	switch((int)$data[0]){
 		//case 1: Opomene::getAll(); break;
 		case 2: Opomene::get($data[1]);break;

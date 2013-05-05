@@ -7,10 +7,9 @@ var userSelectType; //ova nam je da se znamo vratiti poslje pohrane korisnika il
 $(document).ready(function(){
     var cred = parseInt(currentUserCredentials());    
     console.log(cred);
-    if(cred==3){
+    if(cred===3){
         //all show
-    }
-    if(cred==2){
+    } else if(cred===2){
         $($('nav li')[1]).hide();
         $($('nav li')[2]).hide();
         $($('nav li')[10]).hide();
@@ -383,7 +382,8 @@ function saveWarn(){
     protocolData.push($('#userWarnNew').val());
     var xml = sendToPhp(protocolData,'../getSet_opomene.php');
     phpStatus(xml,'userWarnStatus');    
-    initWarnTable();
+    $('#userWarnNew').val('');
+    editUser($('#userID').val());
 }
 
 /* === MODS === */

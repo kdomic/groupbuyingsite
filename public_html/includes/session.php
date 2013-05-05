@@ -15,10 +15,18 @@
 			$data = json_decode(stripslashes($_POST['data']));			
 			switch ((int)$data[0]) {
 				case 1:
-					$korisnik = Korisnici::authenticate($data[1],$data[2]);
+					$korisnik = Korisnici::authenticate($data[1],$data[2]); //
 					if($korisnik){
-						$this->login($korisnik);
-						xmlStatusSend(1);
+						if($korisnik->aktivan==0)
+							xmlStatusSend(2);
+						else if($korisnik->deaktiviran==1)
+							xmlStatusSend(3);
+						else if($korisnik->zamrznut!='0000-00-00 00:00:00' && Vrijeme::remainingTimeWithOffset($korisnik->zamrznut)!='Kupnja je zatvorena' )
+							xmlStatusSend(     Vrijeme::remainingTimeWithOffset($korisnik->zamrznut)    );
+						else {
+							$this->login($korisnik);
+							xmlStatusSend(1);
+						}
 					} else {
 						xmlStatusSend(0);
 					}

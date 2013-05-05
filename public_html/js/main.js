@@ -26,11 +26,26 @@ function userAccount() {
     $('#dropboxCol1Status').hide();
     $('#dropboxCol2Status').hide();
 
+    console.log(parseInt(userData[15]));
+    $('#btnAdmin').hide();
+    if(parseInt(userData[15])===2 || parseInt(userData[15])===3)
+        $('#btnAdmin').show();
+
     var xml = sendToPhp(new Array('5', userId),'getSet_opomene.php');
     var status = $(xml).find('status').text();    
     if(parseInt(status)>0) {
         $('#infoCol').html('Broj opomena: '+status+'<br>');
-        var xml = sendToPhp(new Array('6',userId),'getSet_opomene.php');
+        var data = lastWarn(userId);
+        console.log(data);
+        $('#infoCol').append("<i>---Zadnja opomena---</i><br>");
+        $('#infoCol').append("Datum: "+data[0]+"<br>");
+        $('#infoCol').append("Od strane: "+data[1]+"<br>");
+        $('#infoCol').append("Razlog:<br>"+data[2]);        
+    }
+}
+
+function lastWarn(id){    
+        var xml = sendToPhp(new Array('6',id),'getSet_opomene.php');
         var dataSet = $(xml).find('opomene');
         var data = new Array();
         $(dataSet).each(function(){    
@@ -40,12 +55,7 @@ function userAccount() {
                 });
             });
         });
-        console.log(data);
-        $('#infoCol').append("<i>---Zadnja opomena---</i><br>");
-        $('#infoCol').append("Datum: "+data[0]+"<br>");
-        $('#infoCol').append("Od strane: "+data[1]+"<br>");
-        $('#infoCol').append("Razlog:<br>"+data[2]);        
-    }
+        return data;
 }
 
 function userPurchases() {
@@ -208,9 +218,15 @@ function loginUser(){
     $('#loginStatus span').html("");
     $('#btnLogin').attr("disabled", "disabled");
     var xml = sendToPhp(data,"includes/session.php");
-    var status = $(xml).find('status').text();
-    if(status==='1'){
-        $('#loginStatus').removeClass("error").removeClass("warning").addClass("info");
+    var ret = $(xml).find('status').text();
+    var status = parseInt(ret);
+    if(status==0){
+        $('#loginStatus').removeClass("info").removeClass("warning").addClass("error");
+        $('#loginStatus span').html("Uneseni podatci nisu ispravni");
+        $('#btnLogin').removeAttr("disabled");        
+        $('#loginStatus').slideDown("slow");
+    } else if(status==1){
+        $('#loginStatus').removeClass("warning").removeClass("error").addClass("info");
         $('#loginStatus span').html("Prijava uspješna!");      
         $('#loginStatus').slideDown("slow");
         $('#btnShowDropboxLogin').addClass("hide");        
@@ -221,9 +237,19 @@ function loginUser(){
         }, 1000);
         reloadBasket();
         $('#layout_sidebar_newsletter').show();
+    } else if(status==2){
+        $('#loginStatus').removeClass("info").removeClass("error").addClass("warning");
+        $('#loginStatus span').html("Vaš račun je blokiran");
+        $('#btnLogin').removeAttr("disabled");        
+        $('#loginStatus').slideDown("slow");
+    } else if(status==3){
+        $('#loginStatus').removeClass("info").removeClass("error").addClass("warning");
+        $('#loginStatus span').html("Vaš račun je deaktiviran zbog opomena");
+        $('#btnLogin').removeAttr("disabled");        
+        $('#loginStatus').slideDown("slow");
     } else {
-        $('#loginStatus').removeClass("warning").addClass("error");
-        $('#loginStatus span').html("Uneseni podatci nisu ispravni");
+        $('#loginStatus').removeClass("info").removeClass("error").addClass("warning");
+        $('#loginStatus span').html("Račun je zamrznut još:<br>"+ret);
         $('#btnLogin').removeAttr("disabled");        
         $('#loginStatus').slideDown("slow");
     }
@@ -273,7 +299,8 @@ function userCredentialChange(){
         $('#dropboxCol2Status').slideDown("slow");
         return;
     }
-    userData[16] = pass;
+    userData[14] = pass;
+    console.log(pass);
     protocolData = protocolData.concat(userData);
     var xml = sendToPhp(protocolData,'getSet_korisnici.php');
     var status = $(xml).find('status').text();
@@ -891,7 +918,6 @@ $(document).ready(function() {
         initOffers();
     });
 
-
     /*EVENTS*/
     $('#newsletterSubmit').click(function(){saveNewsletter();});
     $('#searchSubmit').click(function(){searchStart();});
@@ -1021,6 +1047,10 @@ function msgBoxShow(title, content, type) {
 
 function goTop(){
     window.scrollTo(0,0);
+}
+
+function goToAdmin() {
+    window.location.href="admin/";
 }
 
 function leadZero(str) {
