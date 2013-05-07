@@ -20,6 +20,7 @@
         <link rel="stylesheet" type="text/css" href="../stylesheet/uploadify.css" />        
 
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+        <script type="text/javascript" src="http://www.google.com/jsapi"></script>
         <script type="text/javascript" src="../js/encoder.js"></script>            
         <script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
         <script type="text/javascript" src="../js/jquery.timer.js"></script>

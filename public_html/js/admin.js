@@ -17,7 +17,6 @@ $(document).ready(function(){
         error();
     }
 
-    hideAll();
     layout_showPocetna();
     //EVENTS
     $($('nav li')[0]).click(function(){layout_showPocetna();});
@@ -74,6 +73,7 @@ function hideAll(){
 
 function layout_showPocetna(){
     hideAll();
+    showStatistics();
     $('#pocetna').show();
     $('.menuCurrent').removeClass('menuCurrent');
     $($('nav li')[0]).addClass('menuCurrent');
@@ -177,6 +177,76 @@ function layout_showVrijeme(){
     $('#vrijeme').show();
     $('.menuCurrent').removeClass('menuCurrent');
     $($('nav li')[10]).addClass('menuCurrent');    
+}
+
+/* === START === */
+
+function showStatistics(){
+    google.setOnLoadCallback(drawPonudeGradovi);
+    google.setOnLoadCallback(drawKategorijeGradovi);
+    google.setOnLoadCallback(drawKorisniciPrijave);    
+    google.setOnLoadCallback(drawKupljenoDodano);    
+}
+
+function getStatData(get,head){
+    var xml = sendToPhp(new Array(get),'../get_statistics.php');
+    var users = $(xml).find('dataset');
+    var dataset = new Array();
+    dataset.push(head);
+    $(users).each(function(){    
+        $(this).children().each(function(){
+            var data = new Array();
+            var i = 0;
+            $(this).children().each(function(){
+                if(i++)
+                    data.push(parseInt($(this).text()));
+                else
+                    data.push($(this).text());
+            });
+            dataset.push(data);
+        });
+    });
+    return dataset;  
+}
+
+function drawPonudeGradovi() {
+    var dataset = getStatData('1',new Array('Ponuda','Ponude po gradovima'));
+    var data = google.visualization.arrayToDataTable(dataset);
+    var options = { title: 'Aktivnih ponuda po gradovima' };
+    var chart = new google.visualization.PieChart(document.getElementById('visualization1'));
+    chart.draw(data, options);
+}
+
+function drawKategorijeGradovi() {
+    var dataset = getStatData('2',new Array('Kategorija','Kategorij po gradovima'));
+    var data = google.visualization.arrayToDataTable(dataset);
+    var options = { title: 'Aktivnih kategorija po gradovima' };
+    var chart = new google.visualization.PieChart(document.getElementById('visualization2'));
+    chart.draw(data, options);
+}
+
+function drawKorisniciPrijave() {
+    var dataset = getStatData('3',new Array('Korisnik','Broj prijava'));
+    console.log(dataset);
+    var data = google.visualization.arrayToDataTable(dataset);
+    var options = {
+      title: 'Top korisnici po prijavama (aktivni)',
+      hAxis: {title: 'Identifikacija korisnika', titleTextStyle: {color: 'red'}}
+    };
+    var chart = new google.visualization.ColumnChart(document.getElementById('visualization3'));
+    chart.draw(data, options);
+}
+
+function drawKupljenoDodano() {
+    var dataset = getStatData('4',new Array('Ponuda','Broj kupovina','Broj dodavanja'));
+    console.log(dataset);
+    var data = google.visualization.arrayToDataTable(dataset);
+    var options = {
+      title: 'Statistika dodavanja i kupovine (košarica)',
+      hAxis: {title: 'Ponuda', titleTextStyle: {color: 'red'}}
+    };
+    var chart = new google.visualization.BarChart(document.getElementById('visualization4'));
+    chart.draw(data, options);
 }
 
 /* === USER EDIT === */

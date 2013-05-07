@@ -29,5 +29,6 @@
     require_once ('opomene.php');    
     require_once ('logovi.php');  
     require_once ('log_tip.php');
+    require_once ('statistics.php');
 
 ?>

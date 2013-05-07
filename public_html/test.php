@@ -1,5 +1,7 @@
 <?php require_once('includes/initialize.php'); ?>
-<?php
+<?php print_r(Statistics::getPonudeGradovi());
+
+
 /*
 	$ponude = Ponude::find_all();
 	foreach ($ponude as $p) {

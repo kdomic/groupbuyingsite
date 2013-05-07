@@ -50,13 +50,12 @@
             if($protocolData[6]==1 && $protocolData[5]!=''){ 
                 $query .= 'AND k.id='.$protocolData[5].' ';
             }
-            //print_r($query);
             $data = DatabaseObject::find_by_raw_sql($query);
             xmlStatusSend(array_shift($data[0]));
         }
 
         public static function get($protocolData)
-        {
+        {            
             $id = (int)$protocolData[1];
             $idOrg = $id;
             $query  = 'SELECT a.id AS akcija, p.id AS ponuda, p.naslov, p.podnaslov, p.cijena, a.popust, ';
@@ -93,7 +92,8 @@
                     $query .= 'AND k.id='.$protocolData[5].' ';
                 }                
                 $query .= 'ORDER BY a.istaknuto DESC, a.datum_zavrsetka ASC ';
-                $query .= 'LIMIT 1 OFFSET '.($id-1);
+                $id = ($id-1)<0 ? 0 : ($id-1);
+                $query .= 'LIMIT 1 OFFSET '.$id;
             }            
             $data = DatabaseObject::find_by_raw_sql($query);
             if(empty($data)){
