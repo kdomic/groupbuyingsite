@@ -1,4 +1,12 @@
 <?php require_once('../includes/initialize.php'); ?>
+<?php
+    if(Korisnici::currentUserCredentialsValue()<2){
+        Logovi::logoviOp('17',$_SESSION['user_id']);
+        header('Location: ../');
+    } else {
+        Logovi::logoviOp('16',$_SESSION['user_id']);
+    }    
+?>
 <!DOCTYPE html>
 <html>
     <head>

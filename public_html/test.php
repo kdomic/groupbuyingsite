@@ -1,7 +1,5 @@
 <?php require_once('includes/initialize.php'); ?>
 <?php
-
-print_r($_SERVER['HTTP_USER_AGENT']);
 /*
 	$ponude = Ponude::find_all();
 	foreach ($ponude as $p) {

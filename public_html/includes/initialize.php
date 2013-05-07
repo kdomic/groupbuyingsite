@@ -27,7 +27,7 @@
     require_once ('moderatori.php');
     require_once ('newsletter.php');    
     require_once ('opomene.php');    
-    require_once ('logovi.php');    
-
+    require_once ('logovi.php');  
+    require_once ('log_tip.php');
 
 ?>

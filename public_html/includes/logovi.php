@@ -21,5 +21,25 @@
         	$l->save();
         }
 
+        public static function getAll() //1
+        {
+            $_d = self::find_all();
+            $xmlDoc = new DOMDocument();
+            $root = $xmlDoc->appendChild($xmlDoc->createElement("logovi"));
+            foreach ($_d as $d){
+                $data = $root->appendChild($xmlDoc->createElement("log"));
+                $k = Korisnici::find_by_id($d->id_korisnika);
+                $d->id_korisnika = $k->ime.' '.$k->prezime;
+                $l = Log_tip::find_by_id($d->id_tip);
+                $d->id_tip = $l->opis;
+                $d->datum = timeForScreenLong($d->datum);
+                foreach ($d as $key => $value) {
+                    $data->appendChild($xmlDoc->createElement($key, toUtf8($value)));
+                }
+            }
+            header("Content-Type: text/xml");
+            $xmlDoc->formatOutput = true;
+            echo $xmlDoc->saveXML();
+        }
     }
 ?>

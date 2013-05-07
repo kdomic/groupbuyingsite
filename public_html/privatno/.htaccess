@@ -1,0 +1,4 @@
+AuthType Basic
+AuthUserFile /opt/lampp/htdocs/groupbuyingsite/public_html/privatno/.htpasswd
+AuthName "Administracija sustava"
+Require valid-user

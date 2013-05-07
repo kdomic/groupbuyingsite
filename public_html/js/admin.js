@@ -173,6 +173,7 @@ function layout_showKomentari(){
 function layout_showVrijeme(){
     hideAll();
     initTimeTable();
+    initLogsTable();
     $('#vrijeme').show();
     $('.menuCurrent').removeClass('menuCurrent');
     $($('nav li')[10]).addClass('menuCurrent');    
@@ -996,6 +997,25 @@ function initTimeTable(){
 function saveTime() {
     sendToPhp(new Array('2'),'../getSet_vrijeme.php');
     initTimeTable();
+}
+
+/* === LOGS === */
+
+function initLogsTable(){
+    var dataTable = $('#logsTable').dataTable();
+    dataTable.fnClearTable();
+    var xml = sendToPhp(new Array('1'),'../get_logs.php');
+    var dataSet = $(xml).find('logovi');
+    var data = new Array();    
+    $(dataSet).each(function(){    
+        $(this).children().each(function(){
+            data = []; 
+            $(this).children().each(function(){
+                data.push($(this).text());
+            });
+            dataTable.fnAddData([data[0],data[1],data[2],data[3],data[4]]);
+        });
+    });  
 }
 
 /* === AJAX STATUS SEND/R === */
