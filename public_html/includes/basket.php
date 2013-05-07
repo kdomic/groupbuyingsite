@@ -98,7 +98,10 @@
 				$p = Ponude::find_by_id($a->id_ponude);
 				$suma += $p->cijena-$p->cijena*$a->popust/100;
 			}
-			xmlStatusSend( str_replace('.', ',', sprintf("%01.2f", $suma)) );
+			if($suma == 0.00)
+				xmlStatusSend('0');
+			else
+				xmlStatusSend( str_replace('.', ',', sprintf("%01.2f", $suma)) );
 		}
 
 	}
