@@ -6,7 +6,6 @@ var userSelectType; //ova nam je da se znamo vratiti poslje pohrane korisnika il
 
 $(document).ready(function(){
     var cred = parseInt(currentUserCredentials());    
-    console.log(cred);
     if(cred===3){
         //all show
     } else if(cred===2){
@@ -227,7 +226,6 @@ function drawKategorijeGradovi() {
 
 function drawKorisniciPrijave() {
     var dataset = getStatData('3',new Array('Korisnik','Broj prijava'));
-    console.log(dataset);
     var data = google.visualization.arrayToDataTable(dataset);
     var options = {
       title: 'Top korisnici po prijavama (aktivni)',
@@ -239,7 +237,6 @@ function drawKorisniciPrijave() {
 
 function drawKupljenoDodano() {
     var dataset = getStatData('4',new Array('Ponuda','Broj kupovina','Broj dodavanja'));
-    console.log(dataset);
     var data = google.visualization.arrayToDataTable(dataset);
     var options = {
       title: 'Statistika dodavanja i kupovine (košarica)',
