@@ -21,8 +21,10 @@
                 xmlStatusSend(-1);
                 return;
             }
+            $emailPattern = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/';
+            preg_match($emailPattern, $this->email, $eamilOK);
             if(isset($data[7])){
-                if(!strlen($this->ime) || !strlen($this->prezime) || !strlen($this->email) || !strlen($this->lozinka) || !$this->uvjeti || $this->lozinka!=$this->lozinka)
+                if(strlen($this->ime)<3 || strlen($this->prezime)<3 || strlen($this->email)<3 || strlen($this->lozinka)<3 || !$eamilOK || !$this->uvjeti || $this->lozinka!=$this->lozinka)
                     xmlStatusSend(0);
                 else
                     $this->register();

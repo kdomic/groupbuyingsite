@@ -111,19 +111,20 @@ function registerUser(){
 function checkIsEmpty(){
     var i;
     var data = parseRegForm();
+    console.log(data);
     for(i=0; i<data.length; i++)
-        if(data[i].length===0)
+        if(data[i].length<3)
             break;
     if(!emailPattern.test(data[2])) i=2;
     if(!data[5]) i=5;
     switch(i){
         case 0: 
-            $('#regStatus span').html("Ime je obavezno polje!");
+            $('#regStatus span').html("Ime je obavezno polje!<br>(min 3. znaka)");
             $('#regStatus').removeClass("error").removeClass("info").addClass("warning").slideDown("slow");
             $('#inputIme').focus();
               return false;
         case 1: 
-            $('#regStatus span').html("Prezime je obavezno polje!");
+            $('#regStatus span').html("Prezime je obavezno polje!<br>(min 3. znaka)");
             $('#regStatus').removeClass("error").removeClass("info").addClass("warning").slideDown("slow");
             $('#inputPrezime').focus();
             return false;
@@ -133,7 +134,7 @@ function checkIsEmpty(){
             $('#inputEmail').focus();
             return false;
         case 3: 
-            $('#regStatus span').html("Lozinka je obavezno polje!");
+            $('#regStatus span').html("Lozinka je obavezno polje!<br>(min 3. znaka)");
             $('#regStatus').removeClass("error").removeClass("info").addClass("warning").slideDown("slow");
             $('#inputLozinka').focus();
             return false;
@@ -253,8 +254,26 @@ function loginUser(){
 }
 
 function logoutUser(){
-    var xml = sendToPhp(new Array('3'),"includes/session.php");
-    error();    
+    var xml = sendToPhp(new Array('4'),"includes/basket.php");
+    var sum = $(xml).find('status').text();
+    console.log(sum);
+    if(sum==0){
+        var xml = sendToPhp(new Array('3'),"includes/session.php");
+        error();
+    } else {     
+        $.msgBox({
+            title: "Odjava",
+            content: "U košarice se nalaze neki aritikli. Da li ste sigurni da se želite odjaviti?",
+            type: "confirm",
+            buttons: [{ value: "Odjava" }, { value: "Povratak" }],
+            success: function (result) {
+                if (result == "Odjava") {                
+                    var xml = sendToPhp(new Array('3'),"includes/session.php");
+                    error();
+                }
+            }
+        });
+    }
 }
 
 /*=== USER SETTINGS ===*/
