@@ -92,8 +92,9 @@
                     $query .= 'AND k.id='.$protocolData[5].' ';
                 }                
                 $query .= 'ORDER BY a.istaknuto DESC, a.datum_zavrsetka ASC ';
-                $id = ($id-1)<0 ? 0 : ($id-1);
+                //$id = ($id-1)<0 ? 0 : ($id-1);
                 $query .= 'LIMIT 1 OFFSET '.$id;
+                //print_r($query);
             }            
             $data = DatabaseObject::find_by_raw_sql($query);
             if(empty($data)){

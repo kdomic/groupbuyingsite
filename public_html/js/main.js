@@ -25,8 +25,6 @@ function userAccount() {
     $('#inputEmailA').val(userData[7]);    
     $('#dropboxCol1Status').hide();
     $('#dropboxCol2Status').hide();
-
-    console.log(parseInt(userData[15]));
     $('#btnAdmin').hide();
     if(parseInt(userData[15])===2 || parseInt(userData[15])===3)
         $('#btnAdmin').show();
@@ -36,7 +34,6 @@ function userAccount() {
     if(parseInt(status)>0) {
         $('#infoCol').html('Broj opomena: '+status+'<br>');
         var data = lastWarn(userId);
-        console.log(data);
         $('#infoCol').append("<i>---Zadnja opomena---</i><br>");
         $('#infoCol').append("Datum: "+data[0]+"<br>");
         $('#infoCol').append("Od strane: "+data[1]+"<br>");
@@ -346,22 +343,20 @@ function sliderPlay(){
 }
 
 function sliderChange(selectedOffer){
-    var data = new Array();
+    var loadNow;
     if(selectedOffer===null){
-        sliderNum = sliderNum+1;
-        selectedOffer = sliderNum;        
-        sliderNum = sliderNum%sliderMaxNum;       
-    }else{
-        sliderNum = selectedOffer;
-        sliderNum = sliderNum%sliderMaxNum;
-        timer.pause();        
-        //data = getOffer(selectedOffer,0);
+        loadNow = sliderNum;        
+        sliderNum += 1;
+        sliderNum %=4        
+    } else {
+        loadNow = selectedOffer;
+        timer.pause(); 
+        sliderNum = selectedOffer;       
     }    
-    sliderPlayIcon();
-    var index = $('.sliderImgNum a').length-selectedOffer;
     $('.sliderImgNum a').removeClass('current');
-    $($('.sliderImgNum a')[index]).addClass('current');
-    data = getOffer(sliderMaxNum-index+1,0,1);
+    $('#sid'+loadNow).addClass('current');
+    sliderPlayIcon();
+    var data = getOffer(loadNow);    
     slideOfferChange(data);
     sliderImgChange(data[12]);
 }
@@ -443,11 +438,10 @@ var filterCategory = '';
 function initOffers(){
     $('#layout_offers').html('');
     $('#layout_content_universal').show();
-    //initOfferNum = 1;
     if(filterTitle==''&&filterCity==''&&filterCategory=='')
-        currentOfferNum = 5; //prve 4 su za gore!
+        currentOfferNum = 4; //prve 4 su za gore!
     else {
-        currentOfferNum = 1;
+        currentOfferNum = 0;
         $('#layout_offers').append('Filteri:  ');
     }
     if(filterTitle!='')
@@ -464,7 +458,7 @@ function initOffers(){
 function addOneOffer(){
     var xml = sendToPhp(new Array('2', 0, 0, filterTitle, filterCity, filterCategory, 1),"get_offer.php");
     var status = $(xml).find('status').text();
-    if(status>=currentOfferNum)        
+    if(status>currentOfferNum)        
         addNewOffer(currentOfferNum,'layout_offers',0);
     else
         $('#layout_content_universal').hide();
@@ -717,6 +711,7 @@ function addOfferToBasket(num){
     var xml = sendToPhp(dataString,"includes/basket.php");
     var status = $(xml).find('status').text();
     reloadBasket();
+    console.log("Kupnja"+ sliderNum);
     sliderChange(sliderNum);
     msgBoxShow("Dodavanje", "Proizvod je dodan u košaricu", "info");
 }

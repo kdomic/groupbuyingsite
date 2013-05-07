@@ -21,10 +21,10 @@
     </div>
     <div class="sliderImg"><img src="images/empty.png" alt="Slika ponude" /></div>
     <div class="sliderImgNum"><a onclick="sliderPlay()" id="sliderPlay">&#9734;</a></div>
-    <div class="sliderImgNum"><a onclick="sliderChange(4)" >4</a></div>
-    <div class="sliderImgNum"><a onclick="sliderChange(3)" >3</a></div>
-    <div class="sliderImgNum"><a onclick="sliderChange(2)" >2</a></div>
-    <div class="sliderImgNum"><a onclick="sliderChange(1)" class="current">1</a></div>
+    <div class="sliderImgNum"><a id="sid3" onclick="sliderChange(3)" >4</a></div>
+    <div class="sliderImgNum"><a id="sid2" onclick="sliderChange(2)" >3</a></div>
+    <div class="sliderImgNum"><a id="sid1" onclick="sliderChange(1)" >2</a></div>
+    <div class="sliderImgNum"><a id="sid0" onclick="sliderChange(0)" class="current">1</a></div>
     <div id="imageGallery">
         <div class="shortDesc"></div>
         <div class="imgGallery"></div>
