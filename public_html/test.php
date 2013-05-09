@@ -1,5 +1,5 @@
 <?php require_once('includes/initialize.php'); ?>
-<?php print_r(Statistics::getPonudeGradovi());
+<?php Korisnici::lastBoughtCat(41);
 
 
 /*

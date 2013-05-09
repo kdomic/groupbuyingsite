@@ -10,6 +10,7 @@
         [6]             - getAll(razina)
         [7]             - getAll(razina)
         [8]             - currentUserCredentials
+        [9, 'ID']       - lastBoughtCat()
     */
     
     $data = json_decode(stripslashes($_POST['data']));
@@ -38,7 +39,6 @@
         case 6: Korisnici::getAll(2); break;
         case 7: Korisnici::getAll(3); break;
         case 8: Korisnici::currentUserCredentials(); break;
+        case 9: Korisnici::lastBoughtCat($data[1]); break;
     }
-    
-
 ?>

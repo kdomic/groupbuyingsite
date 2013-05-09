@@ -111,7 +111,6 @@ function registerUser(){
 function checkIsEmpty(){
     var i;
     var data = parseRegForm();
-    console.log(data);
     for(i=0; i<data.length; i++)
         if(data[i].length<3)
             break;
@@ -234,6 +233,7 @@ function loginUser(){
             $('#btnShowDropboxAccount').removeClass("hide");
         }, 1000);
         reloadBasket();
+        initOffers();
         $('#layout_sidebar_newsletter').show();
     } else if(status==2){
         $('#loginStatus').removeClass("info").removeClass("error").addClass("warning");
@@ -256,7 +256,6 @@ function loginUser(){
 function logoutUser(){
     var xml = sendToPhp(new Array('4'),"includes/basket.php");
     var sum = $(xml).find('status').text();
-    console.log(sum);
     if(sum==0){
         var xml = sendToPhp(new Array('3'),"includes/session.php");
         error();
@@ -316,7 +315,6 @@ function userCredentialChange(){
         return;
     }
     userData[14] = pass;
-    console.log(pass);
     protocolData = protocolData.concat(userData);
     var xml = sendToPhp(protocolData,'getSet_korisnici.php');
     var status = $(xml).find('status').text();
@@ -470,6 +468,16 @@ function initOffers(){
     if(filterCity!='')
         $('#layout_offers').append('<input type="checkbox" name="searchOn" value="1" checked onclick="citysFilterStop();">Po gradovima');    
     loadedOffers = new Array();
+
+    //Ukoliko je korisnik logiran provjeri da li je nešto kupovao
+    //Ako da daj mu to kao relevantno
+    var userID = sessionCheck();
+    if(userID!==0){
+        var xml = sendToPhp(new Array('9', userID),"getSet_korisnici.php");
+        var status = $(xml).find('status').text();
+        addNewOffer(0,'layout_offers', status);
+        addNewOffer(1,'layout_offers', status);        
+    }
     for(var i = 0; i<initOfferNum; i++)
         addOneOffer();
 }
@@ -561,8 +569,8 @@ function loadOfferDetails(num){
     showHideComment(data[0]);
     loadComments(data[0]);
     $('#layout_recomended_offers').html('<div class="caption">Uz ovaj proizvod možda će vas još zanimati</div>');
+    addNewOffer(0,'layout_recomended_offers', data[20]);
     addNewOffer(1,'layout_recomended_offers', data[20]);
-    addNewOffer(2,'layout_recomended_offers', data[20]);
 }
 
 /* === COMMENTS === */
@@ -573,7 +581,6 @@ function showHideComment(offerID){
     var userID = sessionCheck();
     var xml = sendToPhp(new Array(5,userID,offerID),"getSet_komentari.php");
     var status = $(xml).find('status').text();
-    console.log(status);
 
     if(status==1) $('#newCommentArea').show();
 }
@@ -589,7 +596,6 @@ function saveNewComment(){
     var xml = sendToPhp(protocolData,"getSet_komentari.php");
     loadComments(protocolData[3]);
     $('#newCommentArea').hide();
-    console.log(protocolData);
 }
 
 function loadComments(offerID){
@@ -730,7 +736,6 @@ function addOfferToBasket(num){
     var xml = sendToPhp(dataString,"includes/basket.php");
     var status = $(xml).find('status').text();
     reloadBasket();
-    console.log("Kupnja"+ sliderNum);
     sliderChange(sliderNum);
     msgBoxShow("Dodavanje", "Proizvod je dodan u košaricu", "info");
 }

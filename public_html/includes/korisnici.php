@@ -153,6 +153,22 @@
                 return 0;
             }
 
+            public static function lastBoughtCat($id=''){
+                $query  = 'SELECT p.id_kategorije ';
+                $query  .= 'FROM racuni AS r ';
+                $query  .= 'JOIN racuni_akcije AS ra ON ra.id_racuna=r.id ';
+                $query  .= 'JOIN akcije AS a ON a.id=ra.id_akcije ';
+                $query  .= 'JOIN ponude AS p ON p.id=a.id_ponude ';
+                $query  .= 'WHERE r.id_korisnika='.$id;
+                $query  .= ' ORDER BY r.datum DESC ';
+                $query  .= 'LIMIT 1 ';
+                $data = DatabaseObject::find_by_raw_sql($query);
+                if($data)
+                    xmlStatusSend(array_shift($data[0]));
+                else
+                    xmlStatusSend(0);
+            }
+
 
     }
 ?>
