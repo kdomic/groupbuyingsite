@@ -745,7 +745,7 @@ function initOffersTable(){
             $(this).children().each(function(){
                 data.push($(this).text());
             });
-            dataTable.fnAddData([data[0],data[2],data[3],data[1],data[data.length-1]]);
+            dataTable.fnAddData([data[0],data[2],data[3],data[1],data[12]]);
         });
     });    
     dataTable.$('tr').addClass("row").click(function(){editOffer(dataTable.fnGetData(this)[0])});
@@ -777,6 +777,7 @@ function editOffer(num){
     $(parsedXML).children().each(function(){
         data.push($(this).text());
     });
+    console.log(data);
     $('#offerID').val(data[0]);
     $('#offerNASLOV').jqteVal(data[3]);
     $('#offerPODNASLOV').jqteVal(Encoder.htmlEncode(data[4]));
@@ -789,7 +790,7 @@ function editOffer(num){
     $('#offerKARTAY').val(data[11]);    
     $('#offerPRODAVATELJ option').eq(parseInt(data[1])-1).attr('selected', 'selected');    
     $('#offerKATEGORIJA option').eq(parseInt(data[2])-1).attr('selected', 'selected');
-    if(data[data.length-1]=="1")
+    if(data[12]=="1")
         $('#singleOffer input:radio[name=vidljivost][value="1"]').prop('checked', true);
     else
         $('#singleOffer input:radio[name=vidljivost][value="0"]').prop('checked', true);
