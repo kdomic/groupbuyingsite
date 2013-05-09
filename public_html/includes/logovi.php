@@ -17,7 +17,7 @@
         	$l->id_korisnika = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
         	$l->id_tip = $tip;
         	$l->kljuc = $kljuc;
-        	$l->datum = date("Y-m-d H:i:s");
+        	$l->datum = Vrijeme::nowWithOffset();
         	$l->save();
         }
 

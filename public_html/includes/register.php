@@ -39,7 +39,7 @@
             $korisnik->prezime = $this->prezime;
             $korisnik->email = $this->email;
             $korisnik->password = sha1($this->lozinka);
-            $korisnik->datum_registracije = date("Y-m-d H:i:s");
+            $korisnik->datum_registracije = Vrijeme::nowWithOffset();
             $korisnik->email_potvrda = $this->emailConfirm();
             $korisnik->ovlasti = 1;
             $status = $korisnik->save();

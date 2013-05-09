@@ -17,7 +17,7 @@
             $k->id_korisnika = $_SESSION['user_id'];
             $k->id_akcije = $item;
             $k->operacija = $op;
-            $k->datum = date("Y-m-d H:i:s");
+            $k->datum = Vrijeme::nowWithOffset();
             $k->save();
         }
 

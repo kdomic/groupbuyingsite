@@ -71,7 +71,7 @@
 			if(!isset($_SESSION['basket']) || !$_SESSION['user_id']) return;
 			$racun = new Racuni();
 			$racun->id_korisnika = $_SESSION['user_id'];
-			$racun->datum = date("Y-m-d H:i:s");
+			$racun->datum = Vrijeme::nowWithOffset();
 			$racun->placeno = 1;
 			$racun->save();
 			$data = explode(';', $_SESSION['basket']);

@@ -108,7 +108,7 @@
                 $newPass= array_pop($data);
                 $d->password = is_sha1($newPass) ? $newPass : sha1($newPass);
                 $d->email_potvrda = array_pop($data);
-                $d->datum_registracije = array_pop($data)=='' ? date("Y-m-d H:i:s") : timeForMysql($d->datum_registracije);
+                $d->datum_registracije = array_pop($data)=='' ? Vrijeme::nowWithOffset() : timeForMysql($d->datum_registracije);
                 $d->zamrznut = array_pop($data);
                 $d->deaktiviran = array_pop($data);
                 $d->open_id = array_pop($data);

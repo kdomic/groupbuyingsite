@@ -42,7 +42,7 @@
         public static function set($data) {
 			$o = new opomene();
             $o->opis = array_pop($data);
-            $o->datum = date("Y-m-d H:i:s");
+            $o->datum = Vrijeme::nowWithOffset();
             $o->id_moderatora = array_pop($data);
             $o->id_korisnika = array_pop($data);            
 			xmlStatusSend($o->save());

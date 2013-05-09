@@ -68,7 +68,7 @@
 			$k = new Komantari();
 			if((int)$data[0]===4) $k = self::find_by_id($data[1]);
 			$k->aktivan = array_pop($data);
-			if((int)$data[0]===3)$k->datum = date("Y-m-d H:i:s");
+			if((int)$data[0]===3)$k->datum = Vrijeme::nowWithOffset();
 			$k->ocjena = array_pop($data);
 			$k->komentar = nl2br(array_pop($data));
 			$k->id_ponude = array_pop($data);

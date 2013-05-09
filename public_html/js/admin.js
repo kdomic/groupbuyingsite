@@ -282,6 +282,7 @@ function editUser(num){
     $('#userPurHistory').show();  
     userPurchases(num);    
     var userData = getUserData(num);
+    console.log(userData);
     $('#userID').val(userData[0]);
     $('#userIME').val(userData[1]);
     $('#userPREZIME').val(userData[2]);
@@ -399,7 +400,8 @@ function saveUser(){
         default:
             $('#userUpdateStatus').html("").slideUp("slow");
     }
-    var xml = sendToPhp(protocolData,'../getSet_korisnici.php');    
+    console.log(protocolData);
+    var xml = sendToPhp(protocolData,'../getSet_korisnici.php');
     if(phpStatus(xml,'userUpdateStatus')){
         setTimeout(function(){
             $('#singleUser').hide();
