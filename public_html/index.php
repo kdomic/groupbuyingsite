@@ -9,7 +9,8 @@
         <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
         <script type="text/javascript" src="js/jquery.timer.js"></script>
         <script type="text/javascript" src="js/jquery.msgBox.js"></script>
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>  
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+        <script type="text/javascript" src="js/encoder.js"></script>   
         <script type="text/javascript" src="js/main.js"></script> 
     </head>    
     

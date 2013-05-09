@@ -50,7 +50,39 @@ $(document).ready(function(){
     $('#userEMAIL').blur(function(){checkEmailAvailability('userEMAIL')});
     $('#modSelectUser').change(function(){showCatDropSelectOptions()});
 
-    $('.jqte-test').jqte();
+    $('.jqteBox').jqte({
+        fsize: false,
+        color: false,
+        indent: false,
+        outdent: false,
+        left: false,
+        center: false,
+        right: false,
+        unlink: false,
+        link:false,
+        source: false
+    });
+    $('.textOnly').jqte({
+        b: false,
+        i: false,
+        u: false,
+        ol: false,
+        ul: false,
+        fsize: false,
+        color: false,
+        indent: false,
+        outdent: false,
+        left: false,
+        center: false,
+        right: false,
+        unlink: false,
+        link:false,
+        source: false,
+        sub: false,
+        strike: false,
+        sup: false,
+        rule: false
+    });
 
 });
 
@@ -400,7 +432,6 @@ function saveUser(){
         default:
             $('#userUpdateStatus').html("").slideUp("slow");
     }
-    console.log(protocolData);
     var xml = sendToPhp(protocolData,'../getSet_korisnici.php');
     if(phpStatus(xml,'userUpdateStatus')){
         setTimeout(function(){
@@ -776,8 +807,7 @@ function editOffer(num){
     var parsedXML = $(xml).find('ponuda');
     $(parsedXML).children().each(function(){
         data.push($(this).text());
-    });
-    console.log(data);
+    });    
     $('#offerID').val(data[0]);
     $('#offerNASLOV').jqteVal(data[3]);
     $('#offerPODNASLOV').jqteVal(Encoder.htmlEncode(data[4]));
@@ -813,13 +843,13 @@ function saveOffer(){
 
     data.push($('#offerPRODAVATELJ').val());  
     data.push($('#offerKATEGORIJA').val());
-    data.push($('#offerNASLOV').val());
-    data.push($('#offerPODNASLOV').val());
+    data.push(Encoder.htmlDecode($('#offerNASLOV').val()));
+    data.push(Encoder.htmlDecode($('#offerPODNASLOV').val()));
     data.push($('#offerCIJENA').val());
-    data.push($('#offerOPISNASLOV').val());
-    data.push($('#offerOPISKRATKI').val());
-    data.push($('#offerOPIS').val());
-    data.push($('#offerNAPOMENA').val());
+    data.push(Encoder.htmlDecode($('#offerOPISNASLOV').val()));
+    data.push(Encoder.htmlDecode($('#offerOPISKRATKI').val()));
+    data.push(Encoder.htmlDecode($('#offerOPIS').val()));
+    data.push(Encoder.htmlDecode($('#offerNAPOMENA').val()));
     data.push($('#offerKARTAX').val());
     data.push($('#offerKARTAY').val());
     data.push($('#singleOffer input:radio[name=vidljivost]:checked').val());

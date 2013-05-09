@@ -27,12 +27,12 @@
             <tr>
                 <td><label for="offerNASLOV">Naslov</label></td>                
                 <td>                    
-                    <textarea name="offerNASLOV"        id="offerNASLOV" class="jqte-test"></textarea>                    
+                    <textarea name="offerNASLOV"        id="offerNASLOV" class="textOnly"></textarea>                    
                 </td>
             </tr>
             <tr>
                 <td><label for="offerPODNASLOV"></label>Podnaslov</td>
-                <td><textarea name="offerPODNASLOV"      id="offerPODNASLOV" class="jqte-test"></textarea></td>
+                <td><textarea name="offerPODNASLOV"      id="offerPODNASLOV" class="textOnly"></textarea></td>
             </tr>
             <tr>
                 <td><label for="offerCIJENA">Cijena</label></td>
@@ -40,19 +40,19 @@
             </tr>
             <tr>
                 <td><label for="offerOPISNASLOV">Naslov opisa</label></td>
-                <td><textarea name="offerOPISNASLOV"      id="offerOPISNASLOV" class="jqte-test"></textarea></td>
+                <td><textarea name="offerOPISNASLOV"      id="offerOPISNASLOV" class="jqteBox"></textarea></td>
             </tr>
             <tr>
                 <td><label for="offerOPISKRATKI">Kratki opis</label></td>
-                <td><textarea name="offerOPISKRATKI"      id="offerOPISKRATKI" class="jqte-test"></textarea></td>
+                <td><textarea name="offerOPISKRATKI"      id="offerOPISKRATKI" class="jqteBox"></textarea></td>
             </tr>
             <tr>
                 <td><label for="offerOPIS">Opis</label></td>
-                <td><textarea name="offerOPIS"      id="offerOPIS" class="jqte-test"></textarea></td>
+                <td><textarea name="offerOPIS"      id="offerOPIS" class="jqteBox"></textarea></td>
             </tr>
             <tr>
                 <td><label for="offerNAPOMENA">Napomena</label></td>
-                <td><textarea name="offerNAPOMENA"      id="offerNAPOMENA" class="jqte-test"></textarea></td>
+                <td><textarea name="offerNAPOMENA"      id="offerNAPOMENA" class="jqteBox"></textarea></td>
             </tr>
             <tr>
                 <td><label for="offerKARTAX">Karta X</label></td>

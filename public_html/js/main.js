@@ -398,6 +398,7 @@ function sliderImgChange(img){
 
 function slideOfferChange(data) {         
     var time = 400;
+    console.log(data);
     $('.sliderCaption h1').fadeOut(time, function() { $(this).text(data[1]).fadeIn(time); });
     $('.sliderCaption h2').fadeOut(time, function() { $(this).text( data[2] ).fadeIn(time); });
     $('.sliderOfferBuy h2').fadeOut(time, function() { $(this).text(data[3]).fadeIn(time); });
@@ -549,6 +550,7 @@ function loadOfferDetails(num){
     goTop();
     num = num *(-1);
     var data = getOffer(num,0,0);
+    console.log(data);
     sliderChange(num);
     var img = data[14].split(';');
     img.pop();
