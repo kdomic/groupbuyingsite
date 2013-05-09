@@ -28,6 +28,19 @@
 							xmlStatusSend(1);
 						}
 					} else {
+						if(isset($_SESSION['login_error']))
+							$_SESSION['login_error']++;
+						else
+							$_SESSION['login_error'] = 1;
+						if($_SESSION['login_error']>2){
+							$k = Korisnici::find_by_email($data[1]);
+							if($k){
+								$k->aktivan = 0;
+								$k->save();
+								xmlStatusSend(2);
+								return;
+							}
+						}							
 						xmlStatusSend(0);
 					}
 					break;
@@ -43,6 +56,7 @@
 		public function login($user)
 		{
 			if($user){
+				if(isset($_SESSION['login_error'])) unset($_SESSION['login_error']);
 				$this->user_id = $_SESSION['user_id'] = $user->id;
 				$this->clearBasket();
                 Logovi::logoviOp('5',$_SESSION['user_id']);				
@@ -51,10 +65,11 @@
 
 		public function logout()
 		{
+			Logovi::logoviOp('6',$_SESSION['user_id']);
 			unset($_SESSION['user_id']);
 			$this->user_id = 0;
-			$this->clearBasket();
-			Logovi::logoviOp('6',$_SESSION['user_id']);
+			$this->clearBasket();			
+			session_destroy();
 			return 1;
 		}
 
