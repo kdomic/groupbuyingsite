@@ -1,5 +1,5 @@
 <div id="slider" class="outerWrapper">                
-    <div class="sliderCaption"><h1></h1><h2></h2></div>
+    <div class="sliderCaption"><h1></h1><h2></h2></div>    
     <div class="sliderOffer">                    
         <div class="sliderOfferBuy">
             <div class="sliderOfferTag"></div>
