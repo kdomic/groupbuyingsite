@@ -30,7 +30,9 @@
         <script type="text/javascript" src="../js/jquery-ui-1.10.2.custom.js"></script>
         <script type="text/javascript" src="../js/jquery.dataTables.columnFilter.js"></script>
         <script type="text/javascript" src="../js/jquery-te-1.3.5.min.js"></script>
-        <script type="text/javascript" src="../js/jquery.uploadify.min.js"></script>        
+        <script type="text/javascript" src="../js/jquery.uploadify.min.js"></script>
+        <script type="text/javascript" src="../js/jquery.blockUI.js"></script>        
+                
                 
     </head>    
     

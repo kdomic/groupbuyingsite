@@ -88,7 +88,7 @@ $(document).ready(function(){
 
 /* === LAYOUTS === */
 
-function hideAll(){
+function hideAll(){    
     $('#pocetna').hide();
     $('#korisnici').hide();
     $('#moderatori').hide();    
@@ -207,16 +207,18 @@ function layout_showVrijeme(){
     initLogsTable();
     $('#vrijeme').show();
     $('.menuCurrent').removeClass('menuCurrent');
-    $($('nav li')[10]).addClass('menuCurrent');    
+    $($('nav li')[10]).addClass('menuCurrent');      
 }
 
 /* === START === */
-
+var graphWidth = 925;
+var graphHeight = 400;
 function showStatistics(){
-    google.setOnLoadCallback(drawPonudeGradovi);
-    google.setOnLoadCallback(drawKategorijeGradovi);
-    google.setOnLoadCallback(drawKorisniciPrijave);    
-    google.setOnLoadCallback(drawKupljenoDodano);    
+    drawOffset();
+    drawPonudeGradovi();
+    drawKategorijeGradovi();
+    drawKorisniciPrijave();
+    drawKupljenoDodano();
 }
 
 function getStatData(get,head){
@@ -240,10 +242,26 @@ function getStatData(get,head){
     return dataset;  
 }
 
+function drawOffset() {
+    var cred = parseInt(currentUserCredentials());    
+    if(cred!==3) return;
+    var xml = sendToPhp(new Array('1'),'../getSet_vrijeme.php');
+    var status = $(xml).find('status').text();
+    if(!status) status = 0;
+    else status = parseInt(status);
+    var data = google.visualization.arrayToDataTable([['Oznaka', 'Vrijednost'],['Pomak', status]]);
+    var options = {
+        width: 200, height: 200,
+        minorTicks: 5,
+        min: -720,max: 720
+    };
+    new google.visualization.Gauge(document.getElementById('visualization0')).draw(data, options);
+}
+
 function drawPonudeGradovi() {
     var dataset = getStatData('1',new Array('Ponuda','Ponude po gradovima'));
     var data = google.visualization.arrayToDataTable(dataset);
-    var options = { title: 'Aktivnih ponuda po gradovima' };
+    var options = {title: 'Aktivnih ponuda po gradovima', width: graphWidth, height: graphHeight, is3D:true };    
     var chart = new google.visualization.PieChart(document.getElementById('visualization1'));
     chart.draw(data, options);
 }
@@ -251,7 +269,7 @@ function drawPonudeGradovi() {
 function drawKategorijeGradovi() {
     var dataset = getStatData('2',new Array('Kategorija','Kategorij po gradovima'));
     var data = google.visualization.arrayToDataTable(dataset);
-    var options = { title: 'Aktivnih kategorija po gradovima' };
+    var options = { title: 'Aktivnih kategorija po gradovima', width: graphWidth, height: graphHeight, is3D:true };
     var chart = new google.visualization.PieChart(document.getElementById('visualization2'));
     chart.draw(data, options);
 }
@@ -260,7 +278,7 @@ function drawKorisniciPrijave() {
     var dataset = getStatData('3',new Array('Korisnik','Broj prijava'));
     var data = google.visualization.arrayToDataTable(dataset);
     var options = {
-      title: 'Top korisnici po prijavama (aktivni)',
+      title: 'Top korisnici po prijavama (aktivni)', width: graphWidth, height: graphHeight,
       hAxis: {title: 'Identifikacija korisnika', titleTextStyle: {color: 'red'}}
     };
     var chart = new google.visualization.ColumnChart(document.getElementById('visualization3'));
@@ -271,7 +289,7 @@ function drawKupljenoDodano() {
     var dataset = getStatData('4',new Array('Ponuda','Broj kupovina','Broj dodavanja'));
     var data = google.visualization.arrayToDataTable(dataset);
     var options = {
-      title: 'Statistika dodavanja i kupovine (košarica)',
+      title: 'Statistika dodavanja i kupovine (košarica)', width: graphWidth, height: graphHeight,
       hAxis: {title: 'Ponuda', titleTextStyle: {color: 'red'}}
     };
     var chart = new google.visualization.BarChart(document.getElementById('visualization4'));
@@ -314,7 +332,6 @@ function editUser(num){
     $('#userPurHistory').show();  
     userPurchases(num);    
     var userData = getUserData(num);
-    console.log(userData);
     $('#userID').val(userData[0]);
     $('#userIME').val(userData[1]);
     $('#userPREZIME').val(userData[2]);
@@ -1118,13 +1135,17 @@ function initLogsTable(){
     });  
 }
 
-/* === AJAX STATUS SEND/R === */
-
+/* === AJAX SEND/R === */
+var xcv = 0;
 function sendToPhp(dataString,url){
-    $("body").css("cursor", "progress");    
+    //$("body").css("cursor", "progress");
     var jsonString = JSON.stringify(dataString);
     var data;
     $.ajax({
+         beforeSend: function(){
+            console.log(xcv++);            
+            $.blockUI({ message: '<h1>Učitavanje...</h1>' });
+         },
          type: "POST",
          url: url,
          data: {data : jsonString}, 
@@ -1132,9 +1153,12 @@ function sendToPhp(dataString,url){
          async:false,
          success: function(xml){
              data = xml;
+         },
+         complete: function(){            
+             $.unblockUI();
          }
-    });
-    $("body").css("cursor", "default");    
+    }); 
+    //$("body").css("cursor", "default");
     return data;
 }
 
