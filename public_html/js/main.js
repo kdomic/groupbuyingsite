@@ -2,6 +2,144 @@ var emailPattern = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-
 var map_x = 0;
 var map_y = 0;
 
+/* === ONLOAD === */
+$(document).ready(function() {
+    if(sessionCheck()){
+        $('#btnShowDropboxLogin').addClass("hide");        
+        $('#btnShowDropboxPurchases').removeClass("hide");
+        $('#btnShowDropboxAccount').removeClass("hide");        
+    }
+    
+    reloadBasket();   
+    showIndexLayout();
+    startCountdown();    
+    countdown.set({ time : 1000, autostart : true });
+    initNewsletter();
+
+    /*DROPBOX EVENTS*/
+    $('#inputLozinkaP').keypress(function(e) {if(e.which == 13)loginUser();});    
+
+    /*FILTERS EVENTS*/
+    cityDropSelectOptions('dropFilterCitys');
+    categoryDropSelectOptions("dropFilterCategories",1);
+    $('#dropFilterCitys').change(function(){citysFilterStart();});    
+    $('#dropFilterCategories').change(function(){categoriesFilterStart();});
+    $('#dropFilterNum').change(function(){
+        initOfferNum = $('#dropFilterNum').val();
+        initOffers();
+    });
+
+    /*NEWSLETTER EVENTS*/
+    $('#newsletterSubmit').click(function(){saveNewsletter();});
+    $('#searchSubmit').click(function(){searchStart();});
+    $('#searchTitle').keypress(function(e) {if(e.which == 13)searchStart();});
+
+});
+
+/* === LAYOUTS === */
+
+function hideAll() {
+    goTop();
+    hideIndexLayou();
+    hideOfferLayou();
+    hideCheckoutLayout();
+}
+
+function showIndexLayout() {
+    backQuene.push(1);
+    $('#goBack').hide();
+    hideAll();
+    $('#layout_offers').html('');
+    initOffers();
+    initSlider();
+    sliderPlayIcon();
+    $('#slider').show();
+    $($('.sliderOfferFriend a')[1]).show();
+    $('.sliderImgNum').show();
+    $('#layout_offers').show();
+    $('#layout_content_universal').html('<div class="offer" id="loadMoreOffer" onclick="addOneOffer();">Učitaj više</div>').show();
+    $('#layout_sidebar_search').show();
+    $('#layout_sidebar_basket').show(); 
+    if(sessionCheck()) $('#layout_sidebar_newsletter').show();
+}
+
+function hideIndexLayou() {
+    timer.stop();
+    $('#slider').hide();
+    $($('.sliderOfferFriend a')[1]).hide();
+    $('.sliderImgNum').hide();
+    $('#layout_offers').hide();
+    $('#layout_content_universal').hide();
+    $('#layout_sidebar_search').hide();
+    $('#layout_sidebar_basket').hide();    
+    $('#layout_sidebar_newsletter').hide();
+}
+
+function showOfferLayou(){
+    hideAll();    
+    $('#goBack').show();
+    $('#slider').show();
+    $('#imageGallery').show();
+    $('#layout_offer_details').show();
+    $('#layout_sidebar_offer_details').show();
+    $('#layout_sidebar_basket').show();
+    $('#layout_comments').show();
+    $('#layout_recomended_offers').show();
+    googleMaps();    
+}
+
+function hideOfferLayou(){
+    $('#slider').hide();
+    $('#imageGallery').hide();    
+    $('#layout_offer_details').hide();
+    $('#layout_sidebar_offer_details').hide();
+    $('#layout_sidebar_basket').hide();
+    $('#layout_comments').hide();  
+    $('#layout_recomended_offers').hide();    
+}
+
+function showCheckoutLayout() {
+    backQuene.push(3);
+    $('#goBack').show();
+    hideAll();
+    $('#layout_offers').html('').show();
+    $('#layout_sidebar_universal').show();
+    $('#layout_content_universal').html('').show();  
+}
+
+function hideCheckoutLayout() {
+    $('#layout_offers').hide();
+    $('#layout_sidebar_universal').hide();
+    $('#layout_content_universal').hide();
+}
+
+var backQuene = new Array();
+
+function goHome(){
+    backQuene = new Array();
+    backQuene.push(1);
+    backQuene.push(1);
+    goBack();   
+}
+
+function goBack() {    
+    hideAll();
+    backQuene.pop();
+    var num = backQuene.pop();
+    switch(num){
+        case 1: 
+            showIndexLayout(); 
+            $('#goBack').hide();
+            break;
+        case 2: break;
+        case 3: showCheckoutLayout(); break;
+        default:
+            num = num*(-1);
+            showOfferLayou();
+            loadOfferDetails(num);
+    }
+}
+
 /* === DROPBOX === */
 
 function showDropbox(index){
@@ -28,7 +166,6 @@ function userAccount() {
     $('#btnAdmin').hide();
     if(parseInt(userData[15])===2 || parseInt(userData[15])===3)
         $('#btnAdmin').show();
-
     var xml = sendToPhp(new Array('5', userId),'getSet_opomene.php');
     var status = $(xml).find('status').text();    
     if(parseInt(status)>0) {
@@ -195,7 +332,7 @@ function parseRegForm(){
     data.push($('#inputLozinka').val());    //3
     data.push($('#inputLozinka2').val());   //4
     data.push($('#uvjeti').is(':checked')); //5
-    data.push($('#inputCaptcha').val()); //5
+    data.push($('#inputCaptcha').val());    //6
     return data;
 }
 
@@ -583,7 +720,6 @@ function showHideComment(offerID){
     var userID = sessionCheck();
     var xml = sendToPhp(new Array(5,userID,offerID),"getSet_komentari.php");
     var status = $(xml).find('status').text();
-
     if(status==1) $('#newCommentArea').show();
 }
 
@@ -911,144 +1047,6 @@ function decreaseTime(element){
     var _m = parseInt(sum/60);
     var _s = sum - 60*_m;
     $(element).text(_d+' dana '+_h+':'+_m+':'+_s);
-}
-
-
-
-/* === ONLOAD === */
-$(document).ready(function() {
-    if(sessionCheck()){
-        $('#btnShowDropboxLogin').addClass("hide");        
-        $('#btnShowDropboxPurchases').removeClass("hide");
-        $('#btnShowDropboxAccount').removeClass("hide");        
-    }
-    $('#inputLozinkaP').keypress(function(e) {if(e.which == 13)loginUser();});    
-    reloadBasket();   
-    showIndexLayout();
-    startCountdown();
-    countdown.set({ time : 1000, autostart : true });
-    initNewsletter();
-
-    /*FILTERS*/
-    cityDropSelectOptions('dropFilterCitys');
-    categoryDropSelectOptions("dropFilterCategories",1);
-    $('#dropFilterCitys').change(function(){citysFilterStart();});    
-    $('#dropFilterCategories').change(function(){categoriesFilterStart();});
-    $('#dropFilterNum').change(function(){
-        initOfferNum = $('#dropFilterNum').val();
-        initOffers();
-    });
-
-    /*EVENTS*/
-    $('#newsletterSubmit').click(function(){saveNewsletter();});
-    $('#searchSubmit').click(function(){searchStart();});
-    $('#searchTitle').keypress(function(e) {if(e.which == 13)searchStart();});
-
-});
-
-/* === LAYOUTS === */
-
-function hideAll() {
-    goTop();
-    hideIndexLayou();
-    hideOfferLayou();
-    hideCheckoutLayout();
-}
-
-function showIndexLayout() {
-    backQuene.push(1);
-    $('#goBack').hide();
-    hideAll();
-    $('#layout_offers').html('');
-    initOffers();
-    initSlider();
-    sliderPlayIcon();
-    $('#slider').show();
-    $($('.sliderOfferFriend a')[1]).show();
-    $('.sliderImgNum').show();
-    $('#layout_offers').show();
-    $('#layout_content_universal').html('<div class="offer" id="loadMoreOffer" onclick="addOneOffer();">Učitaj više</div>')
-                                  .show();
-    $('#layout_sidebar_search').show();
-    $('#layout_sidebar_basket').show(); 
-    if(sessionCheck()) $('#layout_sidebar_newsletter').show();
-}
-
-function hideIndexLayou() {
-    timer.stop();
-    $('#slider').hide();
-    $($('.sliderOfferFriend a')[1]).hide();
-    $('.sliderImgNum').hide();
-    $('#layout_offers').hide();
-    $('#layout_content_universal').hide();
-    $('#layout_sidebar_search').hide();
-    $('#layout_sidebar_basket').hide();    
-    $('#layout_sidebar_newsletter').hide();
-}
-
-function showOfferLayou(){
-    hideAll();    
-    $('#goBack').show();
-    $('#slider').show();
-    $('#imageGallery').show();
-    $('#layout_offer_details').show();
-    $('#layout_sidebar_offer_details').show();
-    $('#layout_sidebar_basket').show();
-    $('#layout_comments').show();
-    $('#layout_recomended_offers').show();
-    googleMaps();    
-}
-
-function hideOfferLayou(){
-    $('#slider').hide();
-    $('#imageGallery').hide();    
-    $('#layout_offer_details').hide();
-    $('#layout_sidebar_offer_details').hide();
-    $('#layout_sidebar_basket').hide();
-    $('#layout_comments').hide();  
-    $('#layout_recomended_offers').hide();    
-}
-
-function showCheckoutLayout() {
-    backQuene.push(3);
-    $('#goBack').show();
-    hideAll();
-    $('#layout_offers').html('').show();
-    $('#layout_sidebar_universal').show();
-    $('#layout_content_universal').html('').show();  
-}
-
-function hideCheckoutLayout() {
-    $('#layout_offers').hide();
-    $('#layout_sidebar_universal').hide();
-    $('#layout_content_universal').hide();
-}
-
-var backQuene = new Array();
-
-function goHome(){
-    backQuene = new Array();
-    backQuene.push(1);
-    backQuene.push(1);
-    goBack();   
-}
-
-function goBack() {    
-    hideAll();
-    backQuene.pop();
-    var num = backQuene.pop();
-    switch(num){
-        case 1: 
-            showIndexLayout(); 
-            $('#goBack').hide();
-            break;
-        case 2: break;
-        case 3: showCheckoutLayout(); break;
-        default:
-            num = num*(-1);
-            showOfferLayou();
-            loadOfferDetails(num);
-    }
 }
 
 /* === Message Box === */
