@@ -11,11 +11,12 @@
         [7]             - getAll(razina)
         [8]             - currentUserCredentials
         [9, 'ID']       - lastBoughtCat()
+        [10,'email']    - lostPassword()
     */
     
     $data = json_decode(stripslashes($_POST['data']));
     $op = (int)$data[0];
-    if(Korisnici::currentUserCredentialsValue()==3 || $op==5 || $op==8) {
+    if(Korisnici::currentUserCredentialsValue()==3 || $op==5 || $op==8 || $op==10) {
         //ok
     } elseif (Korisnici::currentUserCredentialsValue()==2) {
         if($data[1]==$_SESSION['user_id']){
@@ -40,5 +41,6 @@
         case 7: Korisnici::getAll(3); break;
         case 8: Korisnici::currentUserCredentials(); break;
         case 9: Korisnici::lastBoughtCat($data[1]); break;
+        case 10: Korisnici::lostPassword($data[1]); break;        
     }
 ?>

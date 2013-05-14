@@ -42,14 +42,15 @@
             <table>
                 <tr>
                     <td><label for="inputEmailP">Email</label></td>
-                    <td><input type="email"     name="email"    id="inputEmailP"     placeholder="Email" value="pero@pero.com"/></td>
+                    <td><input type="email"     name="email"    id="inputEmailP"     placeholder="Email" /></td>
                 </tr>
                 <tr>
                     <td><label for="inputLozinkaP">Lozinka</label></td>
-                    <td> <input type="password"  name="lozinka"  id="inputLozinkaP"   placeholder="Lozinka" value="pero"/></td>
+                    <td> <input type="password"  name="lozinka"  id="inputLozinkaP"   placeholder="Lozinka" /></td>
                 </tr>
                 <tr>
-                    <td colspan="2"><button id="btnLogin" onclick="loginUser();" >Prijava</button></td>
+                    <td><button id="btnLogin" onclick="loginUser();" >Prijava</button></td>
+                    <td><button id="btnReset" onclick="resetPassword();" >Resetiraj lozinku</button></td>
                 </tr>
             </table>
             <div id="loginStatus" class="warning hide"><span></span></div>

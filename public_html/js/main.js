@@ -417,6 +417,23 @@ function logoutUser(){
     }
 }
 
+function resetPassword(){
+    var userEmail = $('#inputEmailP').val();    
+    var xml = sendToPhp(new Array('5',userEmail),"getSet_korisnici.php");
+    var status = $(xml).find('status').text();
+    if(status==='0'){
+        $('#loginStatus').removeClass("info").removeClass("error").addClass("warning");
+        $('#loginStatus span').html("Unesite ispravni email");                
+        $('#loginStatus').slideDown("slow");
+    } else {
+        $('#loginStatus').slideUp("fast");
+        $('#loginStatus').removeClass("warning").removeClass("error").addClass("info");
+        $('#loginStatus span').html("Nova lozinka poslana vam je na email");    
+        $('#loginStatus').slideDown("slow");
+        var xml = sendToPhp(new Array('10',userEmail),"getSet_korisnici.php");
+    }
+}
+
 /*=== USER SETTINGS ===*/
 
 function userInformationChange(){

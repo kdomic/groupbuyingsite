@@ -174,6 +174,20 @@
                     xmlStatusSend(0);
             }
 
-
+            public static function lostPassword($email){
+                $korisnik = self::find_by_email($email);
+                $newPass = "";
+                for ($i=0; $i < 5; $i++)
+                    $newPass .= chr(rand(97,122));
+                $korisnik->password = sha1($newPass);
+                $korisnik->save();
+                $to = $email;
+                $subject = "Nova lozinka";
+                $message  = 'Nova lozinka je: ' . $newPass;
+                $from = "kdomic@foi.hr";
+                $headers = "From:" . $from;
+                mail($to,$subject,$message,$headers);
+                echo "ok";
+            }
     }
 ?>
