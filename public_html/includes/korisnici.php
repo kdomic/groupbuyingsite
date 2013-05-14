@@ -187,7 +187,7 @@
                 $from = "kdomic@foi.hr";
                 $headers = "From:" . $from;
                 mail($to,$subject,$message,$headers);
-                echo "ok";
+                Logovi::logoviOp('18',$korisnik->id);
             }
     }
 ?>
