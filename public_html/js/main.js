@@ -4,6 +4,7 @@ var map_y = 0;
 
 /* === ONLOAD === */
 $(document).ready(function() {
+    facebookLoginInit();
     if(sessionCheck()){
         $('#btnShowDropboxLogin').addClass("hide");        
         $('#btnShowDropboxPurchases').removeClass("hide");
@@ -354,51 +355,14 @@ function loginUser(){
     var xml = sendToPhp(data,"includes/session.php");
     var ret = $(xml).find('status').text();
     var status = parseInt(ret);
-    if(status==0){
-        $('#loginStatus').removeClass("info").removeClass("warning").addClass("error");
-        $('#loginStatus span').html("Uneseni podatci nisu ispravni");
-        $('#btnLogin').removeAttr("disabled");        
-        $('#loginStatus').slideDown("slow");
-    } else if(status==1){
-        $('#loginStatus').removeClass("warning").removeClass("error").addClass("info");
-        $('#loginStatus span').html("Prijava uspješna!");      
-        $('#loginStatus').slideDown("slow");
-        $('#btnShowDropboxLogin').addClass("hide");        
-        setTimeout(function(){
-            $('.dropboxLogin').slideUp("slow");
-            $('#btnShowDropboxPurchases').removeClass("hide");
-            $('#btnShowDropboxAccount').removeClass("hide");
-        }, 1000);
-        reloadBasket();
-        initOffers();
-        $('#layout_sidebar_newsletter').show();
-    } else if(status==2){
-        $('#loginStatus').removeClass("info").removeClass("error").addClass("warning");
-        $('#loginStatus span').html("Vaš račun je blokiran");
-        $('#btnLogin').removeAttr("disabled");        
-        $('#loginStatus').slideDown("slow");
-    } else if(status==3){
-        $('#loginStatus').removeClass("info").removeClass("error").addClass("warning");
-        $('#loginStatus span').html("Vaš račun je deaktiviran zbog opomena");
-        $('#btnLogin').removeAttr("disabled");        
-        $('#loginStatus').slideDown("slow");
-    } else if(status==4) {
-        $('#loginStatus').removeClass("info").removeClass("error").addClass("warning");
-        $('#loginStatus span').html("Niste aktivirali račun putem e-maila");
-        $('#btnLogin').removeAttr("disabled");        
-        $('#loginStatus').slideDown("slow");
-    } else {
-        $('#loginStatus').removeClass("info").removeClass("error").addClass("warning");
-        $('#loginStatus span').html("Račun je zamrznut još:<br>"+ret);
-        $('#btnLogin').removeAttr("disabled");        
-        $('#loginStatus').slideDown("slow");
-    }
+    if(ret.indexOf("dana")>=0) status = 5;    
+    loginStatusMess(status,ret);
 }
 
-function logoutUser(){
+function logoutUser(){    
     var xml = sendToPhp(new Array('4'),"includes/basket.php");
     var sum = $(xml).find('status').text();
-    if(sum==0){
+    if(sum==0){        
         var xml = sendToPhp(new Array('3'),"includes/session.php");
         error();
     } else {     
@@ -431,6 +395,118 @@ function resetPassword(){
         $('#loginStatus span').html("Nova lozinka poslana vam je na email");    
         $('#loginStatus').slideDown("slow");
         var xml = sendToPhp(new Array('10',userEmail),"getSet_korisnici.php");
+    }
+}
+
+function facebookLoginInit() {
+    FB.init({
+        appId      : '501223329943409', // App ID
+        channelUrl : '//'+window.location.hostname+'/channel', // Path to your Channel File
+        status     : true, // check login status
+        cookie     : true, // enable cookies to allow the server to access the session
+        xfbml      : true  // parse XFBML
+    });
+    $('#btnFacebookLogin').click(function(){FB.login(function(response){},{scope: 'email'});});
+    $('#btnLogOut').click(function(){FB.logout(function(response){});})
+    FB.Event.subscribe('auth.statusChange', function(response) {
+        if (response.authResponse) {
+            FB.api('/me', function(me){
+                if (me.name) {
+                    console.log(me);
+                    facebookRegisterUser(me);
+                    facebookRegisterSession(me);
+                }
+            })
+        } else {
+            facebookLogout();
+        }
+    });
+}
+
+function facebookRegisterUser(user){
+    var protocolData = new Array();
+    protocolData.push(user.first_name);
+    protocolData.push(user.last_name);
+    protocolData.push('fb.'+user.email);
+    protocolData.push('facebooktajnalozinka');
+    protocolData.push('facebooktajnalozinka');
+    protocolData.push(1);
+    protocolData.push('facebook');
+    var xml = sendToPhp(protocolData,"includes/register.php");
+    var status = $(xml).find('status').text();
+    if(status==='0'){
+        protocolData.push("regData");
+        sendToPhp(protocolData,"includes/register.php");
+    }
+}
+
+function facebookRegisterSession(user){
+    var protocolData = new Array();
+    protocolData.push('1');
+    protocolData.push('fb.'+user.email);
+    protocolData.push('fb.'+user.email);
+    $('#loginStatus').slideUp("slow");
+    $('#loginStatus span').html("");
+    var xml = sendToPhp(protocolData,"includes/session.php");
+    var ret = $(xml).find('status').text();
+    var status = parseInt(ret);
+    if(ret.indexOf("dana")>=0) status = 5;
+    loginStatusMess(status,ret);
+}
+
+function facebookLogout(){    
+    FB.api('/me', function(me){
+        if (me.name){
+            FB.logout(function(response){});
+        }
+    });
+}
+
+function loginStatusMess(status,ret){
+    console.log(status);
+    if(status===0){
+        $('#loginStatus').removeClass("info").removeClass("warning").addClass("error");
+        $('#loginStatus span').html("Uneseni podatci nisu ispravni");
+        $('#btnLogin').removeAttr("disabled");        
+        $('#loginStatus').slideDown("slow");
+        facebookLogout();
+    } else if(status===1){
+        $('#loginStatus').removeClass("warning").removeClass("error").addClass("info");
+        $('#loginStatus span').html("Prijava uspješna!");      
+        $('#loginStatus').slideDown("slow");
+        $('#btnShowDropboxLogin').addClass("hide");        
+        setTimeout(function(){
+            $('.dropboxLogin').slideUp("slow");
+            $('#btnShowDropboxPurchases').removeClass("hide");
+            $('#btnShowDropboxAccount').removeClass("hide");
+        }, 1000);
+        reloadBasket();
+        initOffers();
+        $('#layout_sidebar_newsletter').show();
+    } else if(status===2){
+        facebookLogout();
+        $('#loginStatus').removeClass("info").removeClass("error").addClass("warning");
+        $('#loginStatus span').html("Vaš račun je blokiran");
+        $('#btnLogin').removeAttr("disabled");        
+        $('#loginStatus').slideDown("slow");
+    } else if(status===3){
+        facebookLogout();
+        $('#loginStatus').removeClass("info").removeClass("error").addClass("warning");
+        $('#loginStatus span').html("Vaš račun je deaktiviran zbog opomena");
+        $('#btnLogin').removeAttr("disabled");        
+        $('#loginStatus').slideDown("slow");
+    } else if(status===4) {
+        facebookLogout();
+        $('#loginStatus').removeClass("info").removeClass("error").addClass("warning");
+        $('#loginStatus span').html("Niste aktivirali račun putem e-maila");
+        $('#btnLogin').removeAttr("disabled");        
+        $('#loginStatus').slideDown("slow");
+    } else if(status===5) {
+        facebookLogout();
+        $('#loginStatus').removeClass("info").removeClass("error").addClass("warning");
+        $('#loginStatus span').html("Račun je zamrznut još:<br>"+ret);
+        $('#btnLogin').removeAttr("disabled");        
+        $('#loginStatus').slideDown("slow");
     }
 }
 
@@ -634,8 +710,8 @@ function initOffers(){
     if(userID!==0){
         var xml = sendToPhp(new Array('9', userID),"getSet_korisnici.php");
         var status = $(xml).find('status').text();
-        addNewOffer(0,'layout_offers', status);
-        addNewOffer(1,'layout_offers', status);        
+        //addNewOffer(0,'layout_offers', status);
+        //addNewOffer(1,'layout_offers', status);        
     }
     for(var i = 0; i<initOfferNum; i++)
         addOneOffer();

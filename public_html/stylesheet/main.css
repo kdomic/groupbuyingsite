@@ -122,6 +122,10 @@ header nav select {
     text-align: center;;
 }
 
+#btnFacebookLogin{
+    cursor: pointer;
+}
+
 /* === Content === */
 
 #outerDiv {

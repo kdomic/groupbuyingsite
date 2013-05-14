@@ -15,7 +15,11 @@
 			$data = json_decode(stripslashes($_POST['data']));			
 			switch ((int)$data[0]) {
 				case 1:
-					$korisnik = Korisnici::authenticate($data[1],$data[2]); //
+					$korisnik = "";
+					if($data[1]==$data[2])
+						$korisnik = Korisnici::find_by_email($data[1]);
+					else
+						$korisnik = Korisnici::authenticate($data[1],$data[2]);
 					if($korisnik){
 						if($korisnik->aktivan==0)
 							xmlStatusSend(2);
@@ -72,6 +76,7 @@
 			$this->user_id = 0;
 			$this->clearBasket();			
 			session_destroy();
+			//setcookie ("fbsr_501223329943409", "", time() - 3600);
 			return 1;
 		}
 

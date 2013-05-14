@@ -56,7 +56,11 @@
             <div id="loginStatus" class="warning hide"><span></span></div>
     </div>
     <div class="dropboxLeft">
-        Facebook & Google
+        <div id="auth-status">
+            <div id="auth-loggedout">
+                <img src="images/facebookLogin.png" alt="Facebook prijava" id="btnFacebookLogin"/>
+            </div>
+        </div>
     </div>
     <div class="clear"></div>
 </div>
@@ -136,6 +140,7 @@
             <div id="dropboxCol2Status" class="hide"><span></span></div>
     </div>
     <div class="dropboxLeft">
+        <div id="fb-root"></div>
         <button id="btnLogOut" onclick="logoutUser();">ODJAVA</button>
         <button id="btnAdmin" onclick="goToAdmin();">ADMINISTRACIJA</button>
         <br><br>

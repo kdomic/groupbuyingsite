@@ -17,7 +17,7 @@
             $this->lozinka = $data[3];
             $this->lozinka2 = $data[4];
             $this->uvjeti = $data[5];
-            if($data[6]!=$_SESSION['captcha']){
+            if($data[6]!=$_SESSION['captcha'] && $data[6]!='facebook'){
                 xmlStatusSend(-1);
                 return;
             }
@@ -40,7 +40,12 @@
             $korisnik->email = $this->email;
             $korisnik->password = sha1($this->lozinka);
             $korisnik->datum_registracije = Vrijeme::nowWithOffset();
-            $korisnik->email_potvrda = $this->emailConfirm($korisnik->email);
+            if($korisnik->email[0]=='f'&&$korisnik->email[1]=='b'&&$korisnik->email[2]=='.'){
+                $korisnik->email_potvrda = 'aktivan';
+                $korisnik->open_id = 1;
+            }
+            else
+                $korisnik->email_potvrda = $this->emailConfirm($korisnik->email);
             $korisnik->ovlasti = 1;
             $korisnik->aktivan = 1;
             $status = $korisnik->save();
