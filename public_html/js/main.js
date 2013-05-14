@@ -230,7 +230,7 @@ function registerUser(){
     var status = $(xml).find('status').text();
     if(status==='1'){
         $('#regStatus').removeClass("error").removeClass("warning").addClass("info");
-        $('#regStatus span').html("Registracija izvršena!<br/>Možete se prijaviti");      
+        $('#regStatus span').html("Registracija izvršena!<br/>Provjerite e-mail zbog aktivacije");      
         $('#regStatus').slideDown("slow");
     } else if(status==='-1') {
         $('#regStatus').removeClass("info").removeClass("error").addClass("warning");
@@ -380,6 +380,11 @@ function loginUser(){
     } else if(status==3){
         $('#loginStatus').removeClass("info").removeClass("error").addClass("warning");
         $('#loginStatus span').html("Vaš račun je deaktiviran zbog opomena");
+        $('#btnLogin').removeAttr("disabled");        
+        $('#loginStatus').slideDown("slow");
+    } else if(status==4) {
+        $('#loginStatus').removeClass("info").removeClass("error").addClass("warning");
+        $('#loginStatus span').html("Niste aktivirali račun putem e-maila");
         $('#btnLogin').removeAttr("disabled");        
         $('#loginStatus').slideDown("slow");
     } else {
@@ -535,7 +540,6 @@ function sliderImgChange(img){
 
 function slideOfferChange(data) {         
     var time = 400;
-    console.log(data);
     $('.sliderCaption h1').fadeOut(time, function() { $(this).text(data[1]).fadeIn(time); });
     $('.sliderCaption h2').fadeOut(time, function() { $(this).text( data[2] ).fadeIn(time); });
     $('.sliderOfferBuy h2').fadeOut(time, function() { $(this).text(data[3]).fadeIn(time); });
@@ -687,7 +691,6 @@ function loadOfferDetails(num){
     goTop();
     num = num *(-1);
     var data = getOffer(num,0,0);
-    console.log(data);
     sliderChange(num);
     var img = data[14].split(';');
     img.pop();

@@ -1143,8 +1143,7 @@ function sendToPhp(dataString,url){
     var data;
     $.ajax({
          beforeSend: function(){
-            console.log(xcv++);            
-            $.blockUI({ message: '<h1>Učitavanje...</h1>' });
+            //$.blockUI({ message: '<h1>Učitavanje...</h1>' });
          },
          type: "POST",
          url: url,
@@ -1155,7 +1154,7 @@ function sendToPhp(dataString,url){
              data = xml;
          },
          complete: function(){            
-             $.unblockUI();
+             //$.unblockUI();
          }
     }); 
     //$("body").css("cursor", "default");
