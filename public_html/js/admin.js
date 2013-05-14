@@ -617,8 +617,9 @@ function editSeller(num){
     $(parsedXML).children().each(function(){
         data.push($(this).text());
     });
+    console.log(data);
     $('#sellerID').val(data[0]);
-    $('#sellerKORISNIK option').eq(parseInt(data[1])-1).prop('selected',true);
+    $('#sellerKORISNIK option[value="'+data[1]+'"]').prop('selected',true);
     $('#sellerNAZIV').val(data[2]);
     $('#sellerADRESA').val(data[3]);
     $('#sellerKONTAKT').val(data[4]); 
