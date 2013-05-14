@@ -6,10 +6,10 @@
                 <select id="dropFilterCitys"> </select>
                 <select id="dropFilterCategories"> </select>
                 <select id="dropFilterNum">
-                    <option class="selectDrop" value="1" selected>1</option>                    
-                    <option class="selectDrop" value="3">3</option>
-                    <option class="selectDrop" value="5">5</option>
-                    <option class="selectDrop" value="10">10</option>                    
+                    <option class="selectDrop" value="10" selected>10</option>                    
+                    <option class="selectDrop" value="15">15</option>
+                    <option class="selectDrop" value="20">20</option>
+                    <option class="selectDrop" value="50">50</option>                    
                 </select>
             </nav>      
         </div>

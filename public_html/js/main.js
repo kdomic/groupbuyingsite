@@ -679,7 +679,7 @@ function hideIfTimeIsUp(){
 
 /* === OFFERS ==== */
 
-var initOfferNum = 1;
+var initOfferNum = 10;
 var currentOfferNum;
 var loadedOffers;
 
