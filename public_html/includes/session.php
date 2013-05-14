@@ -23,7 +23,9 @@
 							xmlStatusSend(3);
 						else if($korisnik->zamrznut!='0000-00-00 00:00:00' && Vrijeme::remainingTimeWithOffset($korisnik->zamrznut)!='Kupnja je zatvorena' )
 							xmlStatusSend(     Vrijeme::remainingTimeWithOffset($korisnik->zamrznut)    );
-						else {
+						else if($korisnik->email_potvrda!='aktivan'){
+							xmlStatusSend(4);
+						} else {
 							$this->login($korisnik);
 							xmlStatusSend(1);
 						}

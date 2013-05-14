@@ -40,8 +40,9 @@
             $korisnik->email = $this->email;
             $korisnik->password = sha1($this->lozinka);
             $korisnik->datum_registracije = Vrijeme::nowWithOffset();
-            $korisnik->email_potvrda = $this->emailConfirm();
+            $korisnik->email_potvrda = $this->emailConfirm($korisnik->email);
             $korisnik->ovlasti = 1;
+            $korisnik->aktivan = 1;
             $status = $korisnik->save();
             Logovi::logoviOp('1',$korisnik->id);
             xmlStatusSend($status);
@@ -49,12 +50,19 @@
         
         function emailCheck(){
             $check = Korisnici::find_by_email($this->email);
-            //Logovi::logoviOp('2',ID_KORISNIKA);
             xmlStatusSend($check ? "1":"0");
         }
         
-        function emailConfirm(){
-            return 0;
+        function emailConfirm($email){            
+            $email_potvrda = md5(uniqid(rand(), true));
+            $to = $email;
+            $subject = "Registracija";
+            $message  = 'Aktiviraj se: ';
+            $message .= 'http://arka.foi.hr/WebDiP/2012_projekti/WebDiP2012_013/potvrda.php?potvrda='.$email_potvrda;
+            $from = "kdomic@foi.hr";
+            $headers = "From:" . $from;
+            mail($to,$subject,$message,$headers);            
+            return $email_potvrda;
         }
         
     }    

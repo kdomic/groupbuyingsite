@@ -67,6 +67,18 @@
             else
                 return "Kupnja je zatvorena";
         }
+
+        public static function isInTime($datetime){
+            $future = strtotime($datetime);
+            $now = strtotime(self::nowWithOffset());
+            $diff = $future - $now;
+            if($diff>0) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+
     }    
 
 ?>
