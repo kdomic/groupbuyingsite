@@ -349,8 +349,8 @@ function editUser(num){
     var dt = userData[11].split(" ");
     $('#userZAMRZNUTdate').val(dt[0]);
     $('#userZAMRZNUTtime').val(dt[1]);    
-    $('#userDATUM').val(userData[12]);    
-    if(userData[13]==0){
+    $('#userDATUM').val(userData[12]);   
+    if(userData[13]=='aktivan'){
         $('#userPOTVRDA option').eq(0).prop('selected',true);
         $('#userPOTVRDA').prop('disabled', 'disabled');
     } else {
@@ -617,7 +617,6 @@ function editSeller(num){
     $(parsedXML).children().each(function(){
         data.push($(this).text());
     });
-    console.log(data);
     $('#sellerID').val(data[0]);
     $('#sellerKORISNIK option[value="'+data[1]+'"]').prop('selected',true);
     $('#sellerNAZIV').val(data[2]);
@@ -835,9 +834,10 @@ function editOffer(num){
     $('#offerOPIS').jqteVal(data[8]);
     $('#offerNAPOMENA').jqteVal(data[9]);
     $('#offerKARTAX').val(data[10]);
-    $('#offerKARTAY').val(data[11]);    
-    $('#offerPRODAVATELJ option').eq(parseInt(data[1])-1).attr('selected', 'selected');    
-    $('#offerKATEGORIJA option').eq(parseInt(data[2])-1).attr('selected', 'selected');
+    $('#offerKARTAY').val(data[11]);
+    console.log(data[1]);
+    $('#offerPRODAVATELJ option[value='+data[1]+']').attr('selected', 'selected');    
+    $('#offerKATEGORIJA option[value='+data[2]+']').attr('selected', 'selected');
     if(data[12]=="1")
         $('#singleOffer input:radio[name=vidljivost][value="1"]').prop('checked', true);
     else
@@ -955,7 +955,7 @@ function editAction(num){
     });
     $('#actionID').val(data[0]);
     citysActionsShow(data[0]);
-    $('#actionPONUDA option').eq(parseInt(data[1])-1).attr('selected', 'selected');        
+    $('#actionPONUDA option[value='+data[1]+']').attr('selected', 'selected');        
     $('#actionPOPUST').val(data[2]);
     $('#actionPOCETAK').val();
     var dt = data[3].split(" ");

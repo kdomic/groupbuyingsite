@@ -85,8 +85,8 @@
                     <td><label for="userPOTVRDA">Email potvrda</label></td>
                     <td>
                         <select name="potvrda"  id="userPOTVRDA">
-                            <option value="0">Aktiviran</option>
-                            <option>Nije aktiviran</option> 
+                            <option value="aktivan">Aktiviran</option>
+                            <option value="0">Nije aktiviran</option> 
                         </select>
                     </td>
                 </tr>

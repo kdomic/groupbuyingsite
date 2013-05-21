@@ -77,8 +77,7 @@
         <div id="map"></div>
         <br>
         <p>Slike je moguće pohraniti nakon spremanja ponude
-            <br>Moraju biti imenovane rednim brojem u JPG formatu (npg. 1.jpg, 2.jpg ...)
-            <br>Slika 1.jpg biti će glavna slika
+            <br>Naslovna slika mora biti u formatu JPG i imati sljedeći naziv: 1.jpg
             <br>Brisanje slika se vrši klikom na samu sliku</p>
         <div id="offerImgBox">
             <div id="queue"></div>
