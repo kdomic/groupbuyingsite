@@ -77,5 +77,13 @@
                 xmlStatusSend($d->id_ponude);
             }
 
+            public static function soldCount($id) {
+                global $database;
+                $sql = "SELECT COUNT(*) FROM racuni_akcije WHERE id_akcije=".$id;
+                $result_set = $database->db_query($sql);
+                $row = $database->db_fetch_array($result_set);
+                return array_shift($row);
+            }
+
     }
 ?>
