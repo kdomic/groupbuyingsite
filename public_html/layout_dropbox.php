@@ -2,7 +2,7 @@
 <div class="headerContent">
     <div class="dropboxLeft">
         Registracija
-            <table>
+            <table id="userRegTable">
                 <tr>
                     <td><label for="inputIme">Ime</label></td>
                     <td><input type="text"      name="ime"      id="inputIme"       placeholder="Ime"/></td>

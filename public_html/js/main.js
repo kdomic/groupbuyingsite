@@ -230,6 +230,7 @@ function registerUser(){
     var xml = sendToPhp(dataString,"includes/register.php");
     var status = $(xml).find('status').text();
     if(status==='1'){
+        $('#userRegTable').slideUp("slow");
         $('#regStatus').removeClass("error").removeClass("warning").addClass("info");
         $('#regStatus span').html("Registracija izvršena!<br/>Provjerite e-mail zbog aktivacije");      
         $('#regStatus').slideDown("slow");
