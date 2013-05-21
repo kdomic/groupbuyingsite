@@ -29,6 +29,7 @@
         }
 
         public function db_escape_value( $value ) {
+            $value = str_replace('&', '', $value);
             return $this->real_escape_string($value);
         }
 
