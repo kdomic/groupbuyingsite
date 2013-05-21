@@ -10,7 +10,7 @@
 
 	*/
 	$data = json_decode(stripslashes($_POST['data']));	
-	if(Korisnici::currentUserCredentialsValue()>1) {
+	if(Korisnici::currentUserCredentialsValue()>1 || $data[0]==5) {
         //ok
     } else {
         return -1;
