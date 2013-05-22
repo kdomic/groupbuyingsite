@@ -6,6 +6,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="stylesheet/msgBoxLight.css" />
         <link rel="stylesheet" type="text/css" href="stylesheet/main.css" />
+        <link rel="stylesheet" type="text/css" href="stylesheet/print.css" media="print"/>        
         <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
         <script type="text/javascript" src="js/jquery.timer.js"></script>
         <script type="text/javascript" src="js/jquery.msgBox.js"></script>
