@@ -835,11 +835,34 @@ header nav select {
 
 footer {
     width: 100%;
-    height: 500px;
-    color: #fff;
+    height: 250px;
+    color: #949494;
     background-color: #1a1a1a;
     border-top: 1px solid #05c4e7;
     margin-top: 100px;
+}
+
+footer a {
+    color: #FF9933;
+}
+
+footer a:hover {
+    color: #fff;
+}
+
+.footerContent {
+    width: 945px;    
+    margin: 0 auto;
+    margin-top: 25px;
+    color: #fff;
+    padding-top: 3px;
+    text-align: center;
+}
+
+.divFooterLeft {
+    width: 45%;
+    float: left;
+    margin-right: 20px;
 }
 
 /* === Message Box === */
