@@ -22,6 +22,10 @@
         public $x;
         public $y;
         public $category;
+        public $sellerNaziv;
+        public $sellerAdresa;
+        public $sellerKontakt;
+        public $sellerInfo;
         
         public static function count($protocolData)
         {
@@ -60,7 +64,8 @@
             $idOrg = $id;
             $query  = 'SELECT a.id AS akcija, p.id AS ponuda, p.naslov, p.podnaslov, p.cijena, a.popust, ';
             $query .= '(SELECT sum(ra.kolicina) FROM racuni_akcije as ra WHERE ra.id_akcije=a.id GROUP BY ra.id_akcije ) as kupljeno, ';
-            $query .= 'a.granica, a.datum_zavrsetka, p.opis_naslov, p.opis_kratki, p.opis, p.napomena, p.karta_x, p.karta_y, k.id ';
+            $query .= 'a.granica, a.datum_zavrsetka, p.opis_naslov, p.opis_kratki, p.opis, p.napomena, p.karta_x, p.karta_y, k.id, ';
+            $query .= 'prod.naziv, prod.adresa, prod.kontakt, prod.info ';
             $query .= 'FROM  akcije AS a ';
             $query .= 'JOIN ponude AS p ON a.id_ponude=p.id ';
             $query .= 'JOIN prodavatelji AS prod ON p.id_prodavatelja=prod.id ';
@@ -92,9 +97,7 @@
                     $query .= 'AND k.id='.$protocolData[5].' ';
                 }                
                 $query .= 'ORDER BY a.istaknuto DESC, a.datum_zavrsetka ASC ';
-                //$id = ($id-1)<0 ? 0 : ($id-1);
                 $query .= 'LIMIT 1 OFFSET '.$id;
-                //print_r($query);
             }            
             $data = DatabaseObject::find_by_raw_sql($query);
             if(empty($data)){
@@ -142,7 +145,11 @@
             $xml->y = array_shift($data[0]);                        
             $xml->sliderOfferBoughtImg = ('offers/ponuda_'.sprintf("%05d", $za_sluku).'/01.jpg');
             $xml->imgList($za_sluku);
-            $xml->category  = array_shift($data[0]);
+            $xml->category = array_shift($data[0]);
+            $xml->sellerNaziv = array_shift($data[0]);
+            $xml->sellerAdresa = array_shift($data[0]);
+            $xml->sellerKontakt = array_shift($data[0]);
+            $xml->sellerInfo = array_shift($data[0]);
             $xml->save();            
         }
         
@@ -171,7 +178,12 @@
             $offerTag->appendChild($xmlDoc->createElement("remark", toUtf8($this->remark)));
             $offerTag->appendChild($xmlDoc->createElement("x", toUtf8($this->x)));
             $offerTag->appendChild($xmlDoc->createElement("y", toUtf8($this->y)));
-            $offerTag->appendChild($xmlDoc->createElement("category", toUtf8($this->category)));            
+            $offerTag->appendChild($xmlDoc->createElement("category", toUtf8($this->category)));
+            $offerTag->appendChild($xmlDoc->createElement("sellerNaziv", toUtf8($this->sellerNaziv)));            
+            $offerTag->appendChild($xmlDoc->createElement("sellerAdresa", toUtf8($this->sellerAdresa)));            
+            $offerTag->appendChild($xmlDoc->createElement("sellerKontakt", toUtf8($this->sellerKontakt)));            
+            $offerTag->appendChild($xmlDoc->createElement("sellerInfo", toUtf8($this->sellerInfo)));            
+
             header("Content-Type: text/xml");
             $xmlDoc->formatOutput = true;
             echo $xmlDoc->saveXML();

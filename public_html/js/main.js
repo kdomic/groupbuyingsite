@@ -747,6 +747,7 @@ function addNewOffer(load,field,specialFilter){
     } else {
         loadedOffers.push(data[0]);
     }
+    if(data.length<=0) return;
     var $div = $('\
 <div class="offer">\
 <img src="'+data[12]+'" alt="slika" onclick="loadOfferDetails('+data[0]+');"/>\
@@ -796,6 +797,7 @@ function loadOfferDetails(num){
     }
     $('.shortDesc').html( data[15] );
     $('.desc').html(data[16]);
+    $('.desc').append("<b>Prodavatelj:</b><br>"+data[21]+"<br>"+data[22]+"<br>"+data[23]+"<br>"+data[24]+"<br>");
     $($('#layout_sidebar_offer_details div')[0]).html(data[17]); 
     map_x = parseFloat(data[18]);
     map_y = parseFloat(data[19]);  
@@ -932,7 +934,6 @@ function categoryDropSelectOptions(field,filter){
             $(this).children().each(function(){
                 data.push($(this).text());
             });
-            console.log(filter);
             if(filter==1)
                 if(data[2]=='Da')
                     $('#'+field).append('<option class="selectDrop" value='+data[0]+'>'+data[1]+'</option>');
