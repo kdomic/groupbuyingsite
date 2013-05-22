@@ -835,7 +835,6 @@ function editOffer(num){
     $('#offerNAPOMENA').jqteVal(data[9]);
     $('#offerKARTAX').val(data[10]);
     $('#offerKARTAY').val(data[11]);
-    console.log(data[1]);
     $('#offerPRODAVATELJ option[value='+data[1]+']').attr('selected', 'selected');    
     $('#offerKATEGORIJA option[value='+data[2]+']').attr('selected', 'selected');
     if(data[12]=="1")
@@ -859,8 +858,8 @@ function saveOffer(){
         data.push($($('#singleOffer input')[0]).val());
     }
 
-    data.push($('#offerPRODAVATELJ').val());  
-    data.push($('#offerKATEGORIJA').val());
+    data.push($('#offerPRODAVATELJ option:selected').val());  
+    data.push($('#offerKATEGORIJA option:selected').val());
     data.push(Encoder.htmlDecode($('#offerNASLOV').val()));
     data.push(Encoder.htmlDecode($('#offerPODNASLOV').val()));
     data.push($('#offerCIJENA').val());
@@ -987,7 +986,7 @@ function saveAction(){
         data.push(4);        
         data.push($($('#singleAction input')[0]).val());
     }
-    data.push($('#actionPONUDA').val());
+    data.push($('#actionPONUDA option:selected').val());
     data.push($('#actionPOPUST').val());
     if($('#actionPOCETAKdate').val()=='')
         data.push('0000-00-00 00:00:00');        
@@ -1040,7 +1039,8 @@ function citysActionsShow(id) {
             $(this).children().each(function(){
                 data.push($(this).text());
             });
-            $('#citysActionsOptions').append("<option value="+data[0]+">"+data[1]+"</option>");
+            if(data[2]==1)
+                $('#citysActionsOptions').append("<option value="+data[0]+">"+data[1]+"</option>");               
         });
     });
 
@@ -1208,9 +1208,13 @@ function userDropSelectOptions(field){
             $(this).children().each(function(){
                 user.push($(this).text());
             });
-            $('#'+field).append("<option value="+user[0]+">"+user[1]+' '+user[2]+"</option>");
+            if(user[16]=='Da')
+                $('#'+field).append("<option value="+user[0]+">"+user[1]+' '+user[2]+"</option>");
+            else
+                $('#'+field).append("<option disabled value="+user[0]+">"+user[1]+' '+user[2]+"</option>");
         });
     });
+
 }
 
 function prodavateljiDropSelectOptions(field){
@@ -1226,7 +1230,10 @@ function prodavateljiDropSelectOptions(field){
             $(this).children().each(function(){
                 data.push($(this).text());
             });
-            $('#'+field).append("<option value="+data[0]+">"+data[2]+"</option>");
+            if(data[7]=='Da')
+                $('#'+field).append("<option value="+data[0]+">"+data[2]+"</option>");
+            else
+                $('#'+field).append("<option disabled value="+data[0]+">"+data[2]+"</option>");                
         });
     });
 }
@@ -1246,25 +1253,6 @@ function prodavateljiNazivi(){
         });
     });
     return nazivi;
-}
-
-function categoryDropSelectOptions(field,type,userID){
-    $('#'+field+" option").remove();
-    var protocolData = new Array();
-    protocolData.push(type);
-    protocolData.push(userID);
-    var xml = sendToPhp(protocolData,'../getSet_kategorije.php');
-    var cats = $(xml).find('kategorije');
-    var data = new Array();
-    $(cats).each(function(){    
-        $(this).children().each(function(){
-            data = []; 
-            $(this).children().each(function(){
-                data.push($(this).text());
-            });
-            $('#'+field).append("<option value="+data[0]+">"+data[1]+"</option>");
-        });
-    });
 }
 
 function kategorijeNazivi(){
@@ -1298,7 +1286,10 @@ function categoryDropSelectOptions(field,type,userID){
             $(this).children().each(function(){
                 data.push($(this).text());
             });
-            $('#'+field).append("<option value="+data[0]+">"+data[1]+"</option>");
+            if(data[2]=='Da')
+                $('#'+field).append("<option value="+data[0]+">"+data[1]+"</option>");
+            else if(userID==0)
+                $('#'+field).append("<option disabled value="+data[0]+">"+data[1]+"</option>");                
         });
     });
 }
@@ -1315,7 +1306,10 @@ function offersDropSelectOptions(field){
             $(this).children().each(function(){
                 data.push($(this).text());
             });
-            $('#'+field).append("<option value="+data[0]+">"+data[3]+"</option>");
+            if(data[12]=='Da')
+                $('#'+field).append("<option value="+data[0]+">"+data[3]+"</option>");
+            else
+                $('#'+field).append("<option disabled value="+data[0]+">"+data[3]+"</option>");                
         });
     });
 }

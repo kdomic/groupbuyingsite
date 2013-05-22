@@ -68,9 +68,6 @@
                     <input type="radio" name="vidljivost" value="1" id="offerAKTIVNA">Da
                     <input type="radio" name="vidljivost" value="0" >Ne
                 </td>
-            </tr> 
-            <tr>
-            
             </tr>
         </table>        
         <div class="clear"></div>
@@ -85,9 +82,9 @@
             <div id="galleryOffer"></div>
         </div>
         <br>
-        <td colspan="2"><button id="btnSaveOffer" >Pospremi</button></td>        
         <div class="clear"></div>          
         <div id="offerUpdateStatus" class=""><span></span></div>
+        <button id="btnSaveOffer" >Pospremi</button>               
     </div>
 </div>
 

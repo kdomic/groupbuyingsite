@@ -62,6 +62,7 @@
                     $kategorija = $root->appendChild($xmlDoc->createElement("grad"));
                     $kategorija->appendChild($xmlDoc->createElement("id", toUtf8($k->id)));
                     $kategorija->appendChild($xmlDoc->createElement("ime", toUtf8($k->ime)));
+                    $kategorija->appendChild($xmlDoc->createElement("aktivan", toUtf8($k->aktivan)));                    
                 }
                 header("Content-Type: text/xml");
                 $xmlDoc->formatOutput = true;

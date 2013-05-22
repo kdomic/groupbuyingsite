@@ -413,7 +413,6 @@ function facebookLoginInit() {
         if (response.authResponse) {
             FB.api('/me', function(me){
                 if (me.name) {
-                    console.log(me);
                     facebookRegisterUser(me);
                     facebookRegisterSession(me);
                 }
@@ -464,7 +463,6 @@ function facebookLogout(){
 }
 
 function loginStatusMess(status,ret){
-    console.log(status);
     if(status===0){
         $('#loginStatus').removeClass("info").removeClass("warning").addClass("error");
         $('#loginStatus span').html("Uneseni podatci nisu ispravni");
@@ -711,8 +709,10 @@ function initOffers(){
     if(userID!==0){
         var xml = sendToPhp(new Array('9', userID),"getSet_korisnici.php");
         var status = $(xml).find('status').text();
-        //addNewOffer(0,'layout_offers', status);
-        //addNewOffer(1,'layout_offers', status);        
+        if(status!=0){
+            addNewOffer(0,'layout_offers', status);
+            addNewOffer(1,'layout_offers', status);        
+        }
     }
     for(var i = 0; i<initOfferNum; i++)
         addOneOffer();
@@ -932,10 +932,13 @@ function categoryDropSelectOptions(field,filter){
             $(this).children().each(function(){
                 data.push($(this).text());
             });
-            if(filter)
-                $('#'+field).append('<option class="selectDrop" value='+data[0]+'>'+data[1]+'</option>');
-            else
-                $('#'+field).append("<option value="+data[0]+">"+data[1]+"</option>");                
+            console.log(filter);
+            if(filter==1)
+                if(data[2]=='Da')
+                    $('#'+field).append('<option class="selectDrop" value='+data[0]+'>'+data[1]+'</option>');
+            if(filter==0)
+                if(data[2]=='Da')
+                    $('#'+field).append('<option value='+data[0]+'>'+data[1]+'</option>');             
         });
     });
 }
@@ -952,6 +955,7 @@ function cityDropSelectOptions(field){
             $(this).children().each(function(){
                 data.push($(this).text());
             });
+            if(data[2]=='Da')
                 $('#'+field).append('<option class="selectDrop" value='+data[0]+'>'+data[1]+'</option>');              
         });
     });
