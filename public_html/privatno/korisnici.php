@@ -10,6 +10,39 @@
 	<script type="text/javascript" src="../js/jquery.dataTables.min.js"></script>
 </head>
 <body>
+    <h1>Izdvojeni korisnici za testiranje</h1>
+    <table id="izdvojeno">
+        <thead>
+            <tr>
+                <th>Razina</th>
+                <th>Email</th>
+                <th>Lozinka</th>
+                <th>Prava</th>                
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>admin@admin.com</td>
+                <td>admin</td>
+                <td>Administrator</td>                
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>mod@mod.com</td>
+                <td>mod</td>
+                <td>Moderator (kat. Edukacija)</td>                
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>webdip@webdip.com</td>
+                <td>webdip</td>
+                <td>Korisnik</td>                
+            </tr>
+        </tbody>
+    </table>
+    <br><br>
+    <h1>Svi korisnici</h1>
 	<?php
 		$_k = Korisnici::find_all();
         echo "<table id=sviKorisnici>";
@@ -30,6 +63,9 @@
         echo "</tbody>";
         echo "</table>";
 	?>
-	<script type="text/javascript">$('#sviKorisnici').dataTable();</script>
+	<script type="text/javascript">
+        $('#izdvojeno').dataTable();    
+        $('#sviKorisnici').dataTable();
+    </script>
 </body>
 </html>

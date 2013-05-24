@@ -462,13 +462,20 @@ function saveUser(){
 
 function userPurchases(num) {
     var dataTable = $('#userPurchases').dataTable();
+    dataTable.fnClearTable();
     var xml = sendToPhp(new Array(2,num),"../get_purchases.php");
     $(xml).find('kupnja').each(function(){
         var data = new Array();
         $(this).children().each(function(){
             data.push($(this).text());
         });
-        dataTable.fnAddData([data[0],data[4],data[2],data[3]]);
+        if(data[2]=='Aktivno')
+            dataTable.fnAddData([data[0],data[4],data[2],data[2]]);
+        else if(data[2]=='Neuspjelo')
+            dataTable.fnAddData([data[0],data[4],data[2],data[2]]);
+        else
+            dataTable.fnAddData([data[0],data[4],data[2],data[3]]);
+
     });
 }
 

@@ -56,11 +56,11 @@
             </tr>
             <tr>
                 <td><label for="offerKARTAX">Karta X</label></td>
-                <td><input type="text"      name="offerKARTAX"      id="offerKARTAX"      /></td>                
+                <td><input type="text"      name="offerKARTAX"      id="offerKARTAX"    readonly      /></td>                
             </tr>
             <tr>
                 <td><label for="offerKARTAY">Karta Y</label></td>
-                <td><input type="text"      name="offerKARTAY"      id="offerKARTAY"      /></td>                
+                <td><input type="text"      name="offerKARTAY"      id="offerKARTAY"    readonly      /></td>                
             </tr>
             <tr>
                 <td><label for="offerAKTIVNA">Vidljivost</label></td>

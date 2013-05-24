@@ -22,7 +22,7 @@
         }
 
         public static function getAll(){
-            $query  = 'SELECT ra.id_akcije, k.ime, k.prezime, p.naslov, kat.naziv as kategorija, prod.naziv as prodavatelj, r.datum, p.cijena, a.popust, a.granica, a.datum_zavrsetka ';
+            $query  = 'SELECT ra.id_akcije, k.ime, k.prezime, p.naslov, kat.naziv as kategorija, prod.naziv as prodavatelj, r.datum, p.cijena, a.popust, a.granica, a.datum_zavrsetka, kat.id as katid ';
             $query .= 'FROM racuni AS r ';
             $query .= 'JOIN racuni_akcije AS ra ON ra.id_racuna=r.id ';
             $query .= 'JOIN akcije AS a ON ra.id_akcije=a.id ';
@@ -32,6 +32,12 @@
             $query .= 'JOIN prodavatelji AS prod ON  p.id_prodavatelja=prod.id ';            
             $query .= 'ORDER BY r.datum ASC';
             $data = DatabaseObject::find_by_raw_sql($query);
+            $kor = Korisnici::find_by_id($_SESSION['user_id']); 
+            $_m = Moderatori::find_by_korisnik($_SESSION['user_id']);
+            $filter = array();
+            if($kor->ovlasti==2)
+                foreach ($_m as $m)
+                    $filter[] = $m->id_kategorije;                
             if(empty($data)){
                 xmlStatusSend(0);
                 return;
@@ -39,6 +45,7 @@
             $xmlDoc = new DOMDocument();
             $root = $xmlDoc->appendChild($xmlDoc->createElement("kupnje"));
             foreach ($data as $d){
+                if($kor->ovlasti!=3 && !in_array($d['katid'],$filter)) continue;
                 $ponuda = $root->appendChild($xmlDoc->createElement("kupnja"));
                 if(Vrijeme::isInTime($d['datum_zavrsetka'])){
                     $d['granica'] = 'A';
