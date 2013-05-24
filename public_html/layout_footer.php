@@ -10,7 +10,8 @@
     	<div class="divFooterLeft">
     		Detaljnu dokumentaciju portala, korištenih dodataka, te
     		<br> vanjske reference možete pronaći u dokumentaciji portala. <br><br>
-    		<a href="dokumentacija.html">Dokumentacija portala</a>
+    		<a href="dokumentacija.html">Dokumentacija portala</a><br>
+            <a href="https://github.com/kruno-hidden/groupbuyingsite">GitHub - komplatak kod</a>
     	</div>
     	<div class="clear"></div>
     	<br><br><br>Copyright © 2013 Krunoslav Domić - kdomic@foi.hr Sva prava pridržana.	
