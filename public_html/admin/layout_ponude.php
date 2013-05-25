@@ -36,7 +36,7 @@
             </tr>
             <tr>
                 <td><label for="offerCIJENA">Cijena</label></td>
-                <td><input type="text"      name="offerCIJENA"      id="offerCIJENA"      placeholder=""/></td>
+                <td><input type="text"      name="offerCIJENA"      id="offerCIJENA"      placeholder="Cijena" /></td>
             </tr>
             <tr>
                 <td><label for="offerOPISNASLOV">Naslov opisa</label></td>
@@ -74,7 +74,7 @@
         <div id="map"></div>
         <br>
         <p>Slike je moguće pohraniti nakon spremanja ponude
-            <br>Naslovna slika mora biti u formatu JPG i imati sljedeći naziv: 1.jpg
+            <br>Naslovna slika mora biti u formatu JPG i imati sljedeći naziv: 01.jpg
             <br>Brisanje slika se vrši klikom na samu sliku</p>
         <div id="offerImgBox">
             <div id="queue"></div>
